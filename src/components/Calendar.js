@@ -11,10 +11,10 @@ class Calendar extends React.Component {
     selectedDate: new Date(),
     evenots: ''
   };
-
   
   renderHeader() {
     const dateFormat = "MMMM YYYY";
+    console.log(this.state.currentMonth)
 
     return (
       <div className="header row flex-middle">
@@ -80,7 +80,7 @@ class Calendar extends React.Component {
           >
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
-            <Button />
+            <Button dDate={this.state.currentMonth}/>
           </div>
         );
         day = dateFns.addDays(day, 1);
