@@ -21,8 +21,8 @@ class App extends React.Component {
         {/* <Route path='/contacts' component={Contacts} /> */}
         <Route path='/calendrier' component={Calendar}/>
         {/* <Route path='/suivi' component={FollowedUp} /> */}
+        {/* <Route path='/mon_compte' component={Account} /> */}
         </BrowserRouter>
-       
       </div>
     );
   }
