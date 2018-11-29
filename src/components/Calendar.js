@@ -3,6 +3,7 @@ import React from 'react';
 import dateFns from 'date-fns';
 // import { locale } from "./locale";
 import Button from './Button';
+import HeaderCalendar from './HeaderCalendar';
 // import EventCalendar from 'react-event-calendar';
 
 class Calendar extends React.Component {
@@ -14,6 +15,8 @@ class Calendar extends React.Component {
   renderHeader() {
     const dateFormat = 'MMMM YYYY';
     return (
+      <div>
+      <HeaderCalendar />
       <div className='header row flex-middle'>
         <div className='col col-start'>
           <div className='iconCalendar' onClick={this.prevMonth}>
@@ -27,6 +30,7 @@ class Calendar extends React.Component {
         <div className='col col-end' onClick={this.nextMonth}>
           <div className='iconCalendar'>chevron_right</div>
         </div>
+      </div>
       </div>
     );
   }
