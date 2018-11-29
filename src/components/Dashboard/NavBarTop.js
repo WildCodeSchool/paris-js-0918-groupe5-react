@@ -1,4 +1,5 @@
 import React from 'react';
+import  {NavLink} from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -28,24 +29,32 @@ const NavBarTop = (props) => {
         <Toolbar>
         <Grid container spacing={0}>
         <Grid item xs={3}>
+        <NavLink exact to='/'>
           <Typography variant="h6" color="inherit">
             Tableau de bord
           </Typography>
+          </NavLink>
           </Grid>
           <Grid item xs={3}>
+          <NavLink to='/contacts'>
           <Typography variant="h6" color="inherit">
             Contacts
           </Typography>
+          </NavLink>
           </Grid>
           <Grid item xs={3}>
+          <NavLink to='/calendrier'>
           <Typography variant="h6" color="inherit">
             Calendrier
           </Typography>
+          </NavLink>
           </Grid>
           <Grid item xs={3}>
+          <NavLink to='/suivi'>
           <Typography variant="h6" color="inherit">
             Suivi
           </Typography>
+          </NavLink>
           </Grid>
           </Grid>
         </Toolbar>
