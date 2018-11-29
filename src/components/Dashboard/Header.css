@@ -25,14 +25,23 @@
     border-radius: 90px;
   }
 
-  .user{
+  .user1{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    vertical-align: center;
+    opacity: 0.5;
+    /* border: 2px solid green; */
+  }
+
+  .user2{
     display:flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
     vertical-align: center;
     /* border: 2px solid green; */
-
   }
 
   .nameUser{

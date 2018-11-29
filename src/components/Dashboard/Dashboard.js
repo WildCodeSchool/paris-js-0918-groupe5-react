@@ -12,7 +12,7 @@ import "./Curves.css";
 import Grid from "@material-ui/core/Grid";
 
 class App extends Component {
-  render() { 
+  render() {
     return (
       <div>
         <Grid container spacing={0}>
