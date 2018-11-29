@@ -1,0 +1,15 @@
+.divCalendarLittle{
+    /* border: 2px solid red; */
+}
+
+.textCalendar{
+    margin-top: 30px;
+    text-align: left;
+    font-size: 20px;
+}
+
+.calendarLittle{
+    width:1350px;
+    margin-top: 10px;
+    border: 1px solid #C0C0C0;
+}
