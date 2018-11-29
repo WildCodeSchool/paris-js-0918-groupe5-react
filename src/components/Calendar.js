@@ -8,12 +8,12 @@ import HeaderCalendar from './HeaderCalendar';
 
 class Calendar extends React.Component {
   state = {
-    currentMonth: new Date(),
+    currentMonth: new Date(),//the D-Day
     selectedDate: new Date(),
   };
   
   renderHeader() {
-    const dateFormat = 'MMMM YYYY';
+    const dateFormat = 'MMMM YYYY'; //the format of the month and the year on the top of the calendar
     return (
       <div>
       <HeaderCalendar />
@@ -25,7 +25,7 @@ class Calendar extends React.Component {
           {/* <Button dDate={this.state.currentMonth}/> */}
         </div>
         <div className='col col-center'>
-          <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
+          <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span> {/* it shows the name of the month and the year */}
         </div>
         <div className='col col-end' onClick={this.nextMonth}>
           <div className='iconCalendar'>chevron_right</div>
@@ -36,15 +36,15 @@ class Calendar extends React.Component {
   }
 
   renderDays() {
-    const dateFormat = 'dddd';
+    const dateFormat = 'dddd';//the format of the name of the days
     const days = [];
 
-    const startDate = dateFns.startOfWeek(this.state.currentMonth);
+    const startDate = dateFns.startOfWeek(this.state.currentMonth); //the date where begins the calendar, sunday, and the date of the last line with more than 1 date
 
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className="col col-center" key={i}>
-          {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
+          {dateFns.format(dateFns.addDays(startDate, i), dateFormat)} {/* i+1 makes the week begin with monday instead of sunday */}
         </div>
       );
     }
@@ -79,8 +79,8 @@ class Calendar extends React.Component {
             key={day}
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
           >
-            <span className="number">{formattedDate}</span>
-            <span className="bg">{formattedDate}</span>
+            <span className="number">{formattedDate}</span>{/*the small number in the cell */}
+            <span className="bg">{formattedDate}</span>{/*the big number on the hover of a cell*/}
             <Button dDate={this.state.currentMonth}/>
           </div>
         );
