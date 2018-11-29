@@ -5,19 +5,19 @@ import DialogEvent from './DialogEvent';
 
 export default class FormDialog extends React.Component {
     state = {
-        open: false,
-      };
+      open: false,
+    };
 
-      toggleOpening = () => {
-        this.setState({open:!this.state.open})
-      }
+    toggleOpening = () => {
+      this.setState({ open:!this.state.open })
+    }
 
-  render() {
-    return (
-      <div>
-        <Button onClick={this.toggleOpening}>+</Button>
-        <DialogEvent onOpen={() => this.toggleOpening()} openOrNot={this.state.open} />
-      </div>
-    );
-  }
+    render() {
+      return (
+        <div>
+          <Button onClick={this.toggleOpening}>+</Button>
+          <DialogEvent onOpen={() => this.toggleOpening()} openOrNot={this.state.open} />
+        </div>
+      );
+    }
 }

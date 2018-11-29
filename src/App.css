@@ -4,7 +4,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
-.icon {/*le logo + les petites flèches pour changer les mois*/
+.iconCalendar {/*le logo + les petites flèches pour changer les mois*/
   font-family: 'Material Icons', serif;
   font-style: normal;
   display: inline-block;
@@ -66,7 +66,7 @@ header #logo {/*toute la ligne logo + reactcalendar*/
   line-height: 1;
 }
 
-header #logo .icon {/*le petit logo calendrier*/
+header #logo .iconCalendar {/*le petit logo calendrier*/
   padding-right: .25em;
 }
 
@@ -133,22 +133,22 @@ main {/*tout le calendrier*/
   border-bottom: 1px solid var(--border-color);
 }
 
-.calendar .header .icon {/*les flèches pour défiler les mois*/
+.calendar .header .iconCalendar {/*les flèches pour défiler les mois*/
   cursor: pointer;
   transition: .15s ease-out;
 }
 
-.calendar .header .icon:hover { /*le hover sur les fléches pour faire défiler les mois*/
+.calendar .header .iconCalendar:hover { /*le hover sur les fléches pour faire défiler les mois*/
   transform: scale(1.75);
   transition: .25s ease-out;
   color: var(--main-color);
 }
 
-.calendar .header .icon:first-of-type {/*les flèches pour faire défiler les mois*/
+.calendar .header .iconCalendar:first-of-type {/*les flèches pour faire défiler les mois*/
   margin-left: 1em;
 }
 
-.calendar .header .icon:last-of-type {/*les flèches pour faire défiler les mois*/
+.calendar .header .iconCalendar:last-of-type {/*les flèches pour faire défiler les mois*/
   margin-right: 1em;
 }
 

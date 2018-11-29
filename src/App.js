@@ -7,9 +7,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header>
+        <header className="headerCalendar">
           <div id="logo">
-            <span className="icon">date_range</span>
+            <span className="iconCalendar">date_range</span>
             <span>
               Kali <b>calendar</b> with React
             </span>
