@@ -8,14 +8,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="headerCalendar">
-          <div id="logo">
-            <span className="iconCalendar">date_range</span>
-            <span>
-              Kali <b>calendar</b> with React
-            </span>
-          </div>
-        </header>
         <BrowserRouter>
         {/* <Route exact path='/' component={DashBoard} /> */}
         {/* <Route path='/contacts' component={Contacts} /> */}
