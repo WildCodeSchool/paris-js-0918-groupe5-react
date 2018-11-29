@@ -1,7 +1,8 @@
-import React from "react";
-import Calendar from "./components/Calendar";
+import React from 'react';
+import Calendar from './components/Calendar';
+import {Route, BrowserRouter} from 'react-router-dom';
 
-import "./App.css";
+import './App.css';
 
 class App extends React.Component {
   render() {
@@ -15,9 +16,13 @@ class App extends React.Component {
             </span>
           </div>
         </header>
-        <main>
-          <Calendar />
-        </main>
+        <BrowserRouter>
+        {/* <Route exact path='/' component={DashBoard} /> */}
+        {/* <Route path='/contacts' component={Contacts} /> */}
+        <Route path='/calendrier' component={Calendar}/>
+        {/* <Route path='/suivi' component={FollowedUp} /> */}
+        </BrowserRouter>
+       
       </div>
     );
   }
