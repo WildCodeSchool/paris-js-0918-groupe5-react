@@ -12,20 +12,16 @@ import SimpleSelect from './SimpleSelect';
 import DateAndTimePickers from './DateAndTimePickers';
 
 class DialogEvent extends Component{
-    state = {
-        open: this.props.openOrNot,
-      };
-
 
       handleClose = () => {
-        this.setState({ open: false });
+        this.props.onOpen();
       };
-    
+
     render() {
-        console.log('wesh', this.state.open)
-        return( 
+
+        return(
         <Dialog
-          open={this.state.open}
+          open={this.props.openOrNot}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >

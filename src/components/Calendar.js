@@ -9,19 +9,17 @@ class Calendar extends React.Component {
   state = {
     currentMonth: new Date(),
     selectedDate: new Date(),
-    evenots: ''
   };
   
   renderHeader() {
     const dateFormat = "MMMM YYYY";
-    console.log(this.state.currentMonth)
-
     return (
       <div className="header row flex-middle">
         <div className="col col-start">
           <div className="icon" onClick={this.prevMonth}>
             chevron_left
           </div>
+          <Button dDate={this.state.currentMonth}/>
         </div>
         <div className="col col-center">
           <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
@@ -46,7 +44,6 @@ class Calendar extends React.Component {
         </div>
       );
     }
-
     return <div className="days row">{days}</div>;
   }
 
@@ -80,7 +77,7 @@ class Calendar extends React.Component {
           >
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
-            <Button dDate={this.state.currentMonth}/>
+            {/* <Button dDate={this.state.currentMonth}/> */}
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -97,12 +94,8 @@ class Calendar extends React.Component {
 
   onDateClick = day => {
     this.setState({
-      selectedDate: day,
-      evenots: 'wesh'
+      selectedDate: day
     });
-    return (<div>
-      ola
-    </div>)
   };
 
   nextMonth = () => {
@@ -118,34 +111,13 @@ class Calendar extends React.Component {
   };
 
   render() {
-    const events = [
-        {
-            start: '2015-07-20',
-            end: '2015-07-02',
-            eventClasses: 'optionalEvent',
-            title: 'test event',
-            description: 'This is a test description of an event',
-        },
-        {
-            start: '2015-07-19',
-            end: '2015-07-25',
-            title: 'test event',
-            description: 'This is a test description of an event',
-            data: 'you can add what ever random data you may want to use later',
-        },
-    ];
     return (
-        <div>
-      <div className="calendar">
-        {this.renderHeader()}
-        {this.renderDays()}
-        {this.renderCells()}
-      </div>
-      {/* <EventCalendar 
-      month={7}
-      year={2015}
-      events={events} 
-       /> */}
+      <div>
+        <div className="calendar">
+          {this.renderHeader()}
+          {this.renderDays()}
+          {this.renderCells()}
+        </div>
       </div>
     );
   }
