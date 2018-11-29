@@ -25,18 +25,18 @@ const styles = theme => ({
   menuList: {
     // backgroundColor: "#F2EFEA"
   },
-  itemNavBarLeft: {
+  itemNavBarCareGiver: {
     // border: '1px solid blue',
     marginTop: theme.spacing.unit * 4,
     fontSize: "19px",
     fontFamily: 'roboto',
   },
-  itemNavBarLeftPopper: {
+  itemNavBarCareGiverPopper: {
     fontSize: "19px",
   }
 });
 
-class NavBarLeft extends React.Component {
+class NavBarCareGiver extends React.Component {
   state = {
     open: false
   };
@@ -69,20 +69,11 @@ class NavBarLeft extends React.Component {
                 aria-owns={open ? "menu-list-grow" : undefined}
                 aria-haspopup="true"
                 onClick={this.handleToggle}
-                className={classes.itemNavBarLeft}
+                className={classes.itemNavBarCareGiver}
               >
                 Mes aidés{" "}
               </MenuItem>
-              <MenuItem className={classes.itemNavBarLeft}>
-                Gérer mes notifications
-              </MenuItem>
-              <MenuItem className={classes.itemNavBarLeft}>
-                Mes contacts d'urgence
-              </MenuItem>
-              <MenuItem className={classes.itemNavBarLeft}>Mon compte</MenuItem>
-              <MenuItem className={classes.itemNavBarLeft}>
-                Déconnexion
-              </MenuItem>
+              
 
               <div>
                 <Popper
@@ -108,19 +99,19 @@ class NavBarLeft extends React.Component {
                           <MenuList>
                             <MenuItem
                               onClick={this.handleClose}
-                              className={classes.itemNavBarLeftPopper}
+                              className={classes.itemNavBarCareGiverPopper}
                             >
                               Maurice <Icons name="EditIcon" /> <Icons name="DeleteForeverIcon" />
                             </MenuItem>
                             <MenuItem
                               onClick={this.handleClose}
-                              className={classes.itemNavBarLeftPopper}
+                              className={classes.itemNavBarCareGiverPopper}
                             >
                               Mauricette <Icons name="EditIcon" /> <Icons name="DeleteForeverIcon" />
                             </MenuItem>
                             <MenuItem
                               onClick={this.handleClose}
-                              className={classes.itemNavBarLeftPopper}
+                              className={classes.itemNavBarCareGiverPopper}
                             >
                               Ajouter un aidé
                             </MenuItem>
@@ -139,8 +130,8 @@ class NavBarLeft extends React.Component {
   }
 }
 
-NavBarLeft.propTypes = {
+NavBarCareGiver.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(NavBarLeft);
+export default withStyles(styles)(NavBarCareGiver);

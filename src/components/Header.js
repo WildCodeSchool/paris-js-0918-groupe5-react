@@ -1,7 +1,7 @@
 import React from "react";
 
-import logo from "../../assets/logo.svg";
-import avatar_old_man from "../../assets/avatar_old_man.png";
+import logo from "../assets/logo.svg";
+import avatar_old_man from "../assets/avatar_old_man.png";
 import "./Header.css";
 
 import Grid from "@material-ui/core/Grid";

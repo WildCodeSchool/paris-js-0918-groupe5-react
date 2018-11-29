@@ -16,10 +16,11 @@ const styles = {
   appBar: {
     backgroundColor: '#FC8F72',
     color: 'white',
+    
   },
 };
 
-const NavBarTop = (props) => {
+const NavBarReceiver = (props) => {
   const { classes } = props;
 
   return (
@@ -64,10 +65,10 @@ const NavBarTop = (props) => {
   );
 }
 
-NavBarTop.propTypes = {
+NavBarReceiver.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 
  
-export default withStyles(styles)(NavBarTop);
+export default withStyles(styles)(NavBarReceiver);
