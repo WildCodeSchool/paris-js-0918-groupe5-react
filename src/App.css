@@ -41,16 +41,6 @@
   box-sizing: border-box;
 }
 
-body {
-    font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    font-size: 1em;
-    font-weight: 300;
-    line-height: 1.5;
-    color: var(--text-color);
-    background: var(--bg-color);
-    position: relative;
-}
-
 header {
   display: block;
   width: 100%;
@@ -68,13 +58,6 @@ header #logo {/*toute la ligne logo + reactcalendar*/
 
 header #logo .iconCalendar {/*le petit logo calendrier*/
   padding-right: .25em;
-}
-
-main {/*tout le calendrier*/
-  display: block;
-  margin: 0 auto; /*à la base c'était margin: 0 auto -- margin-left:15em*/
-  margin-top: 1em;
-  max-width: 80em;/*la largeur des cases*/
 }
 
 
@@ -123,6 +106,17 @@ main {/*tout le calendrier*/
   background: var(--neutral-color);
   border: 1px solid var(--border-color);
   margin-bottom: 2em;
+  font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-size: 1em;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-color);
+  background: var(--bg-color);
+  position: relative;
+  display: block;
+  margin: 0 auto; /*à la base c'était margin: 0 auto -- margin-left:15em*/
+  margin-top: 1em;
+  max-width: 80em;/*la largeur des cases*/
 }
 
 .calendar .header {/*le rectangle du mois jusqu'aux flèches*/
