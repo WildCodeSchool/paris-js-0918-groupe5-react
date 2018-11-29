@@ -27,7 +27,10 @@ const styles = theme => ({
 
 class SimpleSelect extends React.Component {
   state = {
-    age: "",
+    frequency: "",
+    age:'',
+    responsible:'',
+    category:'',
     name: "hai",
     labelWidth: 0
   };
@@ -38,17 +41,18 @@ class SimpleSelect extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log(this.state.frequency, 'ola', this.state.age)
 
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl required className={classes.formControl}>
-          <InputLabel htmlFor="age-required">Fréquence</InputLabel>
+          <InputLabel htmlFor="frequency-required">Fréquence</InputLabel>
           <Select
-            value={this.state.age}
+            value={this.state.frequency}
             onChange={this.handleChange}
-            name="age"
+            name="frequency"
             inputProps={{
-              id: "age-required"
+              id: "frequency-required"
             }}
             className={classes.selectEmpty}
           >
@@ -70,23 +74,43 @@ class SimpleSelect extends React.Component {
         </FormControl>
 
         <FormControl required className={classes.formControl}>
-          <InputLabel htmlFor="age-required">Responsable</InputLabel>
+          <InputLabel htmlFor="responsible-required">Responsable</InputLabel>
           <Select
-            value={this.state.age}
+            value={this.state.responsible}
             onChange={this.handleChange}
-            name="age"
+            name="responsible"
             inputProps={{
-              id: "age-required"
+              id: "responsible-required"
             }}
             className={classes.selectEmpty}
           >
-            <MenuItem value='Grey'>Dr Grey</MenuItem>
-            <MenuItem value='Jackson'>Michael Jackson</MenuItem>
-            <MenuItem value='Jolivet'>Karine Jolivet</MenuItem>
+            <MenuItem value='grey'>Dr Grey</MenuItem>
+            <MenuItem value='jackson'>Michael Jackson</MenuItem>
+            <MenuItem value='jolivet'>Karine Jolivet</MenuItem>
           </Select>
           <FormHelperText>
             Assigner un responsable à cet événement
           </FormHelperText>
+        </FormControl>
+
+         <FormControl required className={classes.formControl}>
+          <InputLabel htmlFor="category-required">Catégorie</InputLabel>
+          <Select
+            value={this.state.category}
+            onChange={this.handleChange}
+            name="category"
+            inputProps={{
+              id: "category-required"
+            }}
+            className={classes.selectEmpty}
+          >
+            <MenuItem value='medical'>Consultation médicale</MenuItem>
+            <MenuItem value='nurse'>Soins infirmiers</MenuItem>
+            <MenuItem value='family'>Visite d'un proche</MenuItem>
+          </Select>
+          {/* <FormHelperText>
+            Assigner un responsable à cet événement
+          </FormHelperText> */}
         </FormControl>
       </form>
     );

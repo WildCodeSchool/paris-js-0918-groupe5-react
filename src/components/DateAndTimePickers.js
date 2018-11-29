@@ -21,6 +21,7 @@ function DateAndTimePickers(props) {
   return (
     <form className={classes.container} noValidate>
       <TextField
+        required
         id="datetime-local"
         label="Date et heure"
         type="datetime-local"

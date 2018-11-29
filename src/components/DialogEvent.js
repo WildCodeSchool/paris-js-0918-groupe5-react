@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
 import SwitchLabel from './SwitchLabels';
 import SimpleSelect from './SimpleSelect';
 import DateAndTimePickers from './DateAndTimePickers';
@@ -32,6 +32,7 @@ class DialogEvent extends Component{
               updates occasionally.
             </DialogContentText> */}
             <TextField
+              required
               autoFocus
               margin="dense"
               id="titre"
@@ -40,14 +41,7 @@ class DialogEvent extends Component{
               fullWidth
             />
               <TextField
-              autoFocus
-              margin="dense"
-              id="catégorie"
-              label="Catégorie"
-              type="text"
-              fullWidth
-            />
-              <TextField
+              required
               autoFocus
               margin="dense"
               id="address"
@@ -56,24 +50,8 @@ class DialogEvent extends Component{
               fullWidth
             />
             <SwitchLabel />
-              <TextField
-              autoFocus
-              margin="dense"
-              id="date"
-              label="Date"
-              type="date"
-              fullWidth
-            />
-              <TextField
-              autoFocus
-              margin="dense"
-              id="hour"
-              label="Heure"
-              type="hour"
-              fullWidth
-            />
+            <DateAndTimePickers dDate={this.props.dDate}/>
           <SimpleSelect />
-          <DateAndTimePickers dDate={this.props.dDate}/>
 
           </DialogContent>
           <DialogActions>
