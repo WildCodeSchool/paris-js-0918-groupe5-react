@@ -1,0 +1,54 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-header {
+    background-color: #65CDE2;
+    min-height: 3vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    /* border: 2px solid red; */
+  }
+
+  .App-logo {
+    margin-top: 20px;
+    animation: App-logo-spin infinite 20s linear;
+    height: 10vmin;
+  }
+
+  .nameLogo{
+    font-size: calc(10px + 2vmin);
+  }
+
+  .avatar_old_man{
+    width: 100px;
+    border-radius: 90px;
+  }
+
+  .user{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    vertical-align: center;
+    /* border: 2px solid green; */
+
+  }
+
+  .nameUser{
+    margin: 0px;
+    font-size: calc(7px + 2vmin);
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

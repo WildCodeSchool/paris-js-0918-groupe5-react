@@ -1,0 +1,24 @@
+.gridVisitsNb{
+    /* border: 2px solid blue; */
+}
+
+.textVisitsNb{
+    font-size: 20px;
+    margin-top: 40px;
+}
+
+.imageVisitsNb{
+    width: 650px;
+    border: 1px solid #dadeeb;
+}
+
+.textMoodCurve{
+    font-size: 20px;
+    margin-top: 40px;
+}
+
+.imageMoodCurve{
+    width: 650px;
+    border: 1px solid #dadeeb;
+}
+
