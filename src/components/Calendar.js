@@ -19,7 +19,7 @@ class Calendar extends React.Component {
           <div className="icon" onClick={this.prevMonth}>
             chevron_left
           </div>
-          <Button dDate={this.state.currentMonth}/>
+          {/* <Button dDate={this.state.currentMonth}/> */}
         </div>
         <div className="col col-center">
           <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
@@ -77,7 +77,7 @@ class Calendar extends React.Component {
           >
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
-            {/* <Button dDate={this.state.currentMonth}/> */}
+            <Button dDate={this.state.currentMonth}/>
           </div>
         );
         day = dateFns.addDays(day, 1);
