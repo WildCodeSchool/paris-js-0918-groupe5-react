@@ -4,6 +4,10 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
+.App {
+  text-align: center;
+}
+
 .iconCalendar {/*le logo + les petites flèches pour changer les mois*/
   font-family: 'Material Icons', serif;
   font-style: normal;

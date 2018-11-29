@@ -1,8 +1,5 @@
-.App {
-    text-align: center;
-  }
-  
-  .App-header {
+ 
+  .header {
     background-color: #65CDE2;
     min-height: 3vh;
     display: flex;
@@ -13,7 +10,7 @@
     /* border: 2px solid red; */
   }
 
-  .App-logo {
+  .header-logo {
     margin-top: 20px;
     animation: App-logo-spin infinite 20s linear;
     height: 10vmin;
