@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import EditIcon from "@material-ui/icons/Edit";
-// import DeleteForeverIcon from "@material-ui/icons";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PeopleIcon from "@material-ui/icons/People";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import PhoneInTalk from "@material-ui/icons/PhoneInTalk";
@@ -24,8 +24,8 @@ function Icons({ classes, name }) {
   switch (name) {
     case "EditIcon":
       return <EditIcon className={classes.icon} />;
-    // case "DeleteForeverIcon":
-    //   return <DeleteForeverIcon className={classes.icon} />;
+    case "DeleteForeverIcon":
+      return <DeleteForeverIcon className={classes.icon} />;
     case "PeopleIcon":
       return <PeopleIcon className={classes.icon} />;
     case "NotificationsIcon":

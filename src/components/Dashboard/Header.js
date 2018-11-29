@@ -9,13 +9,13 @@ import Grid from "@material-ui/core/Grid";
 
 const Header = () => {
   return (
-    <header className="App-header">
+    <header className="header">
       <Grid container spacing={0}>
       <Grid item xs={2}>
           <div></div>
         </Grid>
         <Grid item xs={8}>
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="header-logo" alt="logo" />
           <p className='nameLogo'>Kali Services</p>
         </Grid>
         <Grid item xs={2} className='user'>
