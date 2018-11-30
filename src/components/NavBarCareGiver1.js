@@ -1,108 +1,62 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const styles = {
   root: {
     flexGrow: 1,
-  },
-  appBar: {
-    backgroundColor: '#F2EFEA',
-    // color: "white",
-    padding: 0,
-    height:'40px',
-    // border: "3px solid purple"
-  },
-  navBarCareGiverToolbar: {
-    // border: '3px solid blue',
-    padding: '0px',
-    minHeight: 0,
-  },
-  navBarCareGiverItem: {
-    // border: '3px solid green',
-    fontSize: '20px',
-    marginTop: '2px',
+    backgroundColor: '#F2EFEA', 
   },
 };
 
-const NavBarReceiver1 = props => {
-  const { classes } = props;
+class NavBarCareGiver1 extends React.Component {
+  state = {
+    value: 0,
+    open: false,
+  };
 
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={0} className={classes.appBarGrid}>
-        <AppBar position="static" color="default" className={classes.appBar}>
-          <Toolbar className={classes.navBarCareGiverToolbar}>
-            <Grid item xs={2}>
-              <NavLink exact to="/">
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.navBarCareGiverItem}
-                >
-                  Mes aidés
-                </Typography>
-              </NavLink>
-            </Grid>
-            <Grid item xs={2}>
-              <NavLink exact to="/">
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.navBarCareGiverItem}
-                >
-                  Gérer mes notifications
-                </Typography>
-              </NavLink>
-            </Grid>
-            <Grid item xs={2}>
-              <NavLink exact to="/">
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.navBarCareGiverItem}
-                >
-                  Mes contacts d'urgence
-                </Typography>
-              </NavLink>
-            </Grid>
-            <Grid item xs={2}>
-              <NavLink exact to="/">
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.navBarCareGiverItem}
-                >
-                  Mon compte
-                </Typography>
-              </NavLink>
-            </Grid>
-            <Grid item xs={2}>
-              <NavLink exact to="/">
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.navBarCareGiverItem}
-                >
-                  Déconnexion
-                </Typography>
-              </NavLink>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-      </Grid>
-    </div>
-  );
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+
+  handleSubTab = () => {
+    this.setState({ open : !this.state.open})
+    console.log(this.state.open)
+  };
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div>
+      
+      <Paper className={classes.root}>
+        <Tabs
+          value={this.state.value}
+          onChange={this.handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
+          <Tab label="Mes aidés" onMouseEnter={this.handleSubTab}/>
+          <Tab label="Gérer mes notifications" />
+          <Tab label="Mes contacts d'urgence" />
+          <Tab label="Mon compte" />
+          <Tab label="Déconnexion" />
+        </Tabs>
+      </Paper>
+      
+      </div>
+    );
+  }
+}
+
+NavBarCareGiver1.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
 
-NavBarReceiver1.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(NavBarReceiver1);
+export default withStyles(styles)(NavBarCareGiver1);
