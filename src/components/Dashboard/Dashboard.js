@@ -16,12 +16,14 @@ class App extends Component {
     return (
       <div>
         <Grid container spacing={0}>
-          <Grid item xs={12}>
-            <Header />
-          </Grid>
+       
 
           <Grid item xs={12}>
             <NavBarTop />
+          </Grid>
+
+             <Grid item xs={12}>
+            <Header />
           </Grid>
 
           <Grid item xs={2}>
