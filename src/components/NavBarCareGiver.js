@@ -43,9 +43,11 @@ class NavBarCareGiver extends React.Component {
 
   handleToggle = () => {
     this.setState(state => ({ open: !state.open }));
+    console.log(this.state.open);
   };
 
   handleClose = event => {
+    console.log(this.state.open);
     if (this.anchorEl.contains(event.target)) {
       return;
     }
@@ -68,7 +70,8 @@ class NavBarCareGiver extends React.Component {
                 }}
                 aria-owns={open ? "menu-list-grow" : undefined}
                 aria-haspopup="true"
-                onClick={this.handleToggle}
+                onMouseEnter={this.handleToggle}
+                onMouseLeave={this.handleClose}
                 className={classes.itemNavBarCareGiver}
               >
                 Mes aidés{" "}
