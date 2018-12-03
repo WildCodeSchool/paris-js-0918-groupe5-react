@@ -11,8 +11,8 @@ class Calendar extends React.Component {
     currentMonth: new Date(),//the D-Day
     selectedDate: new Date(),
   };
-  
   renderHeader() {
+
     const dateFormat = 'MMMM YYYY'; //the format of the month and the year on the top of the calendar
     return (
       <div>
@@ -79,9 +79,10 @@ class Calendar extends React.Component {
             key={day}
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
           >
+
             <span className="number">{formattedDate}</span>{/*the small number in the cell */}
             <span className="bg">{formattedDate}</span>{/*the big number on the hover of a cell*/}
-            <Button dDate={this.state.currentMonth}/>
+            <Button date={this.state.selectedDate}/>
           </div>
         );
         day = dateFns.addDays(day, 1);
