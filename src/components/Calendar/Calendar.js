@@ -11,8 +11,8 @@ class Calendar extends React.Component {
     currentMonth: new Date(),//the D-Day
     selectedDate: new Date(),
   };
-  
   renderHeader() {
+
     const dateFormat = 'MMMM YYYY'; //the format of the month and the year on the top of the calendar
     return (
       <div>
