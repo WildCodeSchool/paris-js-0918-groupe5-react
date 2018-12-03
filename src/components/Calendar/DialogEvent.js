@@ -13,12 +13,31 @@ import SimpleSelectAddress from './SimpleSelectAddress';
 import DateAndTimePickers from './DateAndTimePickers';
 
 class DialogEvent extends Component {
+      state = {
+        titleFieldValue : '',
+        addressFieldValue: ''
+      }
+
       handleClose = () => {
         this.props.onOpen();
       };
 
+      inputTitle = (e) => {
+        this.setState({
+          titleFieldValue: e.target.value
+      });
+      }
+
+      inputAddress = (e) => {
+        this.setState({
+          addressFieldValue: e.target.value
+      });
+      }
+
       render() {
         // console.log('dialogevent', this.props.dDate)
+        // console.log(this.state.titleFieldValue)
+        // console.log(this.state.addressFieldValue)
         return (
           <Dialog
             open={this.props.openOrNot}
@@ -39,7 +58,9 @@ class DialogEvent extends Component {
                 label="Titre"
                 type="text"
                 fullWidth
+                onChange={this.inputTitle}
               />
+              {/* {console.log(TextField.getValue())} */}
               <TextField
                 required
                 autoFocus
@@ -48,6 +69,7 @@ class DialogEvent extends Component {
                 label="Adresse"
                 type="text"
                 fullWidth
+                onChange={this.inputAddress}
               />
               <SimpleSelectAddress />
               <div> <br/> </div>
