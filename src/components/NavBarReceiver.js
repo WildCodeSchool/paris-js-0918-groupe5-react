@@ -11,10 +11,10 @@ import Grid from '@material-ui/core/Grid';
 
 const styles = {
   root: {
-    flexGrow: 1,
+    flexGrow: 0,
   },
   appBar: {
-    backgroundColor: '#FC8F72',
+    backgroundColor: 'white',
     color: 'white',
     
   },
@@ -30,28 +30,28 @@ const NavBarReceiver = (props) => {
         <Toolbar>
         <Grid container spacing={0}>
         <Grid item xs={3}>
-        <NavLink exact to='/'>
+        <NavLink exact to='/' activeClassName='active' className='inactive'>
           <Typography variant="h6" color="inherit">
             Tableau de bord
           </Typography>
           </NavLink>
           </Grid>
           <Grid item xs={3}>
-          <NavLink to='/contacts'>
+          <NavLink to='/contacts' activeClassName='active' className='inactive'>
           <Typography variant="h6" color="inherit">
             Contacts
           </Typography>
           </NavLink>
           </Grid>
           <Grid item xs={3}>
-          <NavLink to='/calendrier'>
+          <NavLink to='/calendrier' activeClassName='active' className='inactive'>
           <Typography variant="h6" color="inherit">
             Calendrier
           </Typography>
           </NavLink>
           </Grid>
           <Grid item xs={3}>
-          <NavLink to='/suivi'>
+          <NavLink to='/suivi' activeClassName='active' className='inactive'>
           <Typography variant="h6" color="inherit">
             Suivi
           </Typography>

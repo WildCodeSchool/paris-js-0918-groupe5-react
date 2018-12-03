@@ -1,8 +1,8 @@
 import React from "react";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Calendar from "./components/Calendar";
-import RemainingComponent from "./components/RemainingComponent";
 
+import RemainingComponent from "./components/RemainingComponent";
+import Calendar from "./components/Calendar/Calendar";
 
 import "./App.css";
 
