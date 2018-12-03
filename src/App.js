@@ -1,6 +1,6 @@
 import React from "react";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Calendar from "./components/Calendar";
+import Calendar from "./components/Calendar/Calendar";
 import { Route, BrowserRouter, Switch, NavLink } from "react-router-dom";
 
 import "./App.css";
