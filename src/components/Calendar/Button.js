@@ -16,7 +16,7 @@ export default class FormDialog extends React.Component {
       return (
         <div>
           <Button onClick={this.toggleOpening}>+</Button>
-          <DialogEvent onOpen={() => this.toggleOpening()} openOrNot={this.state.open} /*dDate={this.props.dDate} */ />
+          <DialogEvent onOpen={() => this.toggleOpening()} openOrNot={this.state.open} dDate={this.props.date}/>
         </div>
       );
     }

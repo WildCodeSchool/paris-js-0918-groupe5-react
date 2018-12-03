@@ -79,9 +79,10 @@ class Calendar extends React.Component {
             key={day}
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
           >
+
             <span className="number">{formattedDate}</span>{/*the small number in the cell */}
             <span className="bg">{formattedDate}</span>{/*the big number on the hover of a cell*/}
-            <Button dDate={this.state.currentMonth}/>
+            <Button date={this.state.selectedDate}/>
           </div>
         );
         day = dateFns.addDays(day, 1);
