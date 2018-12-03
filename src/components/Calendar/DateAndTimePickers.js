@@ -18,7 +18,7 @@ const styles = theme => ({
     width: 260,
   },
   beginningDate: {
-    marginRight: '1.9vw',
+    marginRight: '1.7vw',
     width: 260,
   },
 });
