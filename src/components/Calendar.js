@@ -8,44 +8,68 @@ import HeaderCalendar from './HeaderCalendar';
 
 class Calendar extends React.Component {
   state = {
-    currentMonth: new Date(),//the D-Day
+    currentMonth: new Date(), // the D-Day
     selectedDate: new Date(),
   };
-  
+
+  onDateClick = (day) => {
+    this.setState({
+      selectedDate: day,
+    });
+  };
+
+  nextMonth = () => {
+    const { currentMonth } = this.state;
+    this.setState({
+      currentMonth: dateFns.addMonths(currentMonth, 1),
+    });
+  };
+
+  prevMonth = () => {
+    const { currentMonth } = this.state;
+    this.setState({
+      currentMonth: dateFns.subMonths(currentMonth, 1),
+    });
+  };
+
   renderHeader() {
-    const dateFormat = 'MMMM YYYY'; //the format of the month and the year on the top of the calendar
+    const { currentMonth } = this.state;
+    const dateFormat = 'MMMM YYYY'; // the format of the month and the year on the top of the calendar
     return (
       <div>
-      <HeaderCalendar />
-      <div className='header row flex-middle'>
-        <div className='col col-start'>
-          <div className='iconCalendar' onClick={this.prevMonth}>
-            chevron_left
+        <HeaderCalendar />
+        <div className="header row flex-middle">
+          <div className="col col-start">
+            <div className="iconCalendar" onClick={this.prevMonth}>
+              chevron_left
+            </div>
+            {/* <Button dDate={this.state.currentMonth}/> */}
           </div>
-          {/* <Button dDate={this.state.currentMonth}/> */}
+          <div className="col col-center">
+            <span>{dateFns.format(currentMonth, dateFormat)}</span> {/* it shows the name of the month and the year */}
+          </div>
+          <div className="col col-end" onClick={this.nextMonth}>
+            <div className="iconCalendar">chevron_right</div>
+          </div>
         </div>
-        <div className='col col-center'>
-          <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span> {/* it shows the name of the month and the year */}
-        </div>
-        <div className='col col-end' onClick={this.nextMonth}>
-          <div className='iconCalendar'>chevron_right</div>
-        </div>
-      </div>
       </div>
     );
   }
 
   renderDays() {
-    const dateFormat = 'dddd';//the format of the name of the days
+    const { currentMonth } = this.state;
+    const dateFormat = 'dddd'; // the format of the name of the days
     const days = [];
+    // the date where begins the calendar, sunday,
+    // and the date of the last line with more than 1 date
+    const startDate = dateFns.startOfWeek(currentMonth);
 
-    const startDate = dateFns.startOfWeek(this.state.currentMonth); //the date where begins the calendar, sunday, and the date of the last line with more than 1 date
-
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i += 1) {
       days.push(
         <div className="col col-center" key={i}>
-          {dateFns.format(dateFns.addDays(startDate, i), dateFormat)} {/* i+1 makes the week begin with monday instead of sunday */}
-        </div>
+          {/* i+1 makes the week begin with monday instead of sunday */}
+          {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
+        </div>,
       );
     }
     return <div className="days row">{days}</div>;
@@ -66,7 +90,7 @@ class Calendar extends React.Component {
     let formattedDate = '';
 
     while (day <= endDate) {
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < 7; i += 1) {
         formattedDate = dateFns.format(day, dateFormat);
         const cloneDay = day;
         days.push(
@@ -79,10 +103,10 @@ class Calendar extends React.Component {
             key={day}
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
           >
-            <span className="number">{formattedDate}</span>{/*the small number in the cell */}
-            <span className="bg">{formattedDate}</span>{/*the big number on the hover of a cell*/}
-            <Button dDate={this.state.currentMonth}/>
-          </div>
+            <span className="number">{formattedDate}</span> {/*the small number in the cell */}
+            <span className="bg">{formattedDate}</span> {/*the big number on the hover of a cell*/}
+            <Button dDate={currentMonth} />
+          </div>,
         );
         day = dateFns.addDays(day, 1);
       }
@@ -95,24 +119,6 @@ class Calendar extends React.Component {
     }
     return <div className="body">{rows}</div>;
   }
-
-  onDateClick = (day) => {
-    this.setState({
-      selectedDate: day,
-    });
-  };
-
-  nextMonth = () => {
-    this.setState({
-      currentMonth: dateFns.addMonths(this.state.currentMonth, 1),
-    });
-  };
-
-  prevMonth = () => {
-    this.setState({
-      currentMonth: dateFns.subMonths(this.state.currentMonth, 1),
-    });
-  };
 
   render() {
     return (
