@@ -5,6 +5,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import SimpleSelect from './SimpleSelect';
+import RadioButton from './RadioButton';
+
 
 class Contacts extends Component {
   state = {
@@ -33,9 +36,10 @@ class Contacts extends Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Ajouter un contact</DialogTitle>
+          <DialogTitle id="form-dialog-title">Ajouter un contact professionnel</DialogTitle>
           <DialogContent>
             <TextField
+              required
               autoFocus
               margin="dense"
               id="name"
@@ -44,6 +48,7 @@ class Contacts extends Component {
               fullWidth
             />
             <TextField
+              required
               autoFocus
               margin="dense"
               id="name"
@@ -55,17 +60,43 @@ class Contacts extends Component {
               autoFocus
               margin="dense"
               id="name"
+              label="Titre"
+              type="text"
+              fullWidth
+            />
+            <SimpleSelect />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
               label="Email Address"
               type="email"
               fullWidth
             />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Téléphone"
+              type="number"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Commentaire"
+              type="text"
+              fullWidth
+            />
+            <RadioButton />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
+              Annuler
             </Button>
             <Button onClick={this.handleClose} color="primary">
-              Subscribe
+              Valider
             </Button>
           </DialogActions>
         </Dialog>
