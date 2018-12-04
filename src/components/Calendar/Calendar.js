@@ -46,7 +46,8 @@ class Calendar extends React.Component {
             {/* <Button dDate={this.state.currentMonth}/> */}
           </div>
           <div className="col col-center">
-            <span>{dateFns.format(currentMonth, dateFormat)}</span> {/* it shows the name of the month and the year */}
+            {/* it shows the name of the month and the year */}
+            <span>{dateFns.format(currentMonth, dateFormat)}</span>
           </div>
           <div role="button" tabIndex="0" className="col col-end" onClick={this.nextMonth}>
             <div className="iconCalendar">chevron_right</div>

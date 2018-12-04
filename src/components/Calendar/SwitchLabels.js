@@ -11,7 +11,7 @@ class SwitchLabels extends React.Component {
     checkedD: false,
   };
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({ [name]: event.target.checked });
   };
 
