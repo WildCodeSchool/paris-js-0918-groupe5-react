@@ -7,7 +7,8 @@ class SwitchLabels extends React.Component {
   state = {
     checkedA: false,
     checkedB: false,
-    checkedC: false
+    checkedC: false,
+    checkedD: false,
   };
 
   handleChange = name => event => {
@@ -27,13 +28,24 @@ class SwitchLabels extends React.Component {
           }
           label="Evénement visible par tous ?"
         />
-        <FormControlLabel
-          label="Rappel au responsable avant l'évenement ?"
+        <div> <br/> </div>
+         <FormControlLabel
           control={
             <Switch
               checked={this.state.checkedB}
               onChange={this.handleChange('checkedB')}
               value="checkedB"
+            />
+          }
+          label="Autoriser le suivi de la visite ?"
+        />
+        <FormControlLabel
+          label="Rappel au responsable 24h avant l'événement ?"
+          control={
+            <Switch
+              checked={this.state.checkedC}
+              onChange={this.handleChange('checkedC')}
+              value="checkedC"
               color="primary"
             />
           }
@@ -42,9 +54,9 @@ class SwitchLabels extends React.Component {
           label="Notification immédiate au responsable ?"
           control={
             <Switch
-              checked={this.state.checkedC}
-              onChange={this.handleChange('checkedC')}
-              value="checkedB"
+              checked={this.state.checkedD}
+              onChange={this.handleChange('checkedD')}
+              value="checkedD"
               color="primary"
             />
           }

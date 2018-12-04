@@ -40,7 +40,7 @@ class Calendar extends React.Component {
         <HeaderCalendar />
         <div className="header row flex-middle">
           <div className="col col-start">
-            <div className="iconCalendar" onClick={this.prevMonth}>
+            <div role="button" tabIndex="0" className="iconCalendar" onClick={this.prevMonth}>
               chevron_left
             </div>
             {/* <Button dDate={this.state.currentMonth}/> */}
@@ -48,7 +48,7 @@ class Calendar extends React.Component {
           <div className="col col-center">
             <span>{dateFns.format(currentMonth, dateFormat)}</span> {/* it shows the name of the month and the year */}
           </div>
-          <div className="col col-end" onClick={this.nextMonth}>
+          <div role="button" tabIndex="0" className="col col-end" onClick={this.nextMonth}>
             <div className="iconCalendar">chevron_right</div>
           </div>
         </div>
@@ -95,6 +95,8 @@ class Calendar extends React.Component {
         const cloneDay = day;
         days.push(
           <div
+            role="button"
+            tabIndex="0"
             className={`col cell ${
               !dateFns.isSameMonth(day, monthStart)
                 ? 'disabled'
@@ -103,9 +105,10 @@ class Calendar extends React.Component {
             key={day}
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
           >
-            <span className="number">{formattedDate}</span> {/*the small number in the cell */}
-            <span className="bg">{formattedDate}</span> {/*the big number on the hover of a cell*/}
-            <Button dDate={currentMonth} />
+
+            <span className="number">{formattedDate}</span>{/*the small number in the cell */}
+            <span className="bg">{formattedDate}</span>{/*the big number on the hover of a cell*/}
+            <Button date={selectedDate} />
           </div>,
         );
         day = dateFns.addDays(day, 1);

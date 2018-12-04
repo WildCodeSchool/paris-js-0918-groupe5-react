@@ -7,7 +7,7 @@ const HeaderCalendar = () => {
                 <div id="logo">
                     <span className="iconCalendar">date_range</span>
                     <span>
-                    Kali <b>calendar</b> with React
+                    Kali <b>calendar</b>
                     </span>
                 </div>
             </header>

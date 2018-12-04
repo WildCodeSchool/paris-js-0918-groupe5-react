@@ -230,3 +230,13 @@ header #logo .iconCalendar {/*le petit logo calendrier*/
   flex-basis: calc(100%/7);
   width: calc(100%/7);
 }
+
+.inactive {
+  color: #FC8F72;
+  text-decoration: none;
+}
+
+.active{
+  color: rgb(209, 102, 69);
+  text-decoration: underline;
+}
