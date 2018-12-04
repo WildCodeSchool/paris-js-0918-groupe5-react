@@ -15,9 +15,12 @@ class App extends React.Component {
     TG_esLint: [],
   };
 
+  fakeEtat = () => {
+    this.setState({TG_esLint: []})
+  };
 
   render() {
-    this.state.TG_esLint = [];
+
     return (
       <div className="App">
         <BrowserRouter>
