@@ -56,7 +56,7 @@ function DateAndTimePickers(props) {
       />
       {/* <DateTimePicker
       value={new Date()}/> */}
-       <TextField
+      <TextField
         required
         id="endingDate"
         label="Date et heure de fin"

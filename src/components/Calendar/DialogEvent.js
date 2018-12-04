@@ -14,8 +14,8 @@ import DateAndTimePickers from './DateAndTimePickers';
 
 class DialogEvent extends Component {
       state = {
-        titleFieldValue : '',
-        addressFieldValue: ''
+        titleFieldValue: '',
+        addressFieldValue: '',
       }
 
       handleClose = () => {
