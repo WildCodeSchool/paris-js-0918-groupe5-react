@@ -28,11 +28,12 @@ class Contacts extends Component {
   }
 
   render() {
+    const { open } = this.state;
     return (
       <div>
-        <Button onClick={this.handleClickOpen}>Open form dialog</Button>
+        <Button onClick={this.handleClickOpen}>Ajouter un contact</Button>
         <Dialog
-          open={this.state.open}
+          open={open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
@@ -78,9 +79,10 @@ class Contacts extends Component {
               margin="dense"
               id="name"
               label="Téléphone"
-              type="number"
+              type="text"
               fullWidth
             />
+            <RadioButton />
             <TextField
               autoFocus
               margin="dense"
@@ -89,7 +91,6 @@ class Contacts extends Component {
               type="text"
               fullWidth
             />
-            <RadioButton />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

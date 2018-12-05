@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -31,7 +30,7 @@ class RadioButtons extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    const { value } = this.state;
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
@@ -40,7 +39,7 @@ class RadioButtons extends React.Component {
             aria-label="communicationPreference"
             name="communicationPreference"
             className={classes.group}
-            value={this.state.value}
+            value={value}
             onChange={this.handleChange}
           >
             <FormControlLabel value="sms" control={<Radio />} label="sms" />
