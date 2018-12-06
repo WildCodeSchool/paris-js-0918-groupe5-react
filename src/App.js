@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import RemainingComponent from './components/RemainingComponent';
 import Calendar from './components/Calendar/Calendar';
 import Contacts from './components/Contacts/Contacts';
+import CaregiversForm from './components/Caregiver/CaregiverForm';
 
 import './App.css';
 
@@ -27,6 +28,7 @@ class App extends React.Component {
               <Route exact path="/" component={Dashboard} />
               <Route path="/contacts" component={Contacts} />
               <Route path="/calendrier" component={Calendar} />
+              <Route path="/création" component={CaregiversForm} />
               {/* <Route path='/suivi' component={FollowedUp} /> */}
               {/* <Route path='/mon_compte' component={Account} /> */}
             </Switch>
