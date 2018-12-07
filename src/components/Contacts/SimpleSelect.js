@@ -23,28 +23,30 @@ const styles = theme => ({
 
 class SimpleSelect extends React.Component {
   state = {
-    category: '',
+    value: 'x',
   };
 
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+  handleChange = (e) => {
+    const { handleCategory } = this.props;
+    handleCategory(e);
+    console.log(e.target.value);
   };
 
   render() {
-    const { classes } = this.props;
-    const { category } = this.state;
+    const { classes, category } = this.props;
+    const { value } = this.state;
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl required className={classes.formControl}>
           <InputLabel htmlFor="category-required">Catégorie</InputLabel>
           <Select
+            name="category"
+            className={classes.selectEmpty}
             value={category}
             onChange={this.handleChange}
-            name="category"
             inputProps={{
               id: 'category-required',
             }}
-            className={classes.selectEmpty}
           >
             <MenuItem value="doctor">Médecin</MenuItem>
             <MenuItem value="nurse">Infirmier</MenuItem>
@@ -59,6 +61,8 @@ class SimpleSelect extends React.Component {
 
 SimpleSelect.propTypes = {
   classes: PropTypes.object.isRequired,
+  handleCategory: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(SimpleSelect);

@@ -5,13 +5,19 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import axios from 'axios';
 import SimpleSelect from './SimpleSelect';
 import RadioButton from './RadioButton';
-
+// import { isThisSecond } from 'date-fns';
 
 class Contacts extends Component {
   state = {
+    contacts: [],
     open: false,
+    firstName: '',
+    lastName: '',
+    communicationPreference: 'sms',
+    category: '',
   };
 
   handleClickOpen = () => {
@@ -22,13 +28,50 @@ class Contacts extends Component {
     this.setState({ open: false });
   };
 
-  toggleOpening = () => {
-    const { open } = this.state;
-    this.setState({ open: !open });
-  }
+  handleChangeFirstName = (e) => {
+    this.setState({ firstName: e.target.value }, () => {
+      const { firstName } = this.state;
+      console.log(firstName);
+    });
+  };
+
+  handleChangeLastName = (e) => {
+    this.setState({ lastName: e.target.value });
+  };
+
+  handleCommunicationPreference = (e) => {
+    this.setState({ communicationPreference: e.target.value });
+  };
+
+  handleCategory = (e) => {
+    this.setState({ category: e.target.value });
+  };
+
+  handleValidation = () => {
+    const {
+      firstName,
+      lastName,
+      communicationPreference,
+      category,
+    } = this.state;
+    const contact = {
+      firstName,
+      lastName,
+      preferenceOfContact: communicationPreference,
+      category,
+    };
+    axios.post('http://localhost:4243/contacts', contact);
+    this.handleClose();
+  };
 
   render() {
-    const { open } = this.state;
+    const {
+      open,
+      firstName,
+      lastName,
+      communicationPreference,
+      category,
+    } = this.state;
     return (
       <div>
         <Button onClick={this.handleClickOpen}>Ajouter un contact</Button>
@@ -37,8 +80,18 @@ class Contacts extends Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Ajouter un contact professionnel</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            Ajouter un contact professionnel
+          </DialogTitle>
           <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Titre"
+              type="text"
+              fullWidth
+            />
             <TextField
               required
               autoFocus
@@ -47,6 +100,8 @@ class Contacts extends Component {
               label="FirstName"
               type="text"
               fullWidth
+              value={firstName}
+              onChange={this.handleChangeFirstName}
             />
             <TextField
               required
@@ -56,16 +111,10 @@ class Contacts extends Component {
               label="LastName"
               type="text"
               fullWidth
+              value={lastName}
+              onChange={this.handleChangeLastName}
             />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Titre"
-              type="text"
-              fullWidth
-            />
-            <SimpleSelect />
+            <SimpleSelect category={category} handleCategory={this.handleCategory} />
             <TextField
               autoFocus
               margin="dense"
@@ -82,7 +131,7 @@ class Contacts extends Component {
               type="text"
               fullWidth
             />
-            <RadioButton />
+            <RadioButton communicationPreference={communicationPreference} handleCommunicationPreference={this.handleCommunicationPreference} />
             <TextField
               autoFocus
               margin="dense"
@@ -96,7 +145,7 @@ class Contacts extends Component {
             <Button onClick={this.handleClose} color="primary">
               Annuler
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleValidation} color="primary">
               Valider
             </Button>
           </DialogActions>

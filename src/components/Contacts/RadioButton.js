@@ -21,15 +21,17 @@ const styles = theme => ({
 
 class RadioButtons extends React.Component {
   state = {
-    value: 'sms',
+    value: 'SMS',
   };
 
-  handleChange = (event) => {
-    this.setState({ value: event.target.value });
+  handleChange = (e) => {
+    const { handleCommunicationPreference } = this.props;
+    handleCommunicationPreference(e);
+    console.log(e.target.value);
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, communicationPreference } = this.props;
     const { value } = this.state;
     return (
       <div className={classes.root}>
@@ -39,11 +41,11 @@ class RadioButtons extends React.Component {
             aria-label="communicationPreference"
             name="communicationPreference"
             className={classes.group}
-            value={value}
+            value={communicationPreference}
             onChange={this.handleChange}
           >
-            <FormControlLabel value="sms" control={<Radio />} label="sms" />
-            <FormControlLabel value="phone" control={<Radio />} label="phone" />
+            <FormControlLabel value="SMS" control={<Radio />} label="SMS" />
+            <FormControlLabel value="Téléphone" control={<Radio />} label="Téléphone" />
           </RadioGroup>
         </FormControl>
       </div>
@@ -53,6 +55,8 @@ class RadioButtons extends React.Component {
 
 RadioButtons.propTypes = {
   classes: PropTypes.object.isRequired,
+  handleCommunicationPreference: PropTypes.func.isRequired,
+  communicationPreference: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(RadioButtons);
