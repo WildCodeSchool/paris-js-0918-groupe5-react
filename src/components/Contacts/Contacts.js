@@ -12,7 +12,7 @@ import RadioButton from './RadioButton';
 
 class Contacts extends Component {
   state = {
-    contacts: [],
+    contactsList: [],
     open: false,
     firstName: '',
     lastName: '',
@@ -61,10 +61,23 @@ class Contacts extends Component {
       category,
     };
     axios.post('http://localhost:4243/contacts', contact);
+    console.log(contact);
     this.handleClose();
   };
 
+  componentDidMount() {
+    axios.get('http://localhost:4243/contacts')
+      .then(res => this.setState({
+        contactsList: res.data,
+      }));
+  }
+
   render() {
+    const { contactsList } = this.state;
+    console.log(contactsList)
+    // const contactList = contacts.map(e => e);
+    // console.log(contactList);
+
     const {
       open,
       firstName,
@@ -72,8 +85,11 @@ class Contacts extends Component {
       communicationPreference,
       category,
     } = this.state;
+
     return (
       <div>
+        <h2>Liste des contacts</h2>
+        
         <Button onClick={this.handleClickOpen}>Ajouter un contact</Button>
         <Dialog
           open={open}
