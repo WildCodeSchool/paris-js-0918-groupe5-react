@@ -16,9 +16,16 @@ class Contacts extends Component {
     open: false,
     firstName: '',
     lastName: '',
-    communicationPreference: 'sms',
+    communicationPreference: 'SMS',
     category: '',
   };
+
+  componentDidMount() {
+    axios.get('http://localhost:4243/contacts')
+      .then(res => this.setState({
+        contactsList: res.data,
+      }));
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -29,10 +36,7 @@ class Contacts extends Component {
   };
 
   handleChangeFirstName = (e) => {
-    this.setState({ firstName: e.target.value }, () => {
-      const { firstName } = this.state;
-      console.log(firstName);
-    });
+    this.setState({ firstName: e.target.value });
   };
 
   handleChangeLastName = (e) => {
@@ -53,6 +57,7 @@ class Contacts extends Component {
       lastName,
       communicationPreference,
       category,
+      contactsList,
     } = this.state;
     const contact = {
       firstName,
@@ -60,23 +65,19 @@ class Contacts extends Component {
       preferenceOfContact: communicationPreference,
       category,
     };
-    axios.post('http://localhost:4243/contacts', contact);
-    console.log(contact);
+    axios.post('http://localhost:4243/contacts', contact)
+    // .then permet d'éxécuter du code quand la promesse est résolue
+      .then((res) => {
+        // res represents the response of the server (the contact transformed to json)
+        console.log(res.data);
+        contactsList.push(res.data);
+        this.setState({ contactsList });
+      });
     this.handleClose();
   };
 
-  componentDidMount() {
-    axios.get('http://localhost:4243/contacts')
-      .then(res => this.setState({
-        contactsList: res.data,
-      }));
-  }
-
   render() {
     const { contactsList } = this.state;
-    console.log(contactsList)
-    // const contactList = contacts.map(e => e);
-    // console.log(contactList);
 
     const {
       open,
@@ -89,7 +90,7 @@ class Contacts extends Component {
     return (
       <div>
         <h2>Liste des contacts</h2>
-        
+        {contactsList.map(e => <p key={e.id}>{e.firstName}</p>)}
         <Button onClick={this.handleClickOpen}>Ajouter un contact</Button>
         <Dialog
           open={open}
@@ -147,7 +148,9 @@ class Contacts extends Component {
               type="text"
               fullWidth
             />
-            <RadioButton communicationPreference={communicationPreference} handleCommunicationPreference={this.handleCommunicationPreference} />
+            <RadioButton
+              communicationPreference={communicationPreference}
+              handleCommunicationPreference={this.handleCommunicationPreference} />
             <TextField
               autoFocus
               margin="dense"

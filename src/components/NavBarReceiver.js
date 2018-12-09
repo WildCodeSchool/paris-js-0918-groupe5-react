@@ -16,7 +16,6 @@ const styles = {
   appBar: {
     backgroundColor: 'white',
     color: 'white',
-    
   },
 };
 
