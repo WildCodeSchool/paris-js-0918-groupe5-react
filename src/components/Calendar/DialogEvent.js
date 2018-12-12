@@ -45,8 +45,8 @@ class DialogEvent extends Component {
 
       recordedEvent = () => {
         axios.post('http://localhost:4243/events', this.state)
-          .then(result => alert(`L'évenement "${result.data.name}" a bien été enregistré`));
-        this.handleClose();
+          .then(console.log('ola', this.state))
+          // .then(result => !this.state ? alert("Merci de remplir tous les champs") : alert(`L'évenement "${result.data.name}" a bien été enregistré`) && this.handleClose() );
       }
 
       // componentDidMount(){
