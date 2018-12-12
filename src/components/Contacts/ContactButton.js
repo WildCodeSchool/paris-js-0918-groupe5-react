@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const ContactButton = (props) => {
   const { handleClickOpen } = props;
   return (
-    <div> 
+    <div>
       <Button onClick={handleClickOpen}>Ajouter un contact</Button>
     </div>
   );
