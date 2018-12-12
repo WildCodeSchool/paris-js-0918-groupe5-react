@@ -15,7 +15,7 @@ class DialogEvent extends Component {
       handleClose = () => {
         this.props.onOpen();
       };
-
+ 
       render() {
         return (
           <Dialog
