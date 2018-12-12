@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import DialogEvent from './DialogEvent';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 
 export default class FormDialog extends React.Component {
