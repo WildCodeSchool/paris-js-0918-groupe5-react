@@ -22,19 +22,15 @@ const styles = theme => ({
 });
 
 class SimpleSelect extends React.Component {
-  state = {
-    value: 'x',
-  };
 
   handleChange = (e) => {
     const { handleCategory } = this.props;
     handleCategory(e);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   render() {
     const { classes, category } = this.props;
-    const { value } = this.state;
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl required className={classes.formControl}>

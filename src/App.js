@@ -4,7 +4,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 
 import RemainingComponent from './components/RemainingComponent';
 import Calendar from './components/Calendar/Calendar';
-import Contacts from './components/Contacts/Contacts';
+import Contact from './components/Contacts/Contact';
 
 import './App.css';
 
@@ -15,7 +15,8 @@ const App = () => (
         <RemainingComponent />
         <Switch>
           <Route exact path="/" component={Dashboard} />
-          <Route path="/contacts" component={Contacts} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/contacts" component={Contact} />
           <Route path="/calendrier" component={Calendar} />
           {/* <Route path='/suivi' component={FollowedUp} /> */}
           {/* <Route path='/mon_compte' component={Account} /> */}
