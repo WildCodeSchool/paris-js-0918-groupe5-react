@@ -18,6 +18,19 @@ import DateAndTimePickers from './DateAndTimePickers';
 class DialogEvent extends Component {
       state = {
         name: '',
+        address: '',
+        // dateBeginning: '',
+        // dateEnd: '',
+        // hourBeginning: '',
+        // hourEnd: '',
+        // category: '',
+        // frequency: '',
+        // accountable: '',
+        // visibility: false,
+        // recall: false,
+        // immediateRecall: false,
+        // mood: '',
+        // status: false
       }
 
       handleClose = () => {
@@ -26,32 +39,27 @@ class DialogEvent extends Component {
 
       eventInformations = (e) => {
         this.setState({
-          name: e.target.value,
+          [e.target.name]: e.target.value,
         });
-        console.log('coucou', this.state.name)
       }
 
       recordedEvent = () => {
         axios.post('http://localhost:4243/events', this.state)
-          // .then(result => console.log('axios', result.data));
-      }
-
-      componentDidMount(){
-        axios.get('http://localhost:4243/events')
-          .then(result=>console.log(result.data))
+          .then(result => alert(`L'évenement "${result.data.name}" a bien été enregistré`));
+        this.handleClose();
       }
 
       // componentDidMount(){
-      //   this.recordedEvent()
+      //   axios.get('http://localhost:4243/events')
+      //     .then(result=>console.log(result.data))
       // }
 
       render() {
-        // console.log('dialogevent', this.props.dDate)
-        // console.log(this.state.name)
-        // console.log(this.state.addressFieldValue)
+        const { openOrNot, dDate } = this.props;
+        const { name, address } = this.state;
         return (
           <Dialog
-            open={this.props.openOrNot}
+            open={openOrNot}
             onClose={this.handleClose}
             aria-labelledby="form-dialog-title"
           >
@@ -69,7 +77,8 @@ class DialogEvent extends Component {
                 label="Titre"
                 type="text"
                 fullWidth
-                value={this.state.name}
+                name="name"
+                value={name}
                 onChange={this.eventInformations}
               />
               {/* {console.log(TextField.getValue())} */}
@@ -81,13 +90,15 @@ class DialogEvent extends Component {
                 label="Adresse"
                 type="text"
                 fullWidth
+                name="address"
+                value={address}
                 onChange={this.eventInformations}
               />
               <SimpleSelectAddress />
               <div>
                 <br />
               </div>
-              <DateAndTimePickers dDate={this.props.dDate}/>
+              <DateAndTimePickers dDate={dDate} />
               <SimpleSelect />
               <SwitchLabel />
 
