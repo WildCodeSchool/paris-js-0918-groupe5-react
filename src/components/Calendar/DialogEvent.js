@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,32 +13,41 @@ import SwitchLabel from './SwitchLabels';
 import SimpleSelect from './SimpleSelect';
 import SimpleSelectAddress from './SimpleSelectAddress';
 import DateAndTimePickers from './DateAndTimePickers';
+// import { assertExpressionStatement } from 'babel-types';
 
 class DialogEvent extends Component {
       state = {
-        titleFieldValue: '',
-        addressFieldValue: '',
+        name: '',
       }
 
       handleClose = () => {
         this.props.onOpen();
       };
 
-      inputTitle = (e) => {
+      eventInformations = (e) => {
         this.setState({
-          titleFieldValue: e.target.value
-      });
+          name: e.target.value,
+        });
+        console.log('coucou', this.state.name)
       }
 
-      inputAddress = (e) => {
-        this.setState({
-          addressFieldValue: e.target.value
-      });
+      recordedEvent = () => {
+        axios.post('http://localhost:4243/events', this.state)
+          // .then(result => console.log('axios', result.data));
       }
+
+      componentDidMount(){
+        axios.get('http://localhost:4243/events')
+          .then(result=>console.log(result.data))
+      }
+
+      // componentDidMount(){
+      //   this.recordedEvent()
+      // }
 
       render() {
         // console.log('dialogevent', this.props.dDate)
-        // console.log(this.state.titleFieldValue)
+        // console.log(this.state.name)
         // console.log(this.state.addressFieldValue)
         return (
           <Dialog
@@ -58,7 +69,8 @@ class DialogEvent extends Component {
                 label="Titre"
                 type="text"
                 fullWidth
-                onChange={this.inputTitle}
+                value={this.state.name}
+                onChange={this.eventInformations}
               />
               {/* {console.log(TextField.getValue())} */}
               <TextField
@@ -69,10 +81,12 @@ class DialogEvent extends Component {
                 label="Adresse"
                 type="text"
                 fullWidth
-                onChange={this.inputAddress}
+                onChange={this.eventInformations}
               />
               <SimpleSelectAddress />
-              <div> <br/> </div>
+              <div>
+                <br />
+              </div>
               <DateAndTimePickers dDate={this.props.dDate}/>
               <SimpleSelect />
               <SwitchLabel />
@@ -80,10 +94,10 @@ class DialogEvent extends Component {
             </DialogContent>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">Annuler</Button>
-              <Button color="primary">Enregistrer</Button>
+              <Button onClick={this.recordedEvent} color="primary">Enregistrer</Button>
             </DialogActions>
           </Dialog>
-        )
+        );
       }
 }
 
