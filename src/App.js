@@ -5,7 +5,6 @@ import Dashboard from './components/Dashboard/Dashboard';
 import RemainingComponent from './components/RemainingComponent';
 import Calendar from './components/Calendar/Calendar';
 
-import Contacts from './components/Contacts/Contacts';
 import CaregiversForm from './components/Caregiver/CaregiverForm';
 import Contact from './components/Contacts/Contact';
 
@@ -19,7 +18,6 @@ const App = () => (
         <Switch>
           <Route exact path="/" component={Dashboard} />
           <Route path="/contact" component={Contact} />
-          <Route path="/contacts" component={Contacts} />
           <Route path="/création" component={CaregiversForm} />
           <Route path="/calendrier" component={Calendar} />
           {/* <Route path='/suivi' component={FollowedUp} /> */}
