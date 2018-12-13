@@ -1,4 +1,6 @@
+node_modules/
 
+package-lock.json
 # Created by https://www.gitignore.io/api/git,node,linux,macos,sublimetext,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=git,node,linux,macos,sublimetext,visualstudiocode
 
