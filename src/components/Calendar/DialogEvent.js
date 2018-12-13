@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 import { connect } from 'react-redux';
-
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -18,7 +16,6 @@ import SimpleSelect from './SimpleSelect';
 import SimpleSelectAddress from './SimpleSelectAddress';
 import DateAndTimePickers from './DateAndTimePickers';
 // import { assertExpressionStatement } from 'babel-types';
-
 
 class DialogEvent extends Component {
       state = {
@@ -65,8 +62,10 @@ class DialogEvent extends Component {
       // }
 
       render() {
+
         const { openOrNot, dDate, nameValue } = this.props;
         const { address } = this.state;
+
         return (
           <Dialog
             open={openOrNot}
@@ -90,6 +89,7 @@ class DialogEvent extends Component {
                 name="name"
                 value={nameValue}
                 onChange={this.eventInformations2}
+
               />
               {/* {console.log(TextField.getValue())} */}
               <TextField
