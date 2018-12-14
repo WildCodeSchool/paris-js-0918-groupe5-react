@@ -38,7 +38,7 @@ const NavBarReceiver = (props) => {
           </NavLink>
           </Grid>
           <Grid item xs={3}>
-          <NavLink to='/contacts' activeClassName='active' className='inactive'>
+          <NavLink to='/contact' activeClassName='active' className='inactive'>
           <Typography variant="h6" color="inherit">
             Contacts
           </Typography>

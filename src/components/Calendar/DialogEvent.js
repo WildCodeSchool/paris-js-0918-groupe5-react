@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,6 +8,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
+import { recordName } from '../../actions/eventActions';
 
 import SwitchLabel from './SwitchLabels';
 import SimpleSelect from './SimpleSelect';
@@ -17,7 +19,7 @@ import DateAndTimePickers from './DateAndTimePickers';
 
 class DialogEvent extends Component {
       state = {
-        name: '',
+        // name: '',
         address: '',
         // dateBeginning: '',
         // dateEnd: '',
@@ -37,6 +39,11 @@ class DialogEvent extends Component {
         this.props.onOpen();
       };
 
+      eventInformations2 = (e) => {
+        const { recordName } = this.props;
+        recordName(e.target.value);
+      }
+
       eventInformations = (e) => {
         this.setState({
           [e.target.name]: e.target.value,
@@ -55,8 +62,10 @@ class DialogEvent extends Component {
       // }
 
       render() {
-        const { openOrNot, dDate } = this.props;
-        const { name, address } = this.state;
+
+        const { openOrNot, dDate, nameValue } = this.props;
+        const { address } = this.state;
+
         return (
           <Dialog
             open={openOrNot}
@@ -78,8 +87,9 @@ class DialogEvent extends Component {
                 type="text"
                 fullWidth
                 name="name"
-                value={name}
-                onChange={this.eventInformations}
+                value={nameValue}
+                onChange={this.eventInformations2}
+
               />
               {/* {console.log(TextField.getValue())} */}
               <TextField
@@ -112,4 +122,13 @@ class DialogEvent extends Component {
       }
 }
 
-export default DialogEvent;
+const mapStateToProps = state => ({
+  nameValue: state.event.name,
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    recordName,
+  },
+)(DialogEvent);
