@@ -1,17 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import DialogEvent from './DialogEvent';
-// import PropTypes from 'prop-types';
 
 
 export default class FormDialog extends React.Component {
-  state = {
-    open: false,
-  };
-
-  // FormDialog.propTypes = {
-  //   date: PropTypes.string.isRequired,
-  // };
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+    };
+    FormDialog.propTypes = {
+      date: PropTypes.string.isRequired,
+    };
+  }
 
   toggleOpening = () => {
     const { open } = this.state;
