@@ -70,7 +70,7 @@ const DateAndTimePickers = (props) => {
       />
     </form>
   );
-}
+};
 
 DateAndTimePickers.propTypes = {
   classes: PropTypes.object.isRequired,

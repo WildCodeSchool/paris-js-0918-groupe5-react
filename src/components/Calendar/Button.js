@@ -11,7 +11,7 @@ export default class FormDialog extends React.Component {
       open: false,
     };
     FormDialog.propTypes = {
-      date: PropTypes.string.isRequired,
+      date: PropTypes.object.isRequired,
     };
   }
 

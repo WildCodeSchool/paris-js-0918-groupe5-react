@@ -18,13 +18,13 @@ const SimpleSelectValues = (props) => {
 };
 
 
-const mapStateToProps = state => state;
+// const mapStateToProps = state => state;
 
-// const mapStateToProps = state => ({
-//   frequency2: state.event.frequency, // from store, don't need it
-//   responsible2: state.event.responsible, // from store, don't need it
-//   category2: state.event.category, // from store, don't need it
-// });
+const mapStateToProps = state => ({
+  frequency2: state.event.frequency, // from store, don't need it but without it's bugging
+  responsible2: state.event.responsible, // from store, don't need it but without it's bugging
+  category2: state.event.category, // from store, don't need it but without it's bugging
+});
 
 
 export default connect(

@@ -26,13 +26,14 @@ class DialogEvent extends Component {
     };
     DialogEvent.propTypes = {
       openOrNot: PropTypes.bool.isRequired,
+      dDate: PropTypes.object.isRequired,
+      recordEventInfo: PropTypes.func.isRequired,
       onOpen: PropTypes.func.isRequired,
     };
   }
 
   handleClose = () => {
-    const { onOpen } = this.props;
-    onOpen();
+    this.props.onOpen();
   };
 
   onChange = (e) => {
