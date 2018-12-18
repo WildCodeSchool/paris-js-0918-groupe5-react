@@ -37,77 +37,80 @@ class SimpleSelect extends React.Component {
   render() {
     const { classes } = this.props;
     const { frequency, responsible, category } = this.state;
+    // console.log(frequency, responsible, category);
     return (
-      <form className={classes.root} autoComplete="off">
-        <FormControl required className={classes.formControl}>
-          <InputLabel htmlFor="frequency-required">Fréquence</InputLabel>
-          <Select
-            value={frequency}
-            onChange={this.handleChange}
-            name="frequency"
-            inputProps={{
-              id: 'frequency-required',
-            }}
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="once">Une seule fois</MenuItem>
-            <MenuItem value="everyday">Tous les jours</MenuItem>
-            <MenuItem value="everydayWeek">
-              Tous les jours de la semaine (du lundi au vendredi)
-            </MenuItem>
-            <MenuItem value="everyMonday">Tous les lundis</MenuItem>
-            <MenuItem value="eveyTuesday">Tous les mardis</MenuItem>
-            <MenuItem value="everyWednesday">Tous les mercredis</MenuItem>
-            <MenuItem value="everyThursday">Tous les jeudis</MenuItem>
-            <MenuItem value="everyFriday">Tous les vendredis</MenuItem>
-            <MenuItem value="everySaturday">Tous les samedis</MenuItem>
-          </Select>
-          <FormHelperText>
-            Indiquer ici la récurrence de l'événement
-          </FormHelperText>
-        </FormControl>
+      <div>
+        <form className={classes.root} autoComplete="off">
+          <FormControl required className={classes.formControl}>
+            <InputLabel htmlFor="frequency-required">Fréquence</InputLabel>
+            <Select
+              value={frequency}
+              onChange={this.handleChange}
+              name="frequency"
+              inputProps={{
+                id: 'frequency-required',
+              }}
+              className={classes.selectEmpty}
+            >
+              <MenuItem value="once">Une seule fois</MenuItem>
+              <MenuItem value="everyday">Tous les jours</MenuItem>
+              <MenuItem value="everydayWeek">
+                Tous les jours de la semaine (du lundi au vendredi)
+              </MenuItem>
+              <MenuItem value="everyMonday">Tous les lundis</MenuItem>
+              <MenuItem value="eveyTuesday">Tous les mardis</MenuItem>
+              <MenuItem value="everyWednesday">Tous les mercredis</MenuItem>
+              <MenuItem value="everyThursday">Tous les jeudis</MenuItem>
+              <MenuItem value="everyFriday">Tous les vendredis</MenuItem>
+              <MenuItem value="everySaturday">Tous les samedis</MenuItem>
+            </Select>
+            <FormHelperText>
+              {'Indiquer ici la récurrence de l\'événement'}
+            </FormHelperText>
+          </FormControl>
 
-        <FormControl required className={classes.formControl}>
-          <InputLabel htmlFor="responsible-required">Responsable</InputLabel>
-          <Select
-            value={responsible}
-            onChange={this.handleChange}
-            name="responsible"
-            inputProps={{
-              id: 'responsible-required',
-            }}
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="grey">Dr Grey</MenuItem>
-            <MenuItem value="jackson">Michael Jackson</MenuItem>
-            <MenuItem value="jolivet">Karine Jolivet</MenuItem>
-          </Select>
-          <FormHelperText>
-            Assigner un responsable à cet événement
-          </FormHelperText>
-        </FormControl>
+          <FormControl required className={classes.formControl}>
+            <InputLabel htmlFor="responsible-required">Responsable</InputLabel>
+            <Select
+              value={responsible}
+              onChange={this.handleChange}
+              name="responsible"
+              inputProps={{
+                id: 'responsible-required',
+              }}
+              className={classes.selectEmpty}
+            >
+              <MenuItem value="grey">Dr Grey</MenuItem>
+              <MenuItem value="jackson">Michael Jackson</MenuItem>
+              <MenuItem value="jolivet">Karine Jolivet</MenuItem>
+            </Select>
+            <FormHelperText>
+              Assigner un responsable à cet événement
+            </FormHelperText>
+          </FormControl>
 
-        <FormControl required className={classes.formControl}>
-          <InputLabel htmlFor="category-required">Catégorie</InputLabel>
-          <Select
-            value={category}
-            onChange={this.handleChange}
-            name="category"
-            inputProps={{
-              id: 'category-required',
-            }}
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="medical">Consultation médicale</MenuItem>
-            <MenuItem value="nurse">Soins infirmiers</MenuItem>
-            <MenuItem value="family">Visite d'un proche</MenuItem>
-          </Select>
-          {/* <FormHelperText>
-            Assigner un responsable à cet événement
-          </FormHelperText> */}
-        </FormControl>
+          <FormControl required className={classes.formControl}>
+            <InputLabel htmlFor="category-required">Catégorie</InputLabel>
+            <Select
+              value={category}
+              onChange={this.handleChange}
+              name="category"
+              inputProps={{
+                id: 'category-required',
+              }}
+              className={classes.selectEmpty}
+            >
+              <MenuItem value="medical">Consultation médicale</MenuItem>
+              <MenuItem value="nurse">Soins infirmiers</MenuItem>
+              <MenuItem value="family">{'Visite d\'un proche'}</MenuItem>
+            </Select>
+            {/* <FormHelperText>
+              Assigner un responsable à cet événement
+            </FormHelperText> */}
+          </FormControl>
+        </form>
         <SimpleSelectValues {...this.state} />
-      </form>
+      </div>
     );
   }
 }

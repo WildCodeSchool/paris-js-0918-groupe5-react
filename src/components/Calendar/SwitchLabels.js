@@ -90,11 +90,10 @@ class SwitchLabels extends React.Component {
 }
 
 
-// const mapStateToProps = state => ({
-//   frequency2: state.event.frequency, // from store, don't need it
-//   responsible2: state.event.responsible, // from store, don't need it
-//   category2: state.event.category, // from store, don't need it
-// });
+SwitchLabels.propTypes = {
+  recordSwitchLabels: SwitchLabels.func.isRequired,
+};
+
 const mapStateToProps = state => state;
 
 export default connect(
