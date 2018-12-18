@@ -113,7 +113,7 @@ class SimpleSelect extends React.Component {
 }
 
 SimpleSelect.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(SimpleSelect);
