@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 // import DateTimePicker from 'material-ui-datetimepicker';
 // import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog';
 // import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
-console.log('ola', new Date());
+// console.log('ola', new Date());
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -23,10 +23,10 @@ const styles = theme => ({
   },
 });
 
-function DateAndTimePickers(props) {
+const DateAndTimePickers = (props) => {
   const { classes, dDate } = props;
   // {console.log('dDate', new Date().toDateString())}
-  console.log('oli', typeof dDate);
+  // console.log('oli', typeof dDate);
   // console.log('month', props.dDate.getMonth()+1)
   let monthClicked = dDate.getMonth() + 1;
   monthClicked = monthClicked < 10 ? `0${monthClicked}` : monthClicked;

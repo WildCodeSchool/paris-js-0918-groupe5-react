@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import SimpleSelectValues from './SimpleSelectValues';
 
 const styles = theme => ({
   root: {
@@ -36,6 +37,7 @@ class SimpleSelect extends React.Component {
   render() {
     const { classes } = this.props;
     const { frequency, responsible, category } = this.state;
+    console.log(frequency, responsible, category);
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl required className={classes.formControl}>
@@ -105,6 +107,7 @@ class SimpleSelect extends React.Component {
             Assigner un responsable à cet événement
           </FormHelperText> */}
         </FormControl>
+        {/* <SimpleSelectValues {...this.state} /> */}
       </form>
     );
   }

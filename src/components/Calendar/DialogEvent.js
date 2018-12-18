@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,126 +9,104 @@ import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { recordName } from '../../actions/eventActions';
+import { recordEventInfo } from '../../actions/eventActions';
 
 import SwitchLabel from './SwitchLabels';
 import SimpleSelect from './SimpleSelect';
 import SimpleSelectAddress from './SimpleSelectAddress';
 import DateAndTimePickers from './DateAndTimePickers';
+// import { prototype } from 'react-transition-group/CSSTransition';
 // import { assertExpressionStatement } from 'babel-types';
 
 class DialogEvent extends Component {
-      state = {
-        // name: '',
-        address: '',
-        // dateBeginning: '',
-        // dateEnd: '',
-        // hourBeginning: '',
-        // hourEnd: '',
-        // category: '',
-        // frequency: '',
-        // accountable: '',
-        // visibility: false,
-        // recall: false,
-        // immediateRecall: false,
-        // mood: '',
-        // status: false
-      }
+  constructor() {
+    super();
+    this.state = {
+      titreStateValue: '',
+      adressStateValue: '',
+    };
+    DialogEvent.propTypes = {
+      openOrNot: PropTypes.bool.isRequired,
+      // dDate: PropTypes.date.isRequired,
+    };
+  }
 
-      handleClose = () => {
-        this.props.onOpen();
-      };
+  handleClose = (props) => {
+    props.onOpen();
+  };
 
-      eventInformations2 = (e) => {
-        const { recordName } = this.props;
-        recordName(e.target.value);
-      }
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
 
-      eventInformations = (e) => {
-        this.setState({
-          [e.target.name]: e.target.value,
-        });
-      }
+  onSubmit = () => {
+    const { titreStateValue, adressStateValue } = this.state;
+    const { recordEventInfo } = this.props;
+    recordEventInfo(titreStateValue, adressStateValue);
+  }
 
-      recordedEvent = () => {
-        axios.post('http://localhost:4243/events', this.state)
-          .then(console.log('ola', this.state))
-          // .then(result => !this.state ? alert("Merci de remplir tous les champs") : alert(`L'évenement "${result.data.name}" a bien été enregistré`) && this.handleClose() );
-      }
+  render() {
+    const { openOrNot, dDate } = this.props;
+    const { titreStateValue, adressStateValue } = this.state;
+    return (
+      <Dialog
+        open={openOrNot}
+        onClose={this.handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Nouvel événement</DialogTitle>
+        <DialogContent>
+          <TextField
+            required
+            autoFocus
+            margin="dense"
+            id="titreStateValue"
+            label="Titre"
+            type="text"
+            fullWidth
+            name="titreStateValue"
+            value={titreStateValue}
+            onChange={this.onChange}
+          />
+          <TextField
+            required
+            autoFocus
+            margin="dense"
+            id="adressStateValue"
+            label="Adresse"
+            type="text"
+            fullWidth
+            name="adressStateValue"
+            value={adressStateValue}
+            onChange={this.onChange}
+          />
+          <SimpleSelectAddress />
+          <div>
+            <br />
+          </div>
+          <DateAndTimePickers dDate={dDate} />
+          <SimpleSelect />
+          <SwitchLabel />
 
-      // componentDidMount(){
-      //   axios.get('http://localhost:4243/events')
-      //     .then(result=>console.log(result.data))
-      // }
-
-      render() {
-
-        const { openOrNot, dDate, nameValue } = this.props;
-        const { address } = this.state;
-
-        return (
-          <Dialog
-            open={openOrNot}
-            onClose={this.handleClose}
-            aria-labelledby="form-dialog-title"
-          >
-            <DialogTitle id="form-dialog-title">Nouvel événement</DialogTitle>
-            <DialogContent>
-              {/* <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occasionally.
-              </DialogContentText> */}
-              <TextField
-                required
-                autoFocus
-                margin="dense"
-                id="titre"
-                label="Titre"
-                type="text"
-                fullWidth
-                name="name"
-                value={nameValue}
-                onChange={this.eventInformations2}
-
-              />
-              {/* {console.log(TextField.getValue())} */}
-              <TextField
-                required
-                autoFocus
-                margin="dense"
-                id="address"
-                label="Adresse"
-                type="text"
-                fullWidth
-                name="address"
-                value={address}
-                onChange={this.eventInformations}
-              />
-              <SimpleSelectAddress />
-              <div>
-                <br />
-              </div>
-              <DateAndTimePickers dDate={dDate} />
-              <SimpleSelect />
-              <SwitchLabel />
-
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleClose} color="primary">Annuler</Button>
-              <Button onClick={this.recordedEvent} color="primary">Enregistrer</Button>
-            </DialogActions>
-          </Dialog>
-        );
-      }
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleClose} color="primary">Annuler</Button>
+          <Button onClick={() => this.onSubmit()} color="primary">Enregistrer</Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
-  nameValue: state.event.name,
+  titreValue: state.event.name,
 });
 
 export default connect(
   mapStateToProps,
   {
-    recordName,
+    recordEventInfo,
   },
 )(DialogEvent);
