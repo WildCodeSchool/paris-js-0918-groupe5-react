@@ -39,9 +39,11 @@ class SwitchLabels extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  titreValue: state.event.name,
-});
+// const mapStateToProps = state => ({
+//   checkedE: state.event.atHomeEvent,
+// });
+
+const mapStateToProps = state => state;
 
 export default connect(
   mapStateToProps,

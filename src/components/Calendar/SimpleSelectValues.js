@@ -1,19 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { recordSimpleSelect } from '../../actions/eventActions';
+import SwitchLabel from './SwitchLabels';
+
 
 const SimpleSelectValues = (props) => {
-  console.log(props);
-  recordSimpleSelect(props);
+  const {
+    recordSimpleSelect,
+    frequency,
+    responsible,
+    category
+  } = props;
+  recordSimpleSelect(frequency, responsible, category);
   return (
-    <div>toto</div>
+    <SwitchLabel />
   );
 };
 
 
-const mapStateToProps = state => ({
-  frequency: state.event.name,
-});
+const mapStateToProps = state => state;
+
+// const mapStateToProps = state => ({
+//   frequency2: state.event.frequency, // from store, don't need it
+//   responsible2: state.event.responsible, // from store, don't need it
+//   category2: state.event.category, // from store, don't need it
+// });
 
 
 export default connect(

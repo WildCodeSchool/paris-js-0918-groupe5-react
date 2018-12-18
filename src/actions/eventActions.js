@@ -1,4 +1,9 @@
-import { RECORD_EVENT_INFO, RECORD_BOOL_AT_HOME_EVENT, RECORD_SIMPLE_SELECT } from './types';
+import {
+  RECORD_EVENT_INFO,
+  RECORD_BOOL_AT_HOME_EVENT,
+  RECORD_SIMPLE_SELECT,
+  RECORD_SWITCH_LABEL,
+} from './types';
 
 export const recordEventInfo = (titre, address) => (dispatch) => {
   dispatch({
@@ -21,5 +26,20 @@ export const recordSimpleSelect = (frequency, responsible, category) => (dispatc
     frequency,
     responsible,
     category,
+  });
+};
+
+export const recordSwitchLabels = (
+  checkedA,
+  checkedB,
+  checkedC,
+  checkedD,
+) => (dispatch) => {
+  dispatch({
+    type: RECORD_SWITCH_LABEL,
+    checkedA,
+    checkedB,
+    checkedC,
+    checkedD,
   });
 };

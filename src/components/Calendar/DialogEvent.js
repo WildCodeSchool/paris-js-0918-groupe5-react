@@ -11,7 +11,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { recordEventInfo } from '../../actions/eventActions';
 
-import SwitchLabel from './SwitchLabels';
 import SimpleSelect from './SimpleSelect';
 import SimpleSelectAddress from './SimpleSelectAddress';
 import DateAndTimePickers from './DateAndTimePickers';
@@ -27,12 +26,13 @@ class DialogEvent extends Component {
     };
     DialogEvent.propTypes = {
       openOrNot: PropTypes.bool.isRequired,
-      // dDate: PropTypes.date.isRequired,
+      onOpen: PropTypes.func.isRequired,
     };
   }
 
-  handleClose = (props) => {
-    props.onOpen();
+  handleClose = () => {
+    const { onOpen } = this.props;
+    onOpen();
   };
 
   onChange = (e) => {
@@ -41,7 +41,7 @@ class DialogEvent extends Component {
     });
   };
 
-  onSubmit = () => {
+  onBlur = () => {
     const { titreStateValue, adressStateValue } = this.state;
     const { recordEventInfo } = this.props;
     recordEventInfo(titreStateValue, adressStateValue);
@@ -69,6 +69,7 @@ class DialogEvent extends Component {
             name="titreStateValue"
             value={titreStateValue}
             onChange={this.onChange}
+            onBlur={this.onBlur}
           />
           <TextField
             required
@@ -81,6 +82,7 @@ class DialogEvent extends Component {
             name="adressStateValue"
             value={adressStateValue}
             onChange={this.onChange}
+            onBlur={this.onBlur}
           />
           <SimpleSelectAddress />
           <div>
@@ -88,12 +90,10 @@ class DialogEvent extends Component {
           </div>
           <DateAndTimePickers dDate={dDate} />
           <SimpleSelect />
-          <SwitchLabel />
-
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleClose} color="primary">Annuler</Button>
-          <Button onClick={() => this.onSubmit()} color="primary">Enregistrer</Button>
+          <Button onClick={() => console.log('submitting')} color="primary">Enregistrer</Button>
         </DialogActions>
       </Dialog>
     );

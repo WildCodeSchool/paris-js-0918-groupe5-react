@@ -37,7 +37,6 @@ class SimpleSelect extends React.Component {
   render() {
     const { classes } = this.props;
     const { frequency, responsible, category } = this.state;
-    console.log(frequency, responsible, category);
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl required className={classes.formControl}>
@@ -107,7 +106,7 @@ class SimpleSelect extends React.Component {
             Assigner un responsable à cet événement
           </FormHelperText> */}
         </FormControl>
-        {/* <SimpleSelectValues {...this.state} /> */}
+        <SimpleSelectValues {...this.state} />
       </form>
     );
   }
