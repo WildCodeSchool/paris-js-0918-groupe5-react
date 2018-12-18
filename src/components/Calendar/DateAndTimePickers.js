@@ -28,10 +28,10 @@ function DateAndTimePickers(props) {
   // {console.log('dDate', new Date().toDateString())}
   // console.log('oli', props.dDate)
   // console.log('month', props.dDate.getMonth()+1)
-  let monthClicked = props.dDate.getMonth()+1
-  monthClicked = monthClicked < 10 ? `0${monthClicked}` : monthClicked
-  const dayClicked = props.dDate.toString().substr(8,2)
-  const yearClicked = props.dDate.getFullYear()
+  let monthClicked = props.dDate.getMonth()+1;
+  monthClicked = monthClicked < 10 ? `0${monthClicked}` : monthClicked;
+  const dayClicked = props.dDate.toString().substr(8,2);
+  const yearClicked = props.dDate.getFullYear();
   // console.log('day', dayClicked)
   // console.log('year', yearClicked)
   // console.log('coucou', new Date().getMonth()+1)

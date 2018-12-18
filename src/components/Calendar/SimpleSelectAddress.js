@@ -8,21 +8,21 @@ class SwitchLabels extends React.Component {
     checkedE: false,
   };
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({ [name]: event.target.checked });
   };
 
   render() {
+    const { checkedE } = this.state;
     return (
       <FormGroup row>
         <FormControlLabel
-          control={
+          control={(
             <Switch
-              checked={this.state.checkedE}
+              checked={checkedE}
               onChange={this.handleChange('checkedE')}
               value="checkedE"
-            />
-          }
+            />)}
           label="Utiliser l'adresse du domicile de Maurice"
         />
       </FormGroup>

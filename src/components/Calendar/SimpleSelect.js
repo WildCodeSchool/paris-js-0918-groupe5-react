@@ -29,18 +29,19 @@ class SimpleSelect extends React.Component {
     category: '',
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
     const { classes } = this.props;
+    const { frequency, responsible, category } = this.state;
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl required className={classes.formControl}>
           <InputLabel htmlFor="frequency-required">Fréquence</InputLabel>
           <Select
-            value={this.state.frequency}
+            value={frequency}
             onChange={this.handleChange}
             name="frequency"
             inputProps={{
@@ -68,7 +69,7 @@ class SimpleSelect extends React.Component {
         <FormControl required className={classes.formControl}>
           <InputLabel htmlFor="responsible-required">Responsable</InputLabel>
           <Select
-            value={this.state.responsible}
+            value={responsible}
             onChange={this.handleChange}
             name="responsible"
             inputProps={{
@@ -88,7 +89,7 @@ class SimpleSelect extends React.Component {
         <FormControl required className={classes.formControl}>
           <InputLabel htmlFor="category-required">Catégorie</InputLabel>
           <Select
-            value={this.state.category}
+            value={category}
             onChange={this.handleChange}
             name="category"
             inputProps={{
