@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ContactModale from './ContactModale';
+// import ContactModale from './ContactModale';
+import ContactModal2 from './ContactModal2';
 import ContactButton from './ContactButton';
+import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
 class Contact extends Component {
     state = {
@@ -92,7 +95,7 @@ class Contact extends Component {
         <div>
           {contactsList.map(e => <p key={e.id}>{e.firstName}</p>)}
           <ContactButton handleClickOpen={this.handleClickOpen} />
-          <ContactModale
+          <ContactModal2
             handleClose={this.handleClose}
             handleValidation={this.handleValidation}
             modalIsOpen={modalIsOpen}
@@ -109,4 +112,5 @@ class Contact extends Component {
       );
     }
 }
-export default Contact;
+
+export default (Contact);
