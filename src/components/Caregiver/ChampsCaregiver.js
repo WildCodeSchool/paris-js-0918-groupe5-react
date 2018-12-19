@@ -11,7 +11,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import CguNews from "./CguNews";
-
+import PrefContact from './PrefContact';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 const styles = theme => ({
   container: {
@@ -100,7 +101,7 @@ class ChampsCargivers extends React.Component {
             <TextField
               id="standard-select-title-native"
               select
-              label="test"
+              label="Titre"
               className={classes.textField}
               value={this.state.title}
               onChange={this.handleChange("title")}
@@ -149,8 +150,7 @@ class ChampsCargivers extends React.Component {
               onChange={this.handleChange("phone")}
               margin="normal"
             />
-          </div>
-          <div className={classes.block2}>
+        
             <FormControl
               className={classNames(classes.margin, classes.textField)}
             >
@@ -200,6 +200,10 @@ class ChampsCargivers extends React.Component {
                   </InputAdornment>
                 }
               />
+              <DialogContentText>
+                Préférence de notifications*
+              </DialogContentText>
+              <PrefContact/>
               <CguNews />
               {/*<TextField
                 id="standard-phone"

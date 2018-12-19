@@ -48,17 +48,15 @@ class CguNews extends React.Component {
               control={
                 <Checkbox checked={Cgu} onChange={this.handleChange('Cgu')} value="gilad" />
               }
-              label="Accepter les CGU*
-"
+              label="Accepter les CGU*"
             />
             <FormControlLabel
               control={
                 <Checkbox checked={newsletter} onChange={this.handleChange('newsletter')} value="jason" />
               }
-              label="M’abonner à la newsletter
-"
+              label="M’abonner à la newsletter"
             />
-           
+          
           </FormGroup>
           
         </FormControl>
