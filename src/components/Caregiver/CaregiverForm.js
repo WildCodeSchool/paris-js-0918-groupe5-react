@@ -31,10 +31,10 @@ export default class FormDialog extends React.Component {
         >
           <DialogTitle id="form-dialog-title">Aidant</DialogTitle>
             <DialogContent>
-                <ChampsCaregivers /> 
-                
-          </DialogContent>
-          <Captcha />
+              <ChampsCaregivers /> 
+              <Captcha />  
+            </DialogContent>
+          
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
