@@ -29,7 +29,7 @@ export default class FormDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Aidant</DialogTitle>
+          <DialogTitle id="form-dialog-title">Création de compte</DialogTitle>
             <DialogContent>
               <ChampsCaregivers /> 
               <Captcha />  
