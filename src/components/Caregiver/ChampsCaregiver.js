@@ -38,7 +38,11 @@ const styles = theme => ({
   block2: {
     display: "flex",
     flexDirection: "column"
+  },
+  notif: {
+    marginTop: 50,
   }
+
 });
 
 const title = [
@@ -200,10 +204,12 @@ class ChampsCargivers extends React.Component {
                   </InputAdornment>
                 }
               />
-              <DialogContentText>
-                Préférence de notifications*
-              </DialogContentText>
-              <PrefContact/>
+              <div className={classes.notif}>
+                <DialogContentText >
+                  Préférence de notifications*
+                </DialogContentText>
+                <PrefContact/>
+              </div>
               <CguNews />
               {/*<TextField
                 id="standard-phone"
