@@ -3,6 +3,7 @@ import {
   RECORD_BOOL_AT_HOME_EVENT,
   RECORD_SIMPLE_SELECT,
   RECORD_SWITCH_LABEL,
+  SEND_TO_DB,
 } from './types';
 
 export const recordEventInfo = (titre, address) => (dispatch) => {
@@ -41,5 +42,11 @@ export const recordSwitchLabels = (
     checkedB,
     checkedC,
     checkedD,
+  });
+};
+
+export const sendToDB = (dispatch) => {
+  dispatch({
+    type: SEND_TO_DB,
   });
 };

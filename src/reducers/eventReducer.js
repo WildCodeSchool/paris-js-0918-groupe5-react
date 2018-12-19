@@ -3,6 +3,7 @@ import {
   RECORD_BOOL_AT_HOME_EVENT,
   RECORD_SIMPLE_SELECT,
   RECORD_SWITCH_LABEL,
+  SEND_TO_DB,
 } from '../actions/types';
 
 const initialState = {
@@ -45,6 +46,10 @@ export default (state = initialState, action) => {
         checkedB: action.checkedB,
         checkedC: action.checkedC,
         checkedD: action.checkedD,
+      };
+    case SEND_TO_DB:
+      return {
+        ...state,
       };
     default:
       return state;

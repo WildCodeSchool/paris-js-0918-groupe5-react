@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
@@ -39,9 +40,10 @@ class SwitchLabels extends React.Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   checkedE: state.event.atHomeEvent,
-// });
+SwitchLabels.propTypes = {
+  recordAtHomeEvent: PropTypes.func.isRequired,
+};
+
 
 const mapStateToProps = state => state;
 
