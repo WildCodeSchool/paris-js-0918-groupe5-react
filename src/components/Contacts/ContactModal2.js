@@ -10,20 +10,21 @@ import { Field, reduxForm } from 'redux-form';
 import SimpleSelect from './SimpleSelect';
 import RadioButton from './RadioButton';
 import { renderTextField } from './reduxFormElements';
-import ContactModal from './ContactModal';
+// import ContactModal from './ContactModal';
 
+// valide allows to detect errors (see reduxFormElements.js)
 const validate = (values) => {
   const errors = {};
   const requiredFields = [
     'firstName',
-    // 'lastName',
+    'lastName',
     // 'email',
     // 'favoriteColor',
     // 'notes',
   ];
   requiredFields.forEach((field) => {
     if (!values[field]) {
-      errors[field] = 'Required';
+      errors[field] = 'Champs requis';
     }
   });
   // if (
@@ -40,10 +41,6 @@ const ContactModal2 = (props) => {
     modalIsOpen,
     handleClose,
     handleValidation,
-    // firstName,
-    // handleChangeFirstName,
-    lastName,
-    handleChangeLastName,
     category,
     handleCategory,
     preferenceOfContact,
@@ -62,9 +59,10 @@ const ContactModal2 = (props) => {
         </DialogTitle>
         <DialogContent>
           <Field
-            name="titre"
+            name="title"
             component={renderTextField}
-            label="Titre"
+            label="titre"
+            // value={title}
           />
           {/* <TextField
             required
@@ -77,22 +75,17 @@ const ContactModal2 = (props) => {
             value={firstName}
             onChange={handleChangeFirstName}
           /> */}
+          {/* renderTextField render a Material UI textField */}
+          {/* See reduxFormElements component */}
           <Field
             name="firstName"
             component={renderTextField}
             label="Prénom"
-            value={firstName}
           />
-          <TextField
-            required
-            autoFocus
-            margin="dense"
-            id="name"
-            label="LastName"
-            type="text"
-            fullWidth
-            value={lastName}
-            onChange={handleChangeLastName}
+          <Field
+            name="lastName"
+            component={renderTextField}
+            label="Nom"
           />
           <SimpleSelect category={category} handleCategory={handleCategory} />
           <TextField
@@ -113,7 +106,8 @@ const ContactModal2 = (props) => {
           />
           <RadioButton
             preferenceOfContact={preferenceOfContact}
-            handlePreferenceOfContact={handlePreferenceOfContact} />
+            handlePreferenceOfContact={handlePreferenceOfContact}
+          />
           <TextField
             autoFocus
             margin="dense"
@@ -136,29 +130,26 @@ const ContactModal2 = (props) => {
   );
 };
 
+// const mapStateToProps = state => ({
+//   title: state.form.title,
+//   firstName: state.form.firstName,
+// });
+
 ContactModal2.propTypes = {
   handleValidation: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
-  firstName: PropTypes.string.isRequired,
-  handleChangeFirstName: PropTypes.func.isRequired,
-  lastName: PropTypes.string.isRequired,
-  handleChangeLastName: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   handleCategory: PropTypes.func.isRequired,
   preferenceOfContact: PropTypes.string.isRequired,
   handlePreferenceOfContact: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  firstName: state.form.firstName,
-});
-
 // const mapDispatchToProps = (dispatch)  => ({
-  
+
 // });
 
-ContactModal2 = connect(mapStateToProps, null)(ContactModal2);
+// ContactModal2 = connect(mapStateToProps, null)(ContactModal2);
 
 
 export default reduxForm({

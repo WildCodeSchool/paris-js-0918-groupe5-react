@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { formValueSelector } from 'redux-form';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 // import ContactModale from './ContactModale';
 import ContactModal2 from './ContactModal2';
 import ContactButton from './ContactButton';
-import { reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
+// import { reduxForm } from 'redux-form';
 
 class Contact extends Component {
     state = {
       modalIsOpen: false,
       contactsList: [],
-      firstName: '',
-      lastName: '',
       category: '',
       preferenceOfContact: 'SMS',
     }
@@ -36,11 +36,13 @@ class Contact extends Component {
     handleValidation = () => {
       const {
         contactsList,
-        firstName,
-        lastName,
         category,
         preferenceOfContact,
       } = this.state;
+      const {
+        firstName,
+        lastName,
+      } = this.props;
       const contact = {
         firstName,
         lastName,
@@ -64,14 +66,6 @@ class Contact extends Component {
       this.handleClose();
     };
 
-    handleChangeFirstName = (e) => {
-      this.setState({ firstName: e.target.value });
-    };
-
-    handleChangeLastName = (e) => {
-      this.setState({ lastName: e.target.value });
-    };
-
     handleCategory = (e) => {
       this.setState({ category: e.target.value });
     };
@@ -85,24 +79,21 @@ class Contact extends Component {
       const {
         modalIsOpen,
         contactsList,
-        firstName,
-        lastName,
         category,
         preferenceOfContact,
       } = this.state;
       console.log('modalIsOpen :', modalIsOpen);
       return (
         <div>
-          {contactsList.map(e => <p key={e.id}>{e.firstName}</p>)}
+          {contactsList.map(e => (
+            <p key={e.id}>
+              {e.firstName} {e.lastName}
+            </p>))}
           <ContactButton handleClickOpen={this.handleClickOpen} />
           <ContactModal2
             handleClose={this.handleClose}
             handleValidation={this.handleValidation}
             modalIsOpen={modalIsOpen}
-            firstName={firstName}
-            handleChangeFirstName={this.handleChangeFirstName}
-            lastName={lastName}
-            handleChangeLastName={this.handleChangeLastName}
             category={category}
             handleCategory={this.handleCategory}
             preferenceOfContact={preferenceOfContact}
@@ -113,4 +104,15 @@ class Contact extends Component {
     }
 }
 
-export default (Contact);
+Contact.propTypes = {
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = state => ({
+  // formValueSelector allows to get fields in ContactModal named firstName
+  firstName: formValueSelector('ContactModal2')(state, 'firstName'),
+  lastName: formValueSelector('ContactModal2')(state, 'lastName'),
+});
+
+export default connect(mapStateToProps, null)(Contact);
