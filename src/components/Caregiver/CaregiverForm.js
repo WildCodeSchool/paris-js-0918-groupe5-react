@@ -37,10 +37,10 @@ export default class FormDialog extends React.Component {
           
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
+              Fermer
             </Button>
-            <Button onClick={this.handleClose} color="primary">
-              Subscribe
+            <Button onClick={this.recordNew} color="primary">
+              Enregistrer
             </Button>
           </DialogActions>
         </Dialog>
