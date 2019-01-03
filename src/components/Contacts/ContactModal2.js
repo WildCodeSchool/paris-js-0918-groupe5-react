@@ -18,9 +18,6 @@ const validate = (values) => {
   const requiredFields = [
     'firstName',
     'lastName',
-    // 'email',
-    // 'favoriteColor',
-    // 'notes',
   ];
   requiredFields.forEach((field) => {
     if (!values[field]) {

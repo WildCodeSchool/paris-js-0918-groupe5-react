@@ -82,7 +82,7 @@ class Contact extends Component {
         category,
         preferenceOfContact,
       } = this.state;
-      console.log('modalIsOpen :', modalIsOpen);
+      // console.log('modalIsOpen :', modalIsOpen);
       return (
         <div>
           {contactsList.map(e => (
