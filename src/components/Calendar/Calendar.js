@@ -1,12 +1,14 @@
 
-import React from 'react';
+import React, { Component } from 'react';
 import dateFns from 'date-fns';
 // import { locale } from "./locale";
 import Button from './Button';
 import HeaderCalendar from './HeaderCalendar';
 // import EventCalendar from 'react-event-calendar';
 
-class Calendar extends React.Component {
+// import './Calendar.css';
+
+class Calendar extends Component {
   state = {
     currentMonth: new Date(), // the D-Day
     selectedDate: new Date(),
@@ -101,7 +103,9 @@ class Calendar extends React.Component {
             className={`col cell ${
               !dateFns.isSameMonth(day, monthStart)
                 ? 'disabled'
-                : dateFns.isSameDay(day, selectedDate) ? 'selected' : ''
+                : dateFns.isSameDay(day, selectedDate) 
+                ? 'selected' 
+                : ''
             }`}
             key={day}
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
