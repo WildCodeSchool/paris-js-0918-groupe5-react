@@ -1,0 +1,31 @@
+/* .coverflow {
+    
+} */
+
+.coverflow__container__1P-xE {
+    min-height: 225px;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0);
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.coverflow__figure__3bk_C, .coverflow__cover__25-7e {
+    box-shadow: 0 0 0 !important; 
+    /* max-width: 180px; */
+}
+
+.coverflow__cover__25-7e {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/* 
+@media all and (max-width: 769px)
+{
+    .coverflow__container__1P-xE {
+        padding-top: 25px;
+        min-height: 150px;
+    }
+} */

@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+.spaceBtwAppBarAndRoutes {
+  margin-top: 50px;
+}
+
 .iconCalendar {/*le logo + les petites flèches pour changer les mois*/
   font-family: 'Material Icons', serif;
   font-style: normal;
@@ -41,11 +45,12 @@
 
 /* GENERAL */
 
-* {/*toutes les case de la page*/
+/*toutes les case de la page*/
+* {
   box-sizing: border-box;
 }
 
-header {
+.headerCalendar {
   display: block;
   width: 100%;
   padding: 1.75em 0;
@@ -53,14 +58,14 @@ header {
   background: var(--neutral-color);
 }
 
-header #logo {/*toute la ligne logo + reactcalendar*/
+.headerCalendar #logo {/*toute la ligne logo + reactcalendar*/
   font-size: 175%;
   text-align: center;
   color: var(--main-color);
   line-height: 1;
 }
 
-header #logo .iconCalendar {/*le petit logo calendrier*/
+.headerCalendar #logo .iconCalendar {/*le petit logo calendrier*/
   padding-right: .25em;
 }
 

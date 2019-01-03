@@ -49,10 +49,12 @@ const App = () => (
       <div>
         {/* <RemainingComponent /> */}
         <AppBarGlobal />
-        <Route exact path="/" component={Dashboard} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/création" component={CaregiversForm} />
-        <Route path="/calendrier" component={Calendar} />
+        <div className="spaceBtwAppBarAndRoutes">
+          <Route exact path="/" component={Dashboard} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/création" component={CaregiversForm} />
+          <Route path="/calendrier" component={Calendar} />
+        </div>
         {/* <Route path='/suivi' component={FollowedUp} /> */}
         {/* <Route path='/mon_compte' component={Account} /> */}
       </div>
