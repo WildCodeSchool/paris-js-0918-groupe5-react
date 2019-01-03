@@ -16,50 +16,55 @@ class SwitchLabels extends React.Component {
   };
 
   render() {
+    const {
+      checkedA,
+      checkedB,
+      checkedC,
+      checkedD,
+    } = this.state;
     return (
       <FormGroup row>
         <FormControlLabel
-          control={
+          control={(
             <Switch
-              checked={this.state.checkedA}
+              checked={checkedA}
               onChange={this.handleChange('checkedA')}
               value="checkedA"
-            />
-          }
+            />)}
           label="Evénement visible par tous ?"
         />
-        <div> <br/> </div>
-         <FormControlLabel
-          control={
+        <div>
+          <br />
+        </div>
+        <FormControlLabel
+          control={(
             <Switch
-              checked={this.state.checkedB}
+              checked={checkedB}
               onChange={this.handleChange('checkedB')}
               value="checkedB"
-            />
-          }
+            />)}
           label="Autoriser le suivi de la visite ?"
         />
         <FormControlLabel
           label="Rappel au responsable 24h avant l'événement ?"
-          control={
+          control={(
             <Switch
-              checked={this.state.checkedC}
+              checked={checkedC}
               onChange={this.handleChange('checkedC')}
               value="checkedC"
               color="primary"
-            />
-          }
+            />)}
         />
         <FormControlLabel
           label="Notification immédiate au responsable ?"
-          control={
+          control={(
             <Switch
-              checked={this.state.checkedD}
+              checked={checkedD}
               onChange={this.handleChange('checkedD')}
               value="checkedD"
               color="primary"
             />
-          }
+          )}
         />
       </FormGroup>
     );
