@@ -44,10 +44,6 @@ class Captcha extends React.Component {
     const { load } = this.state || {};
     return (
       <div className="Captcha">
-       
-      
-       
-        
         {load && (
           <ReCAPTCHA
             style={{ display: "inline-block", height:"100px" }}

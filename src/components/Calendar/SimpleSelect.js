@@ -120,3 +120,4 @@ SimpleSelect.propTypes = {
 };
 
 export default withStyles(styles)(SimpleSelect);
+// export default connect(mapto, mapto)( withStyles(styles)(SimpleSelect));

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   RECORD_EVENT_INFO,
   RECORD_BOOL_AT_HOME_EVENT,
@@ -5,6 +6,8 @@ import {
   RECORD_SWITCH_LABEL,
   SEND_TO_DB,
 } from './types';
+
+const apiUrl = 'localhost:4243/calendrier';
 
 export const recordEventInfo = (titre, address) => (dispatch) => {
   dispatch({
@@ -45,8 +48,10 @@ export const recordSwitchLabels = (
   });
 };
 
-export const sendToDB = (dispatch) => {
-  dispatch({
-    type: SEND_TO_DB,
-  });
-};
+// export const sendToDB = (dispatch) => {
+//   axios.post(`${apiUrl}`)
+//     .then(dispatch({
+//       type: SEND_TO_DB,
+//       data,
+//     }));
+// };
