@@ -3,6 +3,7 @@ import {
   RECORD_BOOL_AT_HOME_EVENT,
   RECORD_SIMPLE_SELECT,
   RECORD_SWITCH_LABEL,
+  RECORD_DATE,
   SEND_TO_DB,
 } from '../actions/types';
 
@@ -10,6 +11,8 @@ const initialState = {
   titre: '',
   address: '',
   atHomeEvent: true,
+  begingDate: '',
+  endingDate: '',
   frequency: '',
   responsible: '',
   category: '',
@@ -31,6 +34,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         atHomeEvent: action.atHomeEvent,
+      };
+
+    case RECORD_DATE:
+      return {
+        ...state,
+        begingDate: action.begingDate,
+        endingDate: action.endingDate,
       };
     case RECORD_SIMPLE_SELECT:
       return {
