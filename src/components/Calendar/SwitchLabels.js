@@ -9,10 +9,10 @@ import { recordSwitchLabels } from '../../actions/eventActions';
 
 class SwitchLabels extends React.Component {
   state = {
-    checkedA: false,
-    checkedB: false,
-    checkedC: false,
-    checkedD: false,
+    visibleEvent: false,
+    followedVisit: false,
+    reminder: false,
+    immediateNotif: false,
   };
 
   handleChange = name => (event) => {
@@ -21,31 +21,31 @@ class SwitchLabels extends React.Component {
 
   onBlur = () => {
     const {
-      checkedA,
-      checkedB,
-      checkedC,
-      checkedD,
+      visibleEvent,
+      followedVisit,
+      reminder,
+      immediateNotif,
     } = this.state;
     const { recordSwitchLabels } = this.props;
-    recordSwitchLabels(checkedA, checkedB, checkedC, checkedD);
+    recordSwitchLabels(visibleEvent, followedVisit, reminder, immediateNotif);
   }
 
   render() {
     const {
-      checkedA,
-      checkedB,
-      checkedC,
-      checkedD,
+      visibleEvent,
+      followedVisit,
+      reminder,
+      immediateNotif,
     } = this.state;
     return (
       <FormGroup row>
         <FormControlLabel
           control={(
             <Switch
-              checked={checkedA}
-              onChange={this.handleChange('checkedA')}
+              checked={visibleEvent}
+              onChange={this.handleChange('visibleEvent')}
               onBlur={this.onBlur}
-              value="checkedA"
+              value="visibleEvent"
             />)}
           label="Evénement visible par tous ?"
         />
@@ -55,10 +55,10 @@ class SwitchLabels extends React.Component {
         <FormControlLabel
           control={(
             <Switch
-              checked={checkedB}
-              onChange={this.handleChange('checkedB')}
+              checked={followedVisit}
+              onChange={this.handleChange('followedVisit')}
               onBlur={this.onBlur}
-              value="checkedB"
+              value="followedVisit"
             />)}
           label="Autoriser le suivi de la visite ?"
         />
@@ -66,10 +66,10 @@ class SwitchLabels extends React.Component {
           label="Rappel au responsable 24h avant l'événement ?"
           control={(
             <Switch
-              checked={checkedC}
-              onChange={this.handleChange('checkedC')}
+              checked={reminder}
+              onChange={this.handleChange('reminder')}
               onBlur={this.onBlur}
-              value="checkedC"
+              value="reminder"
               color="primary"
             />)}
         />
@@ -77,10 +77,10 @@ class SwitchLabels extends React.Component {
           label="Notification immédiate au responsable ?"
           control={(
             <Switch
-              checked={checkedD}
-              onChange={this.handleChange('checkedD')}
+              checked={immediateNotif}
+              onChange={this.handleChange('immediateNotif')}
               onBlur={this.onBlur}
-              value="checkedD"
+              value="immediateNotif"
               color="primary"
             />
           )}

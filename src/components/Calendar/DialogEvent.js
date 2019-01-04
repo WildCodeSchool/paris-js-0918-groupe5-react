@@ -6,34 +6,33 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-import { recordEventInfo } from '../../actions/eventActions';
-
+import { recordTitleAndAddress, recordAllInfo } from '../../actions/eventActions';
 import SimpleSelect from './SimpleSelect';
 import SimpleSelectAddress from './SimpleSelectAddress';
+import SwitchLabels from './SwitchLabels';
 import DateAndTimePickers from './DateAndTimePickers';
-// import { prototype } from 'react-transition-group/CSSTransition';
-// import { assertExpressionStatement } from 'babel-types';
 
 class DialogEvent extends Component {
   constructor() {
     super();
     this.state = {
-      titreStateValue: '',
-      adressStateValue: '',
+      title: '',
+      adress: '',
     };
     DialogEvent.propTypes = {
       openOrNot: PropTypes.bool.isRequired,
       dDate: PropTypes.object.isRequired,
-      recordEventInfo: PropTypes.func.isRequired,
+      allInfo: PropTypes.object.isRequired,
+      recordTitleAndAddress: PropTypes.func.isRequired,
+      recordAllInfo: PropTypes.func.isRequired,
       onOpen: PropTypes.func.isRequired,
     };
   }
 
   handleClose = () => {
-    this.props.onOpen();
+    const { onOpen } = this.props;
+    onOpen();
   };
 
   onChange = (e) => {
@@ -43,14 +42,19 @@ class DialogEvent extends Component {
   };
 
   onBlur = () => {
-    const { titreStateValue, adressStateValue } = this.state;
-    const { recordEventInfo } = this.props;
-    recordEventInfo(titreStateValue, adressStateValue);
+    const { title, adress } = this.state;
+    const { recordTitleAndAddress } = this.props;
+    recordTitleAndAddress(title, adress);
+  }
+
+  onSubmit = () => {
+    const { recordAllInfo, allInfo } = this.props;
+    recordAllInfo(allInfo);
   }
 
   render() {
-    const { openOrNot, dDate } = this.props;
-    const { titreStateValue, adressStateValue } = this.state;
+    const { openOrNot, dDate, allInfo } = this.props;
+    const { title, adress } = this.state;
     return (
       <Dialog
         open={openOrNot}
@@ -63,12 +67,12 @@ class DialogEvent extends Component {
             required
             autoFocus
             margin="dense"
-            id="titreStateValue"
+            id="title"
             label="Titre"
             type="text"
             fullWidth
-            name="titreStateValue"
-            value={titreStateValue}
+            name="title"
+            value={title}
             onChange={this.onChange}
             onBlur={this.onBlur}
           />
@@ -76,12 +80,12 @@ class DialogEvent extends Component {
             required
             autoFocus
             margin="dense"
-            id="adressStateValue"
+            id="adress"
             label="Adresse"
             type="text"
             fullWidth
-            name="adressStateValue"
-            value={adressStateValue}
+            name="adress"
+            value={adress}
             onChange={this.onChange}
             onBlur={this.onBlur}
           />
@@ -91,10 +95,12 @@ class DialogEvent extends Component {
           </div>
           <DateAndTimePickers dDate={dDate} />
           <SimpleSelect />
+          <SwitchLabels />
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleClose} color="primary">Annuler</Button>
-          <Button onClick={() => console.log('submitting')} color="primary">Enregistrer</Button>
+          {/* <Button onClick={this.onSubmit} color="primary">Enregistrer</Button> */}
+          <Button onClick={() => this.onSubmit(allInfo)} color="primary">Enregistrer</Button>
         </DialogActions>
       </Dialog>
     );
@@ -102,12 +108,13 @@ class DialogEvent extends Component {
 }
 
 const mapStateToProps = state => ({
-  titreValue: state.event.name,
+  allInfo: state.event,
 });
 
 export default connect(
   mapStateToProps,
   {
-    recordEventInfo,
+    recordTitleAndAddress,
+    recordAllInfo,
   },
 )(DialogEvent);

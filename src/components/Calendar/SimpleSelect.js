@@ -6,7 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import SimpleSelectValues from './SimpleSelectValues';
+import { connect } from 'react-redux';
+import { recordSimpleSelect } from '../../actions/eventActions';
 
 const styles = theme => ({
   root: {
@@ -34,13 +35,22 @@ class SimpleSelect extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  onBlur = () => {
+    const { frequency, responsible, category } = this.state;
+    const { recordSimpleSelect } = this.props;
+    recordSimpleSelect(frequency, responsible, category);
+  }
+
   render() {
     const { classes } = this.props;
     const { frequency, responsible, category } = this.state;
-    // console.log(frequency, responsible, category);
     return (
       <div>
-        <form className={classes.root} autoComplete="off">
+        <form
+          className={classes.root}
+          autoComplete="off"
+          onBlur={() => this.onBlur()}
+        >
           <FormControl required className={classes.formControl}>
             <InputLabel htmlFor="frequency-required">Fréquence</InputLabel>
             <Select
@@ -109,7 +119,6 @@ class SimpleSelect extends React.Component {
             </FormHelperText> */}
           </FormControl>
         </form>
-        <SimpleSelectValues {...this.state} />
       </div>
     );
   }
@@ -117,7 +126,11 @@ class SimpleSelect extends React.Component {
 
 SimpleSelect.propTypes = {
   classes: PropTypes.object.isRequired,
+  recordSimpleSelect: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(SimpleSelect);
-// export default connect(mapto, mapto)( withStyles(styles)(SimpleSelect));
+
+const mapStateToProps = state => state;
+
+export default connect(mapStateToProps,
+  { recordSimpleSelect })(withStyles(styles)(SimpleSelect));

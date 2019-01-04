@@ -1,19 +1,29 @@
-// import axios from 'axios';
+import axios from 'axios';
 import {
   RECORD_EVENT_INFO,
   RECORD_BOOL_AT_HOME_EVENT,
   RECORD_SIMPLE_SELECT,
   RECORD_SWITCH_LABEL,
   RECORD_DATE,
-  // SEND_TO_DB,
+  SEND_TO_DB,
 } from './types';
 
-// const apiUrl = 'localhost:4243/calendrier';
+const apiUrl = 'http://localhost:4243/events';
 
-export const recordEventInfo = (titre, address) => (dispatch) => {
+
+export const recordAllInfo = allInfo => (dispatch) => {
+  axios.post(`${apiUrl}`, allInfo)
+    .then(dispatch({
+      type: SEND_TO_DB,
+      // allInfo,
+    }))
+    .then(console.log('allInfo=> ', allInfo));
+};
+
+export const recordTitleAndAddress = (title, address) => (dispatch) => {
   dispatch({
     type: RECORD_EVENT_INFO,
-    titre,
+    title,
     address,
   });
 };
@@ -43,24 +53,16 @@ export const recordSimpleSelect = (frequency, responsible, category) => (dispatc
 };
 
 export const recordSwitchLabels = (
-  checkedA,
-  checkedB,
-  checkedC,
-  checkedD,
+  visibleEvent,
+  followedVisit,
+  reminder,
+  immediateNotif,
 ) => (dispatch) => {
   dispatch({
     type: RECORD_SWITCH_LABEL,
-    checkedA,
-    checkedB,
-    checkedC,
-    checkedD,
+    visibleEvent,
+    followedVisit,
+    reminder,
+    immediateNotif,
   });
 };
-
-// export const sendToDB = (dispatch) => {
-//   axios.post(`${apiUrl}`)
-//     .then(dispatch({
-//       type: SEND_TO_DB,
-//       data,
-//     }));
-// };

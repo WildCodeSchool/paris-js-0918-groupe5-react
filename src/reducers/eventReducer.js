@@ -8,7 +8,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  titre: '',
+  title: '',
   address: '',
   atHomeEvent: true,
   begingDate: '',
@@ -16,10 +16,10 @@ const initialState = {
   frequency: '',
   responsible: '',
   category: '',
-  checkedA: false,
-  checkedB: false,
-  checkedC: false,
-  checkedD: false,
+  visibleEvent: false,
+  followedVisit: false,
+  reminder: false,
+  immediateNotif: false,
 };
 
 export default (state = initialState, action) => {
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
     case RECORD_EVENT_INFO:
       return {
         ...state,
-        titre: action.titre,
+        title: action.title,
         address: action.address,
       };
     case RECORD_BOOL_AT_HOME_EVENT:
@@ -52,10 +52,10 @@ export default (state = initialState, action) => {
     case RECORD_SWITCH_LABEL:
       return {
         ...state,
-        checkedA: action.checkedA,
-        checkedB: action.checkedB,
-        checkedC: action.checkedC,
-        checkedD: action.checkedD,
+        visibleEvent: action.visibleEvent,
+        followedVisit: action.followedVisit,
+        reminder: action.reminder,
+        immediateNotif: action.immediateNotif,
       };
     case SEND_TO_DB:
       return {

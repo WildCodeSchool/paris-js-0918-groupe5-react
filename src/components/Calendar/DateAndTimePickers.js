@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { recordDateAndTime } from '../../actions/eventActions';
 
-const styles = theme => ({
+const styles = () => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -41,7 +41,6 @@ class DateAndTimePickers extends Component {
 
   render() {
     const { classes, dDate } = this.props;
-    const { begingDate, endingDate } = this.state;
     let monthClicked = dDate.getMonth() + 1;
     monthClicked = monthClicked < 10 ? `0${monthClicked}` : monthClicked;
     const dayClicked = dDate.toString().substr(8, 2);
