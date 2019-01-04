@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './config/store';
 import './index.css';
@@ -8,7 +9,11 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <Switch>
+        <App />
+      </Switch>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root'),
 );
