@@ -1,135 +1,73 @@
 
-import React from 'react';
-import dateFns from 'date-fns';
+import React, { Component } from 'react';
+import BigCalendar from 'react-big-calendar';
+import moment from 'moment';
 import Button from './Button';
-import HeaderCalendar from './HeaderCalendar';
+import DialogEvent from './DialogEvent';
+import './Calendar.css';
 
-class Calendar extends React.Component {
+const localizer = BigCalendar.momentLocalizer(moment);
+const myEventsList = [
+  {
+    title: 'myfirst event',
+    start: new Date(),
+    end: new Date(),
+    allDay: false,
+  },
+  {
+    id: 7,
+    title: 'Lunch',
+    start: new Date(2019, 0, 4, 12, 0, 0, 0),
+    end: new Date(2019, 0, 4, 13, 0, 0, 0),
+    desc: 'Power lunch',
+  },
+  {
+    id: 99,
+    title: 'Lunch',
+    start: new Date(2019, 0, 4, 0, 0, 0, 0),
+    end: new Date(2019, 0, 4, 13, 0, 0, 0),
+    desc: 'Power lunch',
+  },
+  {
+    id: 8,
+    title: 'Meeting',
+    start: new Date(2019, 0, 5, 19, 0, 0, 0),
+    end: new Date(2019, 0, 5, 20, 0, 0, 0),
+  },
+  {
+    id: 9,
+    title: 'Happy Hour',
+    start: new Date(2019, 0, 12, 21, 0, 0, 0),
+    end: new Date(2019, 0, 12, 21, 30, 0, 0),
+    desc: 'Most important meal of the day',
+  },
+  {
+    id: 10,
+    title: 'Dinner',
+    start: new Date(2019, 0, 12, 20, 0, 0, 0),
+    end: new Date(2019, 0, 12, 21, 0, 0, 0),
+  },
+];
+
+class Calendar extends Component {
   state = {
-    currentMonth: new Date(), // the D-Day
-    selectedDate: new Date(),
   };
 
-  onDateClick = (day) => {
-    this.setState({
-      selectedDate: day,
-    });
-  };
-
-  nextMonth = () => {
-    const { currentMonth } = this.state;
-    this.setState({
-      currentMonth: dateFns.addMonths(currentMonth, 1),
-    });
-  };
-
-  prevMonth = () => {
-    const { currentMonth } = this.state;
-    this.setState({
-      currentMonth: dateFns.subMonths(currentMonth, 1),
-    });
-  };
-
-  renderHeader() {
-    const { currentMonth } = this.state;
-    const dateFormat = 'MMMM YYYY'; // the format of the month and the year on the top of the calendar
-    return (
-      <div>
-        <HeaderCalendar />
-        <div className="header row flex-middle">
-          <div className="col col-start">
-            <div role="button" tabIndex="0" className="iconCalendar" onClick={this.prevMonth}>
-              chevron_left
-            </div>
-            {/* <Button dDate={this.state.currentMonth}/> */}
-          </div>
-          <div className="col col-center">
-            {/* it shows the name of the month and the year */}
-            <span>{dateFns.format(currentMonth, dateFormat)}</span>
-          </div>
-          <div role="button" tabIndex="0" className="col col-end" onClick={this.nextMonth}>
-            <div className="iconCalendar">chevron_right</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderDays() {
-    const { currentMonth } = this.state;
-    const dateFormat = 'dddd'; // the format of the name of the days
-    const days = [];
-    // the date where begins the calendar, sunday,
-    // and the date of the last line with more than 1 date
-    const startDate = dateFns.startOfWeek(currentMonth);
-
-    for (let i = 0; i < 7; i += 1) {
-      days.push(
-        <div className="col col-center" key={i}>
-          {/* i+1 makes the week begin with monday instead of sunday */}
-          {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
-        </div>,
-      );
-    }
-    return <div className="days row">{days}</div>;
-  }
-
-  renderCells() {
-    const { currentMonth, selectedDate } = this.state;
-    const monthStart = dateFns.startOfMonth(currentMonth);
-    const monthEnd = dateFns.endOfMonth(monthStart);
-    const startDate = dateFns.startOfWeek(monthStart);
-    const endDate = dateFns.endOfWeek(monthEnd);
-
-    const dateFormat = 'D';
-    const rows = [];
-
-    let days = [];
-    let day = startDate;
-    let formattedDate = '';
-
-    while (day <= endDate) {
-      for (let i = 0; i < 7; i += 1) {
-        formattedDate = dateFns.format(day, dateFormat);
-        const cloneDay = day;
-        days.push(
-          <div
-            role="button"
-            tabIndex="0"
-            className={`col cell ${
-              !dateFns.isSameMonth(day, monthStart)
-                ? 'disabled'
-                : dateFns.isSameDay(day, selectedDate) ? 'selected' : ''
-            }`}
-            key={day}
-            onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
-          >
-
-            <span className="number">{formattedDate}</span>{/*the small number in the cell */}
-            <span className="bg">{formattedDate}</span>{/*the big number on the hover of a cell*/}
-            <Button date={selectedDate} />
-          </div>,
-        );
-        day = dateFns.addDays(day, 1);
-      }
-      rows.push(
-        <div className="row" key={day}>
-          {days}
-        </div>,
-      );
-      days = [];
-    }
-    return <div className="body">{rows}</div>;
-  }
+  handleSelect = ({ start }) => <DialogEvent dDate={start} />
 
   render() {
     return (
-      <div>
-        <div className="calendar">
-          {this.renderHeader()}
-          {this.renderDays()}
-          {this.renderCells()}
-        </div>
+      <div className="toto">
+        <Button date={new Date()} />
+        <BigCalendar
+          views={['month', 'week', 'day']}
+          defaultView="month"
+          localizer={localizer}
+          events={myEventsList}
+          selectable
+          onSelectEvent={() => console.log('pop-up to modify')}
+          onSelectSlot={this.handleSelect}
+        />
       </div>
     );
   }
