@@ -1,10 +1,8 @@
 
 import React from 'react';
 import dateFns from 'date-fns';
-// import { locale } from "./locale";
 import Button from './Button';
 import HeaderCalendar from './HeaderCalendar';
-// import EventCalendar from 'react-event-calendar';
 
 class Calendar extends React.Component {
   state = {
