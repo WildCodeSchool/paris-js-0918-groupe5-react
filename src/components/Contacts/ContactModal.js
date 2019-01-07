@@ -37,7 +37,7 @@ const validate = (values) => {
 
 const ContactModal = (props) => {
   const {
-    modalIsOpen,
+    addContactModalIsOpen,
     handleClose,
     handleValidation,
     // category,
@@ -50,7 +50,7 @@ const ContactModal = (props) => {
   return (
     <div>
       <Dialog
-        open={modalIsOpen}
+        open={addContactModalIsOpen}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
@@ -142,7 +142,7 @@ ContactModal.propTypes = {
   classes: PropTypes.func.isRequired,
   handleValidation: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
-  modalIsOpen: PropTypes.bool.isRequired,
+  addContactModalIsOpen: PropTypes.bool.isRequired,
   category: PropTypes.string.isRequired,
   // handleCategory: PropTypes.func.isRequired,
   // preferenceOfContact: PropTypes.string.isRequired,

@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 import ContactModal from './ContactModal';
 import ContactButton from './ContactButton';
 // import { reduxForm } from 'redux-form';
 
 class Contact extends Component {
     state = {
-      modalIsOpen: false,
+      addContactModalIsOpen: false,
       contactsList: [],
       category: '',
       // preferenceOfContact: 'SMS',
@@ -17,48 +18,50 @@ class Contact extends Component {
 
     // loading the contacts list
     componentDidMount() {
-      axios.get('http://localhost:4243/contacts')
+      axios.get('http://localhost:4244/contacts')
         .then(console.log('componentdidmount !'))
         .then(res => this.setState({
           contactsList: res.data,
         }));
     }
 
-    handleClickOpen = () => {
-      this.setState({ modalIsOpen: true });
+    // generic function to open different modals
+    handleClickOpen = modal => (event) => {
+      this.setState({ [modal]: true });
     };
 
     handleClose = () => {
-      this.setState({ modalIsOpen: false });
+      this.setState({ addContactModalIsOpen: false });
     };
 
     handleValidation = () => {
       const {
         contactsList,
-        category,
+        // category,
         // preferenceOfContact,
       } = this.state;
       const {
         title,
         firstName,
         lastName,
+        category,
         email,
         phone,
-        comment,
         preferenceOfContact,
+        comment,
       } = this.props;
       const contact = {
         title,
         firstName,
         lastName,
+        category,
         email,
         phone,
-        comment,
         preferenceOfContact,
-        category,
+        comment,
       };
       // posting the infos on the database
-      axios.post('http://localhost:4243/contacts', contact)
+      axios.post('http://localhost:4244/contacts', contact)
       // .then allows to execute code when a promise is solved
         .then((res) => {
           // res represents the response of the server (the contact transformed to json)
@@ -74,10 +77,6 @@ class Contact extends Component {
       this.handleClose();
     };
 
-    handleCategory = (e) => {
-      this.setState({ category: e.target.value });
-    };
-
     // handlePreferenceOfContact = (e) => {
     //   this.setState({ preferenceOfContact: e.target.value });
     //   console.log('handleCommunication: ');
@@ -85,24 +84,24 @@ class Contact extends Component {
 
     render() {
       const {
-        modalIsOpen,
+        addContactModalIsOpen,
         contactsList,
-        category,
         // preferenceOfContact,
       } = this.state;
-      // console.log('modalIsOpen :', modalIsOpen);
+      // console.log('addContactModalIsOpen :', addContactModalIsOpen);
       return (
         <div>
           {contactsList.map(e => (
             <p key={e.id}>
-              {e.title} {e.firstName} {e.lastName} {e.email} {e.phone} {e.preferenceOfContact} {e.comment}
+              <Button onClick={this.handleClickOpen('addContactModalIsOpen')}>
+                {e.title} {e.firstName} {e.lastName}
+              </Button>
             </p>))}
-          <ContactButton handleClickOpen={this.handleClickOpen} />
+          <ContactButton handleClickOpen={this.handleClickOpen('addContactModalIsOpen')} />
           <ContactModal
             handleClose={this.handleClose}
             handleValidation={this.handleValidation}
-            modalIsOpen={modalIsOpen}
-            category={category}
+            addContactModalIsOpen={addContactModalIsOpen}
             handleCategory={this.handleCategory}
             // preferenceOfContact={preferenceOfContact}
             // handlePreferenceOfContact={this.handlePreferenceOfContact}
@@ -116,6 +115,7 @@ Contact.propTypes = {
   title: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
   preferenceOfContact: PropTypes.string.isRequired,
@@ -129,6 +129,7 @@ const mapStateToProps = state => ({
   title: formValueSelector('ContactModal')(state, 'title'),
   firstName: formValueSelector('ContactModal')(state, 'firstName'),
   lastName: formValueSelector('ContactModal')(state, 'lastName'),
+  category: formValueSelector('ContactModal')(state, 'category'),
   email: formValueSelector('ContactModal')(state, 'email'),
   phone: formValueSelector('ContactModal')(state, 'phone'),
   preferenceOfContact: formValueSelector('ContactModal')(state, 'preferenceOfContact'),
