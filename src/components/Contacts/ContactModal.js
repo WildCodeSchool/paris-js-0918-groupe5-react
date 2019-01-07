@@ -5,14 +5,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Radio from '@material-ui/core/Radio';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import SimpleSelect from './SimpleSelect';
-import RadioButton from './RadioButton';
-import { renderTextField, radioButton } from './reduxFormElements';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl';
+// import SimpleSelect from './SimpleSelect';
+import { renderTextField, radioButton, renderSelectField } from './reduxFormElements';
 
 // valide allows to detect errors (see reduxFormElements.js)
 const validate = (values) => {
@@ -21,6 +17,8 @@ const validate = (values) => {
     'firstName',
     'lastName',
     'email',
+    'category',
+    'preferenceOfContact',
   ];
   requiredFields.forEach((field) => {
     if (!values[field]) {
@@ -42,10 +40,11 @@ const ContactModal = (props) => {
     modalIsOpen,
     handleClose,
     handleValidation,
-    category,
-    handleCategory,
-    preferenceOfContact,
-    handlePreferenceOfContact,
+    // category,
+    // handleCategory,
+    classes,
+    // preferenceOfContact,
+    // handlePreferenceOfContact,
   } = props;
 
   return (
@@ -64,7 +63,8 @@ const ContactModal = (props) => {
           <Field
             name="title"
             component={radioButton}
-            labels={['M.', 'Mme.']}
+            label="Titre"
+            buttonLabels={['Mme', 'M']}
             required={false}
           />
           {/* renderTextField render a Material UI textField */}
@@ -81,30 +81,37 @@ const ContactModal = (props) => {
             label="Nom"
             required
           />
-          <SimpleSelect category={category} handleCategory={handleCategory} />
+          {/* <SimpleSelect category={category} handleCategory={handleCategory} /> */}
+          <Field
+            classes={classes}
+            name="category"
+            component={renderSelectField}
+            label="Catégorie"
+            required
+          >
+            <option value="" />
+            <option value="doctor">Médecin</option>
+            <option value="nurse">Infirmer</option>
+            <option value="gardener">Jardinier</option>
+          </Field>
           <Field
             name="email"
             component={renderTextField}
             label="Email"
             required
           />
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-          /> */}
           <Field
             name="phone"
             component={renderTextField}
             label="Téléphone"
             required={false}
           />
-          <RadioButton
-            preferenceOfContact={preferenceOfContact}
-            handlePreferenceOfContact={handlePreferenceOfContact}
+          <Field
+            name="preferenceOfContact"
+            component={radioButton}
+            label="Préférence de contact"
+            buttonLabels={['SMS', 'Mail']}
+            required
           />
           <Field
             name="comment"
@@ -132,13 +139,14 @@ const ContactModal = (props) => {
 // });
 
 ContactModal.propTypes = {
+  classes: PropTypes.func.isRequired,
   handleValidation: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
   category: PropTypes.string.isRequired,
-  handleCategory: PropTypes.func.isRequired,
-  preferenceOfContact: PropTypes.string.isRequired,
-  handlePreferenceOfContact: PropTypes.func.isRequired,
+  // handleCategory: PropTypes.func.isRequired,
+  // preferenceOfContact: PropTypes.string.isRequired,
+  // handlePreferenceOfContact: PropTypes.func.isRequired,
 };
 
 // const mapDispatchToProps = (dispatch)  => ({

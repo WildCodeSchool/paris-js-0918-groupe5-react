@@ -4,6 +4,10 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import FormHelperText from '@material-ui/core/FormHelperText'
 
 export const renderTextField = ({
   input,
@@ -25,38 +29,49 @@ export const renderTextField = ({
   />
 );
 
-// export const radioButton = ({
-//   input,
-//   label,
-//   meta: { touched, invalid, error },
-//   ...custom
-// }) => (
-//   <Radio value={label} label={label} />
-// );
-
-export const radioButton = ({ input, labels, ...rest }) => (
-  // <FormControl>
-  //   <RadioGroup {...input} {...rest}>
-  // <FormControlLabel value={label} control={<Radio />} label={label} />
-  //   </RadioGroup>
-  // </FormControl>
-
+export const radioButton = ({ 
+  input, required, label, buttonLabels, ...rest
+}) => (
   <FormControl>
+    <FormLabel component="legend" required={required}>{label}</FormLabel>
     <RadioGroup {...input} {...rest}>
-      {labels.map(label => (
-        <FormControlLabel key={`${label}`} value={label} control={<Radio />} label={label} />
+      {buttonLabels.map(e => (
+        <FormControlLabel value={e} control={<Radio />} label={e} />
       ))}
     </RadioGroup>
   </FormControl>
-
-
 );
 
+const renderFromHelper = ({ touched, error }) => {
+  if (!(touched && error)) {
+    return
+  } else {
+    return <FormHelperText>{touched && error}</FormHelperText>
+  }
+};
 
-// const renderRadioGroup = ({ input, ...rest }) =>
-//   <RadioButtonGroup
-//     {...input}
-//     {...rest}
-//     valueSelected={input.value}
-//     onChange={(event, value) => input.onChange(value)}
-//   />
+
+export const renderSelectField = ({
+  input,
+  required,
+  label,
+  meta: { touched, error },
+  children,
+  ...custom
+}) => (
+  <FormControl error={touched && error}>
+    <InputLabel htmlFor="age-native-simple" required={required}>{label}</InputLabel>
+    <Select
+      native
+      {...input}
+      {...custom}
+      inputProps={{
+        name: 'age',
+        id: 'age-native-simple'
+      }}
+    >
+      {children}
+    </Select>
+    {renderFromHelper({ touched, error })}
+  </FormControl>
+);

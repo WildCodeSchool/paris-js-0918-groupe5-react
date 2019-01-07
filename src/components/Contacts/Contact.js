@@ -12,7 +12,7 @@ class Contact extends Component {
       modalIsOpen: false,
       contactsList: [],
       category: '',
-      preferenceOfContact: 'SMS',
+      // preferenceOfContact: 'SMS',
     }
 
     // loading the contacts list
@@ -36,7 +36,7 @@ class Contact extends Component {
       const {
         contactsList,
         category,
-        preferenceOfContact,
+        // preferenceOfContact,
       } = this.state;
       const {
         title,
@@ -45,6 +45,7 @@ class Contact extends Component {
         email,
         phone,
         comment,
+        preferenceOfContact,
       } = this.props;
       const contact = {
         title,
@@ -77,24 +78,24 @@ class Contact extends Component {
       this.setState({ category: e.target.value });
     };
 
-    handlePreferenceOfContact = (e) => {
-      this.setState({ preferenceOfContact: e.target.value });
-      console.log('handleCommunication: ');
-    };
+    // handlePreferenceOfContact = (e) => {
+    //   this.setState({ preferenceOfContact: e.target.value });
+    //   console.log('handleCommunication: ');
+    // };
 
     render() {
       const {
         modalIsOpen,
         contactsList,
         category,
-        preferenceOfContact,
+        // preferenceOfContact,
       } = this.state;
       // console.log('modalIsOpen :', modalIsOpen);
       return (
         <div>
           {contactsList.map(e => (
             <p key={e.id}>
-              {e.title} {e.firstName} {e.lastName} {e.email} {e.phone} {e.comment}
+              {e.title} {e.firstName} {e.lastName} {e.email} {e.phone} {e.preferenceOfContact} {e.comment}
             </p>))}
           <ContactButton handleClickOpen={this.handleClickOpen} />
           <ContactModal
@@ -103,8 +104,8 @@ class Contact extends Component {
             modalIsOpen={modalIsOpen}
             category={category}
             handleCategory={this.handleCategory}
-            preferenceOfContact={preferenceOfContact}
-            handlePreferenceOfContact={this.handlePreferenceOfContact}
+            // preferenceOfContact={preferenceOfContact}
+            // handlePreferenceOfContact={this.handlePreferenceOfContact}
           />
         </div>
       );
@@ -117,6 +118,7 @@ Contact.propTypes = {
   lastName: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
+  preferenceOfContact: PropTypes.string.isRequired,
   comment: PropTypes.string.isRequired,
 };
 
@@ -129,6 +131,7 @@ const mapStateToProps = state => ({
   lastName: formValueSelector('ContactModal')(state, 'lastName'),
   email: formValueSelector('ContactModal')(state, 'email'),
   phone: formValueSelector('ContactModal')(state, 'phone'),
+  preferenceOfContact: formValueSelector('ContactModal')(state, 'preferenceOfContact'),
   comment: formValueSelector('ContactModal')(state, 'comment'),
 });
 
