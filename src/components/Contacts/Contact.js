@@ -4,13 +4,15 @@ import { formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
-import ContactModal from './ContactModal';
+import AddContactModal from './AddContactModal';
+import DisplayContactModal from './DisplayContactModal';
 import ContactButton from './ContactButton';
 // import { reduxForm } from 'redux-form';
 
 class Contact extends Component {
     state = {
       addContactModalIsOpen: false,
+      displayContactModalIsOpen: false,
       contactsList: [],
       category: '',
       // preferenceOfContact: 'SMS',
@@ -30,13 +32,19 @@ class Contact extends Component {
       this.setState({ [modal]: true });
     };
 
-    handleClose = () => {
-      this.setState({ addContactModalIsOpen: false });
+    handleClose = modal => (event) => {
+      this.setState({ [modal]: false });
     };
+
+    // TEST FUNCTION!
+    handleAlert = () => {
+      this.setState({ addContactModalIsOpen: false });
+    }
 
     handleValidation = () => {
       const {
         contactsList,
+        addContactModalIsOpen,
         // category,
         // preferenceOfContact,
       } = this.state;
@@ -74,7 +82,8 @@ class Contact extends Component {
       console.log('My title is : ', title);
       console.log('My category is : ', category);
       console.log('My comPreference is : ', preferenceOfContact);
-      this.handleClose();
+      this.handleAlert();
+      console.log(addContactModalIsOpen);
     };
 
     // handlePreferenceOfContact = (e) => {
@@ -85,6 +94,7 @@ class Contact extends Component {
     render() {
       const {
         addContactModalIsOpen,
+        displayContactModalIsOpen,
         contactsList,
         // preferenceOfContact,
       } = this.state;
@@ -93,18 +103,23 @@ class Contact extends Component {
         <div>
           {contactsList.map(e => (
             <p key={e.id}>
-              <Button onClick={this.handleClickOpen('addContactModalIsOpen')}>
+              <Button onClick={this.handleClickOpen('displayContactModalIsOpen')}>
                 {e.title} {e.firstName} {e.lastName}
               </Button>
             </p>))}
           <ContactButton handleClickOpen={this.handleClickOpen('addContactModalIsOpen')} />
-          <ContactModal
-            handleClose={this.handleClose}
+          <AddContactModal
+            handleClose={this.handleClose('addContactModalIsOpen')}
             handleValidation={this.handleValidation}
             addContactModalIsOpen={addContactModalIsOpen}
-            handleCategory={this.handleCategory}
             // preferenceOfContact={preferenceOfContact}
             // handlePreferenceOfContact={this.handlePreferenceOfContact}
+          />
+          <DisplayContactModal
+            contactsList={contactsList}
+            displayContactModalIsOpen={displayContactModalIsOpen}
+            handleClose={this.handleClose}
+            handleValidation={this.handleValidation}
           />
         </div>
       );
@@ -125,15 +140,15 @@ Contact.propTypes = {
 // récupérer le state qui est dans le store pour l'injecter dans les props de mon composant actuel
 // grace à mapStateToProps on peut utiliser this.props.poulet par exemple
 const mapStateToProps = state => ({
-  // formValueSelector allows to get fields in ContactModal named firstName
-  title: formValueSelector('ContactModal')(state, 'title'),
-  firstName: formValueSelector('ContactModal')(state, 'firstName'),
-  lastName: formValueSelector('ContactModal')(state, 'lastName'),
-  category: formValueSelector('ContactModal')(state, 'category'),
-  email: formValueSelector('ContactModal')(state, 'email'),
-  phone: formValueSelector('ContactModal')(state, 'phone'),
-  preferenceOfContact: formValueSelector('ContactModal')(state, 'preferenceOfContact'),
-  comment: formValueSelector('ContactModal')(state, 'comment'),
+  // formValueSelector allows to get fields in AddContactModal named firstName
+  title: formValueSelector('AddContactModal')(state, 'title'),
+  firstName: formValueSelector('AddContactModal')(state, 'firstName'),
+  lastName: formValueSelector('AddContactModal')(state, 'lastName'),
+  category: formValueSelector('AddContactModal')(state, 'category'),
+  email: formValueSelector('AddContactModal')(state, 'email'),
+  phone: formValueSelector('AddContactModal')(state, 'phone'),
+  preferenceOfContact: formValueSelector('AddContactModal')(state, 'preferenceOfContact'),
+  comment: formValueSelector('AddContactModal')(state, 'comment'),
 });
 
 // connect permet de connecter ton composant au store (actions, store ....)

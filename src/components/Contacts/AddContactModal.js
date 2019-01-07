@@ -35,7 +35,7 @@ const validate = (values) => {
   return errors;
 };
 
-const ContactModal = (props) => {
+const AddContactModal = (props) => {
   const {
     addContactModalIsOpen,
     handleClose,
@@ -138,25 +138,14 @@ const ContactModal = (props) => {
 //   firstName: state.form.firstName,
 // });
 
-ContactModal.propTypes = {
+AddContactModal.propTypes = {
   classes: PropTypes.func.isRequired,
   handleValidation: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   addContactModalIsOpen: PropTypes.bool.isRequired,
-  category: PropTypes.string.isRequired,
-  // handleCategory: PropTypes.func.isRequired,
-  // preferenceOfContact: PropTypes.string.isRequired,
-  // handlePreferenceOfContact: PropTypes.func.isRequired,
 };
 
-// const mapDispatchToProps = (dispatch)  => ({
-
-// });
-
-// ContactModal = connect(mapStateToProps, null)(ContactModal);
-
-
 export default reduxForm({
-  form: 'ContactModal', // a unique identifier for this form
+  form: 'AddContactModal', // a unique identifier for this form
   validate,
-})(ContactModal);
+})(AddContactModal);
