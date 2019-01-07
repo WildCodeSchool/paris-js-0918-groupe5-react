@@ -2,63 +2,35 @@
 import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import Button from './Button';
-import DialogEvent from './DialogEvent';
+import DialogToCreateEvent from './DialogToCreateEvent';
 import './Calendar.css';
+import myEventsList from '../../enventsTestList';
 
 const localizer = BigCalendar.momentLocalizer(moment);
-const myEventsList = [
-  {
-    title: 'myfirst event',
-    start: new Date(),
-    end: new Date(),
-    allDay: false,
-  },
-  {
-    id: 7,
-    title: 'Lunch',
-    start: new Date(2019, 0, 4, 12, 0, 0, 0),
-    end: new Date(2019, 0, 4, 13, 0, 0, 0),
-    desc: 'Power lunch',
-  },
-  {
-    id: 99,
-    title: 'Lunch',
-    start: new Date(2019, 0, 4, 0, 0, 0, 0),
-    end: new Date(2019, 0, 4, 13, 0, 0, 0),
-    desc: 'Power lunch',
-  },
-  {
-    id: 8,
-    title: 'Meeting',
-    start: new Date(2019, 0, 5, 19, 0, 0, 0),
-    end: new Date(2019, 0, 5, 20, 0, 0, 0),
-  },
-  {
-    id: 9,
-    title: 'Happy Hour',
-    start: new Date(2019, 0, 12, 21, 0, 0, 0),
-    end: new Date(2019, 0, 12, 21, 30, 0, 0),
-    desc: 'Most important meal of the day',
-  },
-  {
-    id: 10,
-    title: 'Dinner',
-    start: new Date(2019, 0, 12, 20, 0, 0, 0),
-    end: new Date(2019, 0, 12, 21, 0, 0, 0),
-  },
-];
 
 class Calendar extends Component {
   state = {
+    openDialog: false,
+    startingDate: '',
   };
 
-  handleSelect = ({ start }) => <DialogEvent dDate={start} />
+  // start in an object of bigcalendar (it provide the date clicked)
+  // on closing dialog, there were a bug (sart undifined)
+  // I fix it thanks default value (idem line 45)
+  // It sucks I know, and it would be better using store for these dates
+  openDialogToCreateEvent = ({ start } = new Date()) => {
+    const { openDialog } = this.state;
+    this.setState({
+      openDialog: !openDialog,
+      startingDate: start,
+    });
+  }
 
   render() {
+    const { openDialog, startingDate } = this.state;
+
     return (
       <div className="toto">
-        <Button date={new Date()} />
         <BigCalendar
           views={['month', 'week', 'day']}
           defaultView="month"
@@ -66,7 +38,12 @@ class Calendar extends Component {
           events={myEventsList}
           selectable
           onSelectEvent={() => console.log('pop-up to modify')}
-          onSelectSlot={this.handleSelect}
+          onSelectSlot={this.openDialogToCreateEvent}
+        />
+        <DialogToCreateEvent
+          onOpen={() => this.openDialogToCreateEvent()}
+          openOrNot={openDialog}
+          startingDate={startingDate || new Date()}
         />
       </div>
     );

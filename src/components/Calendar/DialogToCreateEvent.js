@@ -15,16 +15,16 @@ import SimpleSelectAddress from './SimpleSelectAddress';
 import SwitchLabels from './SwitchLabels';
 import DateAndTimePickers from './DateAndTimePickers';
 
-class DialogEvent extends Component {
+class DialogToCreateEvent extends Component {
   constructor() {
     super();
     this.state = {
       title: '',
       adress: '',
     };
-    DialogEvent.propTypes = {
+    DialogToCreateEvent.propTypes = {
       openOrNot: PropTypes.bool.isRequired,
-      dDate: PropTypes.object.isRequired,
+      startingDate: PropTypes.object.isRequired,
       allInfo: PropTypes.object.isRequired,
       recordTitleAndAddress: PropTypes.func.isRequired,
       recordAllInfo: PropTypes.func.isRequired,
@@ -55,7 +55,7 @@ class DialogEvent extends Component {
   }
 
   render() {
-    const { openOrNot, dDate, allInfo } = this.props;
+    const { openOrNot, startingDate, allInfo } = this.props;
     const { title, adress } = this.state;
     return (
       <Dialog
@@ -70,7 +70,7 @@ class DialogEvent extends Component {
             autoFocus
             margin="dense"
             id="title"
-            label="Titre"
+            label="Nom de l'événement"
             type="text"
             fullWidth
             name="title"
@@ -80,7 +80,6 @@ class DialogEvent extends Component {
           />
           <TextField
             required
-            autoFocus
             margin="dense"
             id="adress"
             label="Adresse"
@@ -91,13 +90,20 @@ class DialogEvent extends Component {
             onChange={this.onChange}
             onBlur={this.onBlur}
           />
+          {/* At Maurice home Event ? */}
           <SimpleSelectAddress />
+
           <div>
             <br />
           </div>
-          <DateAndTimePickers dDate={dDate} />
+          <DateAndTimePickers startingDate={startingDate} />
+
+          {/* frequency , responsible, category */}
           <SimpleSelect />
+
+          {/* visibleEvent , followedVisit, reminder, immediateNotif */}
           <SwitchLabels />
+
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleClose} color="primary">Annuler</Button>
@@ -118,4 +124,4 @@ export default connect(
     recordTitleAndAddress,
     recordAllInfo,
   },
-)(DialogEvent);
+)(DialogToCreateEvent);

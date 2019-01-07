@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -21,10 +22,25 @@ const styles = () => ({
 });
 
 class DateAndTimePickers extends Component {
-  state = {
-    begingDate: '',
-    endingDate: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      begingDate: moment(props.startingDate).toISOString(true).substr(0, 19),
+      endingDate: moment(props.startingDate).toISOString(true).substr(0, 19),
+    };
+
+    DateAndTimePickers.propTypes = {
+      startingDate: PropTypes.object.isRequired,
+      classes: PropTypes.object.isRequired,
+      recordDateAndTime: PropTypes.func.isRequired,
+    };
+  }
+
+  componentDidMount() {
+    const { begingDate, endingDate } = this.state;
+    const { recordDateAndTime } = this.props;
+    recordDateAndTime(begingDate, endingDate);
+  }
 
   onChange = (e) => {
     this.setState({
@@ -38,14 +54,9 @@ class DateAndTimePickers extends Component {
     recordDateAndTime(begingDate, endingDate);
   }
 
-
   render() {
-    const { classes, dDate } = this.props;
-    let monthClicked = dDate.getMonth() + 1;
-    monthClicked = monthClicked < 10 ? `0${monthClicked}` : monthClicked;
-    const dayClicked = dDate.toString().substr(8, 2);
-    const yearClicked = dDate.getFullYear();
-    const defaultDate = `${yearClicked}-${monthClicked}-${dayClicked}T00:00`;
+    const { classes } = this.props;
+    const { begingDate, endingDate } = this.state;
 
     return (
       <form className={classes.container} noValidate>
@@ -55,7 +66,7 @@ class DateAndTimePickers extends Component {
           id="beginningDate"
           label="Date et heure de début"
           type="datetime-local"
-          defaultValue={defaultDate}
+          defaultValue={begingDate}
           InputLabelProps={{
             shrink: true,
           }}
@@ -68,7 +79,7 @@ class DateAndTimePickers extends Component {
           id="endingDate"
           label="Date et heure de fin"
           type="datetime-local"
-          defaultValue={defaultDate}
+          defaultValue={endingDate}
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
@@ -81,12 +92,6 @@ class DateAndTimePickers extends Component {
     );
   }
 }
-
-DateAndTimePickers.propTypes = {
-  classes: PropTypes.object.isRequired,
-  dDate: PropTypes.object.isRequired,
-  recordDateAndTime: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => state;
 
