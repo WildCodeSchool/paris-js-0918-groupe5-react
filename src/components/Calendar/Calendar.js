@@ -5,7 +5,7 @@ import moment from 'moment';
 import axios from 'axios';
 import DialogToCreateEvent from './DialogToCreateEvent';
 import './Calendar.css';
-import myEventsList from '../../enventsTestList';
+// import myEventsList from '../../enventsTestList';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -67,10 +67,10 @@ class Calendar extends Component {
         desc: 'Power lunch',
       },
     ];
-    console.log('=======================');
-    console.log('allEvents ', allEvents);
-    console.log('testevents', testevents);
-    console.log('=======================');
+    // console.log('=======================');
+    // console.log('allEvents ', allEvents);
+    // console.log('testevents', testevents);
+    // console.log('=======================');
     return (
       <div className="toto">
         {/* <GetEventList /> */}
