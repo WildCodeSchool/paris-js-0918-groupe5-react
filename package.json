@@ -11,15 +11,27 @@
     "material-ui-datetimepicker": "^1.0.7",
     "moment": "^2.23.0",
     "prop-types": "^15.6.2",
+    "radium": "^0.25.1",
     "react": "^16.6.3",
+<<<<<<< HEAD
     "react-big-calendar": "^0.20.2",
+=======
+    "react-coverflow": "^0.2.17",
+>>>>>>> eff637f2679e2c4e56ef6a586ad4d00d38aefab7
     "react-dom": "^16.6.3",
     "react-google-recaptcha": "^1.0.5",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
+<<<<<<< HEAD
     "react-scripts": "^2.1.3",
+=======
+    "react-scripts": "2.1.1",
+    "react-slick": "^0.23.2",
+>>>>>>> eff637f2679e2c4e56ef6a586ad4d00d38aefab7
     "redux": "^4.0.1",
+    "redux-form": "^8.0.4",
     "redux-thunk": "^2.3.0",
+    "slick-carousel": "^1.8.1",
     "typeface-roboto": "0.0.54"
   },
   "scripts": {
