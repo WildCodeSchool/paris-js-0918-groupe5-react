@@ -48,9 +48,9 @@ const App = () => (
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        <Route exact path="/" component={ConnexionPage} />
-        {/* <AppBarGlobal /> */}
+        <Route exact path="/connexion" component={ConnexionPage} />
         <div className="spaceBtwAppBarAndRoutes">
+          {/* <AppBarGlobal /> */}
           <Route path="/tableau_de_bord" component={Dashboard} />
           <Route path="/contact" component={Contact} />
           <Route path="/création" component={CaregiversForm} />
