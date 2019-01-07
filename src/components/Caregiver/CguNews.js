@@ -26,14 +26,15 @@ class CguNews extends React.Component {
   };
 
   handleClickCGU = () => {
-    if(this.state.Cgu === false){
+    const { Cgu } = this.state;
+    if (Cgu === false) {
       alert('veuiliez accepter les conditions général.')
     }
   }
 
   render() {
     const { classes } = this.props;
-    const { Cgu, newsletter} = this.state;
+    const { Cgu, newsletter } = this.state;
 
 
     return (
@@ -53,11 +54,7 @@ class CguNews extends React.Component {
               }
               label="M’abonner à la newsletter"
             />
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> eff637f2679e2c4e56ef6a586ad4d00d38aefab7
           </FormGroup>
 
         </FormControl>
