@@ -98,7 +98,7 @@ const AppBarReceiver = (props) => {
         {/* <StyleRoot>
           <Coverflow
             displayQuantityOfSide={2}
-            infiniteScroll={false}
+            infiniteScroll
             enableHeading={false}
             active={0}
           >
