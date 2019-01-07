@@ -39,12 +39,20 @@ class Contact extends Component {
         preferenceOfContact,
       } = this.state;
       const {
+        title,
         firstName,
         lastName,
+        email,
+        phone,
+        comment,
       } = this.props;
       const contact = {
+        title,
         firstName,
         lastName,
+        email,
+        phone,
+        comment,
         preferenceOfContact,
         category,
       };
@@ -58,10 +66,10 @@ class Contact extends Component {
           this.setState({ contactsList });
         });
       console.log('Je valide !');
-      console.log('The firstname is : ', firstName);
-      console.log('The lastname is : ', lastName);
-      console.log('The category is : ', category);
-      console.log('The comPreference is : ', preferenceOfContact);
+      console.log('My firstname is : ', firstName);
+      console.log('My title is : ', title);
+      console.log('My category is : ', category);
+      console.log('My comPreference is : ', preferenceOfContact);
       this.handleClose();
     };
 
@@ -86,7 +94,7 @@ class Contact extends Component {
         <div>
           {contactsList.map(e => (
             <p key={e.id}>
-              {e.firstName} {e.lastName}
+              {e.title} {e.firstName} {e.lastName} {e.email} {e.phone} {e.comment}
             </p>))}
           <ContactButton handleClickOpen={this.handleClickOpen} />
           <ContactModal
@@ -104,16 +112,24 @@ class Contact extends Component {
 }
 
 Contact.propTypes = {
+  title: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+  comment: PropTypes.string.isRequired,
 };
 
 // récupérer le state qui est dans le store pour l'injecter dans les props de mon composant actuel
 // grace à mapStateToProps on peut utiliser this.props.poulet par exemple
 const mapStateToProps = state => ({
   // formValueSelector allows to get fields in ContactModal named firstName
+  title: formValueSelector('ContactModal')(state, 'title'),
   firstName: formValueSelector('ContactModal')(state, 'firstName'),
   lastName: formValueSelector('ContactModal')(state, 'lastName'),
+  email: formValueSelector('ContactModal')(state, 'email'),
+  phone: formValueSelector('ContactModal')(state, 'phone'),
+  comment: formValueSelector('ContactModal')(state, 'comment'),
 });
 
 // connect permet de connecter ton composant au store (actions, store ....)
