@@ -28,7 +28,7 @@ class CguNews extends React.Component {
   handleClickCGU = () => {
     const { Cgu } = this.state;
     if (Cgu === false) {
-      alert('veuiliez accepter les conditions général.')
+      alert('veuiliez accepter les conditions général.');
     }
   }
 

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
+import axios from 'axios';
 import DialogToCreateEvent from './DialogToCreateEvent';
 import './Calendar.css';
 import myEventsList from '../../enventsTestList';
@@ -14,6 +15,15 @@ class Calendar extends Component {
     startingDate: '',
   };
 
+  componentDidMount() {
+    const apiUrl = 'http://localhost:4243/events';
+    axios.get(`${apiUrl}`)
+      .then(res => this.setState({
+        isLoaded: true,
+        allEvents: res.data,
+      }));
+  }
+
   // start in an object of bigcalendar (it provide the date clicked)
   // on closing dialog, there were a bug (sart undifined)
   // I fix it thanks default value (idem line 45)
@@ -23,14 +33,24 @@ class Calendar extends Component {
     this.setState({
       openDialog: !openDialog,
       startingDate: start,
+      isLoaded: false,
+      allEvents: [],
     });
   }
 
   render() {
-    const { openDialog, startingDate } = this.state;
+    const {
+      openDialog,
+      startingDate,
+      isLoaded,
+      allEvents,
+    } = this.state;
+    console.log(allEvents);
 
+    if (!isLoaded) return <p>ça a pas charger !!!!!!!</p>;
     return (
       <div className="toto">
+        {/* <GetEventList /> */}
         <BigCalendar
           views={['month', 'week', 'day']}
           defaultView="month"
