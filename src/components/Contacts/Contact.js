@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-// import ContactModale from './ContactModale';
-import ContactModal2 from './ContactModal2';
+import ContactModal from './ContactModal';
 import ContactButton from './ContactButton';
 // import { reduxForm } from 'redux-form';
 
@@ -90,7 +89,7 @@ class Contact extends Component {
               {e.firstName} {e.lastName}
             </p>))}
           <ContactButton handleClickOpen={this.handleClickOpen} />
-          <ContactModal2
+          <ContactModal
             handleClose={this.handleClose}
             handleValidation={this.handleValidation}
             modalIsOpen={modalIsOpen}
@@ -109,10 +108,13 @@ Contact.propTypes = {
   lastName: PropTypes.string.isRequired,
 };
 
+// récupérer le state qui est dans le store pour l'injecter dans les props de mon composant actuel
+// grace à mapStateToProps on peut utiliser this.props.poulet par exemple
 const mapStateToProps = state => ({
   // formValueSelector allows to get fields in ContactModal named firstName
-  firstName: formValueSelector('ContactModal2')(state, 'firstName'),
-  lastName: formValueSelector('ContactModal2')(state, 'lastName'),
+  firstName: formValueSelector('ContactModal')(state, 'firstName'),
+  lastName: formValueSelector('ContactModal')(state, 'lastName'),
 });
 
+// connect permet de connecter ton composant au store (actions, store ....)
 export default connect(mapStateToProps, null)(Contact);
