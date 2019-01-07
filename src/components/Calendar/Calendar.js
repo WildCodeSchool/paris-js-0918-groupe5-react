@@ -13,6 +13,8 @@ class Calendar extends Component {
   state = {
     openDialog: false,
     startingDate: '',
+    isLoaded: false,
+    allEvents: [],
   };
 
   componentDidMount() {
@@ -33,8 +35,6 @@ class Calendar extends Component {
     this.setState({
       openDialog: !openDialog,
       startingDate: start,
-      isLoaded: false,
-      allEvents: [],
     });
   }
 
@@ -45,9 +45,32 @@ class Calendar extends Component {
       isLoaded,
       allEvents,
     } = this.state;
-    console.log(allEvents);
 
     if (!isLoaded) return <p>ça a pas charger !!!!!!!</p>;
+    const testevents = [
+      {
+        title: 'myfirst event',
+        start: new Date(),
+        end: new Date(),
+        allDay: false,
+      },
+      {
+        title: allEvents[0].title,
+        start: new Date(allEvents[0].begingDate),
+        end: new Date(allEvents[0].begingDate),
+        desc: 'Power lunch',
+      },
+      {
+        title: allEvents[1].title,
+        start: new Date(allEvents[1].begingDate),
+        end: new Date(allEvents[1].begingDate),
+        desc: 'Power lunch',
+      },
+    ];
+    console.log('=======================');
+    console.log('allEvents ', allEvents);
+    console.log('testevents', testevents);
+    console.log('=======================');
     return (
       <div className="toto">
         {/* <GetEventList /> */}
@@ -55,7 +78,7 @@ class Calendar extends Component {
           views={['month', 'week', 'day']}
           defaultView="month"
           localizer={localizer}
-          events={myEventsList}
+          events={testevents}
           selectable
           onSelectEvent={() => console.log('pop-up to modify')}
           onSelectSlot={this.openDialogToCreateEvent}
