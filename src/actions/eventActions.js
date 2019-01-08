@@ -9,7 +9,7 @@ import {
   // GET_EVENTS_FROM_DB,
 } from './types';
 
-const apiUrl = 'http://localhost:4243/events';
+const apiUrl = 'http://localhost:4244/events';
 
 
 export const recordAllInfo = allInfo => (dispatch) => {
