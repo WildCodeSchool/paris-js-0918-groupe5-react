@@ -48,7 +48,7 @@ const App = () => (
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        <Route exact path="/connexion" component={ConnexionPage} />
+        {/* <Route exact path="/connexion" component={ConnexionPage} /> */}
         {/* <AppBarGlobal /> */}
         <div className="spaceBtwAppBarAndRoutes">
           <Route path="/tableau_de_bord" component={Dashboard} />
