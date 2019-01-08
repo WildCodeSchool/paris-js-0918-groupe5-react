@@ -6,6 +6,7 @@ import {
   RECORD_SWITCH_LABEL,
   RECORD_DATE,
   SEND_TO_DB,
+  // GET_EVENTS_FROM_DB,
 } from './types';
 
 const apiUrl = 'http://localhost:4243/events';
@@ -15,9 +16,7 @@ export const recordAllInfo = allInfo => (dispatch) => {
   axios.post(`${apiUrl}`, allInfo)
     .then(dispatch({
       type: SEND_TO_DB,
-      // allInfo,
-    }))
-    .then(console.log('allInfo=> ', allInfo));
+    }));
 };
 
 export const recordTitleAndAddress = (title, address) => (dispatch) => {
