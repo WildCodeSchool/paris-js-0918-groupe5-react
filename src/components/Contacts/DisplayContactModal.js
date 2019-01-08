@@ -11,7 +11,6 @@ const DisplayContactModal = (props) => {
   const {
     displayContactModalIsOpen,
     handleClose,
-    handleValidation,
     // category,
     // handleCategory,
     // classes,
@@ -27,14 +26,11 @@ const DisplayContactModal = (props) => {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          Ajouter un contact professionnel
+          Mon contact
         </DialogTitle>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Annuler
-          </Button>
-          <Button onClick={handleValidation} color="primary">
-            Valider
+            Ok
           </Button>
         </DialogActions>
       </Dialog>

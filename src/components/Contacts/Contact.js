@@ -77,13 +77,8 @@ class Contact extends Component {
           contactsList.push(res.data);
           this.setState({ contactsList });
         });
-      console.log('Je valide !');
-      console.log('My firstname is : ', firstName);
-      console.log('My title is : ', title);
-      console.log('My category is : ', category);
-      console.log('My comPreference is : ', preferenceOfContact);
       this.handleAlert();
-      console.log(addContactModalIsOpen);
+      console.log('addContactModalIsOpen state : ', addContactModalIsOpen);
     };
 
     // handlePreferenceOfContact = (e) => {
@@ -116,10 +111,8 @@ class Contact extends Component {
             // handlePreferenceOfContact={this.handlePreferenceOfContact}
           />
           <DisplayContactModal
-            contactsList={contactsList}
+            handleClose={this.handleClose('displayContactModalIsOpen')}
             displayContactModalIsOpen={displayContactModalIsOpen}
-            handleClose={this.handleClose}
-            handleValidation={this.handleValidation}
           />
         </div>
       );
