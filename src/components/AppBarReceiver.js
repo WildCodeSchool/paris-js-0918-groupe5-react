@@ -33,6 +33,11 @@ const styles = theme => ({
       width: '40vw',
     },
   },
+  coverflow: {
+    '&:focus': {
+      outline: 'none',
+    },
+  },
   typoRoot: {
     color: 'white',
     [theme.breakpoints.down('sm')]: {
@@ -94,64 +99,67 @@ const AppBarReceiver = (props) => {
   return (
     <div className={classes.AppBarReceiver}>
       <div className={classes.slider}>
-        <Coverflow
-          displayQuantityOfSide={2}
-          infiniteScroll
-          enableHeading={false}
-          active={0}
-        >
-          <div
-            // onClick={() => fn()}
-            // onKeyDown={() => fn()}
-            role="menuitem"
+        <div className="coverflowParent">
+          <Coverflow
+            displayQuantityOfSide={2}
+            infiniteScroll
+            enableHeading={false}
+            active={0}
+            className={classes.coverflow}
           >
-            <Avatar alt="avatar" src={avatarOldWoman} classes={{ root: classes.avatarRoot, img: classes.avatarReceiver }} />
-            <Typography
-              variant="h5"
-              color="textSecondary"
-              gutterBottom={false}
-              classes={{
-                root: classes.typoRoot,
-              }}
+            <div
+              // onClick={() => fn()}
+              // onKeyDown={() => fn()}
+              role="menuitem"
             >
-            Mauricette
-            </Typography>
-          </div>
-          <div
-            // onClick={() => fn()}
-            // onKeyDown={() => fn()}
-            role="menuitem"
-          >
-            <Avatar alt="avatar" src={avatarOldMan} classes={{ root: classes.avatarRoot, img: classes.avatarReceiver }} />
-            <Typography
-              variant="h5"
-              color="textSecondary"
-              gutterBottom={false}
-              classes={{
-                root: classes.typoRoot,
-              }}
+              <Avatar alt="avatar" src={avatarOldWoman} classes={{ root: classes.avatarRoot, img: classes.avatarReceiver }} />
+              <Typography
+                variant="h5"
+                color="textSecondary"
+                gutterBottom={false}
+                classes={{
+                  root: classes.typoRoot,
+                }}
+              >
+              Mauricette
+              </Typography>
+            </div>
+            <div
+              // onClick={() => fn()}
+              // onKeyDown={() => fn()}
+              role="menuitem"
             >
-            Maurice
-            </Typography>
-          </div>
-          <div
-            role="menuitem"
-          >
-            <Fab color="secondary" aria-label="Add" className={classes.fab}>
-              <AddIcon />
-            </Fab>
-            <Typography
-              variant="h5"
-              color="textSecondary"
-              gutterBottom={false}
-              classes={{
-                root: classes.typoRoot,
-              }}
+              <Avatar alt="avatar" src={avatarOldMan} classes={{ root: classes.avatarRoot, img: classes.avatarReceiver }} />
+              <Typography
+                variant="h5"
+                color="textSecondary"
+                gutterBottom={false}
+                classes={{
+                  root: classes.typoRoot,
+                }}
+              >
+              Maurice
+              </Typography>
+            </div>
+            <div
+              role="menuitem"
             >
-            Ajouter
-            </Typography>
-          </div>
-        </Coverflow>
+              <Fab color="secondary" aria-label="Add" className={classes.fab}>
+                <AddIcon />
+              </Fab>
+              <Typography
+                variant="h5"
+                color="textSecondary"
+                gutterBottom={false}
+                classes={{
+                  root: classes.typoRoot,
+                }}
+              >
+              Ajouter
+              </Typography>
+            </div>
+          </Coverflow>
+        </div>
       </div>
       <div className={classes.sectionDesktop}>
         <ButtonsBar />
