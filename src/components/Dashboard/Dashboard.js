@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CarlendarLittle from "./CalendarLittle";
 import Curves from "./Curves";
+import AppBarGlobal from '../AppBarGlobal';
 
 import "./CalendarLittle.css";
 import "./Curves.css";
@@ -10,7 +11,8 @@ import Grid from "@material-ui/core/Grid";
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="App">
+        <AppBarGlobal />
         <Grid container spacing={0}>
           {/* <Grid item xs={12}> */}
 

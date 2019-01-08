@@ -124,7 +124,7 @@ class ChampsCargivers extends React.Component {
             </TextField>
             <TextField
               id="standard-name"
-              label="Name*"
+              label="Nom*"
               className={classes.textField}
               value={this.state.name}
               onChange={this.handleChange("name")}
@@ -132,7 +132,7 @@ class ChampsCargivers extends React.Component {
             />
             <TextField
               id="standard-firstname"
-              label="First Name*"
+              label="Prénom*"
               className={classes.textField}
               value={this.state.firstname}
               onChange={this.handleChange("firstname")}
@@ -140,7 +140,7 @@ class ChampsCargivers extends React.Component {
             />
             <TextField
               id="standard-email"
-              label="email*"
+              label="Email*"
               className={classes.textField}
               value={this.state.email}
               onChange={this.handleChange("email")}
@@ -148,7 +148,7 @@ class ChampsCargivers extends React.Component {
             />
             <TextField
               id="standard-phone"
-              label="Phone*"
+              label="Téléphone*"
               className={classes.textField}
               value={this.state.phone}
               onChange={this.handleChange("phone")}
@@ -158,7 +158,7 @@ class ChampsCargivers extends React.Component {
             <FormControl
               className={classNames(classes.margin, classes.textField)}
             >
-              <InputLabel htmlFor="adornment-password">Password</InputLabel>
+              <InputLabel htmlFor="adornment-password">Mot de Passe</InputLabel>
               <Input
                 id="adornment-password"
                 type={this.state.showPassword ? "text" : "password"}
@@ -183,7 +183,7 @@ class ChampsCargivers extends React.Component {
             <FormControl
               className={classNames(classes.margin, classes.textField)}
             >
-              <InputLabel htmlFor="adornment-password">Password</InputLabel>
+              <InputLabel htmlFor="adornment-password">Mot de Passe</InputLabel>
               <Input
                 id="adornment-password"
                 type={this.state.showPassword ? "text" : "password"}
