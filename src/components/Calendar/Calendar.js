@@ -47,7 +47,18 @@ class Calendar extends Component {
     } = this.state;
 
     if (!isLoaded) return <p>ça a pas charger !!!!!!!</p>;
-    // const testevents = [
+    console.log('allEvents', allEvents);
+
+    const testevents = [];
+
+    allEvents.map(item => testevents.push({
+      title: item.title,
+      start: item.begingDate,
+      end: item.endingDate,
+      allDay: true,
+    }));
+    console.log('testevents', testevents);
+
     //   {
     //     title: 'myfirst event',
     //     start: new Date(),
@@ -66,6 +77,12 @@ class Calendar extends Component {
     //     end: new Date(allEvents[1].begingDate),
     //     desc: 'Power lunch',
     //   },
+    //   {
+    //     title: allEvents[2].title,
+    //     start: new Date(allEvents[2].begingDate),
+    //     end: new Date(allEvents[2].begingDate),
+    //     desc: 'Power lunch',
+    //   },
     // ];
     // console.log('=======================');
     // console.log('allEvents ', allEvents);
@@ -78,7 +95,7 @@ class Calendar extends Component {
           views={['month', 'week', 'day']}
           defaultView="month"
           localizer={localizer}
-          events={myEventsList}
+          events={testevents}
           selectable
           onSelectEvent={() => console.log('pop-up to modify')}
           onSelectSlot={this.openDialogToCreateEvent}

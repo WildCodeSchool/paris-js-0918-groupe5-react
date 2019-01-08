@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import Dashboard from './components/Dashboard/Dashboard';
 
 // import RemainingComponent from './components/RemainingComponent';
-import AppBarGlobal from './components/AppBarGlobal';
+// import AppBarGlobal from './components/AppBarGlobal';
 import ConnexionPage from './components/ConnexionPage';
 import Calendar from './components/Calendar/Calendar';
 import CaregiversForm from './components/Caregiver/CaregiverForm';
@@ -48,7 +48,7 @@ const App = () => (
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        {/* <Route exact path="/connexion" component={ConnexionPage} /> */}
+        <Route exact path="/connexion" component={ConnexionPage} />
         {/* <AppBarGlobal /> */}
         <div className="spaceBtwAppBarAndRoutes">
           <Route path="/tableau_de_bord" component={Dashboard} />
