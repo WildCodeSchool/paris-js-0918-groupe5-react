@@ -63,7 +63,7 @@ class MenuBar extends React.Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <List className={classes.list}>
-							<Link to="/" className={classes.link}>
+							<Link to="/tableau_de_bord" className={classes.link}>
 								<ListItem button>
 									<ListItemText primary="Tableau de bord" classes={{ root: classes.listItemTextRoot }}/>
 								</ListItem>
