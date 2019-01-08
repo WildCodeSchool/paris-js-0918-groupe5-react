@@ -6,8 +6,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-
-
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -21,28 +19,28 @@ class CguNews extends React.Component {
   state = {
     Cgu: true,
     newsletter: false,
-    
   };
 
-  handleChange = name => event => {
+  handleChange = name => (event) => {
     this.setState({ [name]: event.target.checked });
   };
 
   handleClickCGU = () => {
-    if(this.state.Cgu === false){
-      alert('veuiliez accepter les conditions général.')
+    const { Cgu } = this.state;
+    if (Cgu === false) {
+      alert('veuiliez accepter les conditions général.');
     }
   }
 
   render() {
     const { classes } = this.props;
-    const { Cgu, newsletter} = this.state;
-    
+    const { Cgu, newsletter } = this.state;
+
 
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
-          
+
           <FormGroup>
             <FormControlLabel
               control={
@@ -56,11 +54,11 @@ class CguNews extends React.Component {
               }
               label="M’abonner à la newsletter"
             />
-          
+
           </FormGroup>
-          
+
         </FormControl>
-        
+
       </div>
     );
   }

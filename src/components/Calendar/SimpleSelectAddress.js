@@ -1,21 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import { recordAtHomeEvent } from '../../actions/eventActions';
+
 
 class SwitchLabels extends React.Component {
   state = {
-    checkedE: false,
+    checkedE: true,
   };
 
   handleChange = name => (event) => {
     this.setState({ [name]: event.target.checked });
   };
 
+  onBlur = () => {
+    const { checkedE } = this.state;
+    const { recordAtHomeEvent } = this.props;
+    recordAtHomeEvent(checkedE);
+  }
+
   render() {
     const { checkedE } = this.state;
     return (
-      <FormGroup row>
+      <FormGroup row onBlur={() => this.onBlur()}>
         <FormControlLabel
           control={(
             <Switch
@@ -30,4 +40,16 @@ class SwitchLabels extends React.Component {
   }
 }
 
-export default SwitchLabels;
+SwitchLabels.propTypes = {
+  recordAtHomeEvent: PropTypes.func.isRequired,
+};
+
+
+const mapStateToProps = state => state;
+
+export default connect(
+  mapStateToProps,
+  {
+    recordAtHomeEvent,
+  },
+)(SwitchLabels);
