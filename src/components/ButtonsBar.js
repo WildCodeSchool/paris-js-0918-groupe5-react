@@ -30,7 +30,7 @@ const ButtonsBar = (props) => {
     <div className={classes.ButtonsBar}>
       <Grid container justify="space-around">
         <Grid item>
-          <Link to="/" className={classes.link}>
+          <Link to="/tableau_de_bord" className={classes.link}>
             <Fab
               variant="extended"
               color="primary"
