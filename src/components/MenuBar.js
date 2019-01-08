@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import {
 	Divider,
@@ -33,7 +34,10 @@ const styles = theme => ({
   },
   listItemTextRoot: {
     textAlign: 'center',
-  },
+	},
+	link: {
+		textDecoration: 'none',
+	},
 });
 
 class MenuBar extends React.Component {
@@ -59,17 +63,23 @@ class MenuBar extends React.Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <List className={classes.list}>
-              <ListItem button>
-                <ListItemText primary="Tableau de bord" classes={{ root: classes.listItemTextRoot }}/>
-              </ListItem>
+							<Link to="/tableau_de_bord" className={classes.link}>
+								<ListItem button>
+									<ListItemText primary="Tableau de bord" classes={{ root: classes.listItemTextRoot }}/>
+								</ListItem>
+							</Link>
               <Divider />
-              <ListItem button>
-                <ListItemText primary="Calendrier" classes={{ root: classes.listItemTextRoot }}/>
-              </ListItem>
+							<Link to="/calendrier" className={classes.link}>
+								<ListItem button>
+									<ListItemText primary="Calendrier" classes={{ root: classes.listItemTextRoot }}/>
+								</ListItem>
+							</Link>
               <Divider />
-              <ListItem button>
-                <ListItemText primary="Contacts" classes={{ root: classes.listItemTextRoot }}/>
-              </ListItem>
+							<Link to="/contacts" className={classes.link}>
+								<ListItem button>
+									<ListItemText primary="Contacts" classes={{ root: classes.listItemTextRoot }}/>
+								</ListItem>
+							</Link>
 							<Divider />
               <ListItem button>
                 <ListItemText primary="Suivi" classes={{ root: classes.listItemTextRoot }}/>
