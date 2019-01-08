@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Coverflow from 'react-coverflow';
-import { StyleRoot } from 'radium';
 import {
   Avatar,
   Fab,
@@ -32,6 +31,11 @@ const styles = theme => ({
     },
     [theme.breakpoints.up('lg')]: {
       width: '40vw',
+    },
+  },
+  coverflow: {
+    '&:focus': {
+      outline: 'none',
     },
   },
   typoRoot: {
@@ -95,12 +99,13 @@ const AppBarReceiver = (props) => {
   return (
     <div className={classes.AppBarReceiver}>
       <div className={classes.slider}>
-        <StyleRoot>
+        <div className="coverflowParent">
           <Coverflow
             displayQuantityOfSide={2}
             infiniteScroll
             enableHeading={false}
             active={0}
+            className={classes.coverflow}
           >
             <div
               // onClick={() => fn()}
@@ -154,7 +159,7 @@ const AppBarReceiver = (props) => {
               </Typography>
             </div>
           </Coverflow>
-        </StyleRoot>
+        </div>
       </div>
       <div className={classes.sectionDesktop}>
         <ButtonsBar />

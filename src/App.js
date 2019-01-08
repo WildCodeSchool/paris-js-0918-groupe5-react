@@ -51,7 +51,7 @@ const App = () => (
         <AppBarGlobal />
         <div className="spaceBtwAppBarAndRoutes">
           <Route exact path="/" component={Dashboard} />
-          <Route path="/contact" component={Contact} />
+          <Route path="/contacts" component={Contact} />
           <Route path="/création" component={CaregiversForm} />
           <Route path="/calendrier" component={Calendar} />
         </div>

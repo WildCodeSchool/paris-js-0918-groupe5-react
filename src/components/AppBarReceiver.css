@@ -2,6 +2,10 @@
     
 } */
 
+.coverflowParent > div:focus, .coverflow__container__1P-xE:focus {
+    outline: none; 
+}
+
 .coverflow__container__1P-xE {
     min-height: 225px;
     height: auto;
