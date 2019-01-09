@@ -7,21 +7,22 @@ import { Fab, Grid } from '@material-ui/core';
 const styles = {
   ButtonsBar: {
     width: '100%',
+    height: 0,
     background: '#65CDE2',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     flexDirection: 'column',
     alignItems: 'center',
   },
   buttonRoot: {
     backgroundColor: 'white',
     color: 'black',
-    bottom: '-24px',
+    top: '-24px',
     width: '159px',
-	},
-	link: {
-		textDecoration: 'none',
-	},
+  },
+  link: {
+    textDecoration: 'none',
+  },
 };
 
 const ButtonsBar = (props) => {
@@ -42,28 +43,28 @@ const ButtonsBar = (props) => {
           </Link>
         </Grid>
         <Grid item>
-					<Link to="/calendrier" className={classes.link}>
-						<Fab
-							variant="extended"
-							color="primary"
-							aria-label="Calendrier"
-							className={classes.buttonRoot}
-						>
-							Calendrier
-						</Fab>
-					</Link>
+          <Link to="/calendrier" className={classes.link}>
+            <Fab
+              variant="extended"
+              color="primary"
+              aria-label="Calendrier"
+              className={classes.buttonRoot}
+            >
+              Calendrier
+            </Fab>
+          </Link>
         </Grid>
         <Grid item>
-					<Link to="/contacts" className={classes.link}>
-						<Fab
-							variant="extended"
-							color="primary"
-							aria-label="Contacts"
-							className={classes.buttonRoot}
-						>
-							Contacts
-						</Fab>
-					</Link>
+          <Link to="/contacts" className={classes.link}>
+            <Fab
+              variant="extended"
+              color="primary"
+              aria-label="Contacts"
+              className={classes.buttonRoot}
+            >
+              Contacts
+            </Fab>
+          </Link>
         </Grid>
         <Grid item>
           <Fab
@@ -81,7 +82,7 @@ const ButtonsBar = (props) => {
 };
 
 ButtonsBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(ButtonsBar);
