@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { displayAppBar } from '../actions/displayActions';
 
-class ConnexionPage extends Component {
+class ConnectionPage extends Component {
   state = {
     redirect: false,
+  }
+
+  componentDidMount() {
+    displayAppBar(false);
   }
 
   handleSubmit = (e) => {
@@ -14,9 +21,10 @@ class ConnexionPage extends Component {
       email: e.target.email.value,
       password: e.target.password.value,
     }).then((res) => {
+      const { displayAppBar } = this.props;
       localStorage.setItem('token', res.headers['x-access-token']);
       console.log('token', localStorage.getItem('token'));
-      this.setState({ redirect: true });
+      this.setState({ redirect: true }, displayAppBar(true));
     });
   }
 
@@ -29,7 +37,7 @@ class ConnexionPage extends Component {
     }
     return (
       <div>
-          ConnexionPage
+          Connexion Page
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="email">
             Mail:
@@ -46,4 +54,8 @@ class ConnexionPage extends Component {
   }
 }
 
-export default ConnexionPage;
+ConnectionPage.propTypes = {
+  displayAppBar: PropTypes.func.isRequired,
+};
+
+export default connect(null, { displayAppBar })(ConnectionPage);
