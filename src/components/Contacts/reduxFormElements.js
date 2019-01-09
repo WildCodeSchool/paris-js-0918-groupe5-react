@@ -36,7 +36,7 @@ export const radioButton = ({
     <FormLabel component="legend" required={required}>{label}</FormLabel>
     <RadioGroup {...input} {...rest}>
       {buttonLabels.map(e => (
-        <FormControlLabel value={e} control={<Radio />} label={e} />
+        <FormControlLabel key={e} value={e} control={<Radio />} label={e} />
       ))}
     </RadioGroup>
   </FormControl>

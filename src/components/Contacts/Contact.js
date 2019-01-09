@@ -1,38 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import AddContactModal from './AddContactModal';
 import DisplayContactModal from './DisplayContactModal';
 import ContactButton from './ContactButton';
-// import { reduxForm } from 'redux-form';
 
 class Contact extends Component {
     state = {
       addContactModalIsOpen: false,
       displayContactModalIsOpen: false,
       contactsList: [],
-      category: '',
-      // preferenceOfContact: 'SMS',
+      selectedContact: null,
     }
 
     // loading the contacts list
     componentDidMount() {
       axios.get('http://localhost:4244/contacts')
-        .then(console.log('componentdidmount !'))
         .then(res => this.setState({
           contactsList: res.data,
         }));
     }
 
     // generic function to open different modals
-    handleClickOpen = modal => (event) => {
+    handleClickOpen = modal => (e) => {
+      console.log('modale ouverte : ', modal);
       this.setState({ [modal]: true });
+      console.log('state of selected contact : ', this.state.selectedContact);
     };
 
-    handleClose = modal => (event) => {
+    handleSelectingContact = (id) => {
+      const { contactsList } = this.state;
+      this.setState({ selectedContact: contactsList[id - 1] });
+      this.setState({ displayContactModalIsOpen: true });
+    }
+
+    handleClose = modal => (e) => {
       this.setState({ [modal]: false });
     };
 
@@ -48,6 +52,7 @@ class Contact extends Component {
         // category,
         // preferenceOfContact,
       } = this.state;
+      /* eslint-disable react/prop-types */
       const {
         title,
         firstName,
@@ -58,6 +63,7 @@ class Contact extends Component {
         preferenceOfContact,
         comment,
       } = this.props;
+      /* eslint-enable react/prop-types */
       const contact = {
         title,
         firstName,
@@ -81,54 +87,42 @@ class Contact extends Component {
       console.log('addContactModalIsOpen state : ', addContactModalIsOpen);
     };
 
-    // handlePreferenceOfContact = (e) => {
-    //   this.setState({ preferenceOfContact: e.target.value });
-    //   console.log('handleCommunication: ');
-    // };
-
     render() {
+      console.log('state of displayContactModalIsOpen : ', this.state.displayContactModalIsOpen);
       const {
         addContactModalIsOpen,
         displayContactModalIsOpen,
         contactsList,
-        // preferenceOfContact,
+        selectedContact,
       } = this.state;
-      // console.log('addContactModalIsOpen :', addContactModalIsOpen);
+
       return (
         <div>
           {contactsList.map(e => (
             <p key={e.id}>
-              <Button onClick={this.handleClickOpen('displayContactModalIsOpen')}>
-                {e.title} {e.firstName} {e.lastName}
+              <Button onClick={() => this.handleSelectingContact(e.id)}>
+                {`${e.title} ${e.firstName} ${e.lastName} ${e.id}`}
               </Button>
             </p>))}
+
+          {selectedContact !== null && (
+          <DisplayContactModal
+            handleClose={this.handleClose('displayContactModalIsOpen')}
+            displayContactModalIsOpen={displayContactModalIsOpen}
+            contactsList={contactsList}
+            selectedContact={selectedContact}
+          />)}
           <ContactButton handleClickOpen={this.handleClickOpen('addContactModalIsOpen')} />
           <AddContactModal
             handleClose={this.handleClose('addContactModalIsOpen')}
             handleValidation={this.handleValidation}
             addContactModalIsOpen={addContactModalIsOpen}
-            // preferenceOfContact={preferenceOfContact}
-            // handlePreferenceOfContact={this.handlePreferenceOfContact}
-          />
-          <DisplayContactModal
-            handleClose={this.handleClose('displayContactModalIsOpen')}
-            displayContactModalIsOpen={displayContactModalIsOpen}
           />
         </div>
       );
     }
 }
 
-Contact.propTypes = {
-  title: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
-  preferenceOfContact: PropTypes.string.isRequired,
-  comment: PropTypes.string.isRequired,
-};
 
 // récupérer le state qui est dans le store pour l'injecter dans les props de mon composant actuel
 // grace à mapStateToProps on peut utiliser this.props.poulet par exemple
