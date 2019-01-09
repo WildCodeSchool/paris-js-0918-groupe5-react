@@ -57,7 +57,7 @@ class DateAndTimePickers extends Component {
   render() {
     const { classes } = this.props;
     const { begingDate, endingDate } = this.state;
-    console.log(begingDate, endingDate);
+    // console.log(begingDate, endingDate);
     return (
       <form className={classes.container} noValidate>
         <TextField

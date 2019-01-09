@@ -1,6 +1,7 @@
 import {
-  RECORD_EVENT_INFO,
-  RECORD_BOOL_AT_HOME_EVENT,
+  RECORD_EVENT_TITLE,
+  RECEIVER_ADDRESS_SELECTED,
+  RECORD_EVENT_ADDRESS,
   RECORD_SIMPLE_SELECT,
   RECORD_SWITCH_LABEL,
   RECORD_DATE,
@@ -9,8 +10,8 @@ import {
 
 const initialState = {
   title: '',
+  receiverAddressChecked: true,
   address: '',
-  atHomeEvent: true,
   begingDate: '',
   endingDate: '',
   frequency: '',
@@ -24,16 +25,23 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case RECORD_EVENT_INFO:
+    case RECORD_EVENT_TITLE:
       return {
         ...state,
         title: action.title,
-        address: action.address,
+        // address: action.address,
       };
-    case RECORD_BOOL_AT_HOME_EVENT:
+    case RECEIVER_ADDRESS_SELECTED:
       return {
         ...state,
-        atHomeEvent: action.atHomeEvent,
+        receiverAddressChecked: action.receiverAddressChecked,
+        address: 'Receiver Address',
+      };
+    case RECORD_EVENT_ADDRESS:
+      return {
+        ...state,
+        address: action.address,
+        receiverAddressChecked: false,
       };
 
     case RECORD_DATE:

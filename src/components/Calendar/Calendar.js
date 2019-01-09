@@ -1,11 +1,9 @@
-
 import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import axios from 'axios';
-import DialogToCreateEvent from './DialogToCreateEvent';
-import './Calendar.css';
-import myEventsList from '../../enventsTestList';
+import OpenDialog from './OpenDialog';
+import './style/Calendar.css';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -28,7 +26,7 @@ class Calendar extends Component {
 
   // start in an object of bigcalendar (it provide the date clicked)
   // on closing dialog, there were a bug (sart undifined)
-  // I fix it thanks default value (idem line 45)
+  // I fix it thanks default value (idem line 73)
   // It sucks I know, and it would be better using store for these dates
   openDialogToCreateEvent = ({ start } = new Date()) => {
     const { openDialog } = this.state;
@@ -46,61 +44,28 @@ class Calendar extends Component {
       allEvents,
     } = this.state;
 
-    if (!isLoaded) return <p>ça a pas charger !!!!!!!</p>;
-    console.log('allEvents', allEvents);
-
-    const testevents = [];
-
-    allEvents.map(item => testevents.push({
+    if (!isLoaded) return <p>ça a pas chargé !!!!!!!</p>;
+    const eventsList = [];
+    allEvents.map(item => eventsList.push({
       title: item.title,
       start: item.begingDate,
       end: item.endingDate,
       allDay: true,
     }));
-    console.log('testevents', testevents);
 
-    //   {
-    //     title: 'myfirst event',
-    //     start: new Date(),
-    //     end: new Date(),
-    //     allDay: false,
-    //   },
-    //   {
-    //     title: allEvents[0].title,
-    //     start: new Date(allEvents[0].begingDate),
-    //     end: new Date(allEvents[0].begingDate),
-    //     desc: 'Power lunch',
-    //   },
-    //   {
-    //     title: allEvents[1].title,
-    //     start: new Date(allEvents[1].begingDate),
-    //     end: new Date(allEvents[1].begingDate),
-    //     desc: 'Power lunch',
-    //   },
-    //   {
-    //     title: allEvents[2].title,
-    //     start: new Date(allEvents[2].begingDate),
-    //     end: new Date(allEvents[2].begingDate),
-    //     desc: 'Power lunch',
-    //   },
-    // ];
-    // console.log('=======================');
-    // console.log('allEvents ', allEvents);
-    // console.log('testevents', testevents);
-    // console.log('=======================');
     return (
-      <div className="toto">
+      <div className="calendar">
         {/* <GetEventList /> */}
         <BigCalendar
           views={['month', 'week', 'day']}
           defaultView="month"
           localizer={localizer}
-          events={testevents}
+          events={eventsList}
           selectable
           onSelectEvent={() => console.log('pop-up to modify')}
           onSelectSlot={this.openDialogToCreateEvent}
         />
-        <DialogToCreateEvent
+        <OpenDialog
           onOpen={() => this.openDialogToCreateEvent()}
           openOrNot={openDialog}
           startingDate={startingDate || new Date()}

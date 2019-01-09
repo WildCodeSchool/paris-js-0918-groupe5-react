@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
-  RECORD_EVENT_INFO,
-  RECORD_BOOL_AT_HOME_EVENT,
+  RECORD_EVENT_TITLE,
+  RECEIVER_ADDRESS_SELECTED,
+  RECORD_EVENT_ADDRESS,
   RECORD_SIMPLE_SELECT,
   RECORD_SWITCH_LABEL,
   RECORD_DATE,
@@ -19,20 +20,22 @@ export const recordAllInfo = allInfo => (dispatch) => {
     }));
 };
 
-export const recordTitleAndAddress = (title, address) => (dispatch) => {
-  dispatch({
-    type: RECORD_EVENT_INFO,
-    title,
-    address,
-  });
-};
+export const recordTitle = title => ({
+  type: RECORD_EVENT_TITLE,
+  title,
+});
 
-export const recordAtHomeEvent = bool => (dispatch) => {
-  dispatch({
-    type: RECORD_BOOL_AT_HOME_EVENT,
-    atHomeEvent: bool,
-  });
-};
+export const receiverAddressChecked = receiverAddressChecked => ({
+  type: RECEIVER_ADDRESS_SELECTED,
+  receiverAddressChecked,
+  // address: receiverAddressChecked ? 'receiver address' : '',
+});
+
+
+export const recordAddress = preciseAddress => ({
+  type: RECORD_EVENT_ADDRESS,
+  address: preciseAddress,
+});
 
 export const recordDateAndTime = (begingDate, endingDate) => (dispatch) => {
   dispatch({

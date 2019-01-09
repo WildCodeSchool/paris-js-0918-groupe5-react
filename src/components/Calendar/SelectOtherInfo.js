@@ -6,7 +6,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { recordSwitchLabels } from '../../actions/eventActions';
 
-
 class SwitchLabels extends React.Component {
   state = {
     visibleEvent: false,
