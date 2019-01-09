@@ -58,7 +58,6 @@ class Charts extends Component {
         Authorization: `Bearer ${token}`,
       },
     })
-    // .then(res => console.log('RES', res))
       .then(res => res.data)
       .then(res => this.formatDateData(res))
       .then(res => this.simplifyEvents(res));// optional
