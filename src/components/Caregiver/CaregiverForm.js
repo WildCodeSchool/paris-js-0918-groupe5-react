@@ -11,6 +11,15 @@ import axios from 'axios';
 export default class FormDialog extends React.Component {
   state = {
     open: false,
+    caregivers: [],
+    title: '',
+    lastName: '',
+    firstname: '',
+    email: '',
+    phone: '',
+    password: '',
+    preferenceOfContact: '',
+    
   };
 
   
@@ -24,7 +33,24 @@ export default class FormDialog extends React.Component {
   };
 
   handleValidation = () => {
-    axios.get('http://localhost:4243/user')
+    const {
+      title, 
+      lastName, 
+      firstname, 
+      email, 
+      phone, 
+      password, 
+      preferenceOfContact } = this.state
+    const newCaregiver = { 
+      title, 
+      lastName, 
+      firstname, 
+      email, 
+      phone, 
+      password, 
+      preferenceOfContact 
+    }
+    axios.post('http://localhost:4244/auth/signup', )
 
       .then(res => this.setState({
         userList: res.data,
