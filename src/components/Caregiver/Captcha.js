@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./css/Captcha.css";
 
-const TEST_SITE_KEY = "6LcBNGgUAAAAAIj17J6UuVmX_kb7vo6AxMJYj07C";
+const TEST_SITE_KEY = "6LfuOYgUAAAAAKjWfOfcyx5oEp5_GawQI-viiYtM";
 const DELAY = 1500;
 
 
@@ -44,10 +44,6 @@ class Captcha extends React.Component {
     const { load } = this.state || {};
     return (
       <div className="Captcha">
-      
-      
-      
-        
         {load && (
           <ReCAPTCHA
             style={{ display: "inline-block", height:"100px" }}
