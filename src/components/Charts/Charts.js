@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
 import VisitsChart from './components/VisitsChart';
@@ -31,7 +32,7 @@ class Charts extends Component {
       d = d.toString().slice(0, 15);
       result.unshift(d);
     }
-    // console.log('getLast7Days', result);
+    console.log('getLast7Days', result);
     return result;
   };
 
@@ -48,17 +49,27 @@ class Charts extends Component {
   );
 
   // returns an array containing all the scheduled events from DB
-  getEventsData = () => fetch('http://localhost:4244/events')
-    .then(res => res.json())
-    .then(res => this.formatDateData(res))
-    .then(res => this.simplifyEvents(res));// optional
+  getEventsData = () => {
+    const token = localStorage.getItem('token');
+    return axios({
+      method: 'GET',
+      url: 'http://localhost:4244/events',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    // .then(res => console.log('RES', res))
+      .then(res => res.data)
+      .then(res => this.formatDateData(res))
+      .then(res => this.simplifyEvents(res));// optional
+  }
 
   // filters all scheduled events from DB to keep only scheduled events of the previous week
   filterEvents = async () => {
     try {
       const [eventsData, lastWeek] = await Promise.all([this.getEventsData(), this.getLast7Days()]);
       const result = eventsData.filter(e => lastWeek.includes(e.dateBeginning));
-      // console.log('filterEvents', result);
+      console.log('filterEvents', result);
       return result;
     } catch (err) {
       console.error(err);
@@ -84,7 +95,7 @@ class Charts extends Component {
         }
       });
       this.setState({ dayNamesArray: result });
-      // console.log('createDayNamesArray', this.state.dayNamesArray);
+      console.log('createDayNamesArray', this.state.dayNamesArray);
     } catch (err) {
       console.error(err);
     }
@@ -114,7 +125,7 @@ class Charts extends Component {
         result.push(currentMood);
       }
       this.setState({ moodArray: result });
-      // console.log('createMoodArray', result);
+      console.log('createMoodArray', result);
     } catch (err) {
       console.error(err);
     }
@@ -146,8 +157,8 @@ class Charts extends Component {
       }
       this.setState({ visitsArray });
       this.setState({ absencesArray });
-      // console.log('this.state.absencesArray', this.state.absencesArray)
-      // console.log('this.state.visitsArray', this.state.visitsArray)
+      console.log('this.state.absencesArray', this.state.absencesArray)
+      console.log('this.state.visitsArray', this.state.visitsArray)
     } catch (err) {
       console.error(err);
     }
