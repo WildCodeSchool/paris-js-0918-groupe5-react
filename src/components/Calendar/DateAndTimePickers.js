@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { recordDateAndTime } from '../../actions/eventActions';
 
-// import DateTimePicker from 'material-ui-datetimepicker';
-// import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog';
-// import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
-console.log('ola', new Date());
-const styles = theme => ({
+const styles = () => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
     margin: 0,
   },
   textField: {
-    // marginLeft: theme.spacing.unit,
     width: 260,
   },
   beginningDate: {
@@ -23,58 +21,79 @@ const styles = theme => ({
   },
 });
 
-function DateAndTimePickers(props) {
-  const { classes, dDate } = props;
-  // {console.log('dDate', new Date().toDateString())}
-  console.log('oli', typeof dDate);
-  // console.log('month', props.dDate.getMonth()+1)
-  let monthClicked = dDate.getMonth() + 1;
-  monthClicked = monthClicked < 10 ? `0${monthClicked}` : monthClicked;
-  const dayClicked = dDate.toString().substr(8, 2);
-  const yearClicked = dDate.getFullYear();
-  // console.log('day', dayClicked)
-  // console.log('year', yearClicked)
-  // console.log('coucou', new Date().getMonth()+1)
-  // const date = new Date().toDateString()
-  const defaultDate = `${yearClicked}-${monthClicked}-${dayClicked}T00:00`
-  // console.log('defaut', defaultDate)
+class DateAndTimePickers extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      begingDate: moment(props.startingDate).toISOString(true).substr(0, 19),
+      endingDate: moment(props.startingDate).toISOString(true).substr(0, 19),
+    };
 
-  return (
-    <form className={classes.container} noValidate>
-      <TextField
-        required
-        className={classes.beginningDate}
-        id="beginningDate"
-        label="Date et heure de début"
-        type="datetime-local"
-        // defaultValue={props.dDate}
-        defaultValue={defaultDate}
-        // className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      {/* <DateTimePicker
-      value={new Date()}/> */}
-      <TextField
-        required
-        id="endingDate"
-        label="Date et heure de fin"
-        type="datetime-local"
-        // defaultValue={props.dDate}
-        defaultValue={defaultDate}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-    </form>
-  );
+    DateAndTimePickers.propTypes = {
+      startingDate: PropTypes.object.isRequired,
+      classes: PropTypes.object.isRequired,
+      recordDateAndTime: PropTypes.func.isRequired,
+    };
+  }
+
+  componentDidMount() {
+    const { begingDate, endingDate } = this.state;
+    const { recordDateAndTime } = this.props;
+    recordDateAndTime(begingDate, endingDate);
+  }
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  onBlur = () => {
+    const { begingDate, endingDate } = this.state;
+    const { recordDateAndTime } = this.props;
+    recordDateAndTime(begingDate, endingDate);
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { begingDate, endingDate } = this.state;
+    console.log(begingDate, endingDate);
+    return (
+      <form className={classes.container} noValidate>
+        <TextField
+          required
+          className={classes.beginningDate}
+          id="beginningDate"
+          label="Date et heure de début"
+          type="datetime-local"
+          defaultValue={begingDate}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          name="begingDate"
+          onChange={this.onChange}
+          onBlur={this.onBlur}
+        />
+        <TextField
+          required
+          id="endingDate"
+          label="Date et heure de fin"
+          type="datetime-local"
+          defaultValue={endingDate}
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          name="endingDate"
+          onChange={this.onChange}
+          onBlur={this.onBlur}
+        />
+      </form>
+    );
+  }
 }
 
-DateAndTimePickers.propTypes = {
-  classes: PropTypes.object.isRequired,
-  dDate: PropTypes.object.isRequired,
-};
+const mapStateToProps = state => state;
 
-export default withStyles(styles)(DateAndTimePickers);
+export default connect(mapStateToProps,
+  { recordDateAndTime })(withStyles(styles)(DateAndTimePickers));

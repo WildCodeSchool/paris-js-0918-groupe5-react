@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import SimpleSelect from './SimpleSelect';
 import RadioButton from './RadioButton';
-import { renderTextField } from './reduxFormElements';
+import { renderTextField } from '../reduxFormElements';
 // import ContactModal from './ContactModal';
 
 // valide allows to detect errors (see reduxFormElements.js)

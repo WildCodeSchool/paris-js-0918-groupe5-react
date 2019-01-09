@@ -1,137 +1,93 @@
 
-import React from 'react';
-import dateFns from 'date-fns';
-// import { locale } from "./locale";
-import Button from './Button';
-import HeaderCalendar from './HeaderCalendar';
-// import EventCalendar from 'react-event-calendar';
+import React, { Component } from 'react';
+import BigCalendar from 'react-big-calendar';
+import moment from 'moment';
+import axios from 'axios';
+import DialogToCreateEvent from './DialogToCreateEvent';
+import './Calendar.css';
+// import myEventsList from '../../enventsTestList';
 
-class Calendar extends React.Component {
+const localizer = BigCalendar.momentLocalizer(moment);
+
+class Calendar extends Component {
   state = {
-    currentMonth: new Date(), // the D-Day
-    selectedDate: new Date(),
+    openDialog: false,
+    startingDate: '',
+    isLoaded: false,
+    allEvents: [],
   };
 
-  onDateClick = (day) => {
-    this.setState({
-      selectedDate: day,
-    });
-  };
-
-  nextMonth = () => {
-    const { currentMonth } = this.state;
-    this.setState({
-      currentMonth: dateFns.addMonths(currentMonth, 1),
-    });
-  };
-
-  prevMonth = () => {
-    const { currentMonth } = this.state;
-    this.setState({
-      currentMonth: dateFns.subMonths(currentMonth, 1),
-    });
-  };
-
-  renderHeader() {
-    const { currentMonth } = this.state;
-    const dateFormat = 'MMMM YYYY'; // the format of the month and the year on the top of the calendar
-    return (
-      <div>
-        <HeaderCalendar />
-        <div className="header row flex-middle">
-          <div className="col col-start">
-            <div role="button" tabIndex="0" className="iconCalendar" onClick={this.prevMonth}>
-              chevron_left
-            </div>
-            {/* <Button dDate={this.state.currentMonth}/> */}
-          </div>
-          <div className="col col-center">
-            {/* it shows the name of the month and the year */}
-            <span>{dateFns.format(currentMonth, dateFormat)}</span>
-          </div>
-          <div role="button" tabIndex="0" className="col col-end" onClick={this.nextMonth}>
-            <div className="iconCalendar">chevron_right</div>
-          </div>
-        </div>
-      </div>
-    );
+  componentDidMount() {
+    const apiUrl = 'http://localhost:4243/events';
+    axios.get(`${apiUrl}`)
+      .then(res => this.setState({
+        isLoaded: true,
+        allEvents: res.data,
+      }));
   }
 
-  renderDays() {
-    const { currentMonth } = this.state;
-    const dateFormat = 'dddd'; // the format of the name of the days
-    const days = [];
-    // the date where begins the calendar, sunday,
-    // and the date of the last line with more than 1 date
-    const startDate = dateFns.startOfWeek(currentMonth);
-
-    for (let i = 0; i < 7; i += 1) {
-      days.push(
-        <div className="col col-center" key={i}>
-          {/* i+1 makes the week begin with monday instead of sunday */}
-          {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
-        </div>,
-      );
-    }
-    return <div className="days row">{days}</div>;
-  }
-
-  renderCells() {
-    const { currentMonth, selectedDate } = this.state;
-    const monthStart = dateFns.startOfMonth(currentMonth);
-    const monthEnd = dateFns.endOfMonth(monthStart);
-    const startDate = dateFns.startOfWeek(monthStart);
-    const endDate = dateFns.endOfWeek(monthEnd);
-
-    const dateFormat = 'D';
-    const rows = [];
-
-    let days = [];
-    let day = startDate;
-    let formattedDate = '';
-
-    while (day <= endDate) {
-      for (let i = 0; i < 7; i += 1) {
-        formattedDate = dateFns.format(day, dateFormat);
-        const cloneDay = day;
-        days.push(
-          <div
-            role="button"
-            tabIndex="0"
-            className={`col cell ${
-              !dateFns.isSameMonth(day, monthStart)
-                ? 'disabled'
-                : dateFns.isSameDay(day, selectedDate) ? 'selected' : ''
-            }`}
-            key={day}
-            onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
-          >
-
-            <span className="number">{formattedDate}</span>{/*the small number in the cell */}
-            <span className="bg">{formattedDate}</span>{/*the big number on the hover of a cell*/}
-            <Button date={selectedDate} />
-          </div>,
-        );
-        day = dateFns.addDays(day, 1);
-      }
-      rows.push(
-        <div className="row" key={day}>
-          {days}
-        </div>,
-      );
-      days = [];
-    }
-    return <div className="body">{rows}</div>;
+  // start in an object of bigcalendar (it provide the date clicked)
+  // on closing dialog, there were a bug (sart undifined)
+  // I fix it thanks default value (idem line 45)
+  // It sucks I know, and it would be better using store for these dates
+  openDialogToCreateEvent = ({ start } = new Date()) => {
+    const { openDialog } = this.state;
+    this.setState({
+      openDialog: !openDialog,
+      startingDate: start,
+    });
   }
 
   render() {
+    const {
+      openDialog,
+      startingDate,
+      isLoaded,
+      allEvents,
+    } = this.state;
+
+    if (!isLoaded) return <p>ça a pas charger !!!!!!!</p>;
+    const testevents = [
+      {
+        title: 'myfirst event',
+        start: new Date(),
+        end: new Date(),
+        allDay: false,
+      },
+      {
+        title: allEvents[0].title,
+        start: new Date(allEvents[0].begingDate),
+        end: new Date(allEvents[0].begingDate),
+        desc: 'Power lunch',
+      },
+      {
+        title: allEvents[1].title,
+        start: new Date(allEvents[1].begingDate),
+        end: new Date(allEvents[1].begingDate),
+        desc: 'Power lunch',
+      },
+    ];
+    // console.log('=======================');
+    // console.log('allEvents ', allEvents);
+    // console.log('testevents', testevents);
+    // console.log('=======================');
     return (
-      <div>
-        <div className="calendar">
-          {this.renderHeader()}
-          {this.renderDays()}
-          {this.renderCells()}
-        </div>
+      <div className="toto">
+        {/* <GetEventList /> */}
+        <BigCalendar
+          views={['month', 'week', 'day']}
+          defaultView="month"
+          localizer={localizer}
+          events={testevents}
+          selectable
+          onSelectEvent={() => console.log('pop-up to modify')}
+          onSelectSlot={this.openDialogToCreateEvent}
+        />
+        <DialogToCreateEvent
+          onOpen={() => this.openDialogToCreateEvent()}
+          openOrNot={openDialog}
+          startingDate={startingDate || new Date()}
+        />
       </div>
     );
   }
