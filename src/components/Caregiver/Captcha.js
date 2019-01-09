@@ -3,8 +3,8 @@
 // import ReCAPTCHA from "react-google-recaptcha";
 // import "./css/Captcha.css";
 
-// const TEST_SITE_KEY = "6LcBNGgUAAAAAIj17J6UuVmX_kb7vo6AxMJYj07C";
-// const DELAY = 1500;
+const TEST_SITE_KEY = "6LfuOYgUAAAAAKjWfOfcyx5oEp5_GawQI-viiYtM";
+const DELAY = 1500;
 
 
 // class Captcha extends React.Component {
@@ -40,24 +40,25 @@
 //     this.setState({ expired2: "true" });
 //   };
 
-//   render() {
-//     const { load } = this.state || {};
-//     return (
-//       <div className="Captcha">
-//         {load && (
-//           <ReCAPTCHA
-//             style={{ display: "inline-block", height:"100px" }}
-//             theme="light"
-//             ref={this._reCaptchaRef}
-//             sitekey={TEST_SITE_KEY}
-//             onChange={this.handleChange}
-//             asyncScriptOnLoad={this.asyncScriptOnLoad}
-//           />
-//         )}
-//       </div>
-//     );
-//   }
-// }
+  render() {
+    const { load } = this.state || {};
+    return (
+      <div className="Captcha">
+        {load && (
+          <ReCAPTCHA
+            style={{ display: "inline-block", height:"100px" }}
+            theme="light"
+            ref={this._reCaptchaRef}
+            sitekey={TEST_SITE_KEY}
+            onChange={this.handleChange}
+            asyncScriptOnLoad={this.asyncScriptOnLoad}
+          />
+        )}
+      </div>
+    );
+  }
+}
+
 
 // const rootElement = document.getElementById("root");
 // ReactDOM.render(<Captcha />, rootElement);
