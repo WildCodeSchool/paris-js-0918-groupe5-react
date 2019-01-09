@@ -3,9 +3,17 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import AddContactModal from './AddContactModal';
 import DisplayContactModal from './DisplayContactModal';
 import ContactButton from './ContactButton';
+
+const styles = theme => ({
+  displayContactButton: {
+    backgroundColor: 'pink',
+    margin: theme.spacing.unit,
+  },
+});
 
 class Contact extends Component {
     state = {
@@ -25,9 +33,7 @@ class Contact extends Component {
 
     // generic function to open different modals
     handleClickOpen = modal => (e) => {
-      console.log('modale ouverte : ', modal);
       this.setState({ [modal]: true });
-      console.log('state of selected contact : ', this.state.selectedContact);
     };
 
     handleSelectingContact = (id) => {
@@ -48,11 +54,8 @@ class Contact extends Component {
     handleValidation = () => {
       const {
         contactsList,
-        addContactModalIsOpen,
-        // category,
-        // preferenceOfContact,
       } = this.state;
-      /* eslint-disable react/prop-types */
+
       const {
         title,
         firstName,
@@ -63,7 +66,7 @@ class Contact extends Component {
         preferenceOfContact,
         comment,
       } = this.props;
-      /* eslint-enable react/prop-types */
+
       const contact = {
         title,
         firstName,
@@ -82,13 +85,13 @@ class Contact extends Component {
           console.log('ma data : ', res.data);
           contactsList.push(res.data);
           this.setState({ contactsList });
-        });
-      this.handleAlert();
-      console.log('addContactModalIsOpen state : ', addContactModalIsOpen);
+        })
+        .then(this.handleClose('addContactModalIsOpen'));
     };
 
     render() {
-      console.log('state of displayContactModalIsOpen : ', this.state.displayContactModalIsOpen);
+      const { classes } = this.props;
+
       const {
         addContactModalIsOpen,
         displayContactModalIsOpen,
@@ -98,10 +101,14 @@ class Contact extends Component {
 
       return (
         <div>
+          <h2>Mes contacts</h2> 
           {contactsList.map(e => (
             <p key={e.id}>
-              <Button onClick={() => this.handleSelectingContact(e.id)}>
-                {`${e.title} ${e.firstName} ${e.lastName} ${e.id}`}
+              <Button
+                onClick={() => this.handleSelectingContact(e.id)}
+                className={classes.displayContactButton}
+              >
+                {`${e.title} ${e.firstName} ${e.lastName}`}
               </Button>
             </p>))}
 
@@ -139,4 +146,4 @@ const mapStateToProps = state => ({
 });
 
 // connect permet de connecter ton composant au store (actions, store ....)
-export default connect(mapStateToProps, null)(Contact);
+export default connect(mapStateToProps, null)(withStyles(styles)(Contact));
