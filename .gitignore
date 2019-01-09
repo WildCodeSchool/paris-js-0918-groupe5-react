@@ -184,3 +184,4 @@ GitHub.sublime-settings
 .history
 
 # End of https://www.gitignore.io/api/git,node,linux,macos,sublimetext,visualstudiocode
+build
