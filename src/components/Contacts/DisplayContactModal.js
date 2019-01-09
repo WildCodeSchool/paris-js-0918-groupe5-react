@@ -16,9 +16,8 @@ const styles = theme => ({
 });
 
 const DisplayContactModal = (props) => {
-  const { classes } = props;
+  // const { classes } = props;
   const {
-    /* eslint-disable react/prop-types */
     displayContactModalIsOpen,
     handleClose,
     selectedContact,
@@ -28,7 +27,6 @@ const DisplayContactModal = (props) => {
     // preferenceOfContact,
     // handlePreferenceOfContact,
   } = props;
-    /* eslint-enable react/prop-types */
 
   return (
     <div>

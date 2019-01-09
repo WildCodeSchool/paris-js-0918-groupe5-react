@@ -10,9 +10,10 @@ import ContactButton from './ContactButton';
 
 const styles = theme => ({
   displayContactButton: {
-    backgroundColor: 'pink',
     margin: theme.spacing.unit,
+    textTransform: 'capitalize',
   },
+
 });
 
 class Contact extends Component {
@@ -109,6 +110,8 @@ class Contact extends Component {
                 className={classes.displayContactButton}
               >
                 {`${e.title} ${e.firstName} ${e.lastName}`}
+                <br />
+                {`${e.category}`}
               </Button>
             </p>))}
 
