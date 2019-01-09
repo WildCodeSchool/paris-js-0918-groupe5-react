@@ -3,61 +3,76 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import FormGroup from '@material-ui/core/FormGroup';
+import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
-import SelectOtherAdress from './SelectOtherAdress';
-
-
-import { receiverAddressChecked, recordAddress } from '../../actions/eventActions';
+import { recordAddress } from '../../actions/eventActions';
 
 class SelectReceiverAddress extends React.Component {
   state = {
     receiverAddressChecked: false,
+    preciseAddress: 'receiver Address',
   };
 
-  handleChange = name => (event) => {
-    this.setState({ [name]: event.target.checked });
-    // const { clearAddressFiel } = this.props;
-    // if (receiverAddressChecked) clearAddressFiel();
+  handleCheck = (event) => {
+    const { receiverAddressChecked } = this.state;
+    this.setState({
+      receiverAddressChecked: event.target.checked,
+      preciseAddress: receiverAddressChecked ? 'receiver Address' : event.target.value,
+    });
+  };
+
+  handleChange = (event) => {
+    this.setState({ preciseAddress: event.target.value });
   };
 
   render() {
-    const { receiverAddressChecked } = this.state;
+    const { receiverAddressChecked, preciseAddress } = this.state;
     const { record } = this.props;
+
     return (
-      <div>
-        <FormGroup row>
-          <FormControlLabel
-            control={(
-              <Switch
-                checked={receiverAddressChecked}
-                onChange={this.handleChange('receiverAddressChecked')}
-                onClick={() => record(receiverAddressChecked)}
-                value="receiverAddressChecked"
-              />)}
-            label="Utiliser une autre adrresse que le domicile"
-          />
-        </FormGroup>
-        <SelectOtherAdress />
+      <FormGroup row>
+        <FormControlLabel
+          control={(
+            <Switch
+              checked={receiverAddressChecked}
+              disabled={receiverAddressChecked}
+              onChange={this.handleCheck}
+              // onClick={() => record(receiverAddressChecked, preciseAddress)}
+              value=""
+            />)}
+          label="Utiliser une autre adrresse que le domicile"
+        />
+        <TextField
+          disabled={!receiverAddressChecked}
+          required
+          margin="dense"
+          id="preciseAddress"
+          label="Adresse"
+          type="text"
+          fullWidth
+          name="otherAddressFiel"
+          value={preciseAddress}
+          onChange={this.handleChange}
+          onBlur={() => record(receiverAddressChecked, preciseAddress)}
+        />
         <br />
         <br />
         <br />
-      </div>
+      </FormGroup>
     );
   }
 }
 
 SelectReceiverAddress.propTypes = {
   record: PropTypes.func.isRequired,
-  clearAddressFiel: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({
-  record: bool => dispatch(receiverAddressChecked(bool)),
-  clearAddressFiel: () => dispatch(recordAddress('')),
+  record: (bool, adress) => dispatch(recordAddress(bool, adress)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectReceiverAddress);

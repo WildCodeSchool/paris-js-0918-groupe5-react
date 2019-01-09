@@ -1,21 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const SelectResponsible = () => (
-  <Select
-    value="{responsible}"
-    // onChange={this.handleChange}
-    name="responsible"
-    // inputProps={{
-    //   id: 'responsible-required',
-    // }}
-    // className={classes.selectEmpty}
-  >
-    <MenuItem value="grey">Dr Grey</MenuItem>
-    <MenuItem value="jackson">Michael Jackson</MenuItem>
-    <MenuItem value="jolivet">Karine Jolivet</MenuItem>
-  </Select>
-);
+import { recordResponsible } from '../../actions/eventActions';
 
-export default SelectResponsible;
+
+const listOfcontact = ['grey', 'jackson', 'jolivet'];
+
+class SelectResponsible extends Component {
+  constructor() {
+    super();
+    this.state = {
+      responsible: '',
+    };
+    SelectResponsible.propTypes = {
+      record: PropTypes.func.isRequired,
+    };
+  }
+
+  handleChange = (event) => {
+    const { record } = this.props;
+    this.setState({ responsible: event.target.value });
+    record(event.target.value);
+  }
+
+  render() {
+    const { responsible } = this.state;
+    return (
+      <Select
+        value={responsible}
+        onChange={this.handleChange}
+        name="responsible"
+        // inputProps={{ id: 'responsible-required' }}
+        // className={classes.selectEmpty}
+      >
+        {listOfcontact.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+      </Select>
+    );
+  }
+}
+
+const mapStateToProps = state => state;
+
+const mapDispatchToProps = dispatch => ({
+  record: responsible => dispatch(recordResponsible(responsible)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectResponsible);

@@ -1,8 +1,8 @@
 import {
   RECORD_EVENT_TITLE,
-  RECEIVER_ADDRESS_SELECTED,
   RECORD_EVENT_ADDRESS,
-  RECORD_SIMPLE_SELECT,
+  RECORD_RESPONSIBLE,
+  RECORD_FREQUENCY,
   RECORD_SWITCH_LABEL,
   RECORD_DATE,
   SEND_TO_DB,
@@ -11,7 +11,7 @@ import {
 const initialState = {
   title: '',
   receiverAddressChecked: true,
-  address: '',
+  address: 'Receiver Address',
   begingDate: '',
   endingDate: '',
   frequency: '',
@@ -29,33 +29,28 @@ export default (state = initialState, action) => {
       return {
         ...state,
         title: action.title,
-        // address: action.address,
-      };
-    case RECEIVER_ADDRESS_SELECTED:
-      return {
-        ...state,
-        receiverAddressChecked: action.receiverAddressChecked,
-        address: 'Receiver Address',
       };
     case RECORD_EVENT_ADDRESS:
       return {
         ...state,
         address: action.address,
-        receiverAddressChecked: false,
+        receiverAddressChecked: action.receiverAddressChecked,
       };
-
+    case RECORD_RESPONSIBLE:
+      return {
+        ...state,
+        responsible: action.responsible,
+      };
+    case RECORD_FREQUENCY:
+      return {
+        ...state,
+        frequency: action.frequency,
+      };
     case RECORD_DATE:
       return {
         ...state,
         begingDate: action.begingDate,
         endingDate: action.endingDate,
-      };
-    case RECORD_SIMPLE_SELECT:
-      return {
-        ...state,
-        frequency: action.frequency,
-        responsible: action.responsible,
-        category: action.category,
       };
     case RECORD_SWITCH_LABEL:
       return {

@@ -1,29 +1,61 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { recordFrequency } from '../../actions/eventActions';
+
 // import SelectMultipleDays from './SelectMultipleDays';
 
-const SelectFrequency = () => {
-  return (
-    <Select
-      value="{frequency}"
-      // onChange={this.handleChange}
-      name="frequency"
-      // inputProps={{
-      //   id: 'frequency-required',
-      // }}
-      // className={classes.selectEmpty}
-    >
-      <MenuItem value="once">Une seule fois</MenuItem>
-      <MenuItem value="everyday">Tous les jours</MenuItem>
-      <MenuItem value="everydayWeek">Sélectionner certains jours de la semaine</MenuItem>
-    </Select>
-    // <SelectMultipleDays />
-  );
-};
+const listOfFrequency = ['once', 'everyday', 'everydayWeek'];
 
-export default SelectFrequency;
+
+class SelectFrequency extends Component {
+  constructor() {
+    super();
+    this.state = {
+      frequency: '',
+    };
+    SelectFrequency.propTypes = {
+      record: PropTypes.func.isRequired,
+    };
+  }
+
+  handleChange = (event) => {
+    const { record } = this.props;
+    this.setState({ frequency: event.target.value });
+    record(event.target.value);
+    console.log(event.target.value);
+  }
+
+  render() {
+    const { frequency } = this.state;
+    return (
+      <Select
+        value={frequency}
+        onChange={this.handleChange}
+        name="frequency"
+        // inputProps={{
+        //   id: 'frequency-required',
+        // }}
+        // className={classes.selectEmpty}
+      >
+        {listOfFrequency.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+      </Select>
+      // <SelectMultipleDays />
+    );
+  }
+}
+
+const mapStateToProps = state => state;
+
+const mapDispatchToProps = dispatch => ({
+  record: frequency => dispatch(recordFrequency(frequency)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectFrequency);
 
 // import React from 'react';
 // import PropTypes from 'prop-types';

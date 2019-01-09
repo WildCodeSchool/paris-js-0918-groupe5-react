@@ -6,7 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import DialogContent from '@material-ui/core/DialogContent';
 import FormControl from '@material-ui/core/FormControl';
 import { connect } from 'react-redux';
-import { recordSimpleSelect } from '../../actions/eventActions';
+// import { recordSimpleSelect } from '../../actions/eventActions';
 
 import SelectTitle from './SelectTitle';
 import SelectDate from './SelectDate';
@@ -43,11 +43,11 @@ class DialogContener extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  onBlur = () => {
-    const { frequency, responsible, category } = this.state;
-    const { recordSimpleSelect } = this.props;
-    recordSimpleSelect(frequency, responsible, category);
-  }
+  // onBlur = () => {
+  //   const { frequency, responsible, category } = this.state;
+  //   const { recordSimpleSelect } = this.props;
+  //   recordSimpleSelect(frequency, responsible, category);
+  // }
 
   render() {
     const { classes, startingDate } = this.props;
@@ -61,7 +61,7 @@ class DialogContener extends React.Component {
         <form
           className={classes.root}
           autoComplete="off"
-          onBlur={() => this.onBlur()}
+          // onBlur={() => this.onBlur()}
         >
 
 
@@ -91,7 +91,7 @@ class DialogContener extends React.Component {
 
 DialogContener.propTypes = {
   classes: PropTypes.object.isRequired,
-  recordSimpleSelect: PropTypes.func.isRequired,
+  // recordSimpleSelect: PropTypes.func.isRequired,
   startingDate: PropTypes.object.isRequired,
 };
 
@@ -99,4 +99,4 @@ DialogContener.propTypes = {
 const mapStateToProps = state => state;
 
 export default connect(mapStateToProps,
-  { recordSimpleSelect })(withStyles(styles)(DialogContener));
+  {})(withStyles(styles)(DialogContener));

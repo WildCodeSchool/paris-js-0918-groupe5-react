@@ -1,9 +1,10 @@
 import axios from 'axios';
 import {
   RECORD_EVENT_TITLE,
-  RECEIVER_ADDRESS_SELECTED,
+  // RECEIVER_ADDRESS_SELECTED,
+  RECORD_RESPONSIBLE,
+  RECORD_FREQUENCY,
   RECORD_EVENT_ADDRESS,
-  RECORD_SIMPLE_SELECT,
   RECORD_SWITCH_LABEL,
   RECORD_DATE,
   SEND_TO_DB,
@@ -25,15 +26,15 @@ export const recordTitle = title => ({
   title,
 });
 
-export const receiverAddressChecked = receiverAddressChecked => ({
-  type: RECEIVER_ADDRESS_SELECTED,
-  receiverAddressChecked,
-  // address: receiverAddressChecked ? 'receiver address' : '',
-});
+// export const receiverAddressChecked = receiverAddressChecked => ({
+//   type: RECEIVER_ADDRESS_SELECTED,
+//   receiverAddressChecked,
+// });
 
 
-export const recordAddress = preciseAddress => ({
+export const recordAddress = (receiverAddressChecked, preciseAddress) => ({
   type: RECORD_EVENT_ADDRESS,
+  receiverAddressChecked,
   address: preciseAddress,
 });
 
@@ -45,14 +46,16 @@ export const recordDateAndTime = (begingDate, endingDate) => (dispatch) => {
   });
 };
 
-export const recordSimpleSelect = (frequency, responsible, category) => (dispatch) => {
-  dispatch({
-    type: RECORD_SIMPLE_SELECT,
-    frequency,
-    responsible,
-    category,
-  });
-};
+export const recordResponsible = responsible => ({
+  type: RECORD_RESPONSIBLE,
+  responsible,
+});
+
+
+export const recordFrequency = frequency => ({
+  type: RECORD_FREQUENCY,
+  frequency,
+});
 
 export const recordSwitchLabels = (
   visibleEvent,
