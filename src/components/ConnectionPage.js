@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { displayAppBar } from '../actions/displayActions';
+import CaregiversForm from './Caregiver/CaregiverForm';
 
 class ConnectionPage extends Component {
   state = {
@@ -48,7 +49,9 @@ class ConnectionPage extends Component {
             <input type="password" name="password" />
           </label>
           <button type="submit">Valider</button>
+          <CaregiversForm />
         </form>
+        
       </div>
     );
   }
