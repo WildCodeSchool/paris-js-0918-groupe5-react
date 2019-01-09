@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import getServerAuthority from '../../config/getServerAuthority';
 // import ContactModale from './ContactModale';
 import ContactModal2 from './ContactModal2';
 import ContactButton from './ContactButton';
@@ -18,7 +19,7 @@ class Contact extends Component {
 
     // loading the contacts list
     componentDidMount() {
-      axios.get('http://localhost:4243/contacts')
+      axios.get(`${getServerAuthority()}/contacts`)
         .then(console.log('componentdidmount !'))
         .then(res => this.setState({
           contactsList: res.data,
@@ -50,7 +51,7 @@ class Contact extends Component {
         category,
       };
       // posting the infos on the database
-      axios.post('http://localhost:4243/contacts', contact)
+      axios.post(`${getServerAuthority()}/contacts`, contact)
       // .then allows to execute code when a promise is solved
         .then((res) => {
           // res represents the response of the server (the contact transformed to json)

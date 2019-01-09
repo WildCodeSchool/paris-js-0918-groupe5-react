@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import getServerAuthority from '../../config/getServerAuthority';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ChampsCaregivers from './ChampsCaregiver';
 import Captcha from './Captcha';
-import axios from 'axios';
+
 
 export default class FormDialog extends React.Component {
   state = {
@@ -24,7 +26,7 @@ export default class FormDialog extends React.Component {
   };
 
   handleValidation = () => {
-    axios.get('http://localhost:4243/user')
+    axios.get(`${getServerAuthority()}/user`)
 
       .then(res => this.setState({
         userList: res.data,

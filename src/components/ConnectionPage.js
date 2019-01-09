@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import getServerAuthority from '../config/getServerAuthority';
 import { displayAppBar } from '../actions/displayActions';
 
 class ConnectionPage extends Component {
@@ -17,7 +18,7 @@ class ConnectionPage extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(e.target.email.value, e.target.password.value);
-    axios.post('http://localhost:4244/auth/signin', {
+    axios.post(`${getServerAuthority()}/auth/signin`, {
       email: e.target.email.value,
       password: e.target.password.value,
     }).then((res) => {
