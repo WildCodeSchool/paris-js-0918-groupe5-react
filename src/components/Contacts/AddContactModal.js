@@ -1,10 +1,13 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+// import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
+// import SimpleSelect from './SimpleSelect';
 import { renderTextField, radioButton, renderSelectField } from './reduxFormElements';
 
 // valide allows to detect errors (see reduxFormElements.js)
@@ -33,7 +36,6 @@ const validate = (values) => {
 };
 
 const AddContactModal = (props) => {
-  /* eslint-disable react/prop-types */
   const {
     addContactModalIsOpen,
     handleClose,
@@ -44,7 +46,6 @@ const AddContactModal = (props) => {
     // preferenceOfContact,
     // handlePreferenceOfContact,
   } = props;
-  /* eslint-enable react/prop-types */
 
   return (
     <div>
@@ -136,6 +137,13 @@ const AddContactModal = (props) => {
 //   title: state.form.title,
 //   firstName: state.form.firstName,
 // });
+
+AddContactModal.propTypes = {
+  classes: PropTypes.func.isRequired,
+  handleValidation: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  addContactModalIsOpen: PropTypes.bool.isRequired,
+};
 
 export default reduxForm({
   form: 'AddContactModal', // a unique identifier for this form

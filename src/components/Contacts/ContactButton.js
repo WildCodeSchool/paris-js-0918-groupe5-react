@@ -10,13 +10,12 @@ const styles = theme => ({
     border: '1px solid #FFD694',
     '&:hover': {
       backgroundColor: '#FFE7C0',
-    }
+    },
   },
 
 });
 
 const ContactButton = (props) => {
-
   const { handleClickOpen } = props;
   const { classes } = props;
 
