@@ -11,6 +11,7 @@ import Icons from '../Icons';
 
 import ContactButton from './ContactButton';
 
+// eslint-disable-next-line no-undef
 const token = localStorage.getItem('token');
 
 const styles = theme => ({
@@ -38,15 +39,15 @@ class Contact extends Component {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-        // .then(res => console.log(res.data));
-        .then(res => this.setState({
+      }).then(
+        res => this.setState({
           contactsList: res.data,
         }),
-        );
+      );
     }
 
     // generic function to open different modals
+    // eslint-disable-next-line no-unused-vars
     handleClickOpen = modal => (e) => {
       this.setState({ [modal]: true });
     };
@@ -57,6 +58,7 @@ class Contact extends Component {
       this.setState({ displayContactModalIsOpen: true });
     }
 
+    // eslint-disable-next-line no-unused-vars
     handleClose = modal => (e) => {
       this.setState({ [modal]: false });
     };
@@ -101,14 +103,8 @@ class Contact extends Component {
         },
         data: contact,
       })
-      // .post('http://localhost:4244/contacts', contact)
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-      // // .then allows to execute code when a promise is solved
         .then((res) => {
           // res represents the response of the server (the contact transformed to json)
-          console.log('ma data : ', res.data);
           contactsList.push(res.data);
           this.setState({ contactsList });
         })
