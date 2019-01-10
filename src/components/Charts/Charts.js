@@ -23,21 +23,21 @@ class Charts extends Component {
     this.createVisitsAbsencesArrays();
   };
 
-  // returns an array containing the seven last days (date format ex: "2018-12-20")
+  // returns an array containing the seven last days (date format ex: "Thu Jan 03 2019")
   getLast7Days = () => {
     const result = [];
-    for (let i = 0; i < 7; i += 1) {
+    for (let i = 0; i < 7; i++) {
       let d = new Date();
       d.setDate(d.getDate() - i - 1);
       d = d.toString().slice(0, 15);
       result.unshift(d);
     }
-    console.log('getLast7Days', result);
+    // console.log('getLast7Days', result);
     return result;
   };
 
   // formats sqlite dates from DB so they can be compared with getLast7Days() dates
-  // ex: "2018-12-20T13:41:54.111Z" => "2018-12-20"
+  // ex: "2019-01-03T13:41:54.111Z" => "Thu Jan 03 2019"
   formatDateData = events => events.map((e) => {
     e.dateBeginning = String(moment(e.dateBeginning)).slice(0, 15);
     return e;
@@ -68,7 +68,7 @@ class Charts extends Component {
     try {
       const [eventsData, lastWeek] = await Promise.all([this.getEventsData(), this.getLast7Days()]);
       const result = eventsData.filter(e => lastWeek.includes(e.dateBeginning));
-      console.log('filterEvents', result);
+      // console.log('filterEvents', result);
       return result;
     } catch (err) {
       console.error(err);
@@ -76,7 +76,7 @@ class Charts extends Component {
   };
 
   // turns our previous week dates into simpler french day names
-  // ex: "2018-12-20" => "Mercredi 12"
+  // ex: "Thu Jan 03 2019" => "JEU 03"
   createDayNamesArray = async () => {
     try {
       const arr = await this.getLast7Days();
@@ -94,7 +94,7 @@ class Charts extends Component {
         }
       });
       this.setState({ dayNamesArray: result });
-      console.log('createDayNamesArray', this.state.dayNamesArray);
+      // console.log('createDayNamesArray', this.state.dayNamesArray);
     } catch (err) {
       console.error(err);
     }
@@ -124,7 +124,7 @@ class Charts extends Component {
         result.push(currentMood);
       }
       this.setState({ moodArray: result });
-      console.log('createMoodArray', result);
+      // console.log('createMoodArray', result);
     } catch (err) {
       console.error(err);
     }
@@ -145,9 +145,9 @@ class Charts extends Component {
         for (const e of events) {
           if(e.dateBeginning === day) {
             if(e.mood !== null) {
-              dailyVisits ++;
+              dailyVisits++;
             } else {
-              dailyAbsences ++;
+              dailyAbsences++;
             }
           }
         }
@@ -156,8 +156,8 @@ class Charts extends Component {
       }
       this.setState({ visitsArray });
       this.setState({ absencesArray });
-      console.log('this.state.absencesArray', this.state.absencesArray)
-      console.log('this.state.visitsArray', this.state.visitsArray)
+      // console.log('this.state.absencesArray', this.state.absencesArray)
+      // console.log('this.state.visitsArray', this.state.visitsArray)
     } catch (err) {
       console.error(err);
     }
