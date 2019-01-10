@@ -1,4 +1,5 @@
 import axios from 'axios';
+import getServerAuthority from '../config/getServerAuthority';
 import {
   RECORD_EVENT_INFO,
   RECORD_BOOL_AT_HOME_EVENT,
@@ -9,7 +10,7 @@ import {
   // GET_EVENTS_FROM_DB,
 } from './types';
 
-const apiUrl = 'http://localhost:4243/events';
+const apiUrl = `${getServerAuthority()}/events`;
 
 
 export const recordAllInfo = allInfo => (dispatch) => {

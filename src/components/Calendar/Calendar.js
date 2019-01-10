@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import axios from 'axios';
+import getServerAuthority from '../../config/getServerAuthority';
 import DialogToCreateEvent from './DialogToCreateEvent';
 import './Calendar.css';
 // import myEventsList from '../../enventsTestList';
@@ -18,7 +19,7 @@ class Calendar extends Component {
   };
 
   componentDidMount() {
-    const apiUrl = 'http://localhost:4244/events';
+    const apiUrl = `${getServerAuthority()}/events`;
     axios.get(`${apiUrl}`)
       .then(res => this.setState({
         isLoaded: true,
