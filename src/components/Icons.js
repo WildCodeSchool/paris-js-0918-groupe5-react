@@ -10,14 +10,14 @@ import Input from '@material-ui/icons/Input';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  root: {
-    color: theme.palette.text.primary,
-  },
-  icon: {
-    // margin: theme.spacing.unit,
-    marginLeft: theme.spacing.unit,
-    fontSize: 20,
-  },
+  // root: {
+  //   color: theme.palette.text.primary,
+  // },
+  // icon: {
+  //   // margin: theme.spacing.unit,
+  //   marginLeft: theme.spacing.unit,
+  //   fontSize: 20,
+  // },
 });
 
 function Icons({ classes, name }) {
