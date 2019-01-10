@@ -18,7 +18,7 @@ class Calendar extends Component {
   };
 
   componentDidMount() {
-    const apiUrl = 'http://localhost:4243/events';
+    const apiUrl = 'http://localhost:4244/events';
     axios.get(`${apiUrl}`)
       .then(res => this.setState({
         isLoaded: true,
@@ -53,19 +53,7 @@ class Calendar extends Component {
         start: new Date(),
         end: new Date(),
         allDay: false,
-      },
-      {
-        title: allEvents[0].title,
-        start: new Date(allEvents[0].begingDate),
-        end: new Date(allEvents[0].begingDate),
-        desc: 'Power lunch',
-      },
-      {
-        title: allEvents[1].title,
-        start: new Date(allEvents[1].begingDate),
-        end: new Date(allEvents[1].begingDate),
-        desc: 'Power lunch',
-      },
+      }
     ];
     // console.log('=======================');
     // console.log('allEvents ', allEvents);

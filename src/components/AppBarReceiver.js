@@ -106,6 +106,8 @@ const AppBarReceiver = (props) => {
             enableHeading={false}
             active={0}
             className={classes.coverflow}
+            currentFigureScale={1.2}
+            otherFigureScale={0.7}
           >
             <div
               // onClick={() => fn()}
