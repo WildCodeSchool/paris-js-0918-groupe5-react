@@ -137,9 +137,9 @@ class Contact extends Component {
                 {`${e.title} ${e.firstName} ${e.lastName}`}
                 <br />
                 {`${e.category}`}
-                <Icons name="EditIcon" />
-                <Icons name="DeleteForeverIcon" />
               </Button>
+              <Icons name="EditIcon" />
+              <Icons name="DeleteForeverIcon" />
             </p>))}
 
           {selectedContact !== null && (
