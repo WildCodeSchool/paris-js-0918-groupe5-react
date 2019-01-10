@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import axios from 'axios';
-import getServerAuthority from '../../config/getServerAuthority';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import getServerAuthority from '../../config/getServerAuthority';
 import AddContactModal from './AddContactModal';
 import DisplayContactModal from './DisplayContactModal';
+import Icons from '../Icons';
 
 import ContactButton from './ContactButton';
 
@@ -136,6 +137,8 @@ class Contact extends Component {
                 {`${e.title} ${e.firstName} ${e.lastName}`}
                 <br />
                 {`${e.category}`}
+                <Icons name="EditIcon" />
+                <Icons name="DeleteForeverIcon" />
               </Button>
             </p>))}
 
