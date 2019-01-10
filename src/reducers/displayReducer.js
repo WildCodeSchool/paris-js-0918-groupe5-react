@@ -1,7 +1,7 @@
 import { DISPLAY_APP_BAR } from '../actions/types';
 
 const initialState = {
-  appBarIsDisplayed: false,
+  appBarIsDisplayed: true,
 };
 
 export default (state = initialState, action) => {
