@@ -36,9 +36,11 @@ class Contact extends Component {
           Authorization: `Bearer ${token}`,
         },
       })
+        // .then(res => console.log(res.data));
         .then(res => this.setState({
           contactsList: res.data,
-        }));
+        }),
+        );
     }
 
     // generic function to open different modals
