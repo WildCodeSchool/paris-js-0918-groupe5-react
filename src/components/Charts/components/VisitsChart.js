@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 
 const VisitsChart = (props) => {
@@ -67,7 +68,7 @@ const VisitsChart = (props) => {
                 color: '#dcdad5',
                 zeroLineColor: '#dcdad5',
                 lineWidth: 2,
-                zeroLineWidth: 2
+                zeroLineWidth: 2,
               },
             }],
           },
@@ -101,6 +102,19 @@ const VisitsChart = (props) => {
       />
     </div>
   );
+};
+
+
+VisitsChart.propTypes = {
+  visitsArray: PropTypes.array,
+  absencesArray: PropTypes.array,
+  dayNamesArray: PropTypes.array,
+};
+
+VisitsChart.defaultProps = {
+  visitsArray: [],
+  absencesArray: [],
+  dayNamesArray: [],
 };
 
 export default VisitsChart;
