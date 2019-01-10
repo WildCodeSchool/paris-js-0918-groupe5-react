@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import axios from 'axios';
+import getServerAuthority from '../../config/getServerAuthority';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import AddContactModal from './AddContactModal';
 import DisplayContactModal from './DisplayContactModal';
+
 import ContactButton from './ContactButton';
 
 const token = localStorage.getItem('token');
@@ -31,7 +33,7 @@ class Contact extends Component {
     componentDidMount() {
       axios({
         method: 'GET',
-        url: 'http://localhost:4244/contacts',
+        url: `${getServerAuthority()}/contacts`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -92,7 +94,7 @@ class Contact extends Component {
       // posting the infos on the database
       axios({
         method: 'POST',
-        url: 'http://localhost:4244/contacts',
+        url: `${getServerAuthority()}/contacts`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

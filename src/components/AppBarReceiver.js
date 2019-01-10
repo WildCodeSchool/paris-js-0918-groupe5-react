@@ -10,9 +10,9 @@ import {
 import { Add as AddIcon } from '@material-ui/icons';
 import avatarOldMan from '../assets/avatar_old_man.png';
 import avatarOldWoman from '../assets/avatar_old_woman.png';
-import './AppBarReceiver.css';
 import ButtonsBar from './ButtonsBar';
 import MenuBar from './MenuBar';
+import './AppBarReceiver.css';
 
 const styles = theme => ({
   AppBarReceiver: {
