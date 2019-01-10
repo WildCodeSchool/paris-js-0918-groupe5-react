@@ -1,12 +1,13 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Dashboard from './components/Dashboard/Dashboard';
 
 // import RemainingComponent from './components/RemainingComponent';
 import AppBarGlobal from './components/AppBarGlobal';
+import ConnectionPage from './components/ConnectionPage';
 import Calendar from './components/Calendar/Calendar';
-
 import CaregiversForm from './components/Caregiver/CaregiverForm';
 import Contact from './components/Contacts/Contact';
 
@@ -43,15 +44,16 @@ const theme = createMuiTheme({
   },
 });
 
-const App = () => (
+const App = props => (
   <MuiThemeProvider theme={theme}>
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        <AppBarGlobal />
+        <Route exact path="/connexion" component={ConnectionPage} />
+        {props.appBarIsDisplayed && <AppBarGlobal />}
         <div className="spaceBtwAppBarAndRoutes">
-          <Route exact path="/" component={Dashboard} />
-          <Route path="/contact" component={Contact} />
+          <Route path="/tableau_de_bord" component={Dashboard} />
+          <Route path="/contacts" component={Contact} />
           <Route path="/création" component={CaregiversForm} />
           <Route path="/calendrier" component={Calendar} />
         </div>
@@ -62,5 +64,8 @@ const App = () => (
   </MuiThemeProvider>
 );
 
+const mapStateToProps = state => ({
+  appBarIsDisplayed: state.display.appBarIsDisplayed,
+});
 
-export default App;
+export default connect(mapStateToProps, null)(App);

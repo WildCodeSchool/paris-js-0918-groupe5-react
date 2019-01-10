@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 // import SimpleSelect from './SimpleSelect';
-import { renderTextField, radioButton, renderSelectField } from './reduxFormElements';
+import { renderTextField, radioButton, renderSelectField } from '../reduxFormElements';
 
 // valide allows to detect errors (see reduxFormElements.js)
 const validate = (values) => {

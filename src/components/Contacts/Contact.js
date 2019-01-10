@@ -8,6 +8,8 @@ import AddContactModal from './AddContactModal';
 import DisplayContactModal from './DisplayContactModal';
 import ContactButton from './ContactButton';
 
+const token = localStorage.getItem('token');
+
 const styles = theme => ({
   displayContactButton: {
     margin: theme.spacing.unit,
@@ -15,6 +17,7 @@ const styles = theme => ({
   },
 
 });
+
 
 class Contact extends Component {
     state = {
@@ -26,7 +29,13 @@ class Contact extends Component {
 
     // loading the contacts list
     componentDidMount() {
-      axios.get('http://localhost:4244/contacts')
+      axios({
+        method: 'GET',
+        url: 'http://localhost:4244/contacts',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then(res => this.setState({
           contactsList: res.data,
         }));
@@ -79,8 +88,19 @@ class Contact extends Component {
         comment,
       };
       // posting the infos on the database
-      axios.post('http://localhost:4244/contacts', contact)
-      // .then allows to execute code when a promise is solved
+      axios({
+        method: 'POST',
+        url: 'http://localhost:4244/contacts',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: contact,
+      })
+      // .post('http://localhost:4244/contacts', contact)
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+      // // .then allows to execute code when a promise is solved
         .then((res) => {
           // res represents the response of the server (the contact transformed to json)
           console.log('ma data : ', res.data);
@@ -102,7 +122,7 @@ class Contact extends Component {
 
       return (
         <div>
-          <h2>Mes contacts</h2> 
+          <h2>Mes contacts</h2>
           {contactsList.map(e => (
             <p key={e.id}>
               <Button
