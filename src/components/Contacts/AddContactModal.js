@@ -1,16 +1,11 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import PropTypes from 'prop-types';
+import {
+  Button, Dialog, DialogActions, DialogContent, DialogTitle,
+} from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
-// import SimpleSelect from './SimpleSelect';
 import { renderTextField, radioButton, renderSelectField } from '../reduxFormElements';
 
-// valide allows to detect errors (see reduxFormElements.js)
+// validate allows to detect errors (see reduxFormElements.js)
 const validate = (values) => {
   const errors = {};
   const requiredFields = [
@@ -25,7 +20,7 @@ const validate = (values) => {
       errors[field] = 'Champs requis';
     }
   });
-  // Vérify if the email has the good format
+  // Verify if the email has the good format
   if (
     values.email &&
     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
@@ -40,11 +35,7 @@ const AddContactModal = (props) => {
     addContactModalIsOpen,
     handleClose,
     handleValidation,
-    // category,
-    // handleCategory,
     classes,
-    // preferenceOfContact,
-    // handlePreferenceOfContact,
   } = props;
 
   return (
@@ -64,7 +55,7 @@ const AddContactModal = (props) => {
             name="title"
             component={radioButton}
             label="Titre"
-            buttonLabels={['Mme', 'M']}
+            buttonLabels={['Mme', 'M.']}
             required={false}
           />
           {/* renderTextField render a Material UI textField */}
@@ -81,7 +72,6 @@ const AddContactModal = (props) => {
             label="Nom"
             required
           />
-          {/* <SimpleSelect category={category} handleCategory={handleCategory} /> */}
           <Field
             classes={classes}
             name="category"
@@ -90,9 +80,10 @@ const AddContactModal = (props) => {
             required
           >
             <option value="" />
-            <option value="Médecin">Médecin</option>
-            <option value="Infirmer">Infirmer</option>
-            <option value="Jardinier">Jardinier</option>
+            <option value="Médical">Médical</option>
+            <option value="Paramédical">Paramédical</option>
+            <option value="Proches">Proches</option>
+            <option value="Autre">Autre</option>
           </Field>
           <Field
             name="email"
@@ -137,13 +128,6 @@ const AddContactModal = (props) => {
 //   title: state.form.title,
 //   firstName: state.form.firstName,
 // });
-
-AddContactModal.propTypes = {
-  classes: PropTypes.func.isRequired,
-  handleValidation: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  addContactModalIsOpen: PropTypes.bool.isRequired,
-};
 
 export default reduxForm({
   form: 'AddContactModal', // a unique identifier for this form

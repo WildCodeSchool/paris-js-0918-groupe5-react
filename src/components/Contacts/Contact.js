@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import axios from 'axios';
-import getServerAuthority from '../../config/getServerAuthority';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import getServerAuthority from '../../config/getServerAuthority';
 import AddContactModal from './AddContactModal';
 import DisplayContactModal from './DisplayContactModal';
+import Icons from '../Icons';
 
 import ContactButton from './ContactButton';
 
@@ -38,9 +39,11 @@ class Contact extends Component {
           Authorization: `Bearer ${token}`,
         },
       })
+        // .then(res => console.log(res.data));
         .then(res => this.setState({
           contactsList: res.data,
-        }));
+        }),
+        );
     }
 
     // generic function to open different modals
@@ -135,6 +138,8 @@ class Contact extends Component {
                 <br />
                 {`${e.category}`}
               </Button>
+              <Icons name="EditIcon" />
+              <Icons name="DeleteForeverIcon" />
             </p>))}
 
           {selectedContact !== null && (

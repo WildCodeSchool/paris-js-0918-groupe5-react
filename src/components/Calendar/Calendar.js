@@ -44,7 +44,7 @@ class Calendar extends Component {
       openDialog,
       startingDate,
       isLoaded,
-      allEvents,
+      // allEvents,
     } = this.state;
 
     if (!isLoaded) return <p>ça a pas charger !!!!!!!</p>;
