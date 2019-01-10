@@ -104,7 +104,6 @@ const VisitsChart = (props) => {
   );
 };
 
-
 VisitsChart.propTypes = {
   visitsArray: PropTypes.array,
   absencesArray: PropTypes.array,
