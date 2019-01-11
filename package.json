@@ -6,11 +6,8 @@
     "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
-<<<<<<< HEAD
-=======
     "chart.js": "^2.7.3",
     "date-fns": "^1.29.0",
->>>>>>> 8a540099b3ec887c6d9ab5ae8e87fbc463f74ea6
     "eslint-config-airbnb": "^17.1.0",
     "express": "^4.16.4",
     "express-favicon": "^2.0.1",

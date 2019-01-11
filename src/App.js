@@ -3,15 +3,11 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Dashboard from './components/Dashboard/Dashboard';
-
 // import RemainingComponent from './components/RemainingComponent';
-<<<<<<< HEAD
 // import AppBarGlobal from './components/AppBarGlobal';
-import ConnexionPage from './components/ConnexionPage';
-=======
+// import ConnexionPage from './components/ConnexionPage';
 import AppBarGlobal from './components/AppBarGlobal';
 import ConnectionPage from './components/ConnectionPage';
->>>>>>> 8a540099b3ec887c6d9ab5ae8e87fbc463f74ea6
 import Calendar from './components/Calendar/Calendar';
 import CaregiversForm from './components/Caregiver/CaregiverForm';
 import Contact from './components/Contacts/Contact';
