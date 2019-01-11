@@ -6,11 +6,23 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ChampsCaregivers from './ChampsCaregiver';
 import Captcha from './Captcha';
+import axios from 'axios';
 
 export default class FormDialog extends React.Component {
   state = {
     open: false,
+    caregivers: [],
+    title: '',
+    lastName: '',
+    firstname: '',
+    email: '',
+    phone: '',
+    password: '',
+    preferenceOfContact: '',
+    
   };
+
+  
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -20,7 +32,33 @@ export default class FormDialog extends React.Component {
     this.setState({ open: false });
   };
 
+  handleValidation = () => {
+    const {
+      title, 
+      lastName, 
+      firstname, 
+      email, 
+      phone, 
+      password, 
+      preferenceOfContact } = this.state
+    const newCaregiver = { 
+      title, 
+      lastName, 
+      firstname, 
+      email, 
+      phone, 
+      password, 
+      preferenceOfContact 
+    }
+    axios.post('http://localhost:4244/auth/signup', )
+
+      .then(res => this.setState({
+        userList: res.data,
+      }))
+  }
+  
   render() {
+    console.log('userList')
     return (
       <div>
         <Button onClick={this.handleClickOpen}>Inscription Aidant</Button>
@@ -39,7 +77,7 @@ export default class FormDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Fermer
             </Button>
-            <Button onClick={this.recordNew} color="primary">
+            <Button onClick={this.handleValidation} color="primary">
               Enregistrer
             </Button>
           </DialogActions>

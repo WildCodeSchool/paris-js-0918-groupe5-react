@@ -1,118 +1,172 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
-import PropTypes from 'prop-types';
 import axios from 'axios';
-// import ContactModale from './ContactModale';
-import ContactModal2 from './ContactModal2';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import AddContactModal from './AddContactModal';
+import DisplayContactModal from './DisplayContactModal';
 import ContactButton from './ContactButton';
-// import { reduxForm } from 'redux-form';
+
+const token = localStorage.getItem('token');
+
+const styles = theme => ({
+  displayContactButton: {
+    margin: theme.spacing.unit,
+    textTransform: 'capitalize',
+  },
+
+});
+
 
 class Contact extends Component {
     state = {
-      modalIsOpen: false,
+      addContactModalIsOpen: false,
+      displayContactModalIsOpen: false,
       contactsList: [],
-      category: '',
-      preferenceOfContact: 'SMS',
+      selectedContact: null,
     }
 
     // loading the contacts list
     componentDidMount() {
-      axios.get('http://localhost:4243/contacts')
-        .then(console.log('componentdidmount !'))
+      axios({
+        method: 'GET',
+        url: 'http://localhost:4244/contacts',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then(res => this.setState({
           contactsList: res.data,
         }));
     }
 
-    handleClickOpen = () => {
-      this.setState({ modalIsOpen: true });
+    // generic function to open different modals
+    handleClickOpen = modal => (e) => {
+      this.setState({ [modal]: true });
     };
 
-    handleClose = () => {
-      this.setState({ modalIsOpen: false });
+    handleSelectingContact = (id) => {
+      const { contactsList } = this.state;
+      this.setState({ selectedContact: contactsList[id - 1] });
+      this.setState({ displayContactModalIsOpen: true });
+    }
+
+    handleClose = modal => (e) => {
+      this.setState({ [modal]: false });
     };
+
+    // TEST FUNCTION!
+    handleAlert = () => {
+      this.setState({ addContactModalIsOpen: false });
+    }
 
     handleValidation = () => {
       const {
         contactsList,
-        category,
-        preferenceOfContact,
       } = this.state;
+
       const {
+        title,
         firstName,
         lastName,
-      } = this.props;
-      const contact = {
-        firstName,
-        lastName,
-        preferenceOfContact,
         category,
+        email,
+        phone,
+        preferenceOfContact,
+        comment,
+      } = this.props;
+
+      const contact = {
+        title,
+        firstName,
+        lastName,
+        category,
+        email,
+        phone,
+        preferenceOfContact,
+        comment,
       };
       // posting the infos on the database
-      axios.post('http://localhost:4243/contacts', contact)
-      // .then allows to execute code when a promise is solved
+      axios({
+        method: 'POST',
+        url: 'http://localhost:4244/contacts',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: contact,
+      })
+      // .post('http://localhost:4244/contacts', contact)
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+      // // .then allows to execute code when a promise is solved
         .then((res) => {
           // res represents the response of the server (the contact transformed to json)
           console.log('ma data : ', res.data);
           contactsList.push(res.data);
           this.setState({ contactsList });
-        });
-      console.log('Je valide !');
-      console.log('The firstname is : ', firstName);
-      console.log('The lastname is : ', lastName);
-      console.log('The category is : ', category);
-      console.log('The comPreference is : ', preferenceOfContact);
-      this.handleClose();
-    };
-
-    handleCategory = (e) => {
-      this.setState({ category: e.target.value });
-    };
-
-    handlePreferenceOfContact = (e) => {
-      this.setState({ preferenceOfContact: e.target.value });
-      console.log('handleCommunication: ');
+        })
+        .then(this.handleClose('addContactModalIsOpen'));
     };
 
     render() {
+      const { classes } = this.props;
+
       const {
-        modalIsOpen,
+        addContactModalIsOpen,
+        displayContactModalIsOpen,
         contactsList,
-        category,
-        preferenceOfContact,
+        selectedContact,
       } = this.state;
-      // console.log('modalIsOpen :', modalIsOpen);
+
       return (
         <div>
+          <h2>Mes contacts</h2>
           {contactsList.map(e => (
             <p key={e.id}>
-              {e.firstName} {e.lastName}
+              <Button
+                onClick={() => this.handleSelectingContact(e.id)}
+                className={classes.displayContactButton}
+              >
+                {`${e.title} ${e.firstName} ${e.lastName}`}
+                <br />
+                {`${e.category}`}
+              </Button>
             </p>))}
-          <ContactButton handleClickOpen={this.handleClickOpen} />
-          <ContactModal2
-            handleClose={this.handleClose}
+
+          {selectedContact !== null && (
+          <DisplayContactModal
+            handleClose={this.handleClose('displayContactModalIsOpen')}
+            displayContactModalIsOpen={displayContactModalIsOpen}
+            contactsList={contactsList}
+            selectedContact={selectedContact}
+          />)}
+          <ContactButton handleClickOpen={this.handleClickOpen('addContactModalIsOpen')} />
+          <AddContactModal
+            handleClose={this.handleClose('addContactModalIsOpen')}
             handleValidation={this.handleValidation}
-            modalIsOpen={modalIsOpen}
-            category={category}
-            handleCategory={this.handleCategory}
-            preferenceOfContact={preferenceOfContact}
-            handlePreferenceOfContact={this.handlePreferenceOfContact}
+            addContactModalIsOpen={addContactModalIsOpen}
           />
         </div>
       );
     }
 }
 
-Contact.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-};
 
+// récupérer le state qui est dans le store pour l'injecter dans les props de mon composant actuel
+// grace à mapStateToProps on peut utiliser this.props.poulet par exemple
 const mapStateToProps = state => ({
-  // formValueSelector allows to get fields in ContactModal named firstName
-  firstName: formValueSelector('ContactModal2')(state, 'firstName'),
-  lastName: formValueSelector('ContactModal2')(state, 'lastName'),
+  // formValueSelector allows to get fields in AddContactModal named firstName
+  title: formValueSelector('AddContactModal')(state, 'title'),
+  firstName: formValueSelector('AddContactModal')(state, 'firstName'),
+  lastName: formValueSelector('AddContactModal')(state, 'lastName'),
+  category: formValueSelector('AddContactModal')(state, 'category'),
+  email: formValueSelector('AddContactModal')(state, 'email'),
+  phone: formValueSelector('AddContactModal')(state, 'phone'),
+  preferenceOfContact: formValueSelector('AddContactModal')(state, 'preferenceOfContact'),
+  comment: formValueSelector('AddContactModal')(state, 'comment'),
 });
 
-export default connect(mapStateToProps, null)(Contact);
+// connect permet de connecter ton composant au store (actions, store ....)
+export default connect(mapStateToProps, null)(withStyles(styles)(Contact));

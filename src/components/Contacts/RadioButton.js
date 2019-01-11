@@ -12,7 +12,7 @@ const styles = theme => ({
     display: 'flex',
   },
   formControl: {
-    margin: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 3,
   },
   group: {
     margin: `${theme.spacing.unit}px 0`,
