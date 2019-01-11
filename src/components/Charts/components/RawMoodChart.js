@@ -62,7 +62,7 @@ const RawMoodChart = (props) => {
             text: 'HUMEUR',
             fontSize: 18,
             fontColor: '#fc8f72',
-            padding: 20,
+            padding: 25,
           },
           legend: {
             display: false,

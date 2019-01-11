@@ -74,7 +74,7 @@ const VisitsChart = (props) => {
           },
           layout: {
             padding: {
-              left: 0, // à modifier
+              left: 0,
               right: 0,
               top: 0,
               bottom: 0,
@@ -85,7 +85,7 @@ const VisitsChart = (props) => {
             text: 'VISITES',
             fontSize: 18,
             fontColor: '#fc8f72',
-            padding: 20,
+            padding: 25,
           },
           legend: {
             display: true,
@@ -96,6 +96,7 @@ const VisitsChart = (props) => {
               fontColor: '#b5b3af',
               fontStyle: 'bold',
               fontSize: 13,
+              padding: 20,
             },
           },
         }}
