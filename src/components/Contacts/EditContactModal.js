@@ -30,23 +30,27 @@ const validate = (values) => {
   return errors;
 };
 
-const AddContactModal = (props) => {
+const EditContactModal = (props) => {
   const {
-    addContactModalIsOpen,
+    editContactModalIsOpen,
     handleClose,
     handleValidation,
     classes,
+    selectedEditContact,
   } = props;
+
+  console.log('selectedEditContact : ', selectedEditContact);
 
   return (
     <div>
       <Dialog
-        open={addContactModalIsOpen}
+        open={editContactModalIsOpen}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          Ajouter un contact professionnel
+          Modifier la fiche contact
+          {/* {`${selectedEditContact.firstName} ${selectedEditContact.lastName}`} */}
         </DialogTitle>
         <DialogContent>
           {/* radioButton render a Material UI radioButton */}
@@ -130,6 +134,6 @@ const AddContactModal = (props) => {
 // });
 
 export default reduxForm({
-  form: 'AddContactModal', // a unique identifier for this form
+  form: 'EditContactModal', // a unique identifier for this form
   validate,
-})(AddContactModal);
+})(EditContactModal);

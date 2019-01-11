@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import getServerAuthority from '../../config/getServerAuthority';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ChampsCaregivers from './ChampsCaregiver';
 import Captcha from './Captcha';
-import axios from 'axios';
+
 
 export default class FormDialog extends React.Component {
   state = {
@@ -33,25 +35,24 @@ export default class FormDialog extends React.Component {
   };
 
   handleValidation = () => {
-    const {
-      title, 
-      lastName, 
-      firstname, 
-      email, 
-      phone, 
-      password, 
-      preferenceOfContact } = this.state
-    const newCaregiver = { 
-      title, 
-      lastName, 
-      firstname, 
-      email, 
-      phone, 
-      password, 
-      preferenceOfContact 
-    }
-    axios.post('http://localhost:4244/auth/signup', )
-
+    // const {
+    //   title, 
+    //   lastName, 
+    //   firstname, 
+    //   email, 
+    //   phone, 
+    //   password, 
+    //   preferenceOfContact } = this.state
+    // const newCaregiver = { 
+    //   title, 
+    //   lastName, 
+    //   firstname, 
+    //   email, 
+    //   phone, 
+    //   password, 
+    //   preferenceOfContact 
+    // }
+    axios.post(`${getServerAuthority()}/auth/signup`, )
       .then(res => this.setState({
         userList: res.data,
       }))
