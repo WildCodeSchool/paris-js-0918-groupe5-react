@@ -172,11 +172,11 @@ class Charts extends Component {
     } = this.state;
     return (
       <div>
-        <Grid container>
-          <Grid item md={6}>
+        <Grid container justify="center" spacing={32}>
+          <Grid item lg={6} md={8} sm={11} xs={12}>
             <VisitsChart absencesArray={absencesArray} visitsArray={visitsArray} dayNamesArray={dayNamesArray} />
           </Grid>
-          <Grid item md={6}>
+          <Grid item lg={6} md={8} sm={11} xs={12}>
             <MoodChart moodArray={moodArray} dayNamesArray={dayNamesArray} />
           </Grid>
         </Grid>
