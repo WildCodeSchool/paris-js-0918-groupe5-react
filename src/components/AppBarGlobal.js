@@ -8,7 +8,7 @@ const styles = {
   appBarGlobal: {
     position: 'sticky',
     top: 0,
-    zIndex: 3,
+    zIndex: 5,
   },
 };
 

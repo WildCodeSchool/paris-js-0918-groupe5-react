@@ -24,6 +24,7 @@ const initialState = {
   immediateNotif: false,
 };
 
+// si pas de valeur à ma state, prend la valeur d'initialstate
 export default (state = initialState, action) => {
   switch (action.type) {
     case RECORD_EVENT_TITLE:

@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import axios from 'axios';
+<<<<<<< HEAD
 import OpenDialog from './OpenDialog';
 import './style/Calendar.css';
+=======
+import getServerAuthority from '../../config/getServerAuthority';
+import DialogToCreateEvent from './DialogToCreateEvent';
+import './Calendar.css';
+// import myEventsList from '../../enventsTestList';
+>>>>>>> 8a540099b3ec887c6d9ab5ae8e87fbc463f74ea6
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -16,7 +23,11 @@ class Calendar extends Component {
   };
 
   componentDidMount() {
+<<<<<<< HEAD
     const apiUrl = 'http://localhost:4244/events';
+=======
+    const apiUrl = `${getServerAuthority()}/events`;
+>>>>>>> 8a540099b3ec887c6d9ab5ae8e87fbc463f74ea6
     axios.get(`${apiUrl}`)
       .then(res => this.setState({
         isLoaded: true,
@@ -41,9 +52,10 @@ class Calendar extends Component {
       openDialog,
       startingDate,
       isLoaded,
-      allEvents,
+      // allEvents,
     } = this.state;
 
+<<<<<<< HEAD
     if (!isLoaded) return <p>ça a pas chargé !!!!!!!</p>;
     const eventsList = [];
     allEvents.map(item => eventsList.push({
@@ -53,6 +65,21 @@ class Calendar extends Component {
       allDay: true,
     }));
 
+=======
+    if (!isLoaded) return <p>ça a pas charger !!!!!!!</p>;
+    const testevents = [
+      {
+        title: 'myfirst event',
+        start: new Date(),
+        end: new Date(),
+        allDay: false,
+      }
+    ];
+    // console.log('=======================');
+    // console.log('allEvents ', allEvents);
+    // console.log('testevents', testevents);
+    // console.log('=======================');
+>>>>>>> 8a540099b3ec887c6d9ab5ae8e87fbc463f74ea6
     return (
       <div className="calendar">
         {/* <GetEventList /> */}

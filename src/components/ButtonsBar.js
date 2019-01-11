@@ -7,16 +7,17 @@ import { Fab, Grid } from '@material-ui/core';
 const styles = {
   ButtonsBar: {
     width: '100%',
+    height: 0,
     background: '#65CDE2',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     flexDirection: 'column',
     alignItems: 'center',
   },
   buttonRoot: {
     backgroundColor: 'white',
     color: 'black',
-    bottom: '-24px',
+    top: '-24px',
     width: '159px',
   },
   link: {
