@@ -1,6 +1,7 @@
 import axios from 'axios';
 import getServerAuthority from '../config/getServerAuthority';
 import {
+  OPEN_DIALOG_EVENT,
   RECORD_EVENT_TITLE,
   RECORD_RESPONSIBLE,
   RECORD_FREQUENCY,
@@ -21,6 +22,10 @@ export const recordAllInfo = allInfo => (dispatch) => {
     }));
 };
 
+export const openEventDialog = () => ({
+  type: OPEN_DIALOG_EVENT,
+});
+
 export const recordTitle = title => ({
   type: RECORD_EVENT_TITLE,
   title,
@@ -32,13 +37,19 @@ export const recordAddress = (receiverAddressChecked, preciseAddress) => ({
   address: preciseAddress,
 });
 
-export const recordDateAndTime = (begingDate, endingDate) => (dispatch) => {
-  dispatch({
-    type: RECORD_DATE,
-    begingDate,
-    endingDate,
-  });
-};
+// export const recordDateAndTime = (begingDate, endingDate) => (dispatch) => {
+//   dispatch({
+//     type: RECORD_DATE,
+//     begingDate,
+//     endingDate,
+//   });
+// };
+
+export const recordDateAndTime = (startingDate, endingDate) => ({
+  type: RECORD_DATE,
+  startingDate,
+  endingDate,
+});
 
 export const recordResponsible = responsible => ({
   type: RECORD_RESPONSIBLE,

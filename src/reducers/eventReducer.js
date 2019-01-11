@@ -1,4 +1,5 @@
 import {
+  OPEN_DIALOG_EVENT,
   RECORD_EVENT_TITLE,
   RECORD_EVENT_ADDRESS,
   RECORD_RESPONSIBLE,
@@ -10,10 +11,11 @@ import {
 } from '../actions/types';
 
 const initialState = {
+  isOpen: false,
   title: '',
   receiverAddressChecked: true,
   address: 'Receiver Address',
-  begingDate: '',
+  startingDate: '',
   endingDate: '',
   frequency: '',
   responsible: '',
@@ -27,6 +29,11 @@ const initialState = {
 // si pas de valeur à ma state, prend la valeur d'initialstate
 export default (state = initialState, action) => {
   switch (action.type) {
+    case OPEN_DIALOG_EVENT:
+      return {
+        ...state,
+        isOpen: !state.isOpen,
+      };
     case RECORD_EVENT_TITLE:
       return {
         ...state,
@@ -56,7 +63,7 @@ export default (state = initialState, action) => {
     case RECORD_DATE:
       return {
         ...state,
-        begingDate: action.begingDate,
+        startingDate: action.startingDate,
         endingDate: action.endingDate,
       };
     case RECORD_SWITCH_LABEL:
@@ -70,6 +77,7 @@ export default (state = initialState, action) => {
     case SEND_TO_DB:
       return {
         ...state,
+        isOpen: false,
       };
     default:
       return state;

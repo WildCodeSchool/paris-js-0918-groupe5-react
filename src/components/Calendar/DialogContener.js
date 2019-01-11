@@ -39,7 +39,8 @@ const DialogContener = ({ classes, startingDate, frequency }) => {
       <DialogContent>
         <SelectTitle />
         <SelectReceiverAddress />
-        <SelectDate startingDate={startingDate} />
+        {/* <SelectDate startingDate={startingDate} /> */}
+        <SelectDate />
         <form className={classes.root} autoComplete="off">
           <FormControl required className={classes.formControl}>
             <InputLabel htmlFor="responsible-required">Responsable</InputLabel>
@@ -69,7 +70,8 @@ const DialogContener = ({ classes, startingDate, frequency }) => {
     <DialogContent>
       <SelectTitle />
       <SelectReceiverAddress />
-      <SelectDate startingDate={startingDate} />
+      {/* <SelectDate startingDate={startingDate} /> */}
+      <SelectDate />
       <form
         className={classes.root}
         autoComplete="off"
@@ -105,7 +107,7 @@ const DialogContener = ({ classes, startingDate, frequency }) => {
 DialogContener.propTypes = {
   classes: PropTypes.object.isRequired,
   frequency: PropTypes.string.isRequired,
-  startingDate: PropTypes.object.isRequired,
+  // startingDate: PropTypes.object.isRequired,
 };
 
 
@@ -113,5 +115,4 @@ const mapStateToProps = state => ({
   frequency: state.event.frequency,
 });
 
-export default connect(mapStateToProps,
-  {})(withStyles(styles)(DialogContener));
+export default connect(mapStateToProps, {})(withStyles(styles)(DialogContener));

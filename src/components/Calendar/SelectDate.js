@@ -6,13 +6,16 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { recordDateAndTime } from '../../actions/eventActions';
 
+
+const getGoodFormat = date => moment(date).toISOString(true).substr(0, 19);
+
 const styles = () => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
     margin: 0,
   },
-  beginningDate: {
+  startingDate: {
     marginRight: '1.7vw',
     width: 260,
   },
@@ -21,25 +24,23 @@ const styles = () => ({
   },
 });
 
-class DateAndTimePickers extends Component {
+class SelectDate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      beginningDate: moment(props.startingDate).toISOString(true).substr(0, 19),
-      endingDate: moment(props.startingDate).toISOString(true).substr(0, 19),
-    };
-    DateAndTimePickers.propTypes = {
-      startingDate: PropTypes.object.isRequired,
-      record: PropTypes.func.isRequired,
-      classes: PropTypes.object.isRequired,
+      // startingDate: moment(props.startingDate).toISOString(true).substr(0, 19),
+      // endingDate: moment(props.startingDate).toISOString(true).substr(0, 19),
+      // startingDate: props.startingDate,
+      // endingDate: props.startingDate,
     };
   }
 
-  componentDidMount() {
-    const { beginningDate, endingDate } = this.state;
-    const { record } = this.props;
-    record(beginningDate, endingDate);
-  }
+  // componentDidMount() {
+  //   const { startingDate, endingDate } = this.props;
+  //   console.log('didMoount', startingDate, endingDate);
+  //   const { record } = this.props;
+  //   record(startingDate, endingDate);
+  // }
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -47,12 +48,17 @@ class DateAndTimePickers extends Component {
 
   render() {
     const { classes, record } = this.props;
-    const { beginningDate, endingDate } = this.state;
+    // const { startingDate, endingDate } = this.state;
+    const { startingDate, endingDate } = this.props;
+    console.log('render', startingDate);
+
     const fieldInfos = [
       {
-        fieldInfo: 'beginningDate',
+        fieldInfo: 'startingDate',
         label: 'Date et heure de début',
-        defaultValue: beginningDate,
+        // defaultValue: getGoodFormat(startingDate),
+        defaultValue: startingDate,
+        // defaultValue: '2019-01-16T00:00:00',
       },
       {
         fieldInfo: 'endingDate',
@@ -74,17 +80,26 @@ class DateAndTimePickers extends Component {
             InputLabelProps={{ shrink: true }}
             name={item.fieldInfo}
             onChange={this.handleChange}
-            onBlur={() => record(beginningDate, endingDate)}
+            onBlur={() => record(startingDate, endingDate)}
           />))}
       </form>
     );
   }
 }
 
-const mapStateToProps = state => state;
+SelectDate.propTypes = {
+  // startingDate: PropTypes.object.isRequired,
+  record: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => ({
+  startingDate: state.event.startingDate,
+  endingDate: state.event.endingDate,
+});
 
 const mapDispatchToProps = dispatch => ({
   record: (begin, end) => dispatch(recordDateAndTime(begin, end)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(DateAndTimePickers));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SelectDate));

@@ -1,70 +1,45 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { recordAllInfo } from '../../actions/eventActions';
+import { recordAllInfo, openEventDialog } from '../../actions/eventActions';
 
 import DialogContener from './DialogContener';
 
-class DialogToCreateEvent extends Component {
-  constructor() {
-    super();
-    this.state = {
-    };
-    DialogToCreateEvent.propTypes = {
-      openOrNot: PropTypes.bool.isRequired,
-      startingDate: PropTypes.object.isRequired,
-      allInfo: PropTypes.object.isRequired,
-      recordAllInfo: PropTypes.func.isRequired,
-      onOpen: PropTypes.func.isRequired,
-    };
-  }
+const DialogToCreateEvent = ({
+  isOpen,
+  allInfo,
+  OpenOrCloseDialog,
+  recordAllInfo,
+}) => (
+  <Dialog open={isOpen} onClose={() => OpenOrCloseDialog()} aria-labelledby="form-dialog-title">
+    <DialogTitle id="form-dialog-title">Nouvel événement</DialogTitle>
+    <DialogContener />
+    <DialogActions>
+      <Button onClick={() => OpenOrCloseDialog()} color="primary">Annuler</Button>
+      <Button onClick={() => recordAllInfo(allInfo)} color="primary">Enregistrer</Button>
+    </DialogActions>
+  </Dialog>
+);
 
-  handleClose = () => {
-    const { onOpen } = this.props;
-    onOpen();
-  };
-
-  onSubmit = () => {
-    const { recordAllInfo, allInfo, onOpen } = this.props;
-    recordAllInfo(allInfo);
-    onOpen();
-    this.setState();
-  }
-
-  render() {
-    const { openOrNot, startingDate, allInfo } = this.props;
-    // const { title, adress } = this.state;
-    return (
-      <Dialog
-        open={openOrNot}
-        onClose={this.handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Nouvel événement</DialogTitle>
-        <DialogContener startingDate={startingDate} />
-        <DialogActions>
-          <Button onClick={this.handleClose} color="primary">Annuler</Button>
-          <Button onClick={() => this.onSubmit(allInfo)} color="primary">Enregistrer</Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-}
+DialogToCreateEvent.propTypes = {
+  allInfo: PropTypes.object.isRequired,
+  recordAllInfo: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   allInfo: state.event,
+  isOpen: state.event.isOpen,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    recordAllInfo,
-  },
-)(DialogToCreateEvent);
+const mapDispatchToProps = dispatch => ({
+  recordAllInfo: allInfo => dispatch(recordAllInfo(allInfo)),
+  OpenOrCloseDialog: bool => dispatch(openEventDialog(bool)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DialogToCreateEvent);
