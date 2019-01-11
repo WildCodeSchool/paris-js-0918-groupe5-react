@@ -12,11 +12,11 @@ const styles = () => ({
     flexWrap: 'wrap',
     margin: 0,
   },
-  textField: {
-    width: 260,
-  },
   beginningDate: {
     marginRight: '1.7vw',
+    width: 260,
+  },
+  endingDate: {
     width: 260,
   },
 });
@@ -25,69 +25,57 @@ class DateAndTimePickers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      begingDate: moment(props.startingDate).toISOString(true).substr(0, 19),
+      beginningDate: moment(props.startingDate).toISOString(true).substr(0, 19),
       endingDate: moment(props.startingDate).toISOString(true).substr(0, 19),
     };
-
     DateAndTimePickers.propTypes = {
       startingDate: PropTypes.object.isRequired,
+      record: PropTypes.func.isRequired,
       classes: PropTypes.object.isRequired,
-      recordDateAndTime: PropTypes.func.isRequired,
     };
   }
 
   componentDidMount() {
-    const { begingDate, endingDate } = this.state;
-    const { recordDateAndTime } = this.props;
-    recordDateAndTime(begingDate, endingDate);
+    const { beginningDate, endingDate } = this.state;
+    const { record } = this.props;
+    record(beginningDate, endingDate);
   }
 
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
-  onBlur = () => {
-    const { begingDate, endingDate } = this.state;
-    const { recordDateAndTime } = this.props;
-    recordDateAndTime(begingDate, endingDate);
-  }
-
   render() {
-    const { classes } = this.props;
-    const { begingDate, endingDate } = this.state;
-    // console.log(begingDate, endingDate);
+    const { classes, record } = this.props;
+    const { beginningDate, endingDate } = this.state;
+    const fieldInfos = [
+      {
+        fieldInfo: 'beginningDate',
+        label: 'Date et heure de début',
+        defaultValue: beginningDate,
+      },
+      {
+        fieldInfo: 'endingDate',
+        label: 'Date et heure de fin',
+        defaultValue: endingDate,
+      },
+    ];
     return (
       <form className={classes.container} noValidate>
-        <TextField
-          required
-          className={classes.beginningDate}
-          id="beginningDate"
-          label="Date et heure de début"
-          type="datetime-local"
-          defaultValue={begingDate}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          name="begingDate"
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
-        <TextField
-          required
-          id="endingDate"
-          label="Date et heure de fin"
-          type="datetime-local"
-          defaultValue={endingDate}
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          name="endingDate"
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
+        {fieldInfos.map(item => (
+          <TextField
+            key={item.fieldInfo}
+            required
+            id={item.fieldInfo}
+            label={item.label}
+            type="datetime-local"
+            defaultValue={item.defaultValue}
+            className={classes[item.fieldInfo]}
+            InputLabelProps={{ shrink: true }}
+            name={item.fieldInfo}
+            onChange={this.handleChange}
+            onBlur={() => record(beginningDate, endingDate)}
+          />))}
       </form>
     );
   }
@@ -95,5 +83,8 @@ class DateAndTimePickers extends Component {
 
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps,
-  { recordDateAndTime })(withStyles(styles)(DateAndTimePickers));
+const mapDispatchToProps = dispatch => ({
+  record: (begin, end) => dispatch(recordDateAndTime(begin, end)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(DateAndTimePickers));

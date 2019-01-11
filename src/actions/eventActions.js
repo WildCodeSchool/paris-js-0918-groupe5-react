@@ -1,14 +1,13 @@
 import axios from 'axios';
 import {
   RECORD_EVENT_TITLE,
-  // RECEIVER_ADDRESS_SELECTED,
   RECORD_RESPONSIBLE,
   RECORD_FREQUENCY,
   RECORD_EVENT_ADDRESS,
+  RECORD_MULTIPLES_DAYS,
   RECORD_SWITCH_LABEL,
   RECORD_DATE,
   SEND_TO_DB,
-  // GET_EVENTS_FROM_DB,
 } from './types';
 
 const apiUrl = 'http://localhost:4244/events';
@@ -25,12 +24,6 @@ export const recordTitle = title => ({
   type: RECORD_EVENT_TITLE,
   title,
 });
-
-// export const receiverAddressChecked = receiverAddressChecked => ({
-//   type: RECEIVER_ADDRESS_SELECTED,
-//   receiverAddressChecked,
-// });
-
 
 export const recordAddress = (receiverAddressChecked, preciseAddress) => ({
   type: RECORD_EVENT_ADDRESS,
@@ -55,6 +48,11 @@ export const recordResponsible = responsible => ({
 export const recordFrequency = frequency => ({
   type: RECORD_FREQUENCY,
   frequency,
+});
+
+export const recordMultipleDays = days => ({
+  type: RECORD_MULTIPLES_DAYS,
+  days,
 });
 
 export const recordSwitchLabels = (

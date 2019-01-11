@@ -1,16 +1,58 @@
-import React from 'react';
-import Select from '@material-ui/core/Select';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-const SelectMultipleDays = () => (
-  <Select>
-    <Checkbox value="everyMonday">Tous les lundis</Checkbox>
-    <Checkbox value="eveyTuesday">Tous les mardis</Checkbox>
-    <Checkbox value="everyWednesday">Tous les mercredis</Checkbox>
-    <Checkbox value="everyThursday">Tous les jeudis</Checkbox>
-    <Checkbox value="everyFriday">Tous les vendredis</Checkbox>
-    <Checkbox value="everySaturday">Tous les samedis</Checkbox>
-  </Select>
-);
+import { recordMultipleDays } from '../../actions/eventActions';
 
-export default SelectMultipleDays;
+const selectedInArray = values => Object.keys(values).filter(day => values[day]);
+
+class SelectMultipleDays extends Component {
+  constructor() {
+    super();
+    this.state = {
+      everyMonday: false,
+      eveyTuesday: false,
+      everyWednesday: false,
+      everyThursday: false,
+      everyFriday: false,
+      everySaturday: false,
+      everySunday: false,
+    };
+    SelectMultipleDays.propTypes = {
+      record: PropTypes.func.isRequired,
+    };
+  }
+
+  handleChange = (name) => {
+    const { record } = this.props;
+    this.setState(prevState => ({ [name]: !prevState[name] }),
+      () => record(this.state));
+  };
+
+  render() {
+    return (
+      Object.entries(this.state).map(([day, checkedStatut]) => (
+        <FormControlLabel
+          key={day}
+          control={(
+            <Checkbox
+              checked={checkedStatut}
+              name={day}
+              onChange={() => this.handleChange(day)}
+            />)}
+          label={day}
+        />
+      ))
+    );
+  }
+}
+
+const mapStateToProps = state => state;
+
+const mapDispatchToProps = dispatch => ({
+  record: days => dispatch(recordMultipleDays(selectedInArray(days))),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectMultipleDays);

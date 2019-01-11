@@ -32,8 +32,10 @@ class DialogToCreateEvent extends Component {
   };
 
   onSubmit = () => {
-    const { recordAllInfo, allInfo } = this.props;
+    const { recordAllInfo, allInfo, onOpen } = this.props;
     recordAllInfo(allInfo);
+    onOpen();
+    this.setState();
   }
 
   render() {
@@ -46,9 +48,7 @@ class DialogToCreateEvent extends Component {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Nouvel événement</DialogTitle>
-
         <DialogContener startingDate={startingDate} />
-
         <DialogActions>
           <Button onClick={this.handleClose} color="primary">Annuler</Button>
           <Button onClick={() => this.onSubmit(allInfo)} color="primary">Enregistrer</Button>

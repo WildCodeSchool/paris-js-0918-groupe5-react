@@ -57,9 +57,6 @@ class SelectReceiverAddress extends React.Component {
           onChange={this.handleChange}
           onBlur={() => record(receiverAddressChecked, preciseAddress)}
         />
-        <br />
-        <br />
-        <br />
       </FormGroup>
     );
   }

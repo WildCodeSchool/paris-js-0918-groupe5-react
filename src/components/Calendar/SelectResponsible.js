@@ -37,7 +37,7 @@ class SelectResponsible extends Component {
         // inputProps={{ id: 'responsible-required' }}
         // className={classes.selectEmpty}
       >
-        {listOfcontact.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+        {listOfcontact.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
       </Select>
     );
   }

@@ -3,6 +3,7 @@ import {
   RECORD_EVENT_ADDRESS,
   RECORD_RESPONSIBLE,
   RECORD_FREQUENCY,
+  RECORD_MULTIPLES_DAYS,
   RECORD_SWITCH_LABEL,
   RECORD_DATE,
   SEND_TO_DB,
@@ -45,6 +46,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         frequency: action.frequency,
+      };
+    case RECORD_MULTIPLES_DAYS:
+      return {
+        ...state,
+        days: action.days,
       };
     case RECORD_DATE:
       return {

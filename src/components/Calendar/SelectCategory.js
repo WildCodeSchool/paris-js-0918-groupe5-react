@@ -1,22 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const SelectCategory = () => (
-  <Select
-  // value={category}
-  value="{category}"
-  // onChange={this.handleChange}
-    name="category"
-    // inputProps={{
-    //   id: 'category-required',
-    // }}
-    // className={classes.selectEmpty}
-  >
-    <MenuItem value="medical">Consultation médicale</MenuItem>
-    <MenuItem value="nurse">Soins infirmiers</MenuItem>
-    <MenuItem value="family">{'Visite d\'un proche'}</MenuItem>
-  </Select>
-);
+// import { recordFrequency } from '../../actions/eventActions';
 
-export default SelectCategory;
+const listOfCategories = ['medical', 'nurse', 'family'];
+
+class SelectCategory extends Component {
+  constructor() {
+    super();
+    this.state = {
+      category: '',
+    };
+    SelectCategory.propTypes = {
+      // record: PropTypes.func.isRequired,
+    };
+  }
+
+  handleChange = (event) => {
+    // const { record } = this.props;
+    this.setState({ category: event.target.value });
+    // record(event.target.value);
+  }
+
+  render() {
+    const { category } = this.state;
+    return (
+      <Select
+        value={category}
+        onChange={this.handleChange}
+        name="category"
+        // inputProps={{ id: 'frequency-required' }}
+        // className={classes.selectEmpty}
+      >
+        {listOfCategories.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+      </Select>
+    );
+  }
+}
+
+const mapStateToProps = state => state;
+
+const mapDispatchToProps = () => ({
+  // record: category => dispatch(recordCat(category)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectCategory);
