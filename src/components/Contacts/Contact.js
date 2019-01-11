@@ -56,13 +56,6 @@ class Contact extends Component {
       this.setState({ [modal]: true });
     };
 
-    // eslint-disable-next-line no-unused-vars
-    handleEditContactModal = (modal, id) => (e) => {
-      const { contactsList } = this.state;
-      this.setState({ selectedEditContact: contactsList[id - 1] });
-      this.setState({ [modal]: true });
-    }
-
     handleDisplayContact = (id) => {
       const { contactsList } = this.state;
       this.setState({ selectedContact: contactsList[id - 1] });
@@ -164,7 +157,7 @@ class Contact extends Component {
       })
         .then((res) => {
           // res represents the response of the server (the contact transformed to json)
-          contactsList.push(res.data);
+          contactsList[id] = res.data;
           this.setState({ contactsList });
         })
         .then(this.handleClose('contactModalIsOpen'));
