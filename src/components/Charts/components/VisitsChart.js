@@ -74,10 +74,10 @@ const VisitsChart = (props) => {
           },
           layout: {
             padding: {
-              left: 50,
-              right: 30,
-              top: 15,
-              bottom: 15,
+              left: 0, // à modifier
+              right: 0,
+              top: 0,
+              bottom: 0,
             },
           },
           title: {
@@ -89,7 +89,7 @@ const VisitsChart = (props) => {
           },
           legend: {
             display: true,
-            position: 'left',
+            position: 'bottom',
             reverse: true,
             labels: {
               boxWidth: 14,

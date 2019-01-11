@@ -4,11 +4,7 @@ import Charts from '../Charts/Charts';
 
 const Dashboard = () => (
   <div className="Dashboard">
-    <Grid container spacing={0}>
-      <Grid item xs={10}>
-        <Charts />
-      </Grid>
-    </Grid>
+    <Charts />
   </div>
 );
 
