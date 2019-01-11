@@ -9,8 +9,7 @@ const MoodEmoticons = () => (
     height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center',
   }}
   >
-    {/* <img src="https://via.placeholder.com/60x200" alt="emoticons" /> */}
-    <Grid container direction="column" justify="space-between" alignItems="flex-end" style={{ height: '75%', paddingTop: 35 }}>
+    <Grid container direction="column" justify="space-between" alignItems="flex-end" style={{ height: '73%', paddingTop: 33 }}>
       <Grid item>
         <div style={{ color: '#65cde2' }}>
           <SentimentSatisfiedAlt />
