@@ -45,7 +45,14 @@ export const radioButton = ({
     </FormLabel>
     <RadioGroup {...input} {...rest} value={value}>
       {buttonLabels.map(e => (
-        <FormControlLabel key={e} value={e} control={<Radio />} label={e} />
+        <FormControlLabel
+          key={e}
+          value={e}
+          control={
+            <Radio />
+          }
+          label={e}
+        />
       ))}
     </RadioGroup>
   </FormControl>

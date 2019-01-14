@@ -97,8 +97,6 @@ class Contact extends Component {
         comment,
       };
 
-      // envoyer 1 si modifier, 0 si ajouter
-
       // posting the infos on the database
       axios({
         method: 'POST',
@@ -110,8 +108,8 @@ class Contact extends Component {
       })
         .then((res) => {
           // res represents the response of the server (the contact transformed to json)
-          contactsList.push(res.data);
-          this.setState({ contactsList });
+          // concatenation
+          this.setState({ contactsList: [...contactsList, res.data] });
         })
         .then(this.handleClose('contactModalIsOpen'));
     };
@@ -143,25 +141,55 @@ class Contact extends Component {
         comment,
       };
 
-      this.setState({ selectedEditContact: contactsList[id - 1] });
-      this.setState({ contactModalIsOpen: true });
+      console.log(contactsList[id - 1]);
 
-      // posting the modifications on the database
-      axios({
-        method: 'PUT',
-        url: `${getServerAuthority()}/contacts`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: contact,
-      })
-        .then((res) => {
-          // res represents the response of the server (the contact transformed to json)
-          contactsList[id] = res.data;
-          this.setState({ contactsList });
-        })
-        .then(this.handleClose('contactModalIsOpen'));
+      this.setState({ selectedEditContact: contactsList[id - 1], contactModalIsOpen: true });
+      // this.setState({ contactModalIsOpen: true });
     };
+
+    validateEditContact = (param) => {
+      console.log('myparams : ', param);
+      // const {
+      //   contactsList,
+      // } = this.state;
+
+      // const {
+      //   title,
+      //   firstName,
+      //   lastName,
+      //   category,
+      //   email,
+      //   phone,
+      //   preferenceOfContact,
+      //   comment,
+      // } = this.props;
+
+      // const contact = {
+      //   title,
+      //   firstName,
+      //   lastName,
+      //   category,
+      //   email,
+      //   phone,
+      //   preferenceOfContact,
+      //   comment,
+      // };
+
+      // axios({
+      //   method: 'PUT',
+      //   url: `${getServerAuthority()}/contacts`,
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      //   data: contact,
+      // })
+      //   .then((res) => {
+      //     // res represents the response of the server (the contact transformed to json)
+      //     contactsList[id] = res.data;
+      //     this.setState({ contactsList });
+      //   })
+      //   .then(this.handleClose('contactModalIsOpen'));
+    }
 
     render() {
       const { classes } = this.props;
@@ -203,19 +231,12 @@ class Contact extends Component {
             contactsList={contactsList}
             selectedContact={selectedContact}
           />)}
-          {/* {selectedEditContact !== null && (
-            <EditContactModal
-              handleClose={this.handleClose('editContactModalIsOpen')}
-              handleValidation={this.handleValidation}
-              editContactModalIsOpen={editContactModalIsOpen}
-              contactsList={contactsList}
-              selectedEditContact={selectedEditContact}
-              handleEditContact={handleEditContact}
-            />)} */}
           <ContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
           <ContactModal
             handleClose={this.handleClose('contactModalIsOpen')}
             handleValidation={this.handleValidation}
+            handleEditContact={this.handleEditContact}
+            validateEditContact={this.validateEditContact}
             contactModalIsOpen={contactModalIsOpen}
             selectedEditContact={selectedEditContact}
           />
