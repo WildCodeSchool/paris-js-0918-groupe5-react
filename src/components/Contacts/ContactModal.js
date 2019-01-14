@@ -35,6 +35,8 @@ const contactModal = (props) => {
     contactModalIsOpen,
     handleClose,
     handleValidation,
+    // handleEditContact,
+    validateEditContact,
     classes,
     selectedEditContact,
   } = props;
@@ -59,9 +61,11 @@ const contactModal = (props) => {
             buttonLabels={['Mme', 'M.']}
             required
             defaultValue={
-              selectedEditContact !== null ? selectedEditContact.title : ''
+              selectedEditContact !== null
+                ? 'Mme'
+                : ''
             }
-          /> 
+          />
           {/* renderTextField render a Material UI textField */}
           {/* See reduxFormElements component */}
           <Field
@@ -140,7 +144,7 @@ const contactModal = (props) => {
           <Button onClick={handleClose} color="primary">
             Annuler
           </Button>
-          <Button onClick={handleValidation} color="primary">
+          <Button onClick={selectedEditContact !== null ? validateEditContact(selectedEditContact.id) : handleValidation} color="primary">
             Valider
           </Button>
         </DialogActions>
