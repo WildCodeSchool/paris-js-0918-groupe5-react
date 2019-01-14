@@ -11,7 +11,7 @@ const RawMoodChart = (props) => {
           labels: dayNamesArray,
           datasets: [
             {
-              label: 'Humeur',
+              label: 'Etat général',
               fill: false,
               data: moodArray,
               pointBackgroundColor: '#c2efeb',
@@ -51,7 +51,7 @@ const RawMoodChart = (props) => {
           },
           layout: {
             padding: {
-              left: 0, // à modifier
+              left: 0,
               right: 0,
               top: 0,
               bottom: 0,
@@ -59,7 +59,7 @@ const RawMoodChart = (props) => {
           },
           title: {
             display: true,
-            text: 'HUMEUR',
+            text: 'ÉTAT GÉNÉRAL',
             fontSize: 18,
             fontColor: '#fc8f72',
             padding: 25,
