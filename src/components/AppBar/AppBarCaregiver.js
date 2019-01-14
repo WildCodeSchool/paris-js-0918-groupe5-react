@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
@@ -36,16 +43,25 @@ const styles = {
 class AppBarCaregiver extends Component {
   state = {
     anchorEl: null,
-    caregiverModaleisOpen: false,
+    opeN: false,
+    // caregiverModaleisOpen: false,
   };
 
   handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  openCaregiverModale = () => {
-    this.setState({ anchorEl: null, caregiverModaleisOpen: true });
+  handleClickOpenModale = () => {
+    this.setState({ opeN: true, anchorEl: null });
   };
+
+  handleCloseModale = () => {
+    this.setState({ opeN: false });
+  };
+
+  // openCaregiverModale = () => {
+  //   this.setState({ anchorEl: null, caregiverModaleisOpen: true });
+  // };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
@@ -53,7 +69,8 @@ class AppBarCaregiver extends Component {
 
   render() {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
+    const { anchorEl, opeN } = this.state;
+    console.log(opeN);
     const open = Boolean(anchorEl);
     return (
       <div className="AppBarCaregiver">
@@ -81,7 +98,7 @@ class AppBarCaregiver extends Component {
               open={open}
               onClose={this.handleClose}
             >
-              <MenuItem onClick={this.openCaregiverModale}>
+              <MenuItem onClick={this.handleClickOpenModale}>
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>
@@ -102,6 +119,38 @@ class AppBarCaregiver extends Component {
             </Menu>
           </Toolbar>
         </AppBar>
+        {/* <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+          Open form dialog
+        </Button> */}
+        <Dialog
+          open={opeN}
+          onClose={this.handleCloseModale}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              To subscribe to this website, please enter your email address here. We will send
+              updates occasionally.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Email Address"
+              type="email"
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseModale} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.handleClose} color="primary">
+              Subscribe
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
