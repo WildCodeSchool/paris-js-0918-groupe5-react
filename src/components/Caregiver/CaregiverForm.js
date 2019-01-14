@@ -35,23 +35,23 @@ export default class FormDialog extends React.Component {
   };
 
   handleValidation = () => {
-    const {
-      title, 
-      lastName, 
-      firstname, 
-      email, 
-      phone, 
-      password, 
-      preferenceOfContact } = this.state
-    const newCaregiver = { 
-      title, 
-      lastName, 
-      firstname, 
-      email, 
-      phone, 
-      password, 
-      preferenceOfContact 
-    }
+    // const {
+    //   title, 
+    //   lastName, 
+    //   firstname, 
+    //   email, 
+    //   phone, 
+    //   password, 
+    //   preferenceOfContact } = this.state
+    // const newCaregiver = { 
+    //   title, 
+    //   lastName, 
+    //   firstname, 
+    //   email, 
+    //   phone, 
+    //   password, 
+    //   preferenceOfContact 
+    // }
     axios.post(`${getServerAuthority()}/auth/signup`, )
       .then(res => this.setState({
         userList: res.data,

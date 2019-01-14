@@ -14,13 +14,13 @@ const VisitsChart = (props) => {
               label: 'ABSENCES',
               data: absencesArray,
               backgroundColor: [
-                '#53a8b9',
-                '#53a8b9',
-                '#53a8b9',
-                '#53a8b9',
-                '#53a8b9',
-                '#53a8b9',
-                '#53a8b9',
+                '#fc8f72',
+                '#fc8f72',
+                '#fc8f72',
+                '#fc8f72',
+                '#fc8f72',
+                '#fc8f72',
+                '#fc8f72',
               ],
             },
             {
@@ -74,10 +74,10 @@ const VisitsChart = (props) => {
           },
           layout: {
             padding: {
-              left: 50,
-              right: 30,
-              top: 15,
-              bottom: 15,
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
             },
           },
           title: {
@@ -85,17 +85,18 @@ const VisitsChart = (props) => {
             text: 'VISITES',
             fontSize: 18,
             fontColor: '#fc8f72',
-            padding: 20,
+            padding: 25,
           },
           legend: {
             display: true,
-            position: 'left',
+            position: 'bottom',
             reverse: true,
             labels: {
               boxWidth: 14,
               fontColor: '#b5b3af',
               fontStyle: 'bold',
               fontSize: 13,
+              padding: 20,
             },
           },
         }}

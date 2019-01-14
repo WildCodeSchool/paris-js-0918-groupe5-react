@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import axios from 'axios';
-import getServerAuthority from '../../config/getServerAuthority';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
-import AddContactModal from './AddContactModal';
+import { withStyles, IconButton } from '@material-ui/core';
+import getServerAuthority from '../../config/getServerAuthority';
+import ContactModal from './ContactModal';
+// import EditContactModal from './EditContactModal';
 import DisplayContactModal from './DisplayContactModal';
+import Icons from '../Icons';
 
 import ContactButton from './ContactButton';
 
+// eslint-disable-next-line no-undef
 const token = localStorage.getItem('token');
 
 const styles = theme => ({
@@ -23,10 +26,13 @@ const styles = theme => ({
 
 class Contact extends Component {
     state = {
-      addContactModalIsOpen: false,
+      contactModalIsOpen: false,
+      // editContactModalIsOpen: false,
       displayContactModalIsOpen: false,
       contactsList: [],
       selectedContact: null,
+      selectedEditContact: null,
+      // inputValue: '',
     }
 
     // loading the contacts list
@@ -37,31 +43,32 @@ class Contact extends Component {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then(res => this.setState({
+      }).then(
+        res => this.setState({
           contactsList: res.data,
-        }));
+        }),
+      );
     }
 
     // generic function to open different modals
+    // eslint-disable-next-line no-unused-vars
     handleClickOpen = modal => (e) => {
       this.setState({ [modal]: true });
     };
 
-    handleSelectingContact = (id) => {
+    handleDisplayContact = (id) => {
       const { contactsList } = this.state;
       this.setState({ selectedContact: contactsList[id - 1] });
       this.setState({ displayContactModalIsOpen: true });
     }
 
+    // eslint-disable-next-line no-unused-vars
     handleClose = modal => (e) => {
-      this.setState({ [modal]: false });
+      this.setState({
+        [modal]: false,
+        selectedEditContact: false,
+      });
     };
-
-    // TEST FUNCTION!
-    handleAlert = () => {
-      this.setState({ addContactModalIsOpen: false });
-    }
 
     handleValidation = () => {
       const {
@@ -89,6 +96,9 @@ class Contact extends Component {
         preferenceOfContact,
         comment,
       };
+
+      // envoyer 1 si modifier, 0 si ajouter
+
       // posting the infos on the database
       axios({
         method: 'POST',
@@ -98,43 +108,92 @@ class Contact extends Component {
         },
         data: contact,
       })
-      // .post('http://localhost:4244/contacts', contact)
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-      // // .then allows to execute code when a promise is solved
         .then((res) => {
           // res represents the response of the server (the contact transformed to json)
-          console.log('ma data : ', res.data);
           contactsList.push(res.data);
           this.setState({ contactsList });
         })
-        .then(this.handleClose('addContactModalIsOpen'));
+        .then(this.handleClose('contactModalIsOpen'));
+    };
+
+    handleEditContact = (id) => {
+      const {
+        contactsList,
+      } = this.state;
+
+      const {
+        title,
+        firstName,
+        lastName,
+        category,
+        email,
+        phone,
+        preferenceOfContact,
+        comment,
+      } = this.props;
+
+      const contact = {
+        title,
+        firstName,
+        lastName,
+        category,
+        email,
+        phone,
+        preferenceOfContact,
+        comment,
+      };
+
+      this.setState({ selectedEditContact: contactsList[id - 1] });
+      this.setState({ contactModalIsOpen: true });
+
+      // posting the modifications on the database
+      axios({
+        method: 'PUT',
+        url: `${getServerAuthority()}/contacts`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: contact,
+      })
+        .then((res) => {
+          // res represents the response of the server (the contact transformed to json)
+          contactsList[id] = res.data;
+          this.setState({ contactsList });
+        })
+        .then(this.handleClose('contactModalIsOpen'));
     };
 
     render() {
       const { classes } = this.props;
 
       const {
-        addContactModalIsOpen,
+        contactModalIsOpen,
+        // editContactModalIsOpen,
         displayContactModalIsOpen,
         contactsList,
         selectedContact,
+        selectedEditContact,
       } = this.state;
 
       return (
         <div>
           <h2>Mes contacts</h2>
-          {contactsList.map(e => (
-            <p key={e.id}>
+          {contactsList.map(contact => (
+            <p key={contact.id}>
               <Button
-                onClick={() => this.handleSelectingContact(e.id)}
+                onClick={() => this.handleDisplayContact(contact.id)}
                 className={classes.displayContactButton}
               >
-                {`${e.title} ${e.firstName} ${e.lastName}`}
+                {`${contact.title} ${contact.firstName} ${contact.lastName}`}
                 <br />
-                {`${e.category}`}
+                {`${contact.category}`}
               </Button>
+              <IconButton onClick={() => this.handleEditContact(contact.id)}>
+                <Icons name="EditIcon" />
+              </IconButton>
+              <IconButton>
+                <Icons name="DeleteForeverIcon" />
+              </IconButton>
             </p>))}
 
           {selectedContact !== null && (
@@ -144,11 +203,21 @@ class Contact extends Component {
             contactsList={contactsList}
             selectedContact={selectedContact}
           />)}
-          <ContactButton handleClickOpen={this.handleClickOpen('addContactModalIsOpen')} />
-          <AddContactModal
-            handleClose={this.handleClose('addContactModalIsOpen')}
+          {/* {selectedEditContact !== null && (
+            <EditContactModal
+              handleClose={this.handleClose('editContactModalIsOpen')}
+              handleValidation={this.handleValidation}
+              editContactModalIsOpen={editContactModalIsOpen}
+              contactsList={contactsList}
+              selectedEditContact={selectedEditContact}
+              handleEditContact={handleEditContact}
+            />)} */}
+          <ContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
+          <ContactModal
+            handleClose={this.handleClose('contactModalIsOpen')}
             handleValidation={this.handleValidation}
-            addContactModalIsOpen={addContactModalIsOpen}
+            contactModalIsOpen={contactModalIsOpen}
+            selectedEditContact={selectedEditContact}
           />
         </div>
       );
@@ -159,15 +228,23 @@ class Contact extends Component {
 // récupérer le state qui est dans le store pour l'injecter dans les props de mon composant actuel
 // grace à mapStateToProps on peut utiliser this.props.poulet par exemple
 const mapStateToProps = state => ({
-  // formValueSelector allows to get fields in AddContactModal named firstName
-  title: formValueSelector('AddContactModal')(state, 'title'),
-  firstName: formValueSelector('AddContactModal')(state, 'firstName'),
-  lastName: formValueSelector('AddContactModal')(state, 'lastName'),
-  category: formValueSelector('AddContactModal')(state, 'category'),
-  email: formValueSelector('AddContactModal')(state, 'email'),
-  phone: formValueSelector('AddContactModal')(state, 'phone'),
-  preferenceOfContact: formValueSelector('AddContactModal')(state, 'preferenceOfContact'),
-  comment: formValueSelector('AddContactModal')(state, 'comment'),
+  // formValueSelector allows to get fields in contactModal named firstName
+  title: formValueSelector('contactModal')(state, 'title'),
+  firstName: formValueSelector('contactModal')(state, 'firstName'),
+  lastName: formValueSelector('contactModal')(state, 'lastName'),
+  category: formValueSelector('contactModal')(state, 'category'),
+  email: formValueSelector('contactModal')(state, 'email'),
+  phone: formValueSelector('contactModal')(state, 'phone'),
+  preferenceOfContact: formValueSelector('contactModal')(state, 'preferenceOfContact'),
+  comment: formValueSelector('contactModal')(state, 'comment'),
+  editTitle: formValueSelector('EditContactModal')(state, 'title'),
+  editFirstName: formValueSelector('EditContactModal')(state, 'firstName'),
+  editLastName: formValueSelector('EditContactModal')(state, 'lastName'),
+  editCategory: formValueSelector('EditContactModal')(state, 'category'),
+  editEmail: formValueSelector('EditContactModal')(state, 'email'),
+  editPhone: formValueSelector('EditContactModal')(state, 'phone'),
+  editPreferenceOfContact: formValueSelector('EditContactModal')(state, 'preferenceOfContact'),
+  editComment: formValueSelector('EditContactModal')(state, 'comment'),
 });
 
 // connect permet de connecter ton composant au store (actions, store ....)

@@ -1,84 +1,33 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Line } from 'react-chartjs-2';
+import Grid from '@material-ui/core/Grid';
+import RawMoodChart from './RawMoodChart';
+import MoodEmoticons from './MoodEmoticons';
 
 const MoodChart = (props) => {
   const { moodArray, dayNamesArray } = props;
   return (
-    <div>
-      <Line
-        data={{
-          labels: dayNamesArray,
-          datasets: [
-            {
-              label: 'Humeur',
-              fill: false,
-              data: moodArray,
-              pointBackgroundColor: '#c2efeb',
-              borderColor: '#65cde2',
-              borderWidth: 7,
-              pointRadius: 5,
-            },
-          ],
-        }}
-        options={{
-          spanGaps: true,
-          scales: {
-            xAxes: [{
-              ticks: {
-                padding: 10,
-                fontStyle: 'bold',
-                fontSize: 15,
-                fontColor: '#b5b3af',
-              },
-              gridLines: {
-                color: '#dcdad5',
-                lineWidth: 2,
-              },
-            }],
-            yAxes: [{
-              ticks: {
-                stepSize: 1,
-                min: -1,
-                max: 11,
-                display: false,
-              },
-              gridLines: {
-                display: false,
-                color: '#dcdad5',
-              },
-            }],
-          },
-          layout: {
-            padding: {
-              left: 30,
-              right: 50,
-              top: 15,
-              bottom: 15,
-            },
-          },
-          title: {
-            display: true,
-            text: 'HUMEUR',
-            fontSize: 18,
-            fontColor: '#fc8f72',
-            padding: 20,
-          },
-          legend: {
-            display: false,
-          },
-        }}
-      />
-    </div>
+    <Grid container direction="row" justify="center" alignItems="stretch">
+      <Grid item xs={1}>
+        <div style={{ height: '100%' }}>
+          <MoodEmoticons />
+        </div>
+      </Grid>
+      <Grid item xs={11}>
+        <div style={{ height: '100%' }}>
+          <RawMoodChart moodArray={moodArray} dayNamesArray={dayNamesArray} />
+        </div>
+      </Grid>
+    </Grid>
   );
 };
 
-MoodChart.propTypes = {
+RawMoodChart.propTypes = {
   moodArray: PropTypes.array,
   dayNamesArray: PropTypes.array,
 };
 
-MoodChart.defaultProps = {
+RawMoodChart.defaultProps = {
   moodArray: [],
   dayNamesArray: [],
 };
