@@ -5,7 +5,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { withStyles, IconButton } from '@material-ui/core';
 import getServerAuthority from '../../config/getServerAuthority';
-import contactModal from './contactModal';
+import ContactModal from './ContactModal';
 // import EditContactModal from './EditContactModal';
 import DisplayContactModal from './DisplayContactModal';
 import Icons from '../Icons';
@@ -213,7 +213,7 @@ class Contact extends Component {
               handleEditContact={handleEditContact}
             />)} */}
           <ContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
-          <contactModal
+          <ContactModal
             handleClose={this.handleClose('contactModalIsOpen')}
             handleValidation={this.handleValidation}
             contactModalIsOpen={contactModalIsOpen}

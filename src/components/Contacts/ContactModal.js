@@ -61,7 +61,7 @@ const contactModal = (props) => {
             defaultValue={
               selectedEditContact !== null ? selectedEditContact.title : ''
             }
-          />
+          /> 
           {/* renderTextField render a Material UI textField */}
           {/* See reduxFormElements component */}
           <Field
