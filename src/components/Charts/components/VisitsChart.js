@@ -3,7 +3,12 @@ import { PropTypes } from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 
 const VisitsChart = (props) => {
-  const { visitsArray, absencesArray, dayNamesArray } = props;
+  const {
+    nonFollowedVisitsArray,
+    visitsArray,
+    absencesArray,
+    dayNamesArray,
+  } = props;
   return (
     <div>
       <Bar
@@ -11,7 +16,7 @@ const VisitsChart = (props) => {
           labels: dayNamesArray,
           datasets: [
             {
-              label: 'ABSENCES',
+              label: 'NON VALIDÉES',
               data: absencesArray,
               backgroundColor: [
                 '#fc8f72',
@@ -24,7 +29,7 @@ const VisitsChart = (props) => {
               ],
             },
             {
-              label: 'VISITES',
+              label: 'VALIDÉES',
               data: visitsArray,
               backgroundColor: [
                 '#65cde2',
@@ -34,6 +39,19 @@ const VisitsChart = (props) => {
                 '#65cde2',
                 '#65cde2',
                 '#65cde2',
+              ],
+            },
+            {
+              label: 'NON SUIVIES',
+              data: nonFollowedVisitsArray,
+              backgroundColor: [
+                '#dcdad5',
+                '#dcdad5',
+                '#dcdad5',
+                '#dcdad5',
+                '#dcdad5',
+                '#dcdad5',
+                '#dcdad5',
               ],
             },
           ],
@@ -106,12 +124,14 @@ const VisitsChart = (props) => {
 };
 
 VisitsChart.propTypes = {
+  nonFollowedVisitsArray: PropTypes.array,
   visitsArray: PropTypes.array,
   absencesArray: PropTypes.array,
   dayNamesArray: PropTypes.array,
 };
 
 VisitsChart.defaultProps = {
+  nonFollowedVisitsArray: [],
   visitsArray: [],
   absencesArray: [],
   dayNamesArray: [],
