@@ -13,6 +13,7 @@ export const renderTextField = ({
   input,
   label,
   required,
+  value,
   meta: { touched, invalid, error },
   ...custom
 }) => (
@@ -26,15 +27,23 @@ export const renderTextField = ({
     margin="dense"
     type="text"
     fullWidth
+    value={value}
   />
 );
 
-export const radioButton = ({ 
-  input, required, label, buttonLabels, ...rest
+export const radioButton = ({
+  input,
+  label,
+  required,
+  value,
+  buttonLabels,
+  ...rest
 }) => (
   <FormControl>
-    <FormLabel component="legend" required={required}>{label}</FormLabel>
-    <RadioGroup {...input} {...rest}>
+    <FormLabel component="legend" required={required}>
+      {label}
+    </FormLabel>
+    <RadioGroup {...input} {...rest} value={value}>
       {buttonLabels.map(e => (
         <FormControlLabel key={e} value={e} control={<Radio />} label={e} />
       ))}
@@ -53,8 +62,9 @@ const renderFromHelper = ({ touched, error }) => {
 
 export const renderSelectField = ({
   input,
-  required,
   label,
+  required,
+  value,
   meta: { touched, error },
   children,
   ...custom
@@ -67,8 +77,9 @@ export const renderSelectField = ({
       {...custom}
       inputProps={{
         name: 'age',
-        id: 'age-native-simple'
+        id: 'age-native-simple',
       }}
+      value={value}
     >
       {children}
     </Select>

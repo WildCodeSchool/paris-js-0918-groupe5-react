@@ -34,9 +34,10 @@ const EditContactModal = (props) => {
   const {
     editContactModalIsOpen,
     handleClose,
-    handleValidation,
+    // handleValidation,
     classes,
     selectedEditContact,
+    handleEditContact,
   } = props;
 
   console.log('selectedEditContact : ', selectedEditContact);
@@ -61,6 +62,7 @@ const EditContactModal = (props) => {
             label="Titre"
             buttonLabels={['Mme', 'M.']}
             required={false}
+            defaultValue={selectedEditContact.title}
           />
           {/* renderTextField render a Material UI textField */}
           {/* See reduxFormElements component */}
@@ -69,12 +71,15 @@ const EditContactModal = (props) => {
             component={renderTextField}
             label="Prénom"
             required
+            defaultValue={selectedEditContact.firstName}
           />
           <Field
             name="lastName"
             component={renderTextField}
             label="Nom"
             required
+            defaultValue={selectedEditContact.lastName}
+            // onChange={handleEditContact}
           />
           <Field
             classes={classes}
@@ -82,6 +87,7 @@ const EditContactModal = (props) => {
             component={renderSelectField}
             label="Catégorie"
             required
+            defaultValue={selectedEditContact.category}
           >
             <option value="" />
             <option value="Médical">Médical</option>
@@ -94,12 +100,14 @@ const EditContactModal = (props) => {
             component={renderTextField}
             label="Email"
             required
+            defaultValue={selectedEditContact.email}
           />
           <Field
             name="phone"
             component={renderTextField}
             label="Téléphone"
             required={false}
+            defaultValue={selectedEditContact.phone}
           />
           <Field
             name="preferenceOfContact"
@@ -107,19 +115,21 @@ const EditContactModal = (props) => {
             label="Préférence de contact"
             buttonLabels={['SMS', 'Mail']}
             required
+            defaultValue={selectedEditContact.preferenceOfContact}
           />
           <Field
             name="comment"
             component={renderTextField}
             label="Commentaire"
             required={false}
+            defaultValue={selectedEditContact.comment}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Annuler
           </Button>
-          <Button onClick={handleValidation} color="primary">
+          <Button onClick={handleEditContact} color="primary">
             Valider
           </Button>
         </DialogActions>

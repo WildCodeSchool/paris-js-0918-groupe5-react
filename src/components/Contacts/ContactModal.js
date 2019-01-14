@@ -30,18 +30,19 @@ const validate = (values) => {
   return errors;
 };
 
-const AddContactModal = (props) => {
+const contactModal = (props) => {
   const {
-    addContactModalIsOpen,
+    contactModalIsOpen,
     handleClose,
     handleValidation,
     classes,
+    selectedEditContact,
   } = props;
 
   return (
     <div>
       <Dialog
-        open={addContactModalIsOpen}
+        open={contactModalIsOpen}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
@@ -56,8 +57,11 @@ const AddContactModal = (props) => {
             component={radioButton}
             label="Titre"
             buttonLabels={['Mme', 'M.']}
-            required={false}
-          />
+            required
+            defaultValue={
+              selectedEditContact !== null ? selectedEditContact.title : ''
+            }
+          /> 
           {/* renderTextField render a Material UI textField */}
           {/* See reduxFormElements component */}
           <Field
@@ -65,12 +69,18 @@ const AddContactModal = (props) => {
             component={renderTextField}
             label="Prénom"
             required
+            defaultValue={
+              selectedEditContact !== null ? selectedEditContact.firstName : ''
+            }
           />
           <Field
             name="lastName"
             component={renderTextField}
             label="Nom"
             required
+            defaultValue={
+              selectedEditContact !== null ? selectedEditContact.lastName : ''
+            }
           />
           <Field
             classes={classes}
@@ -78,6 +88,9 @@ const AddContactModal = (props) => {
             component={renderSelectField}
             label="Catégorie"
             required
+            defaultValue={
+              selectedEditContact !== null ? selectedEditContact.category : ''
+            }
           >
             <option value="" />
             <option value="Médical">Médical</option>
@@ -90,12 +103,18 @@ const AddContactModal = (props) => {
             component={renderTextField}
             label="Email"
             required
+            defaultValue={
+              selectedEditContact !== null ? selectedEditContact.email : ''
+            }
           />
           <Field
             name="phone"
             component={renderTextField}
             label="Téléphone"
             required={false}
+            defaultValue={
+              selectedEditContact !== null ? selectedEditContact.phone : ''
+            }
           />
           <Field
             name="preferenceOfContact"
@@ -103,12 +122,18 @@ const AddContactModal = (props) => {
             label="Préférence de contact"
             buttonLabels={['SMS', 'Mail']}
             required
+            defaultValue={
+              selectedEditContact !== null ? selectedEditContact.preferenceOfContact : ''
+            }
           />
           <Field
             name="comment"
             component={renderTextField}
             label="Commentaire"
             required={false}
+            defaultValue={
+              selectedEditContact !== null ? selectedEditContact.comment : ''
+            }
           />
         </DialogContent>
         <DialogActions>
@@ -130,6 +155,6 @@ const AddContactModal = (props) => {
 // });
 
 export default reduxForm({
-  form: 'AddContactModal', // a unique identifier for this form
+  form: 'contactModal', // a unique identifier for this form
   validate,
-})(AddContactModal);
+})(contactModal);
