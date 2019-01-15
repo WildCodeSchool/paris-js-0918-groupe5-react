@@ -23,6 +23,11 @@ class MyAccountModale extends React.Component {
     this.setState({ openFieldModifyAccount: false });
   };
 
+  recordNewInformations = () => {
+    this.setState({ openFieldModifyAccount: false });
+    this.props.onClose();
+  }
+
   render() {
     const { open, onClose } = this.props;
     const { openFieldModifyAccount } = this.state;
@@ -93,7 +98,7 @@ class MyAccountModale extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <FieldModifyUser openField={openFieldModifyAccount} onClose={this.handleCloseFieldModifyAccount} />
+        <FieldModifyUser openField={openFieldModifyAccount} onClose={this.handleCloseFieldModifyAccount} closeAll={this.recordNewInformations} />
       </div>
     );
   }

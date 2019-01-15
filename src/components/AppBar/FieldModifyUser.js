@@ -9,12 +9,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 class MyAccountModale extends React.Component {
   render() {
-    const { openField, onClose } = this.props;
+    const { openField, onClose, closeAll } = this.props;
     return (
       <div>
         <Dialog
           open={openField}
-          onClose={this.handleCloseFieldModifyAccount}
+					onClose={this.handleCloseFieldModifyAccount}
+					closeAll={closeAll}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Mon compte</DialogTitle>
@@ -37,7 +38,7 @@ class MyAccountModale extends React.Component {
             <Button onClick={onClose} color="primary">
               Fermer
             </Button>
-						<Button color="primary">
+						<Button onClick={closeAll}color="primary">
               Enregistrer
             </Button>
           </DialogActions>
