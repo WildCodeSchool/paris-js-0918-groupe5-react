@@ -34,14 +34,14 @@ const contactModal = (props) => {
   const {
     contactModalIsOpen,
     handleClose,
-    handleValidation,
-    // handleEditContact,
-    validateEditContact,
+    handleAddContact,
+    handleEditContact,
     classes,
     selectedEditContact,
   } = props;
 
   return (
+    
     <div>
       <Dialog
         open={contactModalIsOpen}
@@ -54,6 +54,7 @@ const contactModal = (props) => {
         <DialogContent>
           {/* radioButton render a Material UI radioButton */}
           {/* See reduxFormElements component */}
+
           <Field
             name="title"
             component={radioButton}
@@ -144,7 +145,7 @@ const contactModal = (props) => {
           <Button onClick={handleClose} color="primary">
             Annuler
           </Button>
-          <Button onClick={selectedEditContact !== null ? validateEditContact(selectedEditContact.id) : handleValidation} color="primary">
+          <Button onClick={() => (selectedEditContact ? handleEditContact(selectedEditContact.id) : handleAddContact())} color="primary">
             Valider
           </Button>
         </DialogActions>

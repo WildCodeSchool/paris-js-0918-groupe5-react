@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import { withStyles, IconButton } from '@material-ui/core';
 import getServerAuthority from '../../config/getServerAuthority';
 import ContactModal from './ContactModal';
-// import EditContactModal from './EditContactModal';
 import DisplayContactModal from './DisplayContactModal';
 import Icons from '../Icons';
 
@@ -66,11 +65,12 @@ class Contact extends Component {
     handleClose = modal => (e) => {
       this.setState({
         [modal]: false,
-        selectedEditContact: false,
+        selectedEditContact: null,
       });
     };
 
-    handleValidation = () => {
+    handleAddContact = () => {
+      console.log('handleAddContact !');
       const {
         contactsList,
       } = this.state;
@@ -114,7 +114,19 @@ class Contact extends Component {
         .then(this.handleClose('contactModalIsOpen'));
     };
 
+    handleSelectContact = (id) => {
+      const {
+        contactsList,
+      } = this.state;
+
+      console.log(contactsList[id - 1]);
+
+      this.setState({ selectedEditContact: contactsList[id - 1], contactModalIsOpen: true });
+      // this.setState({ contactModalIsOpen: true });
+    };
+
     handleEditContact = (id) => {
+      console.log('handleEditContact !', id);
       const {
         contactsList,
       } = this.state;
@@ -141,54 +153,19 @@ class Contact extends Component {
         comment,
       };
 
-      console.log(contactsList[id - 1]);
-
-      this.setState({ selectedEditContact: contactsList[id - 1], contactModalIsOpen: true });
-      // this.setState({ contactModalIsOpen: true });
-    };
-
-    validateEditContact = (param) => {
-      console.log('myparams : ', param);
-      // const {
-      //   contactsList,
-      // } = this.state;
-
-      // const {
-      //   title,
-      //   firstName,
-      //   lastName,
-      //   category,
-      //   email,
-      //   phone,
-      //   preferenceOfContact,
-      //   comment,
-      // } = this.props;
-
-      // const contact = {
-      //   title,
-      //   firstName,
-      //   lastName,
-      //   category,
-      //   email,
-      //   phone,
-      //   preferenceOfContact,
-      //   comment,
-      // };
-
-      // axios({
-      //   method: 'PUT',
-      //   url: `${getServerAuthority()}/contacts`,
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      //   data: contact,
-      // })
-      //   .then((res) => {
-      //     // res represents the response of the server (the contact transformed to json)
-      //     contactsList[id] = res.data;
-      //     this.setState({ contactsList });
-      //   })
-      //   .then(this.handleClose('contactModalIsOpen'));
+      axios({
+        method: 'PUT',
+        url: `${getServerAuthority()}/contacts/${id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: contact,
+      })
+        .then((res) => {
+          contactsList[id - 1] = res.data;
+          this.setState({ contactsList });
+        })
+        .then(this.handleClose('contactModalIsOpen'));
     }
 
     render() {
@@ -216,7 +193,7 @@ class Contact extends Component {
                 <br />
                 {`${contact.category}`}
               </Button>
-              <IconButton onClick={() => this.handleEditContact(contact.id)}>
+              <IconButton onClick={() => this.handleSelectContact(contact.id)}>
                 <Icons name="EditIcon" />
               </IconButton>
               <IconButton>
@@ -234,9 +211,9 @@ class Contact extends Component {
           <ContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
           <ContactModal
             handleClose={this.handleClose('contactModalIsOpen')}
-            handleValidation={this.handleValidation}
+            handleAddContact={this.handleAddContact}
+            handleSelectContact={this.handleSelectContact}
             handleEditContact={this.handleEditContact}
-            validateEditContact={this.validateEditContact}
             contactModalIsOpen={contactModalIsOpen}
             selectedEditContact={selectedEditContact}
           />
