@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Dashboard from './components/Dashboard/Dashboard';
 
 // import RemainingComponent from './components/RemainingComponent';
-import AppBarGlobal from './components/AppBarGlobal';
+import AppBarGlobal from './components/AppBar/AppBarGlobal';
 import ConnectionPage from './components/ConnectionPage';
 import Calendar from './components/Calendar/Calendar';
 import CaregiversForm from './components/Caregiver/CaregiverForm';
@@ -44,13 +44,13 @@ const theme = createMuiTheme({
   },
 });
 
-const App = props => (
+const App = ({ appBarIsDisplayed }) => (
   <MuiThemeProvider theme={theme}>
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        <Route exact path="/connexion" component={ConnectionPage} />
-        {props.appBarIsDisplayed && <AppBarGlobal />}
+        <Route exact path="/" component={ConnectionPage} />
+        {appBarIsDisplayed && <AppBarGlobal />}
         <div className="spaceBtwAppBarAndRoutes">
           <Route path="/tableau_de_bord" component={Dashboard} />
           <Route path="/contacts" component={Contact} />

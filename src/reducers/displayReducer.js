@@ -1,7 +1,8 @@
-import { DISPLAY_APP_BAR } from '../actions/types';
+import { DISPLAY_APP_BAR, DISPLAY_ADD_RECEIVER_DIALOG } from '../actions/types';
 
 const initialState = {
-  appBarIsDisplayed: false,
+  appBarIsDisplayed: true,
+  dialogAddReceiverIsDisplayed: false,
 };
 
 export default (state = initialState, action) => {
@@ -10,6 +11,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         appBarIsDisplayed: action.isDisplayed,
+      };
+    case DISPLAY_ADD_RECEIVER_DIALOG:
+      return {
+        ...state,
+        dialogAddReceiverIsDisplayed: action.isDisplayed,
       };
     default:
       return state;
