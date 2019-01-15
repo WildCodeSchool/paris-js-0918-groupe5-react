@@ -36,10 +36,15 @@ const styles = {
 class AppBarCaregiver extends Component {
   state = {
     anchorEl: null,
+    caregiverModaleisOpen: false,
   };
 
   handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget });
+  };
+
+  openCaregiverModale = () => {
+    this.setState({ anchorEl: null, caregiverModaleisOpen: true });
   };
 
   handleClose = () => {
@@ -76,7 +81,7 @@ class AppBarCaregiver extends Component {
               open={open}
               onClose={this.handleClose}
             >
-              <MenuItem onClick={this.handleClose}>
+              <MenuItem onClick={this.openCaregiverModale}>
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>

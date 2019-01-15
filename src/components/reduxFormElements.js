@@ -34,7 +34,7 @@ export const renderTextField = ({
   );
 };
 
-export const radioButton = ({
+export const renderRadioButton = ({
   input,
   label,
   required,

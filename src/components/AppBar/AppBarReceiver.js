@@ -198,3 +198,4 @@ export default connect(
   null,
   { displayAddReceiverDialog },
 )(withStyles(styles)(AppBarReceiver));
+
