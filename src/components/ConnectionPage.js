@@ -18,7 +18,7 @@ class ConnectionPage extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.email.value, e.target.password.value);
+    // console.log(e.target.email.value, e.target.password.value);
     axios.post(`${getServerAuthority()}/auth/signin`, {
       email: e.target.email.value,
       password: e.target.password.value,
@@ -52,7 +52,6 @@ class ConnectionPage extends Component {
           <button type="submit">Valider</button>
           <CaregiversForm />
         </form>
-        
       </div>
     );
   }
