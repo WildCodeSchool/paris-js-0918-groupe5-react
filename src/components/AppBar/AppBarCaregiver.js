@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+// import Button from '@material-ui/core/Button';
+// import TextField from '@material-ui/core/TextField';
+// import Dialog from '@material-ui/core/Dialog';
+// import DialogActions from '@material-ui/core/DialogActions';
+// import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
@@ -23,6 +23,8 @@ import {
   Build,
   PowerSettingsNew,
 } from '@material-ui/icons';
+import MyAccountModale from './MyAccountModale';
+
 
 const styles = {
   toolbarRoot: {
@@ -43,7 +45,7 @@ const styles = {
 class AppBarCaregiver extends Component {
   state = {
     anchorEl: null,
-    opeN: false,
+    openModaleAccount: false,
     // caregiverModaleisOpen: false,
   };
 
@@ -52,11 +54,11 @@ class AppBarCaregiver extends Component {
   };
 
   handleClickOpenModale = () => {
-    this.setState({ opeN: true, anchorEl: null });
+    this.setState({ openModaleAccount: true, anchorEl: null });
   };
 
   handleCloseModale = () => {
-    this.setState({ opeN: false });
+    this.setState({ openModaleAccount: false });
   };
 
   // openCaregiverModale = () => {
@@ -69,8 +71,7 @@ class AppBarCaregiver extends Component {
 
   render() {
     const { classes } = this.props;
-    const { anchorEl, opeN } = this.state;
-    console.log(opeN);
+    const { anchorEl, openModaleAccount } = this.state;
     const open = Boolean(anchorEl);
     return (
       <div className="AppBarCaregiver">
@@ -119,10 +120,7 @@ class AppBarCaregiver extends Component {
             </Menu>
           </Toolbar>
         </AppBar>
-        {/* <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          Open form dialog
-        </Button> */}
-        <Dialog
+        {/* <Dialog
           open={opeN}
           onClose={this.handleCloseModale}
           aria-labelledby="form-dialog-title"
@@ -150,7 +148,8 @@ class AppBarCaregiver extends Component {
               Subscribe
             </Button>
           </DialogActions>
-        </Dialog>
+        </Dialog> */}
+        <MyAccountModale open={openModaleAccount} onClose={this.handleCloseModale} />
       </div>
     );
   }
