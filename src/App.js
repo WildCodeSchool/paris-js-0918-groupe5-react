@@ -10,6 +10,7 @@ import ConnectionPage from './components/ConnectionPage';
 import Calendar from './components/Calendar/Calendar';
 import CaregiversForm from './components/Caregiver/CaregiverForm';
 import Contact from './components/Contacts/Contact';
+import Monitoring from './components/Monitoring/Monitoring';
 
 import './App.css';
 import 'typeface-roboto';
@@ -56,8 +57,8 @@ const App = ({ appBarIsDisplayed }) => (
           <Route path="/contacts" component={Contact} />
           <Route path="/création" component={CaregiversForm} />
           <Route path="/calendrier" component={Calendar} />
+          <Route path="/suivi" component={Monitoring} />
         </div>
-        {/* <Route path='/suivi' component={FollowedUp} /> */}
         {/* <Route path='/mon_compte' component={Account} /> */}
       </div>
     </div>
