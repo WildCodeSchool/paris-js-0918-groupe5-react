@@ -1,6 +1,6 @@
 import React from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import { IconButton } from '@material-ui/core';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,14 +9,28 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Icons from '../Icons';
 import FieldModifyUser from './FieldModifyUser';
+import getServerAuthority from '../../config/getServerAuthority';
 
 class MyAccountModale extends React.Component {
   state = {
     openFieldModifyAccount: false,
+    name: 'Nom',
+    address: 'Adresse',
+    phone: 'Téléphone',
+    mail: 'Email',
+    password: 'Mot de passe',
+    numberOfSubscriptions: 'Nombre d\'abonnements',
+    selectedField: '',
   }
 
-  openFieldModifyAccount = () => {
-    this.setState({ openFieldModifyAccount: true });
+  componentDidMount() {
+    const id = localStorage.getItem('id');
+    axios.get(`${getServerAuthority()}/caregiver/${id}`)
+      .then(res => console.log(res));
+  }
+
+  openFieldModifyAccount = (e) => {
+    this.setState({ openFieldModifyAccount: true, selectedField: e.target.name });
   }
 
   handleCloseFieldModifyAccount = () => {
@@ -30,8 +44,10 @@ class MyAccountModale extends React.Component {
 
   render() {
     const { open, onClose } = this.props;
-    const { openFieldModifyAccount } = this.state;
-    console.log(openFieldModifyAccount);
+    const {
+      openFieldModifyAccount, name, address, phone, mail, password, numberOfSubscriptions, selectedField,
+    } = this.state;
+    console.log(selectedField);
     return (
       <div>
         <Dialog
@@ -54,42 +70,42 @@ class MyAccountModale extends React.Component {
               type="email"
               fullWidth
             /> */}
-            <h4>Nom</h4>
+            <h4>{name}</h4>
             <p>
               Jolivet Karine
-              <IconButton onClick={this.openFieldModifyAccount}>
+              <IconButton name="Nom" selectedField={selectedField} onClick={this.openFieldModifyAccount}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>Adresse</h4>
+            <h4>{address}</h4>
             <p>
               11 rue de poissy Paris
-              <IconButton>
+              <IconButton name="Adresse">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>Téléphone</h4>
+            <h4>{phone}</h4>
             <p>
               0606060606
-              <IconButton>
+              <IconButton name="Téléphone">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>Email</h4>
+            <h4>{mail}</h4>
             <p>
               karine@jolivet.com
-              <IconButton>
+              <IconButton name="Email">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>Mot de passe</h4>
+            <h4>{password}</h4>
             <p>
               *****
-              <IconButton>
+              <IconButton name="Mot de passe">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>Nombre d'abonnements</h4>
+            <h4>{numberOfSubscriptions}</h4>
             <p>2</p>
           </DialogContent>
           <DialogActions>
@@ -98,7 +114,7 @@ class MyAccountModale extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <FieldModifyUser openField={openFieldModifyAccount} onClose={this.handleCloseFieldModifyAccount} closeAll={this.recordNewInformations} />
+        <FieldModifyUser openField={openFieldModifyAccount} onClose={this.handleCloseFieldModifyAccount} selectedField={selectedField} onCloseAll={this.recordNewInformations} />
       </div>
     );
   }

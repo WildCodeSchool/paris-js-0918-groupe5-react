@@ -9,16 +9,18 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 class MyAccountModale extends React.Component {
   render() {
-    const { openField, onClose, closeAll } = this.props;
+    const {
+      openField, onClose, onCloseAll, selectedField,
+    } = this.props;
     return (
       <div>
         <Dialog
           open={openField}
 					onClose={this.handleCloseFieldModifyAccount}
-					closeAll={closeAll}
+					onCloseAll={onCloseAll}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Mon compte</DialogTitle>
+          <DialogTitle id="form-dialog-title">{`${selectedField}`}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Vous trouverez ci-dessous vos informations personnelles.
@@ -38,7 +40,7 @@ class MyAccountModale extends React.Component {
             <Button onClick={onClose} color="primary">
               Fermer
             </Button>
-						<Button onClick={closeAll}color="primary">
+						<Button onClick={onCloseAll} color="primary">
               Enregistrer
             </Button>
           </DialogActions>

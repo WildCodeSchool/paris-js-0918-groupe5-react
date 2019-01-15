@@ -25,7 +25,8 @@ class ConnectionPage extends Component {
     }).then((res) => {
       const { displayAppBar } = this.props;
       localStorage.setItem('token', res.headers['x-access-token']);
-      console.log('token', localStorage.getItem('token'));
+      localStorage.setItem('id', res.id);
+      // console.log('token', localStorage.getItem('token'));
       this.setState({ redirect: true }, displayAppBar(true));
     });
   }
