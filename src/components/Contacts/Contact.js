@@ -29,8 +29,8 @@ class Contact extends Component {
       // editContactModalIsOpen: false,
       displayContactModalIsOpen: false,
       contactsList: [],
+      displayedContact: null,
       selectedContact: null,
-      selectedEditContact: null,
       selectedId: null,
     }
 
@@ -57,19 +57,21 @@ class Contact extends Component {
 
     handleDisplayContact = (id) => {
       const { contactsList } = this.state;
-      this.setState({ selectedContact: contactsList[id], displayContactModalIsOpen: true });
+      this.setState({
+        displayedContact: contactsList[id],
+        displayContactModalIsOpen: true,
+      });
     }
 
     // eslint-disable-next-line no-unused-vars
     handleClose = modal => (e) => {
       this.setState({
         [modal]: false,
-        selectedEditContact: null,
+        selectedContact: null,
       });
     };
 
     handleAddContact = () => {
-      console.log('handleAddContact !');
       const {
         contactsList,
       } = this.state;
@@ -106,29 +108,25 @@ class Contact extends Component {
         data: contact,
       })
         .then((res) => {
-          // res represents the response of the server (the contact transformed to json)
-          // concatenation
+          // concatenation of contactsList and the new contact
           this.setState({ contactsList: [...contactsList, res.data] });
         })
         .then(this.handleClose('contactModalIsOpen'));
     };
 
     handleSelectContact = (id) => {
-      console.log(id);
       const {
         contactsList,
       } = this.state;
 
       this.setState({
-        selectedEditContact: contactsList[id],
-        contactModalIsOpen: true,
+        selectedContact: contactsList[id],
         selectedId: id,
+        contactModalIsOpen: true,
       });
-      console.log(contactsList);
     };
 
     handleEditContact = (id) => {
-      console.log('handleEditContact !', id);
       const {
         contactsList,
       } = this.state;
@@ -178,8 +176,8 @@ class Contact extends Component {
         contactModalIsOpen,
         displayContactModalIsOpen,
         contactsList,
+        displayedContact,
         selectedContact,
-        selectedEditContact,
         selectedId,
       } = this.state;
 
@@ -204,12 +202,12 @@ class Contact extends Component {
               </IconButton>
             </p>))}
 
-          {selectedContact !== null && (
+          {displayedContact !== null && (
           <DisplayContactModal
             handleClose={this.handleClose('displayContactModalIsOpen')}
             displayContactModalIsOpen={displayContactModalIsOpen}
             contactsList={contactsList}
-            selectedContact={selectedContact}
+            displayedContact={displayedContact}
           />)}
           <ContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
           <ContactModal
@@ -217,9 +215,9 @@ class Contact extends Component {
             handleAddContact={this.handleAddContact}
             handleSelectContact={this.handleSelectContact}
             handleEditContact={this.handleEditContact}
-            contactModalIsOpen={contactModalIsOpen}
-            selectedEditContact={selectedEditContact}
+            selectedContact={selectedContact}
             selectedId={selectedId}
+            contactModalIsOpen={contactModalIsOpen}
           />
         </div>
       );

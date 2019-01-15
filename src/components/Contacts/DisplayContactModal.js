@@ -16,16 +16,11 @@ const styles = theme => ({
 });
 
 const DisplayContactModal = (props) => {
-  // const { classes } = props;
+
   const {
     displayContactModalIsOpen,
     handleClose,
-    selectedContact,
-    // category,
-    // handleCategory,
-    // classes,
-    // preferenceOfContact,
-    // handlePreferenceOfContact,
+    displayedContact,
   } = props;
 
   return (
@@ -36,19 +31,19 @@ const DisplayContactModal = (props) => {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          {`${selectedContact.title} ${selectedContact.firstName} ${selectedContact.lastName}`}
+          {`${displayedContact.title} ${displayedContact.firstName} ${displayedContact.lastName}`}
         </DialogTitle>
         <DialogContent>
-          {selectedContact.category !== null && (<h4>Catégorie</h4>)}
-          <p>{selectedContact.category}</p>
-          {selectedContact.email !== null && (<h4>Email</h4>)}
-          <p>{selectedContact.email}</p>
-          {selectedContact.phone !== null && (<h4>Téléphone</h4>)}
-          <p>{selectedContact.phone}</p>
-          {selectedContact.preferenceOfContact !== null && (<h4>Préférence de contact</h4>)}
-          <p>{selectedContact.preferenceOfContact}</p>
-          {selectedContact.comment !== null && (<h4>Comment</h4>)}
-          <p>{selectedContact.comment}</p>
+          {displayedContact.category !== null && (<h4>Catégorie</h4>)}
+          <p>{displayedContact.category}</p>
+          {displayedContact.email !== null && (<h4>Email</h4>)}
+          <p>{displayedContact.email}</p>
+          {displayedContact.phone !== null && (<h4>Téléphone</h4>)}
+          <p>{displayedContact.phone}</p>
+          {displayedContact.preferenceOfContact !== null && (<h4>Préférence de contact</h4>)}
+          <p>{displayedContact.preferenceOfContact}</p>
+          {displayedContact.comment !== null && (<h4>Comment</h4>)}
+          <p>{displayedContact.comment}</p>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -59,10 +54,5 @@ const DisplayContactModal = (props) => {
     </div>
   );
 };
-
-// const mapStateToProps = state => ({
-//   title: state.form.title,
-//   firstName: state.form.firstName,
-// });
 
 export default withStyles(styles)(DisplayContactModal);
