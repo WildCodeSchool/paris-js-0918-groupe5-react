@@ -55,7 +55,7 @@ class Charts extends Component {
     const token = localStorage.getItem('token');
     return axios({
       method: 'GET',
-      url: 'http://localhost:4244/events',
+      url: 'http://localhost:4245/events',
       headers: {
         Authorization: `Bearer ${token}`,
       },
