@@ -13,6 +13,7 @@ class ConnectionPage extends Component {
   }
 
   componentDidMount() {
+    const { displayAppBar } = this.props;
     displayAppBar(false);
   }
 
@@ -52,7 +53,6 @@ class ConnectionPage extends Component {
           <button type="submit">Valider</button>
           <CaregiversForm />
         </form>
-        
       </div>
     );
   }

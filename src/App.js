@@ -44,13 +44,13 @@ const theme = createMuiTheme({
   },
 });
 
-const App = props => (
+const App = ({ appBarIsDisplayed }) => (
   <MuiThemeProvider theme={theme}>
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        <Route exact path="/connexion" component={ConnectionPage} />
-        {props.appBarIsDisplayed && <AppBarGlobal />}
+        <Route exact path="/" component={ConnectionPage} />
+        {appBarIsDisplayed && <AppBarGlobal />}
         <div className="spaceBtwAppBarAndRoutes">
           <Route path="/tableau_de_bord" component={Dashboard} />
           <Route path="/contacts" component={Contact} />
