@@ -61,7 +61,7 @@ class DialogAddReceiver extends Component {
           <DialogContent>
             <Field
               name="title"
-              component={radioButton}
+              component={renderRadioButton}
               label="Titre"
               buttonLabels={['Mme', 'M.']}
               required
