@@ -76,7 +76,7 @@ class Monitoring extends Component {
     return (
       <div style={{ padding: 30 }}>
         <h2>Suivi</h2>
-        <Grid container>
+        <Grid container justify="center">
           <Grid
             item
             xs={9}
