@@ -19,7 +19,6 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     textTransform: 'capitalize',
   },
-
 });
 
 
@@ -34,7 +33,6 @@ class Contact extends Component {
       selectedId: null,
     }
 
-    // loading the contacts list
     componentDidMount() {
       axios({
         method: 'GET',
@@ -169,6 +167,53 @@ class Contact extends Component {
         .then(this.handleClose('contactModalIsOpen'));
     }
 
+    handleDeleteContact = (id) => {
+      const {
+        contactsList,
+      } = this.state;
+
+      const {
+        title,
+        firstName,
+        lastName,
+        category,
+        email,
+        phone,
+        preferenceOfContact,
+        comment,
+      } = this.props;
+
+      const contact = {
+        title,
+        firstName,
+        lastName,
+        category,
+        email,
+        phone,
+        preferenceOfContact,
+        comment,
+      };
+
+      axios({
+        method: 'DELETE',
+        url: `${getServerAuthority()}/contacts/${contactsList[id].id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: contact,
+      })
+        .then((res) => {
+          const newContactsList = [...contactsList];
+          newContactsList.splice(id, 1);
+          // .splice([id], 1);
+          // console.log('newContactsList : ', newContactsList, 'contactsList : ', contactsList);
+          this.setState({ contactsList: newContactsList });
+        })
+        // .then(console.log(`newContactsList : ${newContactsList}`))
+        .then(console.log(`Contact n° ${contactsList[id].id} (n° ${id} dans le tableau) supprimé`));
+      // .then(this.handleClose('contactModalIsOpen'));
+    }
+
     render() {
       const { classes } = this.props;
 
@@ -190,14 +235,14 @@ class Contact extends Component {
                 onClick={() => this.handleDisplayContact(index)}
                 className={classes.displayContactButton}
               >
-                {`${contact.title} ${contact.firstName} ${contact.lastName}`}
+                {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
                 <br />
                 {`${contact.category}`}
               </Button>
               <IconButton onClick={() => this.handleSelectContact(index)}>
                 <Icons name="EditIcon" />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={() => this.handleDeleteContact(index)}>
                 <Icons name="DeleteForeverIcon" />
               </IconButton>
             </p>))}
