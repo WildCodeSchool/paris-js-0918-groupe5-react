@@ -31,7 +31,7 @@ class Contact extends Component {
       contactsList: [],
       selectedContact: null,
       selectedEditContact: null,
-      // inputValue: '',
+      selectedId: null,
     }
 
     // loading the contacts list
@@ -57,8 +57,7 @@ class Contact extends Component {
 
     handleDisplayContact = (id) => {
       const { contactsList } = this.state;
-      this.setState({ selectedContact: contactsList[id - 1] });
-      this.setState({ displayContactModalIsOpen: true });
+      this.setState({ selectedContact: contactsList[id], displayContactModalIsOpen: true });
     }
 
     // eslint-disable-next-line no-unused-vars
@@ -115,14 +114,17 @@ class Contact extends Component {
     };
 
     handleSelectContact = (id) => {
+      console.log(id);
       const {
         contactsList,
       } = this.state;
 
-      console.log(contactsList[id - 1]);
-
-      this.setState({ selectedEditContact: contactsList[id - 1], contactModalIsOpen: true });
-      // this.setState({ contactModalIsOpen: true });
+      this.setState({
+        selectedEditContact: contactsList[id],
+        contactModalIsOpen: true,
+        selectedId: id,
+      });
+      console.log(contactsList);
     };
 
     handleEditContact = (id) => {
@@ -155,15 +157,16 @@ class Contact extends Component {
 
       axios({
         method: 'PUT',
-        url: `${getServerAuthority()}/contacts/${id}`,
+        url: `${getServerAuthority()}/contacts/${contactsList[id].id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
         data: contact,
       })
         .then((res) => {
-          contactsList[id - 1] = res.data;
-          this.setState({ contactsList });
+          const newContactsList = [...contactsList];
+          newContactsList[id] = res.data;
+          this.setState({ contactsList: newContactsList });
         })
         .then(this.handleClose('contactModalIsOpen'));
     }
@@ -173,27 +176,27 @@ class Contact extends Component {
 
       const {
         contactModalIsOpen,
-        // editContactModalIsOpen,
         displayContactModalIsOpen,
         contactsList,
         selectedContact,
         selectedEditContact,
+        selectedId,
       } = this.state;
 
       return (
         <div>
           <h2>Mes contacts</h2>
-          {contactsList.map(contact => (
+          {contactsList.map((contact, index) => (
             <p key={contact.id}>
               <Button
-                onClick={() => this.handleDisplayContact(contact.id)}
+                onClick={() => this.handleDisplayContact(index)}
                 className={classes.displayContactButton}
               >
                 {`${contact.title} ${contact.firstName} ${contact.lastName}`}
                 <br />
                 {`${contact.category}`}
               </Button>
-              <IconButton onClick={() => this.handleSelectContact(contact.id)}>
+              <IconButton onClick={() => this.handleSelectContact(index)}>
                 <Icons name="EditIcon" />
               </IconButton>
               <IconButton>
@@ -216,6 +219,7 @@ class Contact extends Component {
             handleEditContact={this.handleEditContact}
             contactModalIsOpen={contactModalIsOpen}
             selectedEditContact={selectedEditContact}
+            selectedId={selectedId}
           />
         </div>
       );

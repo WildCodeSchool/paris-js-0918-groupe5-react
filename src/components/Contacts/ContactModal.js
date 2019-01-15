@@ -3,7 +3,7 @@ import {
   Button, Dialog, DialogActions, DialogContent, DialogTitle,
 } from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
-import { renderTextField, radioButton, renderSelectField } from '../reduxFormElements';
+import { renderTextField, renderRadioButton, renderSelectField } from '../reduxFormElements';
 
 // validate allows to detect errors (see reduxFormElements.js)
 const validate = (values) => {
@@ -38,10 +38,14 @@ const contactModal = (props) => {
     handleEditContact,
     classes,
     selectedEditContact,
+    selectedId,
   } = props;
 
+  if (selectedEditContact) {
+    console.log('title : ', selectedEditContact.title, 'preferenceOfContact : ', selectedEditContact.preferenceOfContact);
+  }
+
   return (
-    
     <div>
       <Dialog
         open={contactModalIsOpen}
@@ -57,7 +61,7 @@ const contactModal = (props) => {
 
           <Field
             name="title"
-            component={radioButton}
+            component={renderRadioButton}
             label="Titre"
             buttonLabels={['Mme', 'M.']}
             required
@@ -123,7 +127,7 @@ const contactModal = (props) => {
           />
           <Field
             name="preferenceOfContact"
-            component={radioButton}
+            component={renderRadioButton}
             label="Préférence de contact"
             buttonLabels={['SMS', 'Mail']}
             required
@@ -145,7 +149,7 @@ const contactModal = (props) => {
           <Button onClick={handleClose} color="primary">
             Annuler
           </Button>
-          <Button onClick={() => (selectedEditContact ? handleEditContact(selectedEditContact.id) : handleAddContact())} color="primary">
+          <Button onClick={() => (selectedEditContact ? handleEditContact(selectedId) : handleAddContact())} color="primary">
             Valider
           </Button>
         </DialogActions>
