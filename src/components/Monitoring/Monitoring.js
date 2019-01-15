@@ -36,7 +36,7 @@ class Monitoring extends Component {
 
   formatDatesToISO = async () => {
     try {
-      const events = await this.getEventsData();
+      const events = await this.getFollowedEvents();
       const result = events.map((e) => {
         e.dateBeginning = new Date(e.dateBeginning).toISOString();
         return e;
@@ -60,6 +60,17 @@ class Monitoring extends Component {
       .then(res => res.data);
   };
 
+  getFollowedEvents = async () => {
+    try {
+      const events = await this.getEventsData();
+      const result = events.filter(e => e.followedVisit);
+      // console.log('getFollowedEvents', result);
+      return result;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   render() {
     const { events } = this.state;
     return (
@@ -70,16 +81,16 @@ class Monitoring extends Component {
             item
             xs={9}
             style={{
-              padding: 30, maxHeight: 450, overflow: 'auto', backgroundColor: '#F9F9F9',
+              padding: 30,
             }}
           >
             <EventsTable events={events} />
           </Grid>
-          <Grid item xs={3}>
+          {/* <Grid item xs={3}>
             <div>
               COMPONENT 2
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
     );
