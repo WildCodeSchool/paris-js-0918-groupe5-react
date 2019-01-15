@@ -20,12 +20,12 @@ class MyAccountModale extends React.Component {
 					onCloseAll={onCloseAll}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">{selectedField}</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+          Modification de votre {selectedField}
+          </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Vous trouverez ci-dessous vos informations personnelles.
-              <br />
-              Si vous souhaitez les modifier, nous vous invitons à cliquer sur le bouton "Modifier".
+              Veuillez taper ici vos nouvelles coordonnées:
             </DialogContentText>
             <TextField
               autoFocus
@@ -41,7 +41,7 @@ class MyAccountModale extends React.Component {
               Fermer
             </Button>
 						<Button onClick={onCloseAll} color="primary">
-              Enregistrer
+              Modifier
             </Button>
           </DialogActions>
         </Dialog>

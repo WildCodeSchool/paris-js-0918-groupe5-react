@@ -14,7 +14,8 @@ import FieldModifyUser from './FieldModifyUser';
 class MyAccountModale extends React.Component {
   state = {
     openFieldModifyAccount: false,
-    name: 'Nom',
+    lastName: 'Nom',
+    firstName: 'Prénom',
     address: 'Adresse',
     phone: 'Téléphone',
     mail: 'Email',
@@ -40,12 +41,13 @@ class MyAccountModale extends React.Component {
   recordNewInformations = () => {
     this.setState({ openFieldModifyAccount: false });
     this.props.onClose();
+    alert('Vos modifications ont bien été enregistrées');
   }
 
   render() {
     const { open, onClose } = this.props;
     const {
-      openFieldModifyAccount, name, address, phone, mail, password, numberOfSubscriptions, selectedField,
+      openFieldModifyAccount, lastName, firstName, address, phone, mail, password, numberOfSubscriptions, selectedField,
     } = this.state;
     console.log(selectedField);
 
@@ -71,10 +73,17 @@ class MyAccountModale extends React.Component {
               type="email"
               fullWidth
             /> */}
-            <h4>{name}</h4>
+            <h4>{lastName}</h4>
             <p>
-              Jolivet Karine
-              <IconButton onClick={() => this.openFieldModifyAccount(name)}>
+              Jolivet
+              <IconButton onClick={() => this.openFieldModifyAccount(lastName)}>
+                <Icons name="EditIcon" />
+              </IconButton>
+            </p>
+            <h4>{firstName}</h4>
+            <p>
+              Karine
+              <IconButton onClick={() => this.openFieldModifyAccount(firstName)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
