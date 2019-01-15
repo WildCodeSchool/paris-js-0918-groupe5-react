@@ -13,7 +13,7 @@ import {
 import {
   renderTextField,
   renderDatePicker,
-  radioButton,
+  renderRadioButton,
 } from '../reduxFormElements';
 import { displayAddReceiverDialog } from '../../actions/displayActions';
 
