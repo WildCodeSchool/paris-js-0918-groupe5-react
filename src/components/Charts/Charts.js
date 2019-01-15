@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
 import VisitsChart from './components/VisitsChart';
 import MoodChart from './components/MoodChart';
+import getServerAuthority from '../../config/getServerAuthority';
 
 class Charts extends Component {
   constructor(props) {
@@ -55,7 +56,7 @@ class Charts extends Component {
     const token = localStorage.getItem('token');
     return axios({
       method: 'GET',
-      url: 'http://localhost:4244/events',
+      url: `${getServerAuthority()}/events`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

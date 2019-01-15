@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import EventsTable from './EventsTable';
+import getServerAuthority from '../../config/getServerAuthority';
 
 class Monitoring extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class Monitoring extends Component {
     const token = localStorage.getItem('token');
     return axios({
       method: 'GET',
-      url: 'http://localhost:4244/events',
+      url: `${getServerAuthority()}/events`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
