@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import { IconButton } from '@material-ui/core';
@@ -9,7 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Icons from '../Icons';
 import FieldModifyUser from './FieldModifyUser';
-import getServerAuthority from '../../config/getServerAuthority';
+// import getServerAuthority from '../../config/getServerAuthority';
 
 class MyAccountModale extends React.Component {
   state = {
@@ -23,14 +23,14 @@ class MyAccountModale extends React.Component {
     selectedField: '',
   }
 
-  componentDidMount() {
-    const id = localStorage.getItem('id');
-    axios.get(`${getServerAuthority()}/caregiver/${id}`)
-      .then(res => console.log(res));
-  }
+  // componentDidMount() {
+  //   const id = localStorage.getItem('id');
+  //   axios.get(`${getServerAuthority()}/caregiver/${id}`)
+  //     .then(res => console.log(res));
+  // }
 
-  openFieldModifyAccount = (e) => {
-    this.setState({ openFieldModifyAccount: true, selectedField: e.target.name });
+  openFieldModifyAccount = (name) => {
+    this.setState({ selectedField: name }, () => this.setState({ openFieldModifyAccount: true}));
   }
 
   handleCloseFieldModifyAccount = () => {
@@ -48,6 +48,7 @@ class MyAccountModale extends React.Component {
       openFieldModifyAccount, name, address, phone, mail, password, numberOfSubscriptions, selectedField,
     } = this.state;
     console.log(selectedField);
+
     return (
       <div>
         <Dialog
@@ -73,35 +74,35 @@ class MyAccountModale extends React.Component {
             <h4>{name}</h4>
             <p>
               Jolivet Karine
-              <IconButton name="Nom" selectedField={selectedField} onClick={this.openFieldModifyAccount}>
+              <IconButton onClick={() => this.openFieldModifyAccount(name)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>{address}</h4>
             <p>
               11 rue de poissy Paris
-              <IconButton name="Adresse">
+              <IconButton onClick={() => this.openFieldModifyAccount(address)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>{phone}</h4>
             <p>
               0606060606
-              <IconButton name="Téléphone">
+              <IconButton onClick={() => this.openFieldModifyAccount(phone)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>{mail}</h4>
             <p>
               karine@jolivet.com
-              <IconButton name="Email">
+              <IconButton onClick={() => this.openFieldModifyAccount(mail)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>{password}</h4>
             <p>
               *****
-              <IconButton name="Mot de passe">
+              <IconButton onClick={() => this.openFieldModifyAccount(password)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>

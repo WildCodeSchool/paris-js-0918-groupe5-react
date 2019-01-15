@@ -20,7 +20,7 @@ class MyAccountModale extends React.Component {
 					onCloseAll={onCloseAll}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">{`${selectedField}`}</DialogTitle>
+          <DialogTitle id="form-dialog-title">{selectedField}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Vous trouverez ci-dessous vos informations personnelles.
@@ -31,7 +31,7 @@ class MyAccountModale extends React.Component {
               autoFocus
               margin="dense"
               id="name"
-              label="Email Address"
+              label={selectedField}
               type="email"
               fullWidth
             />
