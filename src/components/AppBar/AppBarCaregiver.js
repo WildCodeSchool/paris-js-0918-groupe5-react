@@ -16,6 +16,8 @@ import {
   Build,
   PowerSettingsNew,
 } from '@material-ui/icons';
+import MyAccountModale from './MyAccountModale';
+
 
 const styles = {
   toolbarRoot: {
@@ -36,24 +38,28 @@ const styles = {
 class AppBarCaregiver extends Component {
   state = {
     anchorEl: null,
-    caregiverModaleisOpen: false,
+    openModaleAccount: false,
   };
 
   handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  openCaregiverModale = () => {
-    this.setState({ anchorEl: null, caregiverModaleisOpen: true });
+  handleClickOpenModale = () => {
+    this.setState({ openModaleAccount: true, anchorEl: null });
   };
 
-  handleClose = () => {
+  handleCloseModale = () => {
+    this.setState({ openModaleAccount: false });
+  };
+
+  handleCloseMenu = () => {
     this.setState({ anchorEl: null });
   };
 
   render() {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
+    const { anchorEl, openModaleAccount } = this.state;
     const open = Boolean(anchorEl);
     return (
       <div className="AppBarCaregiver">
@@ -79,21 +85,21 @@ class AppBarCaregiver extends Component {
                 horizontal: 'right',
               }}
               open={open}
-              onClose={this.handleClose}
+              onClose={this.handleCloseMenu}
             >
-              <MenuItem onClick={this.openCaregiverModale}>
+              <MenuItem onClick={this.handleClickOpenModale}>
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>
                 <ListItemText inset primary="Mon compte" />
               </MenuItem>
-              <MenuItem onClick={this.handleClose}>
+              <MenuItem onClick={this.handleCloseMenu}>
                 <ListItemIcon>
                   <Alarm />
                 </ListItemIcon>
                 <ListItemText inset primary="Mes notifications" />
               </MenuItem>
-              <MenuItem onClick={this.handleClose}>
+              <MenuItem onClick={this.handleCloseMenu}>
                 <ListItemIcon>
                   <PowerSettingsNew />
                 </ListItemIcon>
@@ -102,6 +108,7 @@ class AppBarCaregiver extends Component {
             </Menu>
           </Toolbar>
         </AppBar>
+        <MyAccountModale open={openModaleAccount} onClose={this.handleCloseModale} />
       </div>
     );
   }

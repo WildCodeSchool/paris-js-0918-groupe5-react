@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import {
-	Divider,
-	ExpansionPanel,
-	ExpansionPanelDetails,
-	ExpansionPanelSummary,
-	List,
-	ListItem,
-	ListItemText,
-	Typography,
+  Divider,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
 } from '@material-ui/core';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 const styles = theme => ({
   root: {
@@ -34,10 +34,10 @@ const styles = theme => ({
   },
   listItemTextRoot: {
     textAlign: 'center',
-	},
-	link: {
-		textDecoration: 'none',
-	},
+  },
+  link: {
+    textDecoration: 'none',
+  },
 });
 
 class MenuBar extends React.Component {
@@ -63,26 +63,26 @@ class MenuBar extends React.Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <List className={classes.list}>
-							<Link to="/tableau_de_bord" className={classes.link}>
-								<ListItem button>
-									<ListItemText primary="Tableau de bord" classes={{ root: classes.listItemTextRoot }}/>
-								</ListItem>
-							</Link>
+              <Link to="/tableau_de_bord" className={classes.link}>
+                <ListItem button>
+                  <ListItemText primary="Tableau de bord" classes={{ root: classes.listItemTextRoot }} />
+                </ListItem>
+              </Link>
               <Divider />
-							<Link to="/calendrier" className={classes.link}>
-								<ListItem button>
-									<ListItemText primary="Calendrier" classes={{ root: classes.listItemTextRoot }}/>
-								</ListItem>
-							</Link>
+              <Link to="/calendrier" className={classes.link}>
+                <ListItem button>
+                  <ListItemText primary="Calendrier" classes={{ root: classes.listItemTextRoot }} />
+                </ListItem>
+              </Link>
               <Divider />
-							<Link to="/contacts" className={classes.link}>
-								<ListItem button>
-									<ListItemText primary="Contacts" classes={{ root: classes.listItemTextRoot }}/>
-								</ListItem>
-							</Link>
-							<Divider />
+              <Link to="/contacts" className={classes.link}>
+                <ListItem button>
+                  <ListItemText primary="Contacts" classes={{ root: classes.listItemTextRoot }} />
+                </ListItem>
+              </Link>
+              <Divider />
               <ListItem button>
-                <ListItemText primary="Suivi" classes={{ root: classes.listItemTextRoot }}/>
+                <ListItemText primary="Suivi" classes={{ root: classes.listItemTextRoot }} />
               </ListItem>
             </List>
           </ExpansionPanelDetails>

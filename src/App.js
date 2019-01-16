@@ -10,6 +10,7 @@ import ConnectionPage from './components/ConnectionPage';
 import Calendar from './components/Calendar/Calendar';
 import CaregiversForm from './components/Caregiver/CaregiverForm';
 import Contact from './components/Contacts/Contact';
+import Monitoring from './components/Monitoring/Monitoring';
 
 import './App.css';
 import 'typeface-roboto';
@@ -44,20 +45,20 @@ const theme = createMuiTheme({
   },
 });
 
-const App = props => (
+const App = ({ appBarIsDisplayed }) => (
   <MuiThemeProvider theme={theme}>
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        <Route exact path="/connexion" component={ConnectionPage} />
-        {props.appBarIsDisplayed && <AppBarGlobal />}
+        <Route exact path="/" component={ConnectionPage} />
+        {appBarIsDisplayed && <AppBarGlobal />}
         <div className="spaceBtwAppBarAndRoutes">
           <Route path="/tableau_de_bord" component={Dashboard} />
           <Route path="/contacts" component={Contact} />
           <Route path="/création" component={CaregiversForm} />
           <Route path="/calendrier" component={Calendar} />
+          <Route path="/suivi" component={Monitoring} />
         </div>
-        {/* <Route path='/suivi' component={FollowedUp} /> */}
         {/* <Route path='/mon_compte' component={Account} /> */}
       </div>
     </div>
