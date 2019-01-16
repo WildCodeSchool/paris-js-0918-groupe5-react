@@ -16,23 +16,21 @@ export const renderTextField = ({
   value,
   meta: { touched, invalid, error },
   ...custom
-}) => {
-  console.log('text', value);
-  return (
-    <TextField
-      helperText={touched && error}
-      label={label}
-      error={Boolean(touched && invalid)}
-      {...input}
-      {...custom}
-      required={required}
-      margin="dense"
-      type="text"
-      fullWidth
-      value={value}
-    />
-  );
-};
+}) => (
+  <TextField
+    helperText={touched && error}
+    label={label}
+    error={Boolean(touched && invalid)}
+    {...input}
+    {...custom}
+    required={required}
+    margin="dense"
+    type="text"
+    fullWidth
+    value={value}
+  />
+);
+
 
 export const renderRadioButton = ({
   input,
@@ -41,35 +39,32 @@ export const renderRadioButton = ({
   initialValue,
   buttonLabels,
   ...rest
-}) => {
-  console.log('input', input.value);
-  return (
-    <FormControl>
-      <FormLabel component="legend" required={required}>
-        {label}
-      </FormLabel>
-      <RadioGroup
-        {...input}
-        {...rest}
-        value={input.value.length === 0
-          ? initialValue === undefined
-            ? buttonLabels[0]
-            : initialValue
-          : input.value}
-        row
-      >
-        {buttonLabels.map(e => (
-          <FormControlLabel
-            key={e}
-            value={e}
-            control={<Radio />}
-            label={e}
-          />
-        ))}
-      </RadioGroup>
-    </FormControl>
-  );
-};
+}) => (
+  <FormControl>
+    <FormLabel component="legend" required={required}>
+      {label}
+    </FormLabel>
+    <RadioGroup
+      {...input}
+      {...rest}
+      value={input.value.length === 0
+        ? initialValue === undefined
+          ? buttonLabels[0]
+          : initialValue
+        : input.value}
+      row
+    >
+      {buttonLabels.map(e => (
+        <FormControlLabel
+          key={e}
+          value={e}
+          control={<Radio />}
+          label={e}
+        />
+      ))}
+    </RadioGroup>
+  </FormControl>
+);
 
 const renderFormHelper = ({ touched, error }) => {
   return <FormHelperText>{touched && error}</FormHelperText>;
@@ -105,6 +100,7 @@ export const renderSelectField = ({
 export const renderDatePicker = ({
   input,
   label,
+  value,
   required,
   meta: { touched, error, invalid },
   children,
@@ -119,6 +115,7 @@ export const renderDatePicker = ({
       {...input}
       {...custom}
       required={required}
+      value={value}
       InputLabelProps={{
         shrink: true,
       }}

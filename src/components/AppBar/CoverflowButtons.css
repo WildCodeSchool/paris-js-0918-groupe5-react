@@ -1,0 +1,28 @@
+.iconCoverflow {
+  color: white !important;
+}
+
+.CoverflowButtons > div:focus, .coverflow__container__1P-xE:focus, .coverflow__figure__3bk_C:focus, .coverflow__cover__25-7e:focus {
+  outline: none !important; 
+}
+
+.coverflow__container__1P-xE {
+  /* height: 32vh !important; */
+  height: auto !important;
+  width: auto !important;
+  top: -20px !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  padding-bottom: 20px !important;
+  padding-top: 20px !important;
+}
+
+.coverflow__figure__3bk_C, .coverflow__cover__25-7e {
+  box-shadow: 0 0 0 !important; 
+}
+
+.coverflow__cover__25-7e {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-direction: column !important;
+}
