@@ -221,6 +221,8 @@ const mapStateToProps = state => ({
     firstName: formValueSelector('contactModal')(state, 'firstName'),
     lastName: formValueSelector('contactModal')(state, 'lastName'),
     category: formValueSelector('contactModal')(state, 'category'),
+    profession: formValueSelector('contactModal')(state, 'profession'),
+    address: formValueSelector('contactModal')(state, 'address'),
     email: formValueSelector('contactModal')(state, 'email'),
     phone: formValueSelector('contactModal')(state, 'phone'),
     preferenceOfContact: formValueSelector('contactModal')(state, 'preferenceOfContact'),

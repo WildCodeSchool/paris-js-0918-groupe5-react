@@ -38,6 +38,10 @@ const DisplayContactModal = (props) => {
         <DialogContent>
           {displayedContact.category !== null && (<h4>Catégorie</h4>)}
           <p>{displayedContact.category}</p>
+          {displayedContact.profession !== null && (<h4>Fonction</h4>)}
+          <p>{displayedContact.profession}</p>
+          {displayedContact.address !== null && (<h4>Adresse</h4>)}
+          <p>{displayedContact.address}</p>
           {displayedContact.email !== null && (<h4>Email</h4>)}
           <p>{displayedContact.email}</p>
           {displayedContact.phone !== null && (<h4>Téléphone</h4>)}

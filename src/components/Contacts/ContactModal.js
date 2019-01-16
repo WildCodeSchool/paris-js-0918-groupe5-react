@@ -17,6 +17,7 @@ const validate = (values) => {
     'firstName',
     'lastName',
     'email',
+    'address',
     'category',
     'preferenceOfContact',
   ];
@@ -108,6 +109,24 @@ const contactModal = (props) => {
             <option value="Proches">Proches</option>
             <option value="Autre">Autre</option>
           </Field>
+          <Field
+            name="profession"
+            component={renderTextField}
+            label="Fonction"
+            required={false}
+            defaultValue={
+              selectedContact !== null ? selectedContact.profession : ''
+            }
+          />
+          <Field
+            name="address"
+            component={renderTextField}
+            label="Adresse"
+            required
+            defaultValue={
+              selectedContact !== null ? selectedContact.address : ''
+            }
+          />
           <Field
             name="email"
             component={renderTextField}

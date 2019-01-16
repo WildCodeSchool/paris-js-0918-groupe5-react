@@ -46,10 +46,11 @@ const ContactCard = (props) => {
               <Typography variant="h6" component="h3" className={classes.contactName}>
                 {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
               </Typography>
-              <Typography component="p">
-                {`${contact.category}
-                ${contact.phone === null ? '' : contact.phone === undefined ? '' : contact.phone}
-                ${contact.email !== null ? contact.email : ''}`}
+              <Typography component="h5">
+                <p>{contact.category}</p>
+                <p>{contact.phone === null ? '' : contact.phone === undefined ? '' : contact.phone}</p>
+                <p>{contact.email !== null ? contact.email : ''}</p>
+                <p>{contact.address === null ? '' : contact.address === undefined ? '' : contact.address}</p>
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -64,33 +65,6 @@ const ContactCard = (props) => {
           <Icons name="DeleteForeverIcon" />
         </IconButton>
       </Card>
-
-      {/* <Dialog
-        open={ContactCardIsOpen}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">
-          {`${displayedContact.title} ${displayedContact.firstName} ${displayedContact.lastName}`}
-        </DialogTitle>
-        <DialogContent>
-          {displayedContact.category !== null && (<h4>Catégorie</h4>)}
-          <p>{displayedContact.category}</p>
-          {displayedContact.email !== null && (<h4>Email</h4>)}
-          <p>{displayedContact.email}</p>
-          {displayedContact.phone !== null && (<h4>Téléphone</h4>)}
-          <p>{displayedContact.phone}</p>
-          {displayedContact.preferenceOfContact !== null && (<h4>Préférence de contact</h4>)}
-          <p>{displayedContact.preferenceOfContact}</p>
-          {displayedContact.comment !== null && (<h4>Comment</h4>)}
-          <p>{displayedContact.comment}</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog> */}
     </div>
   );
 };
