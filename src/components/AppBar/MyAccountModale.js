@@ -34,10 +34,6 @@ class MyAccountModale extends React.Component {
     this.axiosGetting();
   }
 
-  componentDidUpdate() {
-    this.axiosGetting();
-  }
-
   axiosGetting = () => {
     axios({
       method: 'GET',
@@ -103,6 +99,7 @@ class MyAccountModale extends React.Component {
     this.setState({ openFieldModifyAccount: false });
     this.props.onClose();
     alert('Vos modifications ont bien été enregistrées.');
+    this.axiosGetting();
   }
 
   render() {
@@ -175,7 +172,14 @@ class MyAccountModale extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <FieldModifyUser openField={openFieldModifyAccount} onClose={this.handleCloseFieldModifyAccount} selectedField={selectedField} stateName={stateName} onCloseAll={this.recordNewInformations} />
+        <FieldModifyUser
+          openField={openFieldModifyAccount}
+          onClose={this.handleCloseFieldModifyAccount}
+          selectedField={selectedField}
+          selectedCaregiver={selectedCaregiver}
+          stateName={stateName}
+          onCloseAll={this.recordNewInformations}
+        />
       </div>
     );
   }

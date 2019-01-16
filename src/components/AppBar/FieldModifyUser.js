@@ -15,7 +15,7 @@ class MyAccountModale extends React.Component {
 
   render() {
     const {
-      openField, onClose, onCloseAll, selectedField, stateName,
+      openField, onClose, onCloseAll, selectedField, stateName, selectedCaregiver,
     } = this.props;
     return (
       <div>
@@ -40,6 +40,7 @@ class MyAccountModale extends React.Component {
               label={selectedField}
               type="email"
               fullWidth
+              value={selectedCaregiver[stateName]}
               onChange={this.recording}
             />
           </DialogContent>
