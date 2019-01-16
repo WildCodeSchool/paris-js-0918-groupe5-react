@@ -40,7 +40,7 @@ const ContactCard = (props) => {
     classes,
     contact,
     handleSelectContact,
-    handleDeleteContact,
+    handleDeleteContactModal,
     handleDisplayContact,
     index,
   } = props;
@@ -70,7 +70,7 @@ const ContactCard = (props) => {
           <IconButton onClick={() => handleSelectContact(index)} color="secondary">
             <Icons name="EditIcon" />
           </IconButton>
-          <IconButton onClick={() => handleDeleteContact(index)} color="secondary">
+          <IconButton onClick={() => handleDeleteContactModal(index)} color="secondary">
             <Icons name="DeleteForeverIcon" />
           </IconButton>
         </div>
