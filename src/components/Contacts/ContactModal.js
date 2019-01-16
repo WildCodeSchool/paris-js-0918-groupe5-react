@@ -5,20 +5,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  withStyles,
 } from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
 import { renderTextField, renderRadioButton, renderSelectField } from '../reduxFormElements';
-
-const styles = () => ({
-  radioButtons: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  preferenceOfContact: {
-    marginTop: 23,
-  },
-});
 
 // validate allows to detect errors (see reduxFormElements.js)
 const validate = (values) => {
@@ -81,10 +70,10 @@ const contactModal = (props) => {
             label="Titre"
             buttonLabels={['Mme', 'M.']}
             required
-            defaultValue={
+            initialValue={
               selectedContact !== null
-                ? 'Mme'
-                : ''
+                ? selectedContact.title
+                : undefined
             }
           />
           {/* renderTextField render a Material UI textField */}
@@ -147,8 +136,10 @@ const contactModal = (props) => {
             label="Préférence de contact"
             buttonLabels={['SMS', 'Mail']}
             required
-            defaultValue={
-              selectedContact !== null ? selectedContact.preferenceOfContact : ''
+            initialValue={
+              selectedContact !== null
+                ? selectedContact.preferenceOfContact
+                : undefined
             }
           />
           <Field
@@ -196,4 +187,4 @@ const contactModal = (props) => {
 export default reduxForm({
   form: 'contactModal', // a unique identifier for this form
   validate,
-})(withStyles(styles)(contactModal));
+})(contactModal);

@@ -50,7 +50,7 @@ export const renderRadioButton = ({
   console.log('input', input.value);
   return (
     <FormControl>
-      <FormLabel component="legend" required={required}  className="radioButtonsLabel">
+      <FormLabel component="legend" required={required} className="radioButtonsLabel">
         {label}
       </FormLabel>
       <RadioGroup
