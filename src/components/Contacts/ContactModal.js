@@ -1,6 +1,10 @@
 import React from 'react';
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogTitle,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
 import { renderTextField, renderRadioButton, renderSelectField } from '../reduxFormElements';
@@ -48,9 +52,10 @@ const contactModal = (props) => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">
-          Ajouter un contact
-        </DialogTitle>
+        {selectedContact !== null
+          ? <DialogTitle id="form-dialog-title"> Modifier le contact</DialogTitle>
+          : <DialogTitle id="form-dialog-title"> Ajouter un contact</DialogTitle>
+        }
         <DialogContent>
           {/* renderRadioButton render a Material UI renderRadioButton */}
           {/* See reduxFormElements component */}

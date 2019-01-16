@@ -35,10 +35,12 @@ const ContactCard = (props) => {
     index,
   } = props;
 
+  /* eslint-disable jsx-a11y/no-static-element-interactions */
+  /* eslint-disable jsx-a11y/anchor-is-valid */
   return (
     <div>
       <Card className={classes.root}>
-        {/* <a onClick={() => handleDisplayContact(index)}> */}
+        <a onClick={() => handleDisplayContact(index)}>
           <CardActionArea>
             <CardContent>
               <Typography variant="h6" component="h3" className={classes.contactName}>
@@ -51,7 +53,7 @@ const ContactCard = (props) => {
               </Typography>
             </CardContent>
           </CardActionArea>
-        {/* </a> */}
+        </a>
         <IconButton onClick={() => handleSelectContact(index)} color="secondary">
           <Icons name="EditIcon" />
         </IconButton>
