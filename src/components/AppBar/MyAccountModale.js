@@ -18,7 +18,7 @@ class MyAccountModale extends React.Component {
   state = {
     openFieldModifyAccount: false,
     selectedCaregiver: {},
-    lastNameUpdated: '',
+    lastName: '',
     firstNameUpdated: '',
     addressUpdated: '',
     phoneUpdated: '',
@@ -27,6 +27,7 @@ class MyAccountModale extends React.Component {
     stateName: '',
     // numberOfSubscriptions: 'Nombre d\'abonnements',
     selectedField: '',
+    inputUpdated: '',
   }
 
   componentDidMount() {
@@ -44,7 +45,7 @@ class MyAccountModale extends React.Component {
     await this.setState({ selectedField: name }, () => this.setState({ openFieldModifyAccount: true }));
     switch (this.state.selectedField) {
       case 'Nom':
-        this.setState({ stateName: 'lastNameUpdated' });
+        this.setState({ stateName: 'lastName' });
         break;
       case 'Prénom':
         this.setState({ stateName: 'firstNameUpdated' });
@@ -77,12 +78,13 @@ class MyAccountModale extends React.Component {
     // console.log('kjghjglghghj', e.target.value)
 
     const array = Object.entries(stateField);
+    let valueUpdated = {};
     for (let i = 0; i < array.length; i++) {
       if (array[i][1].length) {
-        console.log('resulthhhhhhhhhhhhhhhhhhhhhhh', array[i][1]);
+        valueUpdated = { [fieldName]: array[i][1] };
       }
     }
-    // console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', array);
+    console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', fieldName);
 
     // for (const prop in stateField){
     //   if(stateField[prop].length){
@@ -90,24 +92,25 @@ class MyAccountModale extends React.Component {
     //   }
     // }
 
-    const {
-      lastNameUpdated,
-      firstNameUpdated,
-      addressUpdated,
-      phoneUpdated,
-      mailUpdated,
-      passwordUpdated,
-      selectedCaregiver,
-    } = this.state;
+    // const {
+    //   lastName,
+    //   firstNameUpdated,
+    //   addressUpdated,
+    //   phoneUpdated,
+    //   mailUpdated,
+    //   passwordUpdated,
+    //   selectedCaregiver,
+    //   inputUpdated,
+    // } = this.state;
 
-    const newCaregiverInformations = {
-      lastNameUpdated,
-      firstNameUpdated,
-      addressUpdated,
-      phoneUpdated,
-      mailUpdated,
-      passwordUpdated,
-    };
+    // const newCaregiverInformations = {
+    //   lastName,
+    //   firstNameUpdated,
+    //   addressUpdated,
+    //   phoneUpdated,
+    //   mailUpdated,
+    //   passwordUpdated,
+    // };
     // this.setState({ [e.target.name]: e.target.value });
 
     axios({
@@ -116,24 +119,26 @@ class MyAccountModale extends React.Component {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      data: newCaregiverInformations,
+      data: valueUpdated,
     })
       .then((res) => {
-        const data = res.data.name;
-        this.setState({ fieldName: fieldName });
+        // const data = res.data.name;
+        this.setState({ inputUpdated: res.data });
       });
+
     this.setState({ openFieldModifyAccount: false });
     this.props.onClose();
     alert('Vos modifications ont bien été enregistrées.');
-    console.log('=============', this.stateName);
+    // console.log('=============', this.stateName);
   }
 
   render() {
     const { open, onClose } = this.props;
     const {
-      openFieldModifyAccount, selectedField, selectedCaregiver, lastNameUpdated, stateName,
+      openFieldModifyAccount, selectedField, selectedCaregiver, lastName, stateName,
     } = this.state;
     // console.log('===============', selectedCaregiver);
+    console.log('+++++++++++++++', this.state.inputUpdated);
     return (
       <div>
         <Dialog
@@ -151,7 +156,7 @@ class MyAccountModale extends React.Component {
             <h4>Nom</h4>
             <p>
               {selectedCaregiver.lastName}
-              <IconButton onClick={() => this.openFieldModifyAccount('Nom', lastNameUpdated)}>
+              <IconButton onClick={() => this.openFieldModifyAccount('Nom', lastName)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>

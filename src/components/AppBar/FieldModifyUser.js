@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 class MyAccountModale extends React.Component {
   state = {
-    lastNameUpdated: '',
+    lastName: '',
     firstNameUpdated: '',
     addressUpdated: '',
     phoneUpdated: '',
@@ -19,7 +19,7 @@ class MyAccountModale extends React.Component {
   recording = (e) => {
     this.setState({ [e.target.name]: e.target.value });
     console.log(e.target.value);
-    console.log('target', this.state.lastNameUpdated)
+    console.log('target', this.state.lastName)
   };
 
   render() {
