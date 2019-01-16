@@ -1,13 +1,17 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import FormHelperText from '@material-ui/core/FormHelperText'
+import './ReduxFormElements.css';
+import {
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+  InputLabel,
+  Select,
+  FormHelperText,
+} from '@material-ui/core';
+// import classes from '*.module.css';
 
 export const renderTextField = ({
   input,
@@ -39,23 +43,26 @@ export const renderRadioButton = ({
   buttonLabels,
   ...rest
 }) => (
-  <FormControl>
-    <FormLabel component="legend" required={required}>
-      {label}
-    </FormLabel>
-    <RadioGroup {...input} {...rest} value={value}>
-      {buttonLabels.map(e => (
-        <FormControlLabel
-          key={e}
-          value={e}
-          control={
-            <Radio />
-          }
-          label={e}
-        />
-      ))}
-    </RadioGroup>
-  </FormControl>
+  <div>
+    <FormControl>
+      <FormLabel component="legend" required={required} className="radioButtonsLabel">
+        {label}
+      </FormLabel>
+      <RadioGroup {...input} {...rest} value={value} row>
+        {buttonLabels.map(e => (
+          <FormControlLabel
+            key={e}
+            value={e}
+            control={
+              <Radio />
+            }
+            label={e}
+            className="radioButtonsGroup"
+          />
+        ))}
+      </RadioGroup>
+    </FormControl>
+  </div>
 );
 
 const renderFromHelper = ({ touched, error }) => {

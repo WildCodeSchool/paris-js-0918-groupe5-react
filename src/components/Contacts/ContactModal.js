@@ -5,9 +5,20 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  withStyles,
 } from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
 import { renderTextField, renderRadioButton, renderSelectField } from '../reduxFormElements';
+
+const styles = () => ({
+  radioButtons: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  preferenceOfContact: {
+    marginTop: 23,
+  },
+});
 
 // validate allows to detect errors (see reduxFormElements.js)
 const validate = (values) => {
@@ -128,13 +139,24 @@ const contactModal = (props) => {
             }
           />
           <Field
+            name="preferenceOfContact"
+            component={renderRadioButton}
+            label="Préférence de contact"
+            buttonLabels={['SMS', 'Mail']}
+            required
+            defaultValue={
+              selectedContact !== null ? selectedContact.preferenceOfContact : ''
+            }
+          />
+          <Field
             name="email"
             component={renderTextField}
             label="Email"
             required
             defaultValue={
-              selectedContact !== null ? selectedContact.email : ''
+              selectedContact === null ? '' : selectedContact === undefined ? '' : selectedContact.email
             }
+
           />
           <Field
             name="phone"
@@ -143,16 +165,6 @@ const contactModal = (props) => {
             required={false}
             defaultValue={
               selectedContact !== null ? selectedContact.phone : ''
-            }
-          />
-          <Field
-            name="preferenceOfContact"
-            component={renderRadioButton}
-            label="Préférence de contact"
-            buttonLabels={['SMS', 'Mail']}
-            required
-            defaultValue={
-              selectedContact !== null ? selectedContact.preferenceOfContact : ''
             }
           />
           <Field
@@ -181,4 +193,4 @@ const contactModal = (props) => {
 export default reduxForm({
   form: 'contactModal', // a unique identifier for this form
   validate,
-})(contactModal);
+})(withStyles(styles)(contactModal));
