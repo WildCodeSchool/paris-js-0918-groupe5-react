@@ -27,7 +27,8 @@ const validate = (values) => {
     'title',
     'firstName',
     'lastName',
-    'email',
+    // 'email',
+    // 'phone',
     'address',
     'category',
     'preferenceOfContact',
@@ -57,6 +58,8 @@ const contactModal = (props) => {
     selectedContact,
     selectedId,
   } = props;
+
+  // console.log(selectedContact.preferenceOfContact !== null ? selectedContact.preferenceOfContact : 'pas de contact');
 
   return (
     <div>

@@ -34,6 +34,7 @@ const styles = theme => ({
   },
 });
 
+
 const ContactCard = (props) => {
   const {
     classes,
@@ -55,9 +56,9 @@ const ContactCard = (props) => {
               </Typography>
               <Typography component="h5">
                 <p>{contact.category}</p>
-                <p>{contact.phone === null ? '' : contact.phone === undefined ? '' : contact.phone}</p>
-                <p>{contact.email !== null ? contact.email : ''}</p>
                 <p>{contact.address === null ? '' : contact.address === undefined ? '' : contact.address}</p>
+                <p>{contact.phone === null ? '' : contact.phone === undefined ? '' : contact.phone}</p>
+                <p>{contact.email === null ? '' : contact.email === undefined ? '' : contact.email}</p>
               </Typography>
             </CardContent>
           </CardActionArea>
