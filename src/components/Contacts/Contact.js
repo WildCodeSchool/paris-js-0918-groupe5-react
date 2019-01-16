@@ -8,6 +8,7 @@ import ContactModal from './ContactModal';
 import DisplayContactModal from './DisplayContactModal';
 import ContactCard from './ContactCard';
 import AddContactButton from './AddContactButton';
+import DeleteContactModal from './DeleteContactModal';
 
 // eslint-disable-next-line no-undef
 const token = localStorage.getItem('token');
@@ -24,6 +25,7 @@ class Contact extends Component {
     state = {
       contactModalIsOpen: false,
       displayContactModalIsOpen: false,
+      deleteContactModalIsOpen: false,
       contactsList: [],
       displayedContact: null,
       selectedContact: null,
@@ -66,27 +68,29 @@ class Contact extends Component {
       });
     };
 
-      handleAddContact = () => {
-        const { contactsList } = this.state;
-        const { reduxContact, dispatch } = this.props;
-        console.log(this.props);
-        const contact = { ...reduxContact };
+    handleAddContact = () => {
+      const { contactsList } = this.state;
+      const { reduxContact, dispatch } = this.props;
+      console.log(this.props);
+      const contact = { ...reduxContact };
+      contact.title = reduxContact.title || 'Mme';
+      contact.preferenceOfContact = reduxContact.preferenceOfContact || 'SMS';
 
-        axios({
-          method: 'POST',
-          url: `${getServerAuthority()}/contacts`,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          data: contact,
+      axios({
+        method: 'POST',
+        url: `${getServerAuthority()}/contacts`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: contact,
+      })
+        .then((res) => {
+          // concatenation of contactsList and the new contact
+          this.setState({ contactsList: [...contactsList, res.data] });
         })
-          .then((res) => {
-            // concatenation of contactsList and the new contact
-            this.setState({ contactsList: [...contactsList, res.data] });
-          })
-          .then(this.handleClose('contactModalIsOpen'))
-          .then(() => { dispatch(reset('contactModal')); });
-      };
+        .then(this.handleClose('contactModalIsOpen'))
+        .then(() => { dispatch(reset('contactModal')); });
+    };
 
     handleSelectContact = (id) => {
       const { contactsList } = this.state;
@@ -118,6 +122,16 @@ class Contact extends Component {
         .then(this.handleClose('contactModalIsOpen'));
     }
 
+
+    handleDeleteContactModal = (id) => {
+      const { contactsList } = this.state;
+      this.setState({
+        displayedContact: contactsList[id],
+        deleteContactModalIsOpen: true,
+        selectedId: id,
+      });
+    }
+
     handleDeleteContact = (id) => {
       const { contactsList } = this.state;
       const { reduxContact } = this.props;
@@ -136,6 +150,7 @@ class Contact extends Component {
           newContactsList.splice(id, 1);
           this.setState({ contactsList: newContactsList });
         })
+        .then(this.handleClose('deleteContactModalIsOpen'))
         .then(console.log(`Contact n° ${contactsList[id].id} (n° ${id} dans le tableau) supprimé`));
     }
 
@@ -143,6 +158,7 @@ class Contact extends Component {
       const {
         contactModalIsOpen,
         displayContactModalIsOpen,
+        deleteContactModalIsOpen,
         contactsList,
         displayedContact,
         selectedContact,
@@ -164,7 +180,7 @@ class Contact extends Component {
                   <ContactCard
                     contact={contact}
                     handleSelectContact={this.handleSelectContact}
-                    handleDeleteContact={this.handleDeleteContact}
+                    handleDeleteContactModal={this.handleDeleteContactModal}
                     handleDisplayContact={this.handleDisplayContact}
                     index={index}
                   />
@@ -190,6 +206,18 @@ class Contact extends Component {
             selectedId={selectedId}
             contactModalIsOpen={contactModalIsOpen}
           />
+
+          {displayedContact !== null && (
+          <DeleteContactModal
+            handleClose={this.handleClose('deleteContactModalIsOpen')}
+            handleDeleteContact={this.handleDeleteContact}
+            deleteContactModalIsOpen={deleteContactModalIsOpen}
+            contactsList={contactsList}
+            displayedContact={displayedContact}
+            selectedId={selectedId}
+            // index={index}
+          />
+          )}
         </div>
       );
     }

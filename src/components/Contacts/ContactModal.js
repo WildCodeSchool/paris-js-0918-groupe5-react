@@ -48,8 +48,6 @@ const contactModal = (props) => {
     selectedId,
   } = props;
 
-  // console.log(selectedContact.preferenceOfContact !== null ? selectedContact.preferenceOfContact : 'pas de contact');
-
   return (
     <div>
       <Dialog
