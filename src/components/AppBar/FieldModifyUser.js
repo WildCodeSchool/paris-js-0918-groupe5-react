@@ -40,7 +40,7 @@ class MyAccountModale extends React.Component {
               label={selectedField}
               type="email"
               fullWidth
-              value={selectedCaregiver[stateName]}
+              value={stateName === 'password' ? '' : selectedCaregiver[stateName]}
               onChange={this.recording}
             />
           </DialogContent>
