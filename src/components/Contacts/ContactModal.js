@@ -13,6 +13,7 @@ import { renderTextField, renderRadioButton, renderSelectField } from '../reduxF
 const validate = (values) => {
   const errors = {};
   const requiredFields = [
+    'title',
     'firstName',
     'lastName',
     'email',

@@ -34,7 +34,7 @@ const ContactCard = (props) => {
     handleDisplayContact,
     index,
   } = props;
-
+  // console.log('contact.phone', contact.phone);
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   /* eslint-disable jsx-a11y/anchor-is-valid */
   return (
@@ -48,12 +48,15 @@ const ContactCard = (props) => {
               </Typography>
               <Typography component="p">
                 {`${contact.category}
-                ${contact.phone !== null ? contact.phone : ''}
+                ${contact.phone === null ? '' : contact.phone === undefined ? '' : contact.phone}
                 ${contact.email !== null ? contact.email : ''}`}
               </Typography>
             </CardContent>
           </CardActionArea>
         </a>
+        <IconButton color="secondary">
+          <Icons name="NotificationsIcon" />
+        </IconButton>
         <IconButton onClick={() => handleSelectContact(index)} color="secondary">
           <Icons name="EditIcon" />
         </IconButton>

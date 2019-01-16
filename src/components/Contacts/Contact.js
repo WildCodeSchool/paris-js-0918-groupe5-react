@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, reset } from 'redux-form';
 import axios from 'axios';
 import { withStyles, Typography } from '@material-ui/core';
 import getServerAuthority from '../../config/getServerAuthority';
@@ -66,25 +66,50 @@ class Contact extends Component {
       });
     };
 
-    handleAddContact = () => {
-      const { contactsList } = this.state;
-      const { reduxContact } = this.props;
-      const contact = { ...reduxContact };
+      handleAddContact = () => {
+        const { contactsList } = this.state;
+        const { reduxContact, dispatch } = this.props;
+        console.log(this.props);
+        const contact = { ...reduxContact };
 
-      axios({
-        method: 'POST',
-        url: `${getServerAuthority()}/contacts`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: contact,
-      })
-        .then((res) => {
-          // concatenation of contactsList and the new contact
-          this.setState({ contactsList: [...contactsList, res.data] });
+        axios({
+          method: 'POST',
+          url: `${getServerAuthority()}/contacts`,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: contact,
         })
-        .then(this.handleClose('contactModalIsOpen'));
-    };
+          .then((res) => {
+            // concatenation of contactsList and the new contact
+            this.setState({ contactsList: [...contactsList, res.data] });
+          })
+          .then(this.handleClose('contactModalIsOpen'))
+          .then(() => { dispatch(reset('contactModal')); });
+      };
+
+      // handleAddContact = () => {
+      //   const { contactsList } = this.state;
+      //   const { reduxContact, dispatch } = this.props;
+      //   console.log(this.props);
+      //   const contact = { ...reduxContact };
+
+      //   axios({
+      //     method: 'POST',
+      //     url: `${getServerAuthority()}/contacts`,
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //     data: contact,
+      //   })
+      //     .then((res) => {
+      //       // concatenation of contactsList and the new contact
+      //       this.setState({ contactsList: [...contactsList, res.data] });
+      //     })
+      //     .then(this.handleClose('contactModalIsOpen'))
+      //     .then(() => { dispatch(reset('contactModal')); });
+      // };
+
 
     handleSelectContact = (id) => {
       const { contactsList } = this.state;
@@ -165,26 +190,6 @@ class Contact extends Component {
               />
             </div>
           ))}
-
-          {/*
-          {contactsList.map((contact, index) => (
-            <p key={contact.id}>
-              <Button
-                onClick={() => this.handleDisplayContact(index)}
-                className={classes.displayContactButton}
-              >
-                {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
-                <br />
-                {`${contact.category}`}
-              </Button>
-              <IconButton onClick={() => this.handleSelectContact(index)} color="secondary">
-                <Icons name="EditIcon" />
-              </IconButton>
-              <IconButton onClick={() => this.handleDeleteContact(index)} color="secondary">
-                <Icons name="DeleteForeverIcon" />
-              </IconButton>
-            </p>))} */}
-
           {displayedContact !== null && (
           <DisplayContactModal
             handleClose={this.handleClose('displayContactModalIsOpen')}
