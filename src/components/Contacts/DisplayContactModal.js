@@ -18,7 +18,6 @@ const styles = theme => ({
 });
 
 const DisplayContactModal = (props) => {
-
   const {
     displayContactModalIsOpen,
     handleClose,

@@ -9,11 +9,17 @@ import {
 } from '@material-ui/core';
 import Icons from '../Icons';
 
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 const styles = theme => ({
   root: {
-    maxWidth: 300,
+    width: 300,
+    height: 280,
     margin: 30,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   button: {
     margin: theme.spacing.unit,
@@ -22,6 +28,9 @@ const styles = theme => ({
     display: 'none',
   },
   contactName: {
+  },
+  contactIcons: {
+    textAlign: 'right',
   },
 });
 
@@ -34,9 +43,7 @@ const ContactCard = (props) => {
     handleDisplayContact,
     index,
   } = props;
-  // console.log('contact.phone', contact.phone);
-  /* eslint-disable jsx-a11y/no-static-element-interactions */
-  /* eslint-disable jsx-a11y/anchor-is-valid */
+
   return (
     <div>
       <Card className={classes.root}>
@@ -44,7 +51,7 @@ const ContactCard = (props) => {
           <CardActionArea>
             <CardContent>
               <Typography variant="h6" component="h3" className={classes.contactName}>
-                {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
+                {`${contact.title} ${contact.firstName} ${contact.lastName}`}
               </Typography>
               <Typography component="h5">
                 <p>{contact.category}</p>
@@ -55,15 +62,17 @@ const ContactCard = (props) => {
             </CardContent>
           </CardActionArea>
         </a>
-        <IconButton color="secondary">
-          <Icons name="NotificationsIcon" />
-        </IconButton>
-        <IconButton onClick={() => handleSelectContact(index)} color="secondary">
-          <Icons name="EditIcon" />
-        </IconButton>
-        <IconButton onClick={() => handleDeleteContact(index)} color="secondary">
-          <Icons name="DeleteForeverIcon" />
-        </IconButton>
+        <div className={classes.contactIcons}>
+          <IconButton color="secondary">
+            <Icons name="NotificationsIcon" />
+          </IconButton>
+          <IconButton onClick={() => handleSelectContact(index)} color="secondary">
+            <Icons name="EditIcon" />
+          </IconButton>
+          <IconButton onClick={() => handleDeleteContact(index)} color="secondary">
+            <Icons name="DeleteForeverIcon" />
+          </IconButton>
+        </div>
       </Card>
     </div>
   );

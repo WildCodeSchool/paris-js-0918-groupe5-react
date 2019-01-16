@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector, reset } from 'redux-form';
 import axios from 'axios';
-import { withStyles, Typography } from '@material-ui/core';
+import { withStyles, Typography, Grid } from '@material-ui/core';
 import getServerAuthority from '../../config/getServerAuthority';
 import ContactModal from './ContactModal';
 import DisplayContactModal from './DisplayContactModal';
@@ -88,29 +88,6 @@ class Contact extends Component {
           .then(() => { dispatch(reset('contactModal')); });
       };
 
-      // handleAddContact = () => {
-      //   const { contactsList } = this.state;
-      //   const { reduxContact, dispatch } = this.props;
-      //   console.log(this.props);
-      //   const contact = { ...reduxContact };
-
-      //   axios({
-      //     method: 'POST',
-      //     url: `${getServerAuthority()}/contacts`,
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //     data: contact,
-      //   })
-      //     .then((res) => {
-      //       // concatenation of contactsList and the new contact
-      //       this.setState({ contactsList: [...contactsList, res.data] });
-      //     })
-      //     .then(this.handleClose('contactModalIsOpen'))
-      //     .then(() => { dispatch(reset('contactModal')); });
-      // };
-
-
     handleSelectContact = (id) => {
       const { contactsList } = this.state;
       this.setState({
@@ -163,8 +140,6 @@ class Contact extends Component {
     }
 
     render() {
-      // const { classes } = this.props;
-
       const {
         contactModalIsOpen,
         displayContactModalIsOpen,
@@ -179,17 +154,25 @@ class Contact extends Component {
           <Typography variant="h4" component="h2">
             Mes contacts
           </Typography>
-          {contactsList.map((contact, index) => (
-            <div key={contact.id}>
-              <ContactCard
-                contact={contact}
-                handleSelectContact={this.handleSelectContact}
-                handleDeleteContact={this.handleDeleteContact}
-                handleDisplayContact={this.handleDisplayContact}
-                index={index}
-              />
-            </div>
-          ))}
+
+          <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
+
+          <Grid container spacing={16} justify="center">
+            {contactsList.map((contact, index) => (
+              <div key={contact.id}>
+                <Grid item xs={12} sm={12}>
+                  <ContactCard
+                    contact={contact}
+                    handleSelectContact={this.handleSelectContact}
+                    handleDeleteContact={this.handleDeleteContact}
+                    handleDisplayContact={this.handleDisplayContact}
+                    index={index}
+                  />
+                </Grid>
+              </div>
+            ))}
+          </Grid>
+
           {displayedContact !== null && (
           <DisplayContactModal
             handleClose={this.handleClose('displayContactModalIsOpen')}
@@ -197,7 +180,7 @@ class Contact extends Component {
             contactsList={contactsList}
             displayedContact={displayedContact}
           />)}
-          <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
+
           <ContactModal
             handleClose={this.handleClose('contactModalIsOpen')}
             handleAddContact={this.handleAddContact}
