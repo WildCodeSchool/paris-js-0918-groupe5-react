@@ -120,7 +120,7 @@ class MyAccountModale extends React.Component {
             <DialogContentText>
               Vous trouverez ci-dessous vos informations personnelles.
               <br />
-              Si vous souhaitez les modifier, nous vous invitons à cliquer sur le bouton "Modifier".
+              Si vous souhaitez les modifier, nous vous invitons à cliquer sur l'icône "crayon".
             </DialogContentText>
             <h4>Nom</h4>
             <p>
