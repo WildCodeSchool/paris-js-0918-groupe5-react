@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import { withStyles, IconButton } from '@material-ui/core';
+import { Button, withStyles, IconButton } from '@material-ui/core';
 import getServerAuthority from '../../config/getServerAuthority';
 import ContactModal from './ContactModal';
 import DisplayContactModal from './DisplayContactModal';
+import ContactCard from './ContactCard';
+import ContactCards from './ContactCards';
 import Icons from '../Icons';
-
-import ContactButton from './ContactButton';
+import AddContactButton from './AddContactButton';
 
 // eslint-disable-next-line no-undef
 const token = localStorage.getItem('token');
@@ -90,7 +90,7 @@ class Contact extends Component {
 
     handleSelectContact = (id) => {
       const { contactsList } = this.state;
-
+      console.log('HANDLESELECTCONTACT !!!!!!!!!')
       this.setState({
         selectedContact: contactsList[id],
         selectedId: id,
@@ -155,6 +155,19 @@ class Contact extends Component {
       return (
         <div>
           <h2>Mes contacts</h2>
+          {/* <ContactCards /> */}
+          {/* <ContactCards contactsList={contactsList} /> */}
+          {contactsList.map((contact, index) => (
+            <div key={contact.id}>
+              <ContactCard
+                contact={contact}
+                handleSelectContact={this.handleSelectContact}
+                index={index}
+              />
+            </div>
+          ))}
+
+
           {contactsList.map((contact, index) => (
             <p key={contact.id}>
               <Button
@@ -165,10 +178,10 @@ class Contact extends Component {
                 <br />
                 {`${contact.category}`}
               </Button>
-              <IconButton onClick={() => this.handleSelectContact(index)}>
+              <IconButton onClick={() => this.handleSelectContact(index)} color="secondary">
                 <Icons name="EditIcon" />
               </IconButton>
-              <IconButton onClick={() => this.handleDeleteContact(index)}>
+              <IconButton onClick={() => this.handleDeleteContact(index)} color="secondary">
                 <Icons name="DeleteForeverIcon" />
               </IconButton>
             </p>))}
@@ -180,7 +193,7 @@ class Contact extends Component {
             contactsList={contactsList}
             displayedContact={displayedContact}
           />)}
-          <ContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
+          <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
           <ContactModal
             handleClose={this.handleClose('contactModalIsOpen')}
             handleAddContact={this.handleAddContact}

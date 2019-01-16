@@ -41,10 +41,6 @@ const contactModal = (props) => {
     selectedId,
   } = props;
 
-  if (selectedContact) {
-    console.log('title : ', selectedContact.title, 'preferenceOfContact : ', selectedContact.preferenceOfContact);
-  }
-
   return (
     <div>
       <Dialog

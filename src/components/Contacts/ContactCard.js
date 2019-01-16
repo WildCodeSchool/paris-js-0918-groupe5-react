@@ -1,14 +1,26 @@
 import React from 'react';
 import {
   Button,
+  Paper,
   Dialog,
   DialogActions,
   DialogTitle,
   DialogContent,
+  Typography,
   withStyles,
+  IconButton,
 } from '@material-ui/core';
+import Icons from '../Icons';
+
 
 const styles = theme => ({
+  root: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    maxWidth: 300,
+    margin: 30,
+  },
   button: {
     margin: theme.spacing.unit,
   },
@@ -17,18 +29,39 @@ const styles = theme => ({
   },
 });
 
-const DisplayContactModal = (props) => {
+const ContactCard = (props) => {
 
   const {
-    displayContactModalIsOpen,
-    handleClose,
-    displayedContact,
+    classes,
+    contact,
+    handleSelectContact,
+    index,
+    // ContactCardIsOpen,
+    // handleClose,
+    // displayedContact,
   } = props;
 
   return (
     <div>
-      <Dialog
-        open={displayContactModalIsOpen}
+      <Paper className={classes.root} elevation={1}>
+        <Typography variant="h6" component="h3">
+          {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
+        </Typography>
+        <Typography component="p">
+          {`${contact.category}
+          ${contact.phone !== null ? contact.phone : ''}
+          ${contact.email !== null ? contact.email : ''}`}
+        </Typography>
+        <IconButton onClick={() => handleSelectContact(index)}>
+          <Icons name="EditIcon" />
+        </IconButton>
+        <IconButton>
+          <Icons name="DeleteForeverIcon" />
+        </IconButton>
+      </Paper>
+
+      {/* <Dialog
+        open={ContactCardIsOpen}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
@@ -52,9 +85,9 @@ const DisplayContactModal = (props) => {
             Ok
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 };
 
-export default withStyles(styles)(DisplayContactModal);
+export default withStyles(styles)(ContactCard);
