@@ -1,23 +1,17 @@
 import React from 'react';
 import {
-  Button,
-  Paper,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  DialogContent,
   Typography,
   withStyles,
   IconButton,
+  Card,
+  CardActionArea,
+  CardContent,
 } from '@material-ui/core';
 import Icons from '../Icons';
 
 
 const styles = theme => ({
   root: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
     maxWidth: 300,
     margin: 30,
   },
@@ -27,38 +21,44 @@ const styles = theme => ({
   input: {
     display: 'none',
   },
+  contactName: {
+  },
 });
 
 const ContactCard = (props) => {
-
   const {
     classes,
     contact,
     handleSelectContact,
+    handleDeleteContact,
+    handleDisplayContact,
     index,
-    // ContactCardIsOpen,
-    // handleClose,
-    // displayedContact,
   } = props;
 
   return (
     <div>
-      <Paper className={classes.root} elevation={1}>
-        <Typography variant="h6" component="h3">
-          {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
-        </Typography>
-        <Typography component="p">
-          {`${contact.category}
-          ${contact.phone !== null ? contact.phone : ''}
-          ${contact.email !== null ? contact.email : ''}`}
-        </Typography>
-        <IconButton onClick={() => handleSelectContact(index)}>
+      <Card className={classes.root}>
+        {/* <a onClick={() => handleDisplayContact(index)}> */}
+          <CardActionArea>
+            <CardContent>
+              <Typography variant="h6" component="h3" className={classes.contactName}>
+                {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
+              </Typography>
+              <Typography component="p">
+                {`${contact.category}
+                ${contact.phone !== null ? contact.phone : ''}
+                ${contact.email !== null ? contact.email : ''}`}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        {/* </a> */}
+        <IconButton onClick={() => handleSelectContact(index)} color="secondary">
           <Icons name="EditIcon" />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => handleDeleteContact(index)} color="secondary">
           <Icons name="DeleteForeverIcon" />
         </IconButton>
-      </Paper>
+      </Card>
 
       {/* <Dialog
         open={ContactCardIsOpen}

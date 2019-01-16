@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import axios from 'axios';
-import { Button, withStyles, IconButton } from '@material-ui/core';
+import { withStyles, Typography } from '@material-ui/core';
 import getServerAuthority from '../../config/getServerAuthority';
 import ContactModal from './ContactModal';
 import DisplayContactModal from './DisplayContactModal';
 import ContactCard from './ContactCard';
-import ContactCards from './ContactCards';
-import Icons from '../Icons';
 import AddContactButton from './AddContactButton';
 
 // eslint-disable-next-line no-undef
@@ -90,7 +88,6 @@ class Contact extends Component {
 
     handleSelectContact = (id) => {
       const { contactsList } = this.state;
-      console.log('HANDLESELECTCONTACT !!!!!!!!!')
       this.setState({
         selectedContact: contactsList[id],
         selectedId: id,
@@ -141,7 +138,7 @@ class Contact extends Component {
     }
 
     render() {
-      const { classes } = this.props;
+      // const { classes } = this.props;
 
       const {
         contactModalIsOpen,
@@ -154,20 +151,22 @@ class Contact extends Component {
 
       return (
         <div>
-          <h2>Mes contacts</h2>
-          {/* <ContactCards /> */}
-          {/* <ContactCards contactsList={contactsList} /> */}
+          <Typography variant="h4" component="h2">
+            Mes contacts
+          </Typography>
           {contactsList.map((contact, index) => (
             <div key={contact.id}>
               <ContactCard
                 contact={contact}
                 handleSelectContact={this.handleSelectContact}
+                handleDeleteContact={this.handleDeleteContact}
+                handleDisplayContact={this.handleDisplayContact}
                 index={index}
               />
             </div>
           ))}
 
-
+          {/*
           {contactsList.map((contact, index) => (
             <p key={contact.id}>
               <Button
@@ -184,7 +183,7 @@ class Contact extends Component {
               <IconButton onClick={() => this.handleDeleteContact(index)} color="secondary">
                 <Icons name="DeleteForeverIcon" />
               </IconButton>
-            </p>))}
+            </p>))} */}
 
           {displayedContact !== null && (
           <DisplayContactModal

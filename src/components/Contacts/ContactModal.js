@@ -49,7 +49,7 @@ const contactModal = (props) => {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          Ajouter un contact professionnel
+          Ajouter un contact
         </DialogTitle>
         <DialogContent>
           {/* renderRadioButton render a Material UI renderRadioButton */}
