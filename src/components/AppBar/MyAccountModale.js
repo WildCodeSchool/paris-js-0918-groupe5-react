@@ -11,24 +11,25 @@ import Icons from '../Icons';
 import FieldModifyUser from './FieldModifyUser';
 import getServerAuthority from '../../config/getServerAuthority';
 
+const token = localStorage.getItem('token');
+const url = `${getServerAuthority()}/users/caregiver`;
+
 class MyAccountModale extends React.Component {
   state = {
     openFieldModifyAccount: false,
     selectedCaregiver: {},
-    lastName: 'Nom',
-    firstName: 'Prénom',
-    address: 'Adresse',
-    phone: 'Téléphone',
-    mail: 'Email',
-    password: 'Mot de passe',
-    numberOfSubscriptions: 'Nombre d\'abonnements',
+    lastNameUpdated: '',
+    firstNameUpdated: '',
+    addressUpdated: '',
+    phoneUpdated: '',
+    mailUpdated: '',
+    passwordUpdated: '',
+    stateName: '',
+    // numberOfSubscriptions: 'Nombre d\'abonnements',
     selectedField: '',
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('token');
-    const url = `${getServerAuthority()}/users/caregiver`;
-    console.log('url', url);
     axios({
       method: 'GET',
       url,
@@ -36,29 +37,103 @@ class MyAccountModale extends React.Component {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(res => this.setState({ selectedCaregiver: res.data }));
+      .then(res => console.log(res) || this.setState({ selectedCaregiver: res.data }));
   }
 
-  openFieldModifyAccount = (name) => {
-    this.setState({ selectedField: name }, () => this.setState({ openFieldModifyAccount: true }));
+  openFieldModifyAccount = async (name) => {
+    await this.setState({ selectedField: name }, () => this.setState({ openFieldModifyAccount: true }));
+    switch (this.state.selectedField) {
+      case 'Nom':
+        this.setState({ stateName: 'lastNameUpdated' });
+        break;
+      case 'Prénom':
+        this.setState({ stateName: 'firstNameUpdated' });
+        break;
+      case 'Adresse':
+        this.setState({ stateName: 'address' });
+        break;
+      case 'Téléphone':
+        this.setState({ stateName: 'phone' });
+        break;
+      case 'Email':
+        this.setState({ stateName: 'email' });
+        break;
+      case 'Mot de passe':
+        this.setState({ stateName: 'password' });
+        break;
+      default:
+        break;
+    }
+    // this.state.selectedField === 'Nom' ? this.setState({ stateName : 'lastNameUpdated'}) : '';
+    console.log('--------------------', this.state.stateName);
   }
 
   handleCloseFieldModifyAccount = () => {
     this.setState({ openFieldModifyAccount: false });
   };
 
-  recordNewInformations = () => {
+  recordNewInformations = (fieldName, stateField) => {
+    // this.setState({ [e.target.name]: e.target.value });
+    // console.log('kjghjglghghj', e.target.value)
+
+    const array = Object.entries(stateField);
+    for (let i = 0; i < array.length; i++) {
+      if (array[i][1].length) {
+        console.log('resulthhhhhhhhhhhhhhhhhhhhhhh', array[i][1]);
+      }
+    }
+    // console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', array);
+
+    // for (const prop in stateField){
+    //   if(stateField[prop].length){
+    //     console.log('statefiled[prop]', stateField[prop])
+    //   }
+    // }
+
+    const {
+      lastNameUpdated,
+      firstNameUpdated,
+      addressUpdated,
+      phoneUpdated,
+      mailUpdated,
+      passwordUpdated,
+      selectedCaregiver,
+    } = this.state;
+
+    const newCaregiverInformations = {
+      lastNameUpdated,
+      firstNameUpdated,
+      addressUpdated,
+      phoneUpdated,
+      mailUpdated,
+      passwordUpdated,
+    };
+    // this.setState({ [e.target.name]: e.target.value });
+
+    axios({
+      method: 'PUT',
+      url: `${getServerAuthority()}/users/caregiver`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: newCaregiverInformations,
+    })
+      .then((res) => {
+        const data = res.data.name;
+        this.setState({ fieldName: fieldName });
+      });
     this.setState({ openFieldModifyAccount: false });
     this.props.onClose();
     alert('Vos modifications ont bien été enregistrées.');
+    console.log('=============', this.stateName);
   }
 
   render() {
     const { open, onClose } = this.props;
     const {
-      openFieldModifyAccount, lastName, firstName, address, phone, mail, password, numberOfSubscriptions, selectedField, selectedCaregiver
+      openFieldModifyAccount, selectedField, selectedCaregiver, lastNameUpdated, stateName,
     } = this.state;
-    console.log(selectedCaregiver);
+    // console.log('===============', selectedCaregiver);
     return (
       <div>
         <Dialog
@@ -73,50 +148,50 @@ class MyAccountModale extends React.Component {
               <br />
               Si vous souhaitez les modifier, nous vous invitons à cliquer sur le bouton "Modifier".
             </DialogContentText>
-            <h4>{lastName}</h4>
+            <h4>Nom</h4>
             <p>
-              Jolivet
-              <IconButton onClick={() => this.openFieldModifyAccount(lastName)}>
+              {selectedCaregiver.lastName}
+              <IconButton onClick={() => this.openFieldModifyAccount('Nom', lastNameUpdated)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>{firstName}</h4>
+            <h4>Prénom</h4>
             <p>
-              Karine
-              <IconButton onClick={() => this.openFieldModifyAccount(firstName)}>
+              {selectedCaregiver.firstName}
+              <IconButton onClick={() => this.openFieldModifyAccount('Prénom')}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>{address}</h4>
+            <h4>Adresse</h4>
             <p>
-              11 rue de poissy Paris
-              <IconButton onClick={() => this.openFieldModifyAccount(address)}>
+              {selectedCaregiver.address}
+              <IconButton onClick={() => this.openFieldModifyAccount('Adresse')}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>{phone}</h4>
+            <h4>Téléphone</h4>
             <p>
-              0606060606
-              <IconButton onClick={() => this.openFieldModifyAccount(phone)}>
+              {selectedCaregiver.phone}
+              <IconButton onClick={() => this.openFieldModifyAccount('Téléphone')}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>{mail}</h4>
+            <h4>Email</h4>
             <p>
-              karine@jolivet.com
-              <IconButton onClick={() => this.openFieldModifyAccount(mail)}>
+              {selectedCaregiver.email}
+              <IconButton onClick={() => this.openFieldModifyAccount('Email')}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>{password}</h4>
+            <h4>Mot de passe</h4>
             <p>
               *****
-              <IconButton onClick={() => this.openFieldModifyAccount(password)}>
+              <IconButton onClick={() => this.openFieldModifyAccount('Mot de passe')}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
-            <h4>{numberOfSubscriptions}</h4>
-            <p>2</p>
+            {/* <h4>{numberOfSubscriptions}</h4>
+            <p>2</p> */}
           </DialogContent>
           <DialogActions>
             <Button onClick={onClose} color="primary">
@@ -124,7 +199,7 @@ class MyAccountModale extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <FieldModifyUser openField={openFieldModifyAccount} onClose={this.handleCloseFieldModifyAccount} selectedField={selectedField} onCloseAll={this.recordNewInformations} />
+        <FieldModifyUser openField={openFieldModifyAccount} onClose={this.handleCloseFieldModifyAccount} selectedField={selectedField} stateName={stateName} onCloseAll={this.recordNewInformations} />
       </div>
     );
   }

@@ -8,10 +8,26 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 class MyAccountModale extends React.Component {
+  state = {
+    lastNameUpdated: '',
+    firstNameUpdated: '',
+    addressUpdated: '',
+    phoneUpdated: '',
+    mailUpdated: '',
+    passwordUpdated: '',
+  }
+  recording = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(e.target.value);
+    console.log('target', this.state.lastNameUpdated)
+  };
+
   render() {
     const {
-      openField, onClose, onCloseAll, selectedField,
+      openField, onClose, onCloseAll, selectedField, stateName,
     } = this.props;
+    console.log('(((((((((((((', stateName);
+    console.log('this.state', this.state);
     return (
       <div>
         <Dialog
@@ -31,16 +47,18 @@ class MyAccountModale extends React.Component {
               autoFocus
               margin="dense"
               id="name"
+              name={stateName}
               label={selectedField}
               type="email"
               fullWidth
+              onChange={this.recording}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={onClose} color="primary">
               Fermer
             </Button>
-						<Button onClick={onCloseAll} color="primary">
+						<Button onClick={() => onCloseAll(stateName, this.state)} color="primary">
               Modifier
             </Button>
           </DialogActions>
