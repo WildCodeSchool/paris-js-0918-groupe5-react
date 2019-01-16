@@ -10,6 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Icons from '../Icons';
 import FieldModifyUser from './FieldModifyUser';
 import getServerAuthority from '../../config/getServerAuthority';
+import './MyAccountModale.css';
 
 const token = localStorage.getItem('token');
 const url = `${getServerAuthority()}/users/caregiver`;
@@ -124,42 +125,42 @@ class MyAccountModale extends React.Component {
             <h4>Nom</h4>
             <p>
               {selectedCaregiver.lastName}
-              <IconButton onClick={() => this.openFieldModifyAccount('Nom', lastName)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Nom', lastName)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Prénom</h4>
             <p>
               {selectedCaregiver.firstName}
-              <IconButton onClick={() => this.openFieldModifyAccount('Prénom', firstName)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Prénom', firstName)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Adresse</h4>
             <p>
               {selectedCaregiver.address}
-              <IconButton onClick={() => this.openFieldModifyAccount('Adresse', address)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Adresse', address)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Téléphone</h4>
             <p>
               {selectedCaregiver.phone}
-              <IconButton onClick={() => this.openFieldModifyAccount('Téléphone', phone)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Téléphone', phone)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Email</h4>
             <p>
               {selectedCaregiver.email}
-              <IconButton onClick={() => this.openFieldModifyAccount('Email', email)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Email', email)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Mot de passe</h4>
             <p>
               *****
-              <IconButton onClick={() => this.openFieldModifyAccount('Mot de passe', password)}>
+              <IconButton className="modifyButton"  onClick={() => this.openFieldModifyAccount('Mot de passe', password)}>
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
