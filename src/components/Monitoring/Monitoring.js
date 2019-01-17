@@ -29,12 +29,12 @@ class Monitoring extends Component {
       .then(res => res.data);
   };
 
-  // returns only tracked events
-  getFollowedEvents = async () => {
+  // returns only events that have a mood value
+  getEventsWithMood = async () => {
     try {
       const events = await this.getEventsData();
-      const result = events.filter(e => e.followedVisit);
-      console.log('getFollowedEvents', result);
+      const result = events.filter(e => e.mood !== null);
+      console.log('getEventsWithMood', result);
       return result;
     } catch (err) {
       console.error(err);
@@ -44,7 +44,7 @@ class Monitoring extends Component {
   // returns events with dates with ISO format
   formatDatesToISO = async () => {
     try {
-      const events = await this.getFollowedEvents();
+      const events = await this.getEventsWithMood();
       const result = events.map((e) => {
         e.startingDate = new Date(e.startingDate).toISOString();
         return e;
