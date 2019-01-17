@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { getReceivers } from '../../actions/infoActions';
 import CoverflowButtons from './CoverflowButtons';
+import CoverflowAdd from './CoverflowAdd';
 import ButtonsBar from './ButtonsBar';
 import MenuBar from './MenuBar';
 
@@ -53,7 +54,8 @@ class AppBarReceiver extends Component {
     return (
       <div className={classes.AppBarReceiver}>
         <div className={classes.slider}>
-          {redux.receivers.length > 0 && <CoverflowButtons receivers={redux.receivers} />}
+          {redux.receivers && <CoverflowButtons receivers={redux.receivers} />}
+          {/* {!redux.receivers && <CoverflowAdd />} */}
         </div>
         <div className={classes.sectionDesktop}>
           <ButtonsBar />

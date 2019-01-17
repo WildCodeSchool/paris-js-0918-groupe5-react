@@ -16,7 +16,7 @@ import {
   renderRadioButton,
 } from '../reduxFormElements';
 import { getReceivers } from '../../actions/infoActions';
-import { displayDialogAddReceiver } from '../../actions/displayActions';
+import { displayDialogReceiver } from '../../actions/displayActions';
 
 const token = localStorage.getItem('token');
 
@@ -24,7 +24,7 @@ const validate = (values) => {};
 
 class DialogReceiver extends Component {
   handleValidation = () => {
-    const { redux, displayDialogAddReceiver, receiver } = this.props;
+    const { redux, displayDialogReceiver, receiver } = this.props;
 
     const newReceiver = receiver || redux.receiver;
     if (!receiver) {
@@ -43,12 +43,12 @@ class DialogReceiver extends Component {
         const { getReceivers } = this.props;
         getReceivers();
       })
-      .then(() => displayDialogAddReceiver(false));
+      .then(() => displayDialogReceiver(false));
   };
 
   handleClose = () => {
-    const { displayDialogAddReceiver } = this.props;
-    displayDialogAddReceiver(false);
+    const { displayDialogReceiver } = this.props;
+    displayDialogReceiver(false);
   }
 
   render() {
@@ -56,13 +56,13 @@ class DialogReceiver extends Component {
     return (
       <div className="DialogReceiver">
         <Dialog
-          open={redux.dialogAddReceiverIsDisplayed}
+          open={redux.dialogReceiverIsDisplayed}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
             {receiver && `Modifier le profil de ${receiver.firstName}`}
-            {!receiver && "Ajouter un aidé"}
+            {!receiver && 'Ajouter un aidé'}
           </DialogTitle>
           <DialogContent>
             <Field
@@ -133,7 +133,7 @@ class DialogReceiver extends Component {
 
 const mapStateToProps = state => ({
   redux: {
-    dialogAddReceiverIsDisplayed: state.display.dialogAddReceiverIsDisplayed,
+    dialogReceiverIsDisplayed: state.display.dialogReceiverIsDisplayed,
     receiver: {
       title: formValueSelector('AddReceiverForm')(state, 'title'),
       lastName: formValueSelector('AddReceiverForm')(state, 'lastName'),
@@ -149,4 +149,4 @@ const mapStateToProps = state => ({
 export default reduxForm({
   form: 'AddReceiverForm', // a unique identifier for this form
   validate,
-})((connect(mapStateToProps, { displayDialogAddReceiver, getReceivers }))(DialogReceiver));
+})((connect(mapStateToProps, { displayDialogReceiver, getReceivers }))(DialogReceiver));

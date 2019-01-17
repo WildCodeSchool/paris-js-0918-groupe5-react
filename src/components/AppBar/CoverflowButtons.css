@@ -2,6 +2,10 @@
   color: white !important;
 }
 
+.coverflow__stage__14oqC{
+  pointer-events: auto !important;
+}
+
 .CoverflowButtons > div:focus, .coverflow__container__1P-xE:focus, .coverflow__figure__3bk_C:focus, .coverflow__cover__25-7e:focus {
   outline: none !important; 
 }
