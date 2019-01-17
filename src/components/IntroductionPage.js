@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,13 +7,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import getServerAuthority from '../config/getServerAuthority';
 import { displayAppBar } from '../actions/displayActions';
 import SignUpCaregiver from './Caregiver/SignUpCaregiver';
 import SignInCaregiver from './Caregiver/SignInCaregiver';
+import logo from '../assets/logoKaliService2.png';
 
-import './ConnectionPage.css';
+import './IntroductionPage.css';
 
 const styles = {
   root: {
@@ -32,13 +29,9 @@ const styles = {
 
 class IntroductionPage extends Component {
   state = {
-    // redirect: false,
-    // inputConnection: false,
     openSignUp: false,
     openSignIn: false,
   }
-
-
 
   handleClickOpenSignUp = () => {
     this.setState({ openSignUp: true });
@@ -72,7 +65,7 @@ class IntroductionPage extends Component {
           <AppBar position="static">
             <Toolbar>
               <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                <MenuIcon />
+                <img className="logoIntroAppBar" src={logo} alt="logo" />
               </IconButton>
               <Typography variant="h6" color="inherit" className={classes.grow}>
                 Kalify
@@ -84,13 +77,17 @@ class IntroductionPage extends Component {
         </div>
         <SignUpCaregiver openSignUp={openSignUp} onCloseSignUp={this.handleCloseLogin} />
         <SignInCaregiver openSignIn={openSignIn} onCloseSignIn={this.handleCloseConnection} />
+        <div className="logoIntro">
+          <div className="introductionText">Bienvenue à la présentation de Kalify</div>
+          <img className="imgLogoIntro" src={logo} alt="logo" />
+          <div className="teamNames"> Elisa B. - Thomas C. - Adama L. - Elisa L. - Eleonore D. - Widaad B.</div>
+        </div>
       </div>
     );
   }
 }
 
 IntroductionPage.propTypes = {
-  // displayAppBar: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 };
 

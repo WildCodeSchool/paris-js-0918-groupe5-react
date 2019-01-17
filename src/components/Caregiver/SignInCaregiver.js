@@ -66,7 +66,6 @@ class SignInCaregiver extends React.Component {
               Pour vous connecter, merci de rentrer votre adresse mail et votre mot de passe.
             </DialogContentText>
             <TextField
-              autoFocus
               margin="dense"
               id="email"
               label="Adresse mail"
@@ -76,7 +75,6 @@ class SignInCaregiver extends React.Component {
               fullWidth
             />
             <TextField
-              autoFocus
               margin="dense"
               id="name"
               label="Mot de passe"
