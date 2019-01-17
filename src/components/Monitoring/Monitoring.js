@@ -12,42 +12,11 @@ class Monitoring extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.getSortedPastEvent();
   };
 
-  getSortedPastEvent = async () => {
-    try {
-      const events = await this.getPastEvents();
-      const result = events.sort((a, b) => new Date(a.dateBeginning) - new Date(b.dateBeginning)).reverse();
-      // console.log('getSortedPastEvent', result);
-      this.setState({ events: result });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  getPastEvents = async () => { // pourquoi, à ce stade, les events sont déjà triés par date ?
-    const events = await this.formatDatesToISO();
-    const result = events.filter(e => new Date(e.dateBeginning) < new Date());
-    // console.log('getPastEvents', result);
-    return result;
-  };
-
-  formatDatesToISO = async () => {
-    try {
-      const events = await this.getFollowedEvents();
-      const result = events.map((e) => {
-        e.dateBeginning = new Date(e.dateBeginning).toISOString();
-        return e;
-      });
-      // console.log('formatDatesToISO', result);
-      return result;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  // returns all events from DB
   getEventsData = () => {
     const token = localStorage.getItem('token');
     return axios({
@@ -60,12 +29,48 @@ class Monitoring extends Component {
       .then(res => res.data);
   };
 
+  // returns only tracked events
   getFollowedEvents = async () => {
     try {
       const events = await this.getEventsData();
       const result = events.filter(e => e.followedVisit);
-      // console.log('getFollowedEvents', result);
+      console.log('getFollowedEvents', result);
       return result;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // returns events with dates with ISO format
+  formatDatesToISO = async () => {
+    try {
+      const events = await this.getFollowedEvents();
+      const result = events.map((e) => {
+        e.dateBeginning = new Date(e.dateBeginning).toISOString();
+        return e;
+      });
+      console.log('formatDatesToISO', result);
+      return result;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // returns only past events
+  getPastEvents = async () => {
+    const events = await this.formatDatesToISO();
+    const result = events.filter(e => new Date(e.dateBeginning) < new Date());
+    console.log('getPastEvents', result);
+    return result;
+  };
+
+  // returns past events sorted in reversed chronological order
+  getSortedPastEvent = async () => {
+    try {
+      const events = await this.getPastEvents();
+      const result = events.sort((a, b) => new Date(a.dateBeginning) - new Date(b.dateBeginning)).reverse();
+      console.log('getSortedPastEvent', result);
+      this.setState({ events: result });
     } catch (err) {
       console.error(err);
     }
@@ -86,11 +91,6 @@ class Monitoring extends Component {
           >
             <EventsTable events={events} />
           </Grid>
-          {/* <Grid item xs={3}>
-            <div>
-              COMPONENT 2
-            </div>
-          </Grid> */}
         </Grid>
       </div>
     );
