@@ -15,6 +15,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import getServerAuthority from '../../config/getServerAuthority';
 import { displayAppBar } from '../../actions/displayActions';
 
+import './SignInCaregiver.css';
+
 class SignInCaregiver extends React.Component {
   state = {
     redirect: false,
@@ -85,6 +87,9 @@ class SignInCaregiver extends React.Component {
             />
           </DialogContent>
           <DialogActions>
+            <Button className="forgottenPassword" onClick={this.handleSubmit} color="primary">
+              Mot de passe oublié ?
+            </Button>
             <Button onClick={onCloseSignIn} color="primary">
               Annuler
             </Button>
