@@ -19,6 +19,11 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     textTransform: 'capitalize',
   },
+  selectCategoryOfContact: {
+    // border: '1px solid purple',
+    display: 'flex',
+    justifyContent: 'center',
+  },
 });
 
 
@@ -174,6 +179,9 @@ class Contact extends Component {
         categoryOfContact,
       } = this.state;
 
+      const {
+        classes,
+      } = this.props;
 
       const contactsListFiltered = contactsList.filter(
         contact => contact.category === categoryOfContact,
@@ -183,18 +191,14 @@ class Contact extends Component {
 
       return (
         <div>
-          <Typography variant="h4" component="h2">
-            Mes contacts
-          </Typography>
-
           <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
-
-          <ChooseCategoryOfContact
-            categoryOfContact={categoryOfContact}
-            handleChangeCategoryOfContact={this.handleChangeCategoryOfContact}
-          />
-
           <Grid container spacing={16} justify="center">
+            <Grid item xs={12} className={classes.selectCategoryOfContact}>
+              <ChooseCategoryOfContact
+                categoryOfContact={categoryOfContact}
+                handleChangeCategoryOfContact={this.handleChangeCategoryOfContact}
+              />
+            </Grid>
             {contactsList
               .filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories')
               .map((contact, index) => (
