@@ -12,8 +12,11 @@ const styles = theme => ({
   root: {
     display: 'flex',
   },
-  legendPoint: {
-    color: 'white',
+//   formControl: {
+//     margin: theme.spacing.unit * 3,
+//   },
+  group: {
+    margin: `${theme.spacing.unit}px 0`,
   },
 });
 
@@ -41,10 +44,11 @@ class RadioButtonsGroup extends React.Component {
             onChange={this.handleChange}
           >
             <FormControlLabel value="female" control={<Radio />} label="Mme" />
+            {/* <FormControlLabel value="male" control={<Radio />} label="M." /> */}
           </RadioGroup>
         </FormControl>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legendPoint"> .</FormLabel>
+          <FormLabel component="legend"> .</FormLabel>
           <RadioGroup
             aria-label="gender"
             name="gender2"
@@ -57,6 +61,7 @@ class RadioButtonsGroup extends React.Component {
               control={<Radio color="primary" />}
               label="M."
             />
+           
           </RadioGroup>
         </FormControl>
       </div>
