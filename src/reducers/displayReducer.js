@@ -1,4 +1,4 @@
-import { DISPLAY_APP_BAR, DISPLAY_ADD_RECEIVER_DIALOG } from '../actions/types';
+import { DISPLAY_APP_BAR, DISPLAY_DIALOG_ADD_RECEIVER } from '../actions/types';
 
 const initialState = {
   appBarIsDisplayed: true,
@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
         ...state,
         appBarIsDisplayed: action.isDisplayed,
       };
-    case DISPLAY_ADD_RECEIVER_DIALOG:
+    case DISPLAY_DIALOG_ADD_RECEIVER:
       return {
         ...state,
         dialogAddReceiverIsDisplayed: action.isDisplayed,
