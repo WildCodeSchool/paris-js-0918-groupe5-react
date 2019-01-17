@@ -105,7 +105,17 @@ class Contact extends Component {
       const { contactsList } = this.state;
       const { reduxContact } = this.props;
       const contact = { ...reduxContact };
+      console.log(contact);
+      // {contact.function === null ? 'RIEN' : contact.function}
 
+      // if (contact.function === null || contact.function === '' || contact.function === undefined) {
+      //   contact.function = 'RIEN';
+      // }
+      // if (reduxContact.function) {
+      //   contact.function = 'RIEN';
+      // }
+
+      // contact.preferenceOfContact = reduxContact.preferenceOfContact || 'SMS';
       axios({
         method: 'PUT',
         url: `${getServerAuthority()}/contacts/${contactsList[id].id}`,

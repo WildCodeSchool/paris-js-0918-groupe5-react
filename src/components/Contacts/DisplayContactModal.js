@@ -60,7 +60,7 @@ const DisplayContactModal = (props) => {
 
             {displayedContact.phone !== null
               && (displayedContact.phone !== undefined && <h4>Téléphone</h4>)}
-
+            <p>{displayedContact.phone}</p>
             {displayedContact.comment !== null
               && (displayedContact.comment !== undefined && <h4>Commentaire</h4>)}
             <p>{displayedContact.comment}</p>
