@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import { Redirect } from 'react-router-dom';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,9 +11,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
 import getServerAuthority from '../../config/getServerAuthority';
 import { displayAppBar } from '../../actions/displayActions';
-
 
 class SignInCaregiver extends React.Component {
   state = {
@@ -29,7 +29,6 @@ class SignInCaregiver extends React.Component {
 
   recordInformations = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state.email)
   }
 
   handleSubmit = (e) => {
@@ -81,7 +80,7 @@ class SignInCaregiver extends React.Component {
               margin="dense"
               id="name"
               label="Mot de passe"
-              type="text"
+              type="password"
               name="password"
               onChange={this.recordInformations}
               fullWidth
@@ -103,6 +102,5 @@ class SignInCaregiver extends React.Component {
 
 SignInCaregiver.propTypes = {
   displayAppBar: PropTypes.func.isRequired,
-  // classes: PropTypes.object.isRequired,
 };
 export default connect(null, { displayAppBar })(SignInCaregiver);
