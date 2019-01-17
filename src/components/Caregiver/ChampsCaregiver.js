@@ -48,7 +48,7 @@ const styles = theme => ({
 const title = [
   {
     value: "Male",
-    label: "Mr."
+    label: "M."
   },
   {
     value: "Female",
@@ -103,6 +103,7 @@ class ChampsCargivers extends React.Component {
         >
           <div className={classes.block1}>
             <TextField
+              fullWidth
               id="standard-select-title-native"
               select
               label="Titre"
@@ -123,8 +124,9 @@ class ChampsCargivers extends React.Component {
               ))}
             </TextField>
             <TextField
+              required
               id="standard-name"
-              label="Nom*"
+              label="Nom"
               className={classes.textField}
               value={this.state.name}
               onChange={this.handleChange("name")}

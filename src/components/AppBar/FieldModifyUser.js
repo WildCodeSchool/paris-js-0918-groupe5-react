@@ -14,7 +14,7 @@ class FieldModifyUser extends React.Component {
 
   render() {
     const {
-      openField, onClose, onCloseAll, selectedField, stateName, selectedCaregiver,
+      openField, onClose, onCloseAll, selectedField, stateName,
     } = this.props;
     return (
       <div>

@@ -53,7 +53,7 @@ class AppBarReceiver extends Component {
     return (
       <div className={classes.AppBarReceiver}>
         <div className={classes.slider}>
-          {redux.receivers.length > 0 && <CoverflowButtons receivers={redux.receivers} />}
+          {redux.receivers && <CoverflowButtons receivers={redux.receivers} />}
         </div>
         <div className={classes.sectionDesktop}>
           <ButtonsBar />
