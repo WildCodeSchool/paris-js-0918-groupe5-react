@@ -55,7 +55,7 @@ class EventsTable extends Component {
             <TableRow key={e.id}>
               <TableCell>{this.formatDate(e.startingDate)}</TableCell>
               <TableCell align="right">{e.title}</TableCell>
-              <TableCell align="right">{e.responsible}</TableCell>
+              <TableCell align="right">{e.contact}</TableCell>
               <TableCell align="right" style={{ color: '#65cde2' }}>{this.iconifyMood(e.mood)}</TableCell>
             </TableRow>))}
         </TableBody>
