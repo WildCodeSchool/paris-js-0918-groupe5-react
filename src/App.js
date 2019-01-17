@@ -6,9 +6,9 @@ import Dashboard from './components/Dashboard/Dashboard';
 
 // import RemainingComponent from './components/RemainingComponent';
 import AppBarGlobal from './components/AppBar/AppBarGlobal';
-import ConnectionPage from './components/ConnectionPage';
+import IntroductionPage from './components/IntroductionPage';
 import Calendar from './components/Calendar/Calendar';
-import CaregiversForm from './components/Caregiver/CaregiverForm';
+import SignUpCaregiver from './components/Caregiver/SignUpCaregiver';
 import Contact from './components/Contacts/Contact';
 import Monitoring from './components/Monitoring/Monitoring';
 
@@ -50,12 +50,12 @@ const App = ({ appBarIsDisplayed }) => (
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        <Route exact path="/" component={ConnectionPage} />
+        <Route exact path="/" component={IntroductionPage} />
         {appBarIsDisplayed && <AppBarGlobal />}
         <div className="spaceBtwAppBarAndRoutes">
           <Route path="/tableau_de_bord" component={Dashboard} />
           <Route path="/contacts" component={Contact} />
-          <Route path="/création" component={CaregiversForm} />
+          <Route path="/création" component={SignUpCaregiver} />
           <Route path="/calendrier" component={Calendar} />
           <Route path="/suivi" component={Monitoring} />
         </div>

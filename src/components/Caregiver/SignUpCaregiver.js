@@ -10,7 +10,7 @@ import ChampsCaregivers from './ChampsCaregiver';
 import Captcha from './Captcha';
 
 
-export default class FormDialog extends React.Component {
+class SignUpCaregiver extends React.Component {
   state = {
     open: false,
     caregivers: [],
@@ -41,19 +41,19 @@ export default class FormDialog extends React.Component {
     //   password, 
     //   preferenceOfContact 
     // }
-    axios.post(`${getServerAuthority()}/auth/signup`, )
+    axios.post(`${getServerAuthority()}/auth/signup`)
       .then(res => this.setState({
         userList: res.data,
       }));
   }
 
   render() {
-    const { openLogin, onCloseLogin } = this.props;
+    const { openSignUp, onCloseSignUp } = this.props;
     return (
       <div>
         <Dialog
-          open={openLogin}
-          onClose={onCloseLogin}
+          open={openSignUp}
+          onClose={onCloseSignUp}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Création de compte</DialogTitle>
@@ -62,7 +62,7 @@ export default class FormDialog extends React.Component {
             <Captcha />
           </DialogContent>
           <DialogActions>
-            <Button onClick={onCloseLogin} color="primary">
+            <Button onClick={onCloseSignUp} color="primary">
               Fermer
             </Button>
             <Button onClick={this.handleValidation} color="primary">
@@ -74,3 +74,5 @@ export default class FormDialog extends React.Component {
     );
   }
 }
+
+export default SignUpCaregiver;

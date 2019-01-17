@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-class ConnectionPagee extends React.Component {
+class SignInCaregiver extends React.Component {
   state = {
     open: false,
   };
@@ -21,15 +21,15 @@ class ConnectionPagee extends React.Component {
 //   };
 
   render() {
-      const { openConnection, onCloseConnection } = this.props;
+    const { openSignIn, onCloseSignIn } = this.props;
     return (
       <div>
         {/* <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
           Open form dialog
         </Button> */}
         <Dialog
-          open={openConnection}
-          onClose={onCloseConnection}
+          open={openSignIn}
+          onClose={onCloseSignIn}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
@@ -48,7 +48,7 @@ class ConnectionPagee extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={onCloseConnection} color="primary">
+            <Button onClick={onCloseSignIn} color="primary">
               Cancel
             </Button>
             <Button onClick={this.handleClose} color="primary">
@@ -61,4 +61,4 @@ class ConnectionPagee extends React.Component {
   }
 }
 
-export default ConnectionPagee;
+export default SignInCaregiver;

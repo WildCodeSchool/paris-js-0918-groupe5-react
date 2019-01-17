@@ -12,8 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import getServerAuthority from '../config/getServerAuthority';
 import { displayAppBar } from '../actions/displayActions';
-import CaregiverForm from './Caregiver/CaregiverForm';
-import ConnectionPagee from './ConnectionPagee';
+import SignUpCaregiver from './Caregiver/SignUpCaregiver';
+import SignInCaregiver from './Caregiver/SignInCaregiver';
 
 import './ConnectionPage.css';
 
@@ -30,12 +30,12 @@ const styles = {
   },
 };
 
-class ConnectionPage extends Component {
+class IntroductionPage extends Component {
   state = {
     redirect: false,
     inputConnection: false,
-    openLogin: false,
-    openConnection: false,
+    openSignUp: false,
+    openSignIn: false,
   }
 
   componentDidMount() {
@@ -55,30 +55,28 @@ class ConnectionPage extends Component {
       // console.log('token', localStorage.getItem('token'));
       this.setState({ redirect: true }, displayAppBar(true));
     });
-  }
+  };
 
-  // inputConnection = () => {
-  //   this.setState({ inputConnection: true });
-  // };
-
-  handleClickOpenLogin = () => {
-    this.setState({ openLogin: true });
+  handleClickOpenSignUp = () => {
+    this.setState({ openSignUp: true });
   };
 
   handleCloseLogin = () => {
-    this.setState({ openLogin: false });
+    this.setState({ openSignUp: false });
   };
 
-  handleClickOpenConnection = () => {
-    this.setState({ openConnection: true });
+  handleClickOpenSignIn = () => {
+    this.setState({ openSignIn: true });
   };
 
   handleCloseConnection = () => {
-    this.setState({ openConnection: false });
+    this.setState({ openSignIn: false });
   };
 
   render() {
-    const { redirect, inputConnection, openLogin, openConnection } = this.state;
+    const {
+      redirect, inputConnection, openSignUp, openSignIn,
+    } = this.state;
     const { classes } = this.props;
     if (redirect) {
       return (
@@ -96,8 +94,8 @@ class ConnectionPage extends Component {
               <Typography variant="h6" color="inherit" className={classes.grow}>
                 Kalify
               </Typography>
-              <Button onClick={this.handleClickOpenConnection} color="inherit">Connexion</Button>
-              <Button onClick={this.handleClickOpenLogin} color="inherit">Inscription</Button>
+              <Button onClick={this.handleClickOpenSignIn} color="inherit">Connexion</Button>
+              <Button onClick={this.handleClickOpenSignUp} color="inherit">Inscription</Button>
             </Toolbar>
           </AppBar>
         </div>
@@ -114,17 +112,17 @@ class ConnectionPage extends Component {
             <button type="submit">Valider</button>
           </form>
         </div>
-        <CaregiverForm openLogin={openLogin} onCloseLogin={this.handleCloseLogin} />
-        <ConnectionPagee openConnection={openConnection} onCloseConnection={this.handleCloseConnection} />
+        <SignUpCaregiver openSignUp={openSignUp} onCloseSignUp={this.handleCloseLogin} />
+        <SignInCaregiver openSignIn={openSignIn} onCloseSignIn={this.handleCloseConnection} />
 
       </div>
     );
   }
 }
 
-ConnectionPage.propTypes = {
+IntroductionPage.propTypes = {
   displayAppBar: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(null, { displayAppBar })(withStyles(styles)(ConnectionPage));
+export default connect(null, { displayAppBar })(withStyles(styles)(IntroductionPage));
