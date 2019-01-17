@@ -12,13 +12,44 @@ import {
   RECORD_SWITCH_LABEL,
   POST_AND_CLEAR_FIELDS,
   GET_EVENT_LIST,
+  GET_CONTACT_LIST,
 } from './types';
+
+class Contact {
+  constructor(data) {
+    this.address = data.address
+    this.category = data.category
+    this.comment = data.comment
+    this.createdAt = data.createdAt
+    this.email = data.email
+    this.firstName = data.firstName
+    this.id = data.id
+    this.lastName = data.lastName
+    this.phone = data.phone
+    this.preferenceOfContact = data.preferenceOfContact
+    this.profession = data.profession
+    this.status = data.status
+    this.title = data.title
+    this.value =`${data.title} ${data.firstName} ${data.lastName}`
+    this.label =`${data.title} ${data.firstName} ${data.lastName}`
+  }
+
+}
+
+// eslint-disable-next-line no-undef
+const token = localStorage.getItem('token');
 
 const apiUrl = `${getServerAuthority()}/events`;
 
-
 export const postAndClearFields = allInfo => (dispatch) => {
-  axios.post(`${apiUrl}`, allInfo)
+  axios({
+    method: 'POST',
+    url: `${apiUrl}/1`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: allInfo
+  })
     .then(res => dispatch({
       type: POST_AND_CLEAR_FIELDS,
       eventAdded: res,
@@ -29,9 +60,29 @@ export const postAndClearFields = allInfo => (dispatch) => {
     }));
 };
 
+export const getContacts = () => (dispatch) => {
+  axios({
+    method: 'GET',
+    url: `${getServerAuthority()}/contacts`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(
+    res => dispatch({
+      type: GET_CONTACT_LIST,
+      contactsList: res.data.map(item => new Contact(item)),
+    }),
+  );
+}
+
 export const getEventList = () => (dispatch) => {
-  axios.get(`${apiUrl}`)
-    .then(res => dispatch({
+  axios({
+    method: 'GET',
+    url: `${apiUrl}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(res => dispatch({
       type: GET_EVENT_LIST,
       events: res.data,
     }));

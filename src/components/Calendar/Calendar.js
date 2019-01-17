@@ -6,11 +6,10 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import DialogOpener from './DialogOpener';
-// import getServerAuthority from '../../config/getServerAuthority';
-// import DialogToCreateEvent from './DialogToCreateEvent';
-import './Calendar.css';
+import './Calendar.css'
 
-import { recordDateAndTime, openEventDialog, getEventList } from '../../actions/eventActions';
+
+import { recordDateAndTime, openEventDialog, getEventList, getContacts } from '../../actions/eventActions';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -29,8 +28,9 @@ const refactoEventFormat = (allEvents = []) => {
 
 class Calendar extends Component {
   componentDidMount() {
-    const { getEvents } = this.props;
+    const { getEvents, getContactsList } = this.props;
     getEvents();
+    getContactsList();
   }
 
   openDialogToCreateEvent = ({ start }) => {
@@ -40,7 +40,9 @@ class Calendar extends Component {
   }
 
   render() {
-    const { isLoaded, events } = this.props;
+    const { isLoaded, events, contacts } = this.props;
+    console.log('contacts', contacts)
+
     if (!isLoaded) return <p>Site en maintenance, revenez plus tard :)</p>;
     return (
       <div className="calendar">
@@ -65,6 +67,7 @@ Calendar.propTypes = {
   OpenDialog: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   events: PropTypes.array.isRequired,
+  contacts: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -72,12 +75,14 @@ const mapStateToProps = state => ({
   endingDate: state.event.endingDate,
   isLoaded: state.event.isLoaded,
   events: state.event.events,
+  contacts: state.event.listOfcontact
 });
 
 const mapDispatchToProps = dispatch => ({
   record: (start, end) => dispatch(recordDateAndTime(start, end)),
   OpenDialog: () => dispatch(openEventDialog()),
   getEvents: () => dispatch(getEventList()),
+  getContactsList: () => dispatch(getContacts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

@@ -10,6 +10,7 @@ import {
   RECORD_SWITCH_LABEL,
   POST_AND_CLEAR_FIELDS,
   GET_EVENT_LIST,
+  GET_CONTACT_LIST,
 } from '../actions/types';
 
 const initialState = {
@@ -23,10 +24,51 @@ const initialState = {
   daysSelected: '',
   contact: '',
   category: '',
-  listOfcontact: ['grey', 'jackson', 'jolivet'], // sould be fetch from server
-  listOfCategories: ['medical', 'nurse', 'family'],
-  listOfFrequency: ['once', 'everyday', 'everyWeekDay', 'specificDays'],
+  // listOfcontact: ['grey', 'jackson', 'jolivet'], // sould be fetch from server
+  listOfCategories: [
+    {
+      id:1,
+      value:'medical',
+      label:'Visite médicale',
+    },
+    {
+      id:2,
+      value:'nurse',
+      label:'Soins infirmier',
+
+    },
+    {
+      id:3,
+      value:'family',
+      label:'visite d\'un proche',
+    },
+  ],
+  listOfFrequency:
+  [
+    {
+      id:1,
+      value:'once',
+      label:'Evénement unique',
+    },
+    {
+      id:2,
+      value:'everyday',
+      label:'Tous les jours',
+
+    },
+    {
+      id:3,
+      value:'everyWeekDay',
+      label:'Tous les jours de la semaine',
+    },
+    {
+      id:4,
+      value:'specificDays',
+      label:'Certains jours de la semaine',
+    },
+  ],
   events: [],
+  listOfcontact: [],
   isLoaded: false,
   visibleEvent: false,
   followedVisit: false,
@@ -37,6 +79,17 @@ const initialState = {
 // si pas de valeur à ma state, prend la valeur d'initialstate
 export default (state = initialState, action) => {
   switch (action.type) {
+    case GET_EVENT_LIST:
+    return {
+      ...state,
+      events: state.events.concat(action.events),
+      isLoaded: true,
+    };
+  case GET_CONTACT_LIST:
+    return {
+      ...state,
+      listOfcontact: action.contactsList,
+    };
     case OPEN_DIALOG_EVENT:
       return {
         ...state,
@@ -91,13 +144,6 @@ export default (state = initialState, action) => {
         frequency: '',
         contact: '',
         category: '',
-      };
-    case GET_EVENT_LIST:
-      return {
-        ...state,
-        events: state.events.concat(action.events),
-        // events: action.events,
-        isLoaded: true,
       };
     case RECORD_SWITCH_LABEL:
       return {

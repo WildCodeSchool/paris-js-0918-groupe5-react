@@ -19,47 +19,52 @@ const SelectionMenu = ({
   frequency,
   contact,
   category,
-}) => (
-  [
-    {
-      InputLabel: 'Responsable',
-      type: 'contact',
-      liste: listOfcontact,
-      recordFunction: saveContact,
-      fieldValue: contact,
-      FormHelperText: 'Assigner un responsable à cet événement',
-    },
-    {
-      InputLabel: 'Catégorie',
-      type: 'category',
-      liste: listOfCategories,
-      recordFunction: saveCategory,
-      fieldValue: category,
-      FormHelperText: 'Assigner une catégorie à cet événement',
-    },
-    {
-      InputLabel: 'Fréquence',
-      type: 'frequency',
-      liste: listOfFrequency,
-      recordFunction: saveFrequency,
-      fieldValue: frequency,
-      FormHelperText: 'Séléctionner la récurence d un événement',
-    },
-  ].map(item => (
-    <form key={item.type} className="SelectionMenu">
-      <FormControl className="SelectionMenuItems" required>
-        <InputLabel htmlFor={item.type}>{item.InputLabel}</InputLabel>
-        <SelectionMenuItems
-          type={item.type}
-          listeOfChoices={item.liste}
-          record={item.recordFunction}
-          fieldValue={item.fieldValue}
-        />
-        <FormHelperText>{item.FormHelperText}</FormHelperText>
-      </FormControl>
-    </form>
-  ))
-);
+}) => {
+  console.log(listOfcontact);
+  console.log(listOfCategories);
+  console.log(listOfFrequency);
+  return (
+    [
+      {
+        InputLabel: 'Responsable',
+        type: 'contact',
+        liste: listOfcontact,
+        recordFunction: saveContact,
+        fieldValue: contact,
+        FormHelperText: 'Assigner un responsable à cet événement',
+      },
+      {
+        InputLabel: 'Catégorie',
+        type: 'category',
+        liste: listOfCategories,
+        recordFunction: saveCategory,
+        fieldValue: category,
+        FormHelperText: 'Assigner une catégorie à cet événement',
+      },
+      {
+        InputLabel: 'Fréquence',
+        type: 'frequency',
+        liste: listOfFrequency,
+        recordFunction: saveFrequency,
+        fieldValue: frequency,
+        FormHelperText: 'Séléctionner la récurence d un événement',
+      },
+    ].map(item => (
+      <form key={item.type} className="SelectionMenu">
+        <FormControl className="SelectionMenuItems" required>
+          <InputLabel htmlFor={item.type}>{item.InputLabel}</InputLabel>
+          <SelectionMenuItems
+            type={item.type}
+            listeOfChoices={item.liste}
+            record={item.recordFunction}
+            fieldValue={item.fieldValue}
+          />
+          <FormHelperText>{item.FormHelperText}</FormHelperText>
+        </FormControl>
+      </form>
+    ))
+  );
+}
 
 SelectionMenu.propTypes = {
   listOfcontact: PropTypes.array.isRequired,
