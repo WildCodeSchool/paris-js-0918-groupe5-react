@@ -106,4 +106,5 @@ class SignInCaregiver extends React.Component {
 SignInCaregiver.propTypes = {
   displayAppBar: PropTypes.func.isRequired,
 };
+
 export default connect(null, { displayAppBar })(SignInCaregiver);

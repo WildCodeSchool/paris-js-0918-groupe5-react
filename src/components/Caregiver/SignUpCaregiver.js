@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
-import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
@@ -217,7 +216,10 @@ class SignUpCaregiver extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <SignInCaregiverAfterSignUp openSignIn={openSignIn} onCloseSignIn={this.handleCloseConnection} />
+        <SignInCaregiverAfterSignUp
+          openSignIn={openSignIn}
+          onCloseSignIn={this.handleCloseConnection}
+        />
       </div>
     );
   }
