@@ -1,0 +1,7 @@
+.visibleInputConnection {
+    display: block;
+}
+
+.invisibleInputConnection {
+    display: none !important;
+}

@@ -7,48 +7,52 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-class FieldModifyUser extends React.Component {
-  recording = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+class ConnectionPagee extends React.Component {
+  state = {
+    open: false,
   };
 
+//   handleClickOpen = () => {
+//     this.setState({ open: true });
+//   };
+
+//   handleClose = () => {
+//     this.setState({ open: false });
+//   };
+
   render() {
-    const {
-      openField, onClose, onCloseAll, selectedField, stateName,
-    } = this.props;
+      const { openConnection, onCloseConnection } = this.props;
     return (
       <div>
+        {/* <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+          Open form dialog
+        </Button> */}
         <Dialog
-          open={openField}
-          onClose={this.handleCloseFieldModifyAccount}
-          onCloseAll={onCloseAll}
+          open={openConnection}
+          onClose={onCloseConnection}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">
-          Modification de votre {selectedField}
-          </DialogTitle>
+          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Veuillez taper ici vos nouvelles coordonnées:
+              To subscribe to this website, please enter your email address here. We will send
+              updates occasionally.
             </DialogContentText>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              name={stateName}
-              label={selectedField}
+              label="Email Address"
               type="email"
               fullWidth
-              // value={stateName === 'password' ? '' : selectedCaregiver[stateName]}
-              onChange={this.recording}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={onClose} color="primary">
-              Fermer
+            <Button onClick={onCloseConnection} color="primary">
+              Cancel
             </Button>
-            <Button onClick={() => onCloseAll(stateName, this.state)} color="primary">
-              Modifier
+            <Button onClick={this.handleClose} color="primary">
+              Subscribe
             </Button>
           </DialogActions>
         </Dialog>
@@ -57,4 +61,4 @@ class FieldModifyUser extends React.Component {
   }
 }
 
-export default FieldModifyUser;
+export default ConnectionPagee;
