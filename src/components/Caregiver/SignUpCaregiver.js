@@ -56,7 +56,7 @@ class SignUpCaregiver extends React.Component {
           onClose={onCloseSignUp}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Création de compte</DialogTitle>
+          <DialogTitle id="form-dialog-title">Inscription</DialogTitle>
           <DialogContent>
             <ChampsCaregivers />
             <Captcha />

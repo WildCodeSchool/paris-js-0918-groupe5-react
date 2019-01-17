@@ -32,30 +32,13 @@ const styles = {
 
 class IntroductionPage extends Component {
   state = {
-    redirect: false,
-    inputConnection: false,
+    // redirect: false,
+    // inputConnection: false,
     openSignUp: false,
     openSignIn: false,
   }
 
-  componentDidMount() {
-    const { displayAppBar } = this.props;
-    displayAppBar(false);
-  }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post(`${getServerAuthority()}/auth/signin`, {
-      email: e.target.email.value,
-      password: e.target.password.value,
-    }).then((res) => {
-      const { displayAppBar } = this.props;
-      localStorage.setItem('token', res.headers['x-access-token']);
-      localStorage.setItem('id', res.id);
-      // console.log('token', localStorage.getItem('token'));
-      this.setState({ redirect: true }, displayAppBar(true));
-    });
-  };
 
   handleClickOpenSignUp = () => {
     this.setState({ openSignUp: true });
@@ -78,11 +61,11 @@ class IntroductionPage extends Component {
       redirect, inputConnection, openSignUp, openSignIn,
     } = this.state;
     const { classes } = this.props;
-    if (redirect) {
-      return (
-        <Redirect to="/tableau_de_bord" />
-      );
-    }
+    // if (redirect) {
+    //   return (
+    //     <Redirect to="/tableau_de_bord" />
+    //   );
+    // }
     return (
       <div className="ConnectionPage">
         <div className={classes.root}>
@@ -99,29 +82,15 @@ class IntroductionPage extends Component {
             </Toolbar>
           </AppBar>
         </div>
-        <div className={!inputConnection ? 'invisibleInputConnection' : 'visibleInputConnection'}>
-          <form onSubmit={this.handleSubmit}>
-            <label htmlFor="email">
-              Mail:
-              <input id="email" type="email" name="email" />
-            </label>
-            <label htmlFor="password">
-              Mot de passe:
-              <input type="password" name="password" />
-            </label>
-            <button type="submit">Valider</button>
-          </form>
-        </div>
         <SignUpCaregiver openSignUp={openSignUp} onCloseSignUp={this.handleCloseLogin} />
         <SignInCaregiver openSignIn={openSignIn} onCloseSignIn={this.handleCloseConnection} />
-
       </div>
     );
   }
 }
 
 IntroductionPage.propTypes = {
-  displayAppBar: PropTypes.func.isRequired,
+  // displayAppBar: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
