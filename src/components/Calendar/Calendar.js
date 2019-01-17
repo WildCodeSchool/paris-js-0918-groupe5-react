@@ -1,85 +1,88 @@
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import axios from 'axios';
-import getServerAuthority from '../../config/getServerAuthority';
-import DialogToCreateEvent from './DialogToCreateEvent';
-import './Calendar.css';
-// import myEventsList from '../../enventsTestList';
+import PropTypes from 'prop-types';
+
+import DialogOpener from './DialogOpener';
+import './Calendar.css'
+
+
+import { recordDateAndTime, openEventDialog, getEventList, getContacts } from '../../actions/eventActions';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
-class Calendar extends Component {
-  state = {
-    openDialog: false,
-    startingDate: '',
-    isLoaded: false,
-    allEvents: [],
-  };
+const getGoodFormat = date => moment(date).toISOString(true).substr(0, 19);
 
+const refactoEventFormat = (allEvents = []) => {
+  const events = [];
+  allEvents.map(item => events.push({
+    title: item.title,
+    start: item.startingDate,
+    end: item.endingDate,
+    allDay: true,
+  }));
+  return events;
+};
+
+class Calendar extends Component {
   componentDidMount() {
-    const apiUrl = `${getServerAuthority()}/events`;
-    axios.get(`${apiUrl}`)
-      .then(res => this.setState({
-        isLoaded: true,
-        allEvents: res.data,
-      }));
+    const { getEvents, getContactsList } = this.props;
+    getEvents();
+    getContactsList();
   }
 
-  // start in an object of bigcalendar (it provide the date clicked)
-  // on closing dialog, there were a bug (sart undifined)
-  // I fix it thanks default value (idem line 45)
-  // It sucks I know, and it would be better using store for these dates
-  openDialogToCreateEvent = ({ start } = new Date()) => {
-    const { openDialog } = this.state;
-    this.setState({
-      openDialog: !openDialog,
-      startingDate: start,
-    });
+  openDialogToCreateEvent = ({ start }) => {
+    const { record, OpenDialog } = this.props;
+    record(getGoodFormat(start), getGoodFormat(start));
+    OpenDialog();
   }
 
   render() {
-    const {
-      openDialog,
-      startingDate,
-      isLoaded,
-      // allEvents,
-    } = this.state;
+    const { isLoaded, events, contacts } = this.props;
+    console.log('contacts', contacts)
 
-    if (!isLoaded) return <p>ça a pas charger !!!!!!!</p>;
-    const testevents = [
-      {
-        title: 'myfirst event',
-        start: new Date(),
-        end: new Date(),
-        allDay: false,
-      }
-    ];
-    // console.log('=======================');
-    // console.log('allEvents ', allEvents);
-    // console.log('testevents', testevents);
-    // console.log('=======================');
+    if (!isLoaded) return <p>Site en maintenance, revenez plus tard :)</p>;
     return (
-      <div className="toto">
-        {/* <GetEventList /> */}
+      <div className="calendar">
         <BigCalendar
           views={['month', 'week', 'day']}
           defaultView="month"
           localizer={localizer}
-          events={testevents}
+          events={refactoEventFormat(events)}
           selectable
           onSelectEvent={() => console.log('pop-up to modify')}
           onSelectSlot={this.openDialogToCreateEvent}
         />
-        <DialogToCreateEvent
-          onOpen={() => this.openDialogToCreateEvent()}
-          openOrNot={openDialog}
-          startingDate={startingDate || new Date()}
-        />
+        <DialogOpener />
       </div>
     );
   }
 }
 
-export default Calendar;
+Calendar.propTypes = {
+  getEvents: PropTypes.func.isRequired,
+  record: PropTypes.func.isRequired,
+  OpenDialog: PropTypes.func.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
+  events: PropTypes.array.isRequired,
+  contacts: PropTypes.array.isRequired,
+};
+
+const mapStateToProps = state => ({
+  startingDate: state.event.startingDate,
+  endingDate: state.event.endingDate,
+  isLoaded: state.event.isLoaded,
+  events: state.event.events,
+  contacts: state.event.listOfcontact
+});
+
+const mapDispatchToProps = dispatch => ({
+  record: (start, end) => dispatch(recordDateAndTime(start, end)),
+  OpenDialog: () => dispatch(openEventDialog()),
+  getEvents: () => dispatch(getEventList()),
+  getContactsList: () => dispatch(getContacts()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
