@@ -40,9 +40,7 @@ class Calendar extends Component {
   }
 
   render() {
-    const { isLoaded, events, contacts } = this.props;
-    console.log('contacts', contacts)
-
+    const { isLoaded, events } = this.props;
     if (!isLoaded) return <p>Site en maintenance, revenez plus tard :)</p>;
     return (
       <div className="calendar">
@@ -67,7 +65,6 @@ Calendar.propTypes = {
   OpenDialog: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   events: PropTypes.array.isRequired,
-  contacts: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -75,7 +72,6 @@ const mapStateToProps = state => ({
   endingDate: state.event.endingDate,
   isLoaded: state.event.isLoaded,
   events: state.event.events,
-  contacts: state.event.listOfcontact
 });
 
 const mapDispatchToProps = dispatch => ({

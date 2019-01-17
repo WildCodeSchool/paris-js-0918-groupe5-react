@@ -24,7 +24,6 @@ const initialState = {
   daysSelected: '',
   contact: '',
   category: '',
-  // listOfcontact: ['grey', 'jackson', 'jolivet'], // sould be fetch from server
   listOfCategories: [
     {
       id:1,
@@ -76,7 +75,6 @@ const initialState = {
   immediateNotif: false,
 };
 
-// si pas de valeur à ma state, prend la valeur d'initialstate
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_EVENT_LIST:

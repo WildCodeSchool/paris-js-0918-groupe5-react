@@ -20,9 +20,6 @@ const SelectionMenu = ({
   contact,
   category,
 }) => {
-  console.log(listOfcontact);
-  console.log(listOfCategories);
-  console.log(listOfFrequency);
   return (
     [
       {

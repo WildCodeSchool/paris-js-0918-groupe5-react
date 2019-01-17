@@ -11,7 +11,6 @@ class SelectionMenuItems extends Component {
 
   render() {
     const { type, listeOfChoices, fieldValue } = this.props;
-    console.log(listeOfChoices);
     return (
       <Select
         value={fieldValue}
