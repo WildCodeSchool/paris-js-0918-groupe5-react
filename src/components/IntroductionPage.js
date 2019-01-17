@@ -37,7 +37,7 @@ class IntroductionPage extends Component {
     this.setState({ openSignUp: true });
   };
 
-  handleCloseLogin = () => {
+  handleCloseSignUp = () => {
     this.setState({ openSignUp: false });
   };
 
@@ -45,20 +45,13 @@ class IntroductionPage extends Component {
     this.setState({ openSignIn: true });
   };
 
-  handleCloseConnection = () => {
+  handleCloseSignIn = () => {
     this.setState({ openSignIn: false });
   };
 
   render() {
-    const {
-      redirect, inputConnection, openSignUp, openSignIn,
-    } = this.state;
+    const { openSignUp, openSignIn } = this.state;
     const { classes } = this.props;
-    // if (redirect) {
-    //   return (
-    //     <Redirect to="/tableau_de_bord" />
-    //   );
-    // }
     return (
       <div className="ConnectionPage">
         <div className={classes.root}>
@@ -75,8 +68,8 @@ class IntroductionPage extends Component {
             </Toolbar>
           </AppBar>
         </div>
-        <SignUpCaregiver openSignUp={openSignUp} onCloseSignUp={this.handleCloseLogin} />
-        <SignInCaregiver openSignIn={openSignIn} onCloseSignIn={this.handleCloseConnection} />
+        <SignUpCaregiver openSignUp={openSignUp} onCloseSignUp={this.handleCloseSignUp} />
+        <SignInCaregiver openSignIn={openSignIn} onCloseSignIn={this.handleCloseSignIn} />
         <div className="logoIntro">
           <div className="introductionText">Bienvenue à la présentation de Kalify</div>
           <img className="imgLogoIntro" src={logo} alt="logo" />

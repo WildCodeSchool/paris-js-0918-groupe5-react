@@ -11,6 +11,7 @@ import Calendar from './components/Calendar/Calendar';
 import SignUpCaregiver from './components/Caregiver/SignUpCaregiver';
 import Contact from './components/Contacts/Contact';
 import Monitoring from './components/Monitoring/Monitoring';
+import SignInCaregiver from './components/Caregiver/SignInCaregiver';
 
 import './App.css';
 import 'typeface-roboto';
@@ -53,6 +54,7 @@ const App = ({ appBarIsDisplayed }) => (
         <Route exact path="/" component={IntroductionPage} />
         {appBarIsDisplayed && <AppBarGlobal />}
         <div className="spaceBtwAppBarAndRoutes">
+          <Route path="/connexion" component={SignInCaregiver} />
           <Route path="/tableau_de_bord" component={Dashboard} />
           <Route path="/contacts" component={Contact} />
           <Route path="/création" component={SignUpCaregiver} />

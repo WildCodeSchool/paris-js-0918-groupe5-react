@@ -7,9 +7,9 @@
 .introductionText {
     color: #FC8F72;
     text-align: center;
-    font-size: 3.5vw;
-    margin-top: 1em;
-    margin-bottom: 2em;
+    font-size: 3vw;
+    margin-top: 0.7em;
+    margin-bottom: 1.5em;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -25,5 +25,5 @@
     color: #FC8F72;
     text-align: center;
     font-size: 1.5vw;
-    margin-top: 11em;
+    margin-top: 8.7em;
 }

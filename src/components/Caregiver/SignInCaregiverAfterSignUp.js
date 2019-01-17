@@ -15,9 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import getServerAuthority from '../../config/getServerAuthority';
 import { displayAppBar } from '../../actions/displayActions';
 
-import './SignInCaregiver.css';
-
-class SignInCaregiver extends React.Component {
+class SignInCaregiverAfterSignUp extends React.Component {
   state = {
     redirect: false,
     email: '',
@@ -103,8 +101,8 @@ class SignInCaregiver extends React.Component {
   }
 }
 
-SignInCaregiver.propTypes = {
+SignInCaregiverAfterSignUp.propTypes = {
   displayAppBar: PropTypes.func.isRequired,
 };
 
-export default connect(null, { displayAppBar })(SignInCaregiver);
+export default connect(null, { displayAppBar })(SignInCaregiverAfterSignUp);
