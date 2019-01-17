@@ -68,6 +68,12 @@ const styles = theme => ({
 class CoverflowButtons extends Component {
   state= {
     receiver: null,
+    selectedReceiverId: 0,
+  }
+
+  componentDidMount() {
+    // const { redux } = this.props;
+    // this.setState({ selectedReceiverId: 0 });
   }
 
   handleClickAdd = () => {
@@ -109,27 +115,31 @@ class CoverflowButtons extends Component {
       .then(() => { getReceivers(); });
   }
 
+  // handleClickSelect = (event) => {
+  //   console.table(event);
+  // }
+
   render() {
-    const { classes, receivers, redux } = this.props;
-    const { receiver } = this.state;
-    console.log(redux.selectedReceiverId);
+    const { classes, receivers } = this.props;
+    const { receiver, selectedReceiverId } = this.state;
+
     return (
       <div className="CoverflowButtons">
         <Coverflow
           displayQuantityOfSide={2}
           enableHeading={false}
           enableScroll={false}
-          active={1}
+          active={selectedReceiverId}
           className={classes.coverflow}
           currentFigureScale={1.2}
           otherFigureScale={0.7}
         >
-          {receivers.map(receiver => (
+          {receivers.map((receiver, index) => (
             <div
               key={receiver.id}
-              // onClick={() => fn()}
+              // onClick={this.handleClickSelect}
               // onKeyDown={() => fn()}
-              tabIndex={receiver.id}
+              tabIndex={index}
               role="menuitem"
             >
               <Grid container justify="flex-end">
@@ -167,7 +177,7 @@ class CoverflowButtons extends Component {
           ))}
           <div
             role="menuitem"
-            tabIndex="0"
+            tabIndex={receivers.length + 1}
           >
             <Fab color="secondary" aria-label="Add" onClick={this.handleClickAdd}>
               <AddIcon />
