@@ -1,56 +1,82 @@
 import axios from 'axios';
 import getServerAuthority from '../config/getServerAuthority';
 import {
-  RECORD_EVENT_INFO,
-  RECORD_BOOL_AT_HOME_EVENT,
-  RECORD_SIMPLE_SELECT,
-  RECORD_SWITCH_LABEL,
+  OPEN_DIALOG_EVENT,
+  RECORD_EVENT_TITLE,
+  RECORD_CONTACT,
+  RECORD_FREQUENCY,
+  RECORD_EVENT_ADDRESS,
+  RECORD_MULTIPLES_DAYS,
   RECORD_DATE,
-  SEND_TO_DB,
-  // GET_EVENTS_FROM_DB,
+  RECORD_CATEGORY,
+  RECORD_SWITCH_LABEL,
+  POST_AND_CLEAR_FIELDS,
+  GET_EVENT_LIST,
 } from './types';
 
 const apiUrl = `${getServerAuthority()}/events`;
 
 
-export const recordAllInfo = allInfo => (dispatch) => {
+export const postAndClearFields = allInfo => (dispatch) => {
   axios.post(`${apiUrl}`, allInfo)
-    .then(dispatch({
-      type: SEND_TO_DB,
+    .then(res => dispatch({
+      type: POST_AND_CLEAR_FIELDS,
+      eventAdded: res,
+    }))
+    .then(res => dispatch({
+      type: GET_EVENT_LIST,
+      events: res.eventAdded.data,
     }));
 };
 
-export const recordTitleAndAddress = (title, address) => (dispatch) => {
-  dispatch({
-    type: RECORD_EVENT_INFO,
-    title,
-    address,
-  });
+export const getEventList = () => (dispatch) => {
+  axios.get(`${apiUrl}`)
+    .then(res => dispatch({
+      type: GET_EVENT_LIST,
+      events: res.data,
+    }));
 };
 
-export const recordAtHomeEvent = bool => (dispatch) => {
-  dispatch({
-    type: RECORD_BOOL_AT_HOME_EVENT,
-    atHomeEvent: bool,
-  });
-};
+export const openEventDialog = () => ({
+  type: OPEN_DIALOG_EVENT,
+});
 
-export const recordDateAndTime = (begingDate, endingDate) => (dispatch) => {
-  dispatch({
-    type: RECORD_DATE,
-    begingDate,
-    endingDate,
-  });
-};
+export const recordTitle = title => ({
+  type: RECORD_EVENT_TITLE,
+  title,
+});
 
-export const recordSimpleSelect = (frequency, responsible, category) => (dispatch) => {
-  dispatch({
-    type: RECORD_SIMPLE_SELECT,
-    frequency,
-    responsible,
-    category,
-  });
-};
+export const recordAddress = (OtherAddressChecked, preciseAddress) => ({
+  type: RECORD_EVENT_ADDRESS,
+  OtherAddressChecked,
+  address: preciseAddress,
+});
+
+export const recordDateAndTime = (startingDate, endingDate) => ({
+  type: RECORD_DATE,
+  startingDate,
+  endingDate,
+});
+
+export const recordContact = contact => ({
+  type: RECORD_CONTACT,
+  contact,
+});
+
+export const recordCategory = category => ({
+  type: RECORD_CATEGORY,
+  category,
+});
+
+export const recordFrequency = frequency => ({
+  type: RECORD_FREQUENCY,
+  frequency,
+});
+
+export const recordMultipleDays = days => ({
+  type: RECORD_MULTIPLES_DAYS,
+  days,
+});
 
 export const recordSwitchLabels = (
   visibleEvent,

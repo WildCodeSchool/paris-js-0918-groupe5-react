@@ -1,8 +1,18 @@
-.toto {
+
+.calendar {
   width: 80%;
   height: 1000px;
   margin: auto;
   margin-top: 10px;
+}
+
+.adressButton {
+  margin-bottom: -20px;
+}
+
+.adress {
+  padding-top: 20px;
+  padding-bottom: 25px;
 }
 
 .rbc-btn {
