@@ -67,14 +67,16 @@ const ButtonsBar = (props) => {
           </Link>
         </Grid>
         <Grid item>
-          <Fab
-            variant="extended"
-            color="primary"
-            aria-label="Suivi"
-            className={classes.buttonRoot}
-          >
-            Suivi
-          </Fab>
+          <Link to="/suivi" className={classes.link}>
+            <Fab
+              variant="extended"
+              color="primary"
+              aria-label="Suivi"
+              className={classes.buttonRoot}
+            >
+              Suivi
+            </Fab>
+          </Link>
         </Grid>
       </Grid>
     </div>

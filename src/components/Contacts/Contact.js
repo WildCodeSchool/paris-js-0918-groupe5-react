@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, reset } from 'redux-form';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import { withStyles, IconButton } from '@material-ui/core';
+import { withStyles, Typography, Grid } from '@material-ui/core';
 import getServerAuthority from '../../config/getServerAuthority';
 import ContactModal from './ContactModal';
 import DisplayContactModal from './DisplayContactModal';
-import Icons from '../Icons';
-
-import ContactButton from './ContactButton';
+import ContactCard from './ContactCard';
+import AddContactButton from './AddContactButton';
+import DeleteContactModal from './DeleteContactModal';
 
 // eslint-disable-next-line no-undef
 const token = localStorage.getItem('token');
@@ -26,6 +25,7 @@ class Contact extends Component {
     state = {
       contactModalIsOpen: false,
       displayContactModalIsOpen: false,
+      deleteContactModalIsOpen: false,
       contactsList: [],
       displayedContact: null,
       selectedContact: null,
@@ -70,8 +70,11 @@ class Contact extends Component {
 
     handleAddContact = () => {
       const { contactsList } = this.state;
-      const { reduxContact } = this.props;
+      const { reduxContact, dispatch } = this.props;
+      console.log(this.props);
       const contact = { ...reduxContact };
+      contact.title = reduxContact.title || 'Mme';
+      contact.preferenceOfContact = reduxContact.preferenceOfContact || 'SMS';
 
       axios({
         method: 'POST',
@@ -85,12 +88,12 @@ class Contact extends Component {
           // concatenation of contactsList and the new contact
           this.setState({ contactsList: [...contactsList, res.data] });
         })
-        .then(this.handleClose('contactModalIsOpen'));
+        .then(this.handleClose('contactModalIsOpen'))
+        .then(() => { dispatch(reset('contactModal')); });
     };
 
     handleSelectContact = (id) => {
       const { contactsList } = this.state;
-
       this.setState({
         selectedContact: contactsList[id],
         selectedId: id,
@@ -119,6 +122,16 @@ class Contact extends Component {
         .then(this.handleClose('contactModalIsOpen'));
     }
 
+
+    handleDeleteContactModal = (id) => {
+      const { contactsList } = this.state;
+      this.setState({
+        displayedContact: contactsList[id],
+        deleteContactModalIsOpen: true,
+        selectedId: id,
+      });
+    }
+
     handleDeleteContact = (id) => {
       const { contactsList } = this.state;
       const { reduxContact } = this.props;
@@ -137,15 +150,15 @@ class Contact extends Component {
           newContactsList.splice(id, 1);
           this.setState({ contactsList: newContactsList });
         })
+        .then(this.handleClose('deleteContactModalIsOpen'))
         .then(console.log(`Contact n° ${contactsList[id].id} (n° ${id} dans le tableau) supprimé`));
     }
 
     render() {
-      const { classes } = this.props;
-
       const {
         contactModalIsOpen,
         displayContactModalIsOpen,
+        deleteContactModalIsOpen,
         contactsList,
         displayedContact,
         selectedContact,
@@ -154,24 +167,27 @@ class Contact extends Component {
 
       return (
         <div>
-          <h2>Mes contacts</h2>
-          {contactsList.map((contact, index) => (
-            <p key={contact.id}>
-              <Button
-                onClick={() => this.handleDisplayContact(index)}
-                className={classes.displayContactButton}
-              >
-                {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
-                <br />
-                {`${contact.category}`}
-              </Button>
-              <IconButton onClick={() => this.handleSelectContact(index)}>
-                <Icons name="EditIcon" />
-              </IconButton>
-              <IconButton onClick={() => this.handleDeleteContact(index)}>
-                <Icons name="DeleteForeverIcon" />
-              </IconButton>
-            </p>))}
+          <Typography variant="h4" component="h2">
+            Mes contacts
+          </Typography>
+
+          <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
+
+          <Grid container spacing={16} justify="center">
+            {contactsList.map((contact, index) => (
+              <div key={contact.id}>
+                <Grid item xs={12} sm={12}>
+                  <ContactCard
+                    contact={contact}
+                    handleSelectContact={this.handleSelectContact}
+                    handleDeleteContactModal={this.handleDeleteContactModal}
+                    handleDisplayContact={this.handleDisplayContact}
+                    index={index}
+                  />
+                </Grid>
+              </div>
+            ))}
+          </Grid>
 
           {displayedContact !== null && (
           <DisplayContactModal
@@ -180,7 +196,7 @@ class Contact extends Component {
             contactsList={contactsList}
             displayedContact={displayedContact}
           />)}
-          <ContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
+
           <ContactModal
             handleClose={this.handleClose('contactModalIsOpen')}
             handleAddContact={this.handleAddContact}
@@ -190,6 +206,18 @@ class Contact extends Component {
             selectedId={selectedId}
             contactModalIsOpen={contactModalIsOpen}
           />
+
+          {displayedContact !== null && (
+          <DeleteContactModal
+            handleClose={this.handleClose('deleteContactModalIsOpen')}
+            handleDeleteContact={this.handleDeleteContact}
+            deleteContactModalIsOpen={deleteContactModalIsOpen}
+            contactsList={contactsList}
+            displayedContact={displayedContact}
+            selectedId={selectedId}
+            // index={index}
+          />
+          )}
         </div>
       );
     }
@@ -204,6 +232,8 @@ const mapStateToProps = state => ({
     firstName: formValueSelector('contactModal')(state, 'firstName'),
     lastName: formValueSelector('contactModal')(state, 'lastName'),
     category: formValueSelector('contactModal')(state, 'category'),
+    profession: formValueSelector('contactModal')(state, 'profession'),
+    address: formValueSelector('contactModal')(state, 'address'),
     email: formValueSelector('contactModal')(state, 'email'),
     phone: formValueSelector('contactModal')(state, 'phone'),
     preferenceOfContact: formValueSelector('contactModal')(state, 'preferenceOfContact'),

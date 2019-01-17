@@ -19,14 +19,15 @@ class ConnectionPage extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.email.value, e.target.password.value);
+    // console.log(e.target.email.value, e.target.password.value);
     axios.post(`${getServerAuthority()}/auth/signin`, {
       email: e.target.email.value,
       password: e.target.password.value,
     }).then((res) => {
       const { displayAppBar } = this.props;
       localStorage.setItem('token', res.headers['x-access-token']);
-      console.log('token', localStorage.getItem('token'));
+      localStorage.setItem('id', res.id);
+      // console.log('token', localStorage.getItem('token'));
       this.setState({ redirect: true }, displayAppBar(true));
     });
   }
