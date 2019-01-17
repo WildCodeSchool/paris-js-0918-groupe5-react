@@ -46,7 +46,7 @@ class Monitoring extends Component {
     try {
       const events = await this.getFollowedEvents();
       const result = events.map((e) => {
-        e.dateBeginning = new Date(e.dateBeginning).toISOString();
+        e.startingDate = new Date(e.startingDate).toISOString();
         return e;
       });
       console.log('formatDatesToISO', result);
@@ -59,7 +59,7 @@ class Monitoring extends Component {
   // returns only past events
   getPastEvents = async () => {
     const events = await this.formatDatesToISO();
-    const result = events.filter(e => new Date(e.dateBeginning) < new Date());
+    const result = events.filter(e => new Date(e.startingDate) < new Date());
     console.log('getPastEvents', result);
     return result;
   };
@@ -68,7 +68,7 @@ class Monitoring extends Component {
   getSortedPastEvent = async () => {
     try {
       const events = await this.getPastEvents();
-      const result = events.sort((a, b) => new Date(a.dateBeginning) - new Date(b.dateBeginning)).reverse();
+      const result = events.sort((a, b) => new Date(a.startingDate) - new Date(b.startingDate)).reverse();
       console.log('getSortedPastEvent', result);
       this.setState({ events: result });
     } catch (err) {

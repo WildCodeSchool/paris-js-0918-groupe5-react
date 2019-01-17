@@ -53,7 +53,7 @@ class EventsTable extends Component {
         <TableBody>
           {events.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(e => (
             <TableRow key={e.id}>
-              <TableCell>{this.formatDate(e.dateBeginning)}</TableCell>
+              <TableCell>{this.formatDate(e.startingDate)}</TableCell>
               <TableCell align="right">{e.title}</TableCell>
               <TableCell align="right">{e.responsible}</TableCell>
               <TableCell align="right" style={{ color: '#65cde2' }}>{this.iconifyMood(e.mood)}</TableCell>
