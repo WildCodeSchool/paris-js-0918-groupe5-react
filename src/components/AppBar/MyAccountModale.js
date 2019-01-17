@@ -126,42 +126,42 @@ class MyAccountModale extends React.Component {
             <h4>Nom</h4>
             <p>
               {selectedCaregiver.lastName}
-              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Nom', lastName)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Nom', lastName)} color="secondary">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Prénom</h4>
             <p>
               {selectedCaregiver.firstName}
-              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Prénom', firstName)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Prénom', firstName)} color="secondary">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Adresse</h4>
             <p>
               {selectedCaregiver.address}
-              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Adresse', address)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Adresse', address)} color="secondary">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Téléphone</h4>
             <p>
               {selectedCaregiver.phone}
-              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Téléphone', phone)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Téléphone', phone)} color="secondary">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Email</h4>
             <p>
               {selectedCaregiver.email}
-              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Email', email)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Email', email)} color="secondary">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
             <h4>Mot de passe</h4>
             <p>
               *****
-              <IconButton className="modifyButton"  onClick={() => this.openFieldModifyAccount('Mot de passe', password)}>
+              <IconButton className="modifyButton" onClick={() => this.openFieldModifyAccount('Mot de passe', password)} color="secondary">
                 <Icons name="EditIcon" />
               </IconButton>
             </p>
