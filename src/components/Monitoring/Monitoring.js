@@ -79,12 +79,11 @@ class Monitoring extends Component {
   render() {
     const { events } = this.state;
     return (
-      <div style={{ padding: 30 }}>
-        <h2>Suivi</h2>
+      <div style={{ paddingTop: 40 }}>
         <Grid container justify="center">
           <Grid
             item
-            xs={9}
+            xs={10}
             style={{
               padding: 30,
             }}
