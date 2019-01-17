@@ -43,7 +43,10 @@ const ContactCard = (props) => {
     handleDeleteContactModal,
     handleDisplayContact,
     index,
+    categoryOfContact,
   } = props;
+
+  console.log('categoryOfContact ContactCard : ', categoryOfContact);
 
   return (
     <div>

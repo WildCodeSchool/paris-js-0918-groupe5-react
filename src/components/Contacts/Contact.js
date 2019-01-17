@@ -9,6 +9,7 @@ import DisplayContactModal from './DisplayContactModal';
 import ContactCard from './ContactCard';
 import AddContactButton from './AddContactButton';
 import DeleteContactModal from './DeleteContactModal';
+import ChooseCategoryOfContact from './ChooseCategoryOfContact';
 
 // eslint-disable-next-line no-undef
 const token = localStorage.getItem('token');
@@ -30,9 +31,11 @@ class Contact extends Component {
       displayedContact: null,
       selectedContact: null,
       selectedId: null,
+      categoryOfContact: 'Toutes catégories',
     }
 
     componentDidMount() {
+      const { contactsList } = this.state;
       axios({
         method: 'GET',
         url: `${getServerAuthority()}/contacts`,
@@ -40,11 +43,17 @@ class Contact extends Component {
           Authorization: `Bearer ${token}`,
         },
       }).then(
-        res => this.setState({
-          contactsList: res.data,
-        }),
+        (res) => {
+          this.setState({ contactsList: res.data },
+            () => console.log('contactsList : ', contactsList));
+        },
       );
     }
+
+    handleChangeCategoryOfContact = (event) => {
+      this.setState({ categoryOfContact: event.target.value },
+        () => console.log('handleChangeCategoryOfContact : ', event.target.value));
+    };
 
     // generic function to open different modals
     // eslint-disable-next-line no-unused-vars
@@ -106,16 +115,6 @@ class Contact extends Component {
       const { reduxContact } = this.props;
       const contact = { ...reduxContact };
       console.log(contact);
-      // {contact.function === null ? 'RIEN' : contact.function}
-
-      // if (contact.function === null || contact.function === '' || contact.function === undefined) {
-      //   contact.function = 'RIEN';
-      // }
-      // if (reduxContact.function) {
-      //   contact.function = 'RIEN';
-      // }
-
-      // contact.preferenceOfContact = reduxContact.preferenceOfContact || 'SMS';
       axios({
         method: 'PUT',
         url: `${getServerAuthority()}/contacts/${contactsList[id].id}`,
@@ -131,7 +130,6 @@ class Contact extends Component {
         })
         .then(this.handleClose('contactModalIsOpen'));
     }
-
 
     handleDeleteContactModal = (id) => {
       const { contactsList } = this.state;
@@ -173,7 +171,15 @@ class Contact extends Component {
         displayedContact,
         selectedContact,
         selectedId,
+        categoryOfContact,
       } = this.state;
+
+
+      const contactsListFiltered = contactsList.filter(
+        contact => contact.category === categoryOfContact,
+      );
+
+      console.log('contactsListFiltered : ', contactsListFiltered);
 
       return (
         <div>
@@ -183,20 +189,28 @@ class Contact extends Component {
 
           <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
 
+          <ChooseCategoryOfContact
+            categoryOfContact={categoryOfContact}
+            handleChangeCategoryOfContact={this.handleChangeCategoryOfContact}
+          />
+
           <Grid container spacing={16} justify="center">
-            {contactsList.map((contact, index) => (
-              <div key={contact.id}>
-                <Grid item xs={12} sm={12}>
-                  <ContactCard
-                    contact={contact}
-                    handleSelectContact={this.handleSelectContact}
-                    handleDeleteContactModal={this.handleDeleteContactModal}
-                    handleDisplayContact={this.handleDisplayContact}
-                    index={index}
-                  />
-                </Grid>
-              </div>
-            ))}
+            {contactsList
+              .filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories')
+              .map((contact, index) => (
+                <div key={contact.id}>
+                  <Grid item xs={12} sm={12}>
+                    <ContactCard
+                      contact={contact}
+                      handleSelectContact={this.handleSelectContact}
+                      handleDeleteContactModal={this.handleDeleteContactModal}
+                      handleDisplayContact={this.handleDisplayContact}
+                      index={index}
+                      categoryOfContact={categoryOfContact}
+                    />
+                  </Grid>
+                </div>
+              ))}
           </Grid>
 
           {displayedContact !== null && (
