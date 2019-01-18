@@ -102,7 +102,7 @@ class MyAccountModale extends React.Component {
     this.props.onClose();
     alert('Vos modifications ont bien été enregistrées.');
     this.axiosGetting();
-    // window.location.reload();
+    window.location.reload();
   }
 
   render() {
