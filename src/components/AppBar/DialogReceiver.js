@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import {
+  Field,
+  reduxForm,
+  formValueSelector,
+  reset,
+} from 'redux-form';
 import {
   Button,
   Dialog,
@@ -15,16 +20,45 @@ import {
   renderDatePicker,
   renderRadioButton,
 } from '../reduxFormElements';
-import { getReceivers } from '../../actions/infoActions';
+import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
 import { displayDialogReceiver } from '../../actions/displayActions';
 
 const token = localStorage.getItem('token');
 
-const validate = (values) => {};
+const validate = (values) => {
+  const errors = {};
+  const requiredFields = [
+    'title',
+    'lastName',
+    'firstName',
+    'address',
+    'phone',
+    'dateOfBirth',
+    'receiverBond',
+  ];
+  requiredFields.forEach((field) => {
+    if (!values[field]) {
+      errors[field] = 'Champs requis';
+    }
+  });
+  // Verify if the email has the good format
+  if (
+    values.phone
+    && !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(values.phone)
+  ) {
+    errors.email = 'Numéro de téléphone invalide';
+  }
+  return errors;
+};
 
 class DialogReceiver extends Component {
   handleValidation = () => {
-    const { redux, displayDialogReceiver, receiver } = this.props;
+    const {
+      redux,
+      displayDialogReceiver,
+      receiver,
+      reset,
+    } = this.props;
 
     const newReceiver = receiver || redux.receiver;
     if (!receiver) {
@@ -39,10 +73,18 @@ class DialogReceiver extends Component {
       },
       data: redux.receiver,
     })
-      .then(() => {
+      .then(res => res.data)
+      .then((newReceiver) => {
+        console.log(newReceiver);
         const { getReceivers } = this.props;
         getReceivers();
+        return newReceiver;
       })
+      .then((newReceiver) => {
+        const { getSelectedReceiver } = this.props;
+        getSelectedReceiver(newReceiver.id);
+      })
+      .then(() => { reset('receiverForm'); })
       .then(() => displayDialogReceiver(false));
   };
 
@@ -135,18 +177,23 @@ const mapStateToProps = state => ({
   redux: {
     dialogReceiverIsDisplayed: state.display.dialogReceiverIsDisplayed,
     receiver: {
-      title: formValueSelector('AddReceiverForm')(state, 'title'),
-      lastName: formValueSelector('AddReceiverForm')(state, 'lastName'),
-      firstName: formValueSelector('AddReceiverForm')(state, 'firstName'),
-      address: formValueSelector('AddReceiverForm')(state, 'address'),
-      phone: formValueSelector('AddReceiverForm')(state, 'phone'),
-      dateOfBirth: formValueSelector('AddReceiverForm')(state, 'dateOfBirth'),
-      receiverBond: formValueSelector('AddReceiverForm')(state, 'receiverBond'),
+      title: formValueSelector('receiverForm')(state, 'title'),
+      lastName: formValueSelector('receiverForm')(state, 'lastName'),
+      firstName: formValueSelector('receiverForm')(state, 'firstName'),
+      address: formValueSelector('receiverForm')(state, 'address'),
+      phone: formValueSelector('receiverForm')(state, 'phone'),
+      dateOfBirth: formValueSelector('receiverForm')(state, 'dateOfBirth'),
+      receiverBond: formValueSelector('receiverForm')(state, 'receiverBond'),
     },
   },
 });
 
 export default reduxForm({
-  form: 'AddReceiverForm', // a unique identifier for this form
+  form: 'receiverForm', // a unique identifier for this form
   validate,
-})((connect(mapStateToProps, { displayDialogReceiver, getReceivers }))(DialogReceiver));
+})((connect(mapStateToProps, {
+  displayDialogReceiver,
+  getReceivers,
+  getSelectedReceiver,
+  reset,
+}))(DialogReceiver));

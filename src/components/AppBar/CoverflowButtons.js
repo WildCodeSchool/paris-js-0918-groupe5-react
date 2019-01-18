@@ -93,17 +93,7 @@ class CoverflowButtons extends Component {
 
   selectReceiver = (receiverId) => {
     const { getSelectedReceiver } = this.props;
-
     getSelectedReceiver(receiverId);
-    // const token = localStorage.getItem('token');
-
-    // axios({
-    //   method: 'GET',
-    //   url: `${getServerAuthority()}/users/selectReceiver/${receiverId}`,
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
   }
 
   handleClickAdd = () => {
@@ -111,7 +101,7 @@ class CoverflowButtons extends Component {
     this.setState({ receiver: null }, displayDialogReceiver(true));
   }
 
-  getReceiver = (receiverId) => {
+  getReceiverInfos = (receiverId) => {
     const { displayDialogReceiver } = this.props;
     const token = localStorage.getItem('token');
     axios({
@@ -128,10 +118,11 @@ class CoverflowButtons extends Component {
   }
 
   handleClickEdit = (receiverId) => {
-    this.setState({ receiver: null }, () => this.getReceiver(receiverId));
+    this.setState({ receiver: null }, () => this.getReceiverInfos(receiverId));
   }
 
   handleClickClear = (receiverId) => {
+    const { redux, getReceivers } = this.props;
     const token = localStorage.getItem('token');
     axios({
       method: 'DELETE',
@@ -140,7 +131,16 @@ class CoverflowButtons extends Component {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(() => { getReceivers(); });
+      .then(() => { getReceivers(); })
+      .then(() => {
+        if (!redux.receivers) {
+          this.setState({
+            selectedReceiverId: 0,
+          });
+        } else {
+          this.getReceiverTabIndex(redux.selectedReceiverId);
+        }
+      });
   }
 
   handleClickSelect = (receiverId) => {
@@ -150,7 +150,6 @@ class CoverflowButtons extends Component {
   render() {
     const { classes, receivers } = this.props;
     const { receiver, selectedReceiverId } = this.state;
-
     return (
       <div className="CoverflowButtons">
         <Coverflow

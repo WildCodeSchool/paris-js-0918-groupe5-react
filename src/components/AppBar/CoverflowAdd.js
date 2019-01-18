@@ -40,14 +40,14 @@ class CoverflowAdd extends Component {
           displayQuantityOfSide={2}
           enableHeading={false}
           enableScroll={false}
-          active={0}
+          // active={0}
           className={classes.coverflow}
           currentFigureScale={1.2}
           otherFigureScale={0.7}
         >
           <div
             role="menuitem"
-            tabIndex={0}
+            // tabIndex={0}
           >
             <Fab color="secondary" aria-label="Add" onClick={this.handleClickAdd}>
               <AddIcon />
