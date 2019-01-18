@@ -49,7 +49,7 @@ const App = ({ redux }) => (
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        <Route exact path="/" component={ConnectionPage} />
+        <Route exact path="/" component={IntroductionPage} />
         {redux.appBarIsDisplayed && <AppBarGlobal />}
         <div className="spaceBtwAppBarAndRoutes">
           <Route path="/connexion" component={SignInCaregiver} />
