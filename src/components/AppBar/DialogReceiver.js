@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import axios from 'axios';
+import axios from 'axios';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import {
   Button,
@@ -9,24 +9,41 @@ import {
   DialogContent,
   DialogTitle,
 } from '@material-ui/core';
-// import getServerAuthority from '../../config/getServerAuthority';
+import getServerAuthority from '../../config/getServerAuthority';
 import {
   renderTextField,
   renderDatePicker,
   renderRadioButton,
 } from '../reduxFormElements';
+import { getReceivers } from '../../actions/infoActions';
 import { displayDialogAddReceiver } from '../../actions/displayActions';
 
-// const token = localStorage.getItem('token');
+const token = localStorage.getItem('token');
 
 const validate = (values) => {};
 
-class DialogAddReceiver extends Component {
-  handleAddReceiver = () => {
-    const { redux, displayDialogAddReceiver } = this.props;
-    const receiver = { ...redux.receiver };
-    console.log(receiver);
-    displayDialogAddReceiver(false);
+class DialogReceiver extends Component {
+  handleValidation = () => {
+    const { redux, displayDialogAddReceiver, receiver } = this.props;
+
+    const newReceiver = receiver || redux.receiver;
+    if (!receiver) {
+      newReceiver.title = redux.receiver.title || 'Mme';
+    }
+
+    axios({
+      method: receiver ? 'PUT' : 'POST',
+      url: receiver ? `${getServerAuthority()}/users/receiver/${receiver.id}` : `${getServerAuthority()}/users/receivers`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: redux.receiver,
+    })
+      .then(() => {
+        const { getReceivers } = this.props;
+        getReceivers();
+      })
+      .then(() => displayDialogAddReceiver(false));
   };
 
   handleClose = () => {
@@ -35,15 +52,18 @@ class DialogAddReceiver extends Component {
   }
 
   render() {
-    const { redux } = this.props;
+    const { redux, receiver } = this.props;
     return (
-      <div className="DialogAddReceiver">
+      <div className="DialogReceiver">
         <Dialog
           open={redux.dialogAddReceiverIsDisplayed}
-          // onClose={this.handleClose}
+          onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Ajouter un aidé</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            {receiver && `Modifier le profil de ${receiver.firstName}`}
+            {!receiver && "Ajouter un aidé"}
+          </DialogTitle>
           <DialogContent>
             <Field
               name="title"
@@ -51,50 +71,58 @@ class DialogAddReceiver extends Component {
               label="Titre"
               buttonLabels={['Mme', 'M.']}
               required
+              initialValue={receiver ? receiver.title : undefined}
             />
             <Field
               name="lastName"
               component={renderTextField}
               label="Nom"
               required
+              defaultValue={receiver ? receiver.lastName : ''}
             />
             <Field
               name="firstName"
               component={renderTextField}
               label="Prénom"
               required
+              defaultValue={receiver ? receiver.firstName : ''}
             />
             <Field
               name="address"
               component={renderTextField}
               label="Adresse"
               required
+              defaultValue={receiver ? receiver.address : ''}
             />
             <Field
               name="phone"
               component={renderTextField}
               label="Téléphone"
               required
+              defaultValue={receiver ? receiver.phone : ''}
             />
             <Field
               name="dateOfBirth"
               component={renderDatePicker}
               label="Date de naissance"
               required
+              defaultValue={receiver ? receiver.dateOfBirth : ''}
             />
             <Field
               name="receiverBond"
               component={renderTextField}
               label="Lien de parenté"
               required
+              defaultValue={receiver ? receiver.receiverBond : ''}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Annuler
             </Button>
-            <Button onClick={this.handleAddReceiver} color="primary">
-              Ajouter
+            <Button onClick={this.handleValidation} color="primary">
+              {receiver && 'Editer'}
+              {!receiver && 'Ajouter'}
             </Button>
           </DialogActions>
         </Dialog>
@@ -121,4 +149,4 @@ const mapStateToProps = state => ({
 export default reduxForm({
   form: 'AddReceiverForm', // a unique identifier for this form
   validate,
-})((connect(mapStateToProps, { displayDialogAddReceiver }))(DialogAddReceiver));
+})((connect(mapStateToProps, { displayDialogAddReceiver, getReceivers }))(DialogReceiver));
