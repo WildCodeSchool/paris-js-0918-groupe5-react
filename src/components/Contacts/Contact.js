@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector, reset } from 'redux-form';
 import axios from 'axios';
-import { withStyles, Typography, Grid } from '@material-ui/core';
+import { withStyles, Grid } from '@material-ui/core';
 import getServerAuthority from '../../config/getServerAuthority';
 import ContactModal from './ContactModal';
 import DisplayContactModal from './DisplayContactModal';
@@ -10,6 +10,7 @@ import ContactCard from './ContactCard';
 import AddContactButton from './AddContactButton';
 import DeleteContactModal from './DeleteContactModal';
 import { getContacts } from '../../actions/infoActions';
+import ChooseCategoryOfContact from './ChooseCategoryOfContact';
 
 // eslint-disable-next-line no-undef
 const token = localStorage.getItem('token');
@@ -18,6 +19,14 @@ const styles = theme => ({
   displayContactButton: {
     margin: theme.spacing.unit,
     textTransform: 'capitalize',
+  },
+  selectCategoryOfContact: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  addContactButton: {
+    display: 'flex',
+    alignItems: 'center',
   },
 });
 
@@ -30,12 +39,17 @@ class Contact extends Component {
       displayedContact: null,
       selectedContact: null,
       selectedId: null,
+      categoryOfContact: 'Toutes catégories',
     }
 
     componentDidMount() {
       const { getContacts } = this.props;
       getContacts();
     }
+
+    handleChangeCategoryOfContact = (event) => {
+      this.setState({ categoryOfContact: event.target.value });
+    };
 
     // generic function to open different modals
     // eslint-disable-next-line no-unused-vars
@@ -45,8 +59,11 @@ class Contact extends Component {
 
     handleDisplayContact = (id) => {
       const { redux } = this.props;
+      const { categoryOfContact } = this.state;
+
+      const contactsFiltered = redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
       this.setState({
-        displayedContact: redux.contacts[id],
+        displayedContact: contactsFiltered[id],
         displayContactModalIsOpen: true,
       });
     }
@@ -81,8 +98,12 @@ class Contact extends Component {
 
     handleSelectContact = (id) => {
       const { redux } = this.props;
+      const { categoryOfContact } = this.state;
+
+      const contactsFiltered = redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
+
       this.setState({
-        selectedContact: redux.contacts[id],
+        selectedContact: contactsFiltered[id],
         selectedId: id,
         contactModalIsOpen: true,
       });
@@ -104,11 +125,13 @@ class Contact extends Component {
         .then(this.handleClose('contactModalIsOpen'));
     }
 
-
     handleDeleteContactModal = (id) => {
       const { redux } = this.props;
+      const { categoryOfContact } = this.state;
+
+      const contactsFiltered = redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
       this.setState({
-        displayedContact: redux.contacts[id],
+        displayedContact: contactsFiltered[id],
         deleteContactModalIsOpen: true,
         selectedId: id,
       });
@@ -139,19 +162,30 @@ class Contact extends Component {
         displayedContact,
         selectedContact,
         selectedId,
+        categoryOfContact,
       } = this.state;
       const { redux } = this.props;
 
+      const {
+        classes,
+      } = this.props;
+
+      const contactsFiltered = redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
+      console.log('contactsFiltered : ', contactsFiltered);
+
       return (
         <div>
-          <Typography variant="h4" component="h2">
-            Mes contacts
-          </Typography>
-
-          <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
-
           <Grid container spacing={16} justify="center">
-            {redux.contacts && redux.contacts.map((contact, index) => (
+            <Grid item xs={6} className={classes.selectCategoryOfContact}>
+              <ChooseCategoryOfContact
+                categoryOfContact={categoryOfContact}
+                handleChangeCategoryOfContact={this.handleChangeCategoryOfContact}
+              />
+            </Grid>
+            <Grid item xs={6} className={classes.addContactButton}>
+              <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
+            </Grid>
+            {redux.contacts && contactsFiltered.map((contact, index) => (
               <div key={contact.id}>
                 <Grid item xs={12} sm={12}>
                   <ContactCard
@@ -160,6 +194,7 @@ class Contact extends Component {
                     handleDeleteContactModal={this.handleDeleteContactModal}
                     handleDisplayContact={this.handleDisplayContact}
                     index={index}
+                    categoryOfContact={categoryOfContact}
                   />
                 </Grid>
               </div>
@@ -222,3 +257,4 @@ const mapStateToProps = state => ({
 
 // connect permet de connecter ton composant au store (actions, store ....)
 export default connect(mapStateToProps, { getContacts, reset })(withStyles(styles)(Contact));
+

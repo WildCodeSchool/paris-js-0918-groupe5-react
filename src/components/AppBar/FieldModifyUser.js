@@ -7,15 +7,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-class MyAccountModale extends React.Component {
-
+class FieldModifyUser extends React.Component {
   recording = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
     const {
-      openField, onClose, onCloseAll, selectedField, stateName, selectedCaregiver,
+      openField, onClose, onCloseAll, selectedField, stateName,
     } = this.props;
     return (
       <div>
@@ -40,7 +39,7 @@ class MyAccountModale extends React.Component {
               label={selectedField}
               type="email"
               fullWidth
-              value={stateName === 'password' ? '' : selectedCaregiver[stateName]}
+              // value={stateName === 'password' ? '' : selectedCaregiver[stateName]}
               onChange={this.recording}
             />
           </DialogContent>
@@ -58,4 +57,4 @@ class MyAccountModale extends React.Component {
   }
 }
 
-export default MyAccountModale;
+export default FieldModifyUser;
