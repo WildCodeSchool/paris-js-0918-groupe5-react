@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import VisitsChart from './components/VisitsChart';
 import MoodChart from './components/MoodChart';
 import getServerAuthority from '../../config/getServerAuthority';
+
 
 class Charts extends Component {
   constructor(props) {
@@ -18,8 +20,18 @@ class Charts extends Component {
     };
   }
 
+  componentDidMount = () => this.init();
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.selectedReceiverId !== this.props.selectedReceiverId) {
+      console.log('prevProps', prevProps);
+      console.log('this.props', this.props);
+      this.init();
+    }
+  };
+
   // the five arrays that need to be passed to the charts are created and set as states
-  componentDidMount = () => {
+  init = () => {
     this.createDayNamesArray();
     this.createMoodArray();
     this.createVisitsAndAbsencesArrays();
@@ -217,4 +229,7 @@ class Charts extends Component {
   }
 }
 
-export default Charts;
+const mapStateToProps = state => ({
+  selectedReceiverId: state.info.selectedReceiverId,
+});
+export default connect(mapStateToProps)(Charts);
