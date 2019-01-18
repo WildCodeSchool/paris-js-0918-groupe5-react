@@ -9,6 +9,7 @@ import DisplayContactModal from './DisplayContactModal';
 import ContactCard from './ContactCard';
 import AddContactButton from './AddContactButton';
 import DeleteContactModal from './DeleteContactModal';
+import { getContacts } from '../../actions/infoActions';
 import ChooseCategoryOfContact from './ChooseCategoryOfContact';
 
 // eslint-disable-next-line no-undef
@@ -35,7 +36,6 @@ class Contact extends Component {
       contactModalIsOpen: false,
       displayContactModalIsOpen: false,
       deleteContactModalIsOpen: false,
-      contactsList: [],
       displayedContact: null,
       selectedContact: null,
       selectedId: null,
@@ -43,18 +43,8 @@ class Contact extends Component {
     }
 
     componentDidMount() {
-      axios({
-        method: 'GET',
-        url: `${getServerAuthority()}/contacts`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then(
-        (res) => {
-          this.setState({ contactsList: res.data },
-            () => console.log('contactsList : ', res.data));
-        },
-      );
+      const { getContacts } = this.props;
+      getContacts();
     }
 
     handleChangeCategoryOfContact = (event) => {
@@ -68,12 +58,12 @@ class Contact extends Component {
     };
 
     handleDisplayContact = (id) => {
-      console.log(id);
-      const { contactsList, categoryOfContact } = this.state;
-      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
+      const { redux } = this.props;
+      const { categoryOfContact } = this.state;
+
+      const contactsFiltered = redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
       this.setState({
-        // displayedContact: contactsList[id],
-        displayedContact: contactsListFiltered[id],
+        displayedContact: contactsFiltered[id],
         displayContactModalIsOpen: true,
       });
     }
@@ -87,12 +77,11 @@ class Contact extends Component {
     };
 
     handleAddContact = () => {
-      const { contactsList } = this.state;
-      const { reduxContact, dispatch } = this.props;
+      const { redux, getContacts, reset } = this.props;
       console.log(this.props);
-      const contact = { ...reduxContact };
-      contact.title = reduxContact.title || 'Mme';
-      contact.preferenceOfContact = reduxContact.preferenceOfContact || 'SMS';
+      const contact = { ...redux.contact };
+      contact.title = redux.contact.title || 'Mme';
+      contact.preferenceOfContact = redux.contact.preferenceOfContact || 'SMS';
 
       axios({
         method: 'POST',
@@ -102,75 +91,67 @@ class Contact extends Component {
         },
         data: contact,
       })
-        .then((res) => {
-          // concatenation of contactsList and the new contact
-          this.setState({ contactsList: [...contactsList, res.data] });
-        })
+        .then(() => { getContacts(); })
         .then(this.handleClose('contactModalIsOpen'))
-        .then(() => { dispatch(reset('contactModal')); });
+        .then(() => { reset('contactModal'); });
     };
 
     handleSelectContact = (id) => {
-      const { contactsList, categoryOfContact } = this.state;
-      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
+      const { redux } = this.props;
+      const { categoryOfContact } = this.state;
+
+      const contactsFiltered = redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
+
       this.setState({
-        selectedContact: contactsListFiltered[id],
+        selectedContact: contactsFiltered[id],
         selectedId: id,
         contactModalIsOpen: true,
       });
     };
 
     handleEditContact = (id) => {
-      const { contactsList } = this.state;
-      const { reduxContact } = this.props;
-      const contact = { ...reduxContact };
-      console.log(contact);
+      const { redux, getContacts } = this.props;
+      const contact = { ...redux.contact };
+
       axios({
         method: 'PUT',
-        url: `${getServerAuthority()}/contacts/${contactsList[id].id}`,
+        url: `${getServerAuthority()}/contacts/${redux.contacts[id].id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
         data: contact,
       })
-        .then((res) => {
-          const newContactsList = [...contactsList];
-          newContactsList[id] = res.data;
-          this.setState({ contactsList: newContactsList });
-        })
+        .then(() => { getContacts(); })
         .then(this.handleClose('contactModalIsOpen'));
     }
 
     handleDeleteContactModal = (id) => {
-      const { contactsList, categoryOfContact } = this.state;
-      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
+      const { redux } = this.props;
+      const { categoryOfContact } = this.state;
+
+      const contactsFiltered = redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
       this.setState({
-        displayedContact: contactsListFiltered[id],
+        displayedContact: contactsFiltered[id],
         deleteContactModalIsOpen: true,
         selectedId: id,
       });
     }
 
     handleDeleteContact = (id) => {
-      const { contactsList, categoryOfContact } = this.state;
-      const { reduxContact } = this.props;
-      const contact = { ...reduxContact };
-      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
+      const { getContacts, redux } = this.props;
+      const contact = { ...redux.contact };
+
       axios({
         method: 'DELETE',
-        url: `${getServerAuthority()}/contacts/${contactsListFiltered[id].id}`,
+        url: `${getServerAuthority()}/contacts/${redux.contacts[id].id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
         data: contact,
       })
-        .then(() => {
-          const newContactsList = [...contactsList];
-          newContactsList.splice(id, 1);
-          this.setState({ contactsList: newContactsList });
-        })
+        .then(() => { getContacts(); })
         .then(this.handleClose('deleteContactModalIsOpen'))
-        .then(console.log(`Contact n° ${contactsList[id].id} (n° ${id} dans le tableau) supprimé`));
+        .then(() => { console.log(`Contact n° ${redux.contacts[id].id} (n° ${id} dans le tableau) supprimé`); });
     }
 
     render() {
@@ -178,19 +159,19 @@ class Contact extends Component {
         contactModalIsOpen,
         displayContactModalIsOpen,
         deleteContactModalIsOpen,
-        contactsList,
         displayedContact,
         selectedContact,
         selectedId,
         categoryOfContact,
       } = this.state;
+      const { redux } = this.props;
 
       const {
         classes,
       } = this.props;
 
-      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
-      console.log('contactsListFiltered : ', contactsListFiltered);
+      const contactsFiltered = redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
+      console.log('contactsFiltered : ', contactsFiltered);
 
       return (
         <div>
@@ -204,28 +185,27 @@ class Contact extends Component {
             <Grid item xs={6} className={classes.addContactButton}>
               <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
             </Grid>
-            {contactsListFiltered
-              .map((contact, index) => (
-                <div key={contact.id}>
-                  <Grid item xs={12} sm={12}>
-                    <ContactCard
-                      contact={contact}
-                      handleSelectContact={this.handleSelectContact}
-                      handleDeleteContactModal={this.handleDeleteContactModal}
-                      handleDisplayContact={this.handleDisplayContact}
-                      index={index}
-                      categoryOfContact={categoryOfContact}
-                    />
-                  </Grid>
-                </div>
-              ))}
+            {redux.contacts && contactsFiltered.map((contact, index) => (
+              <div key={contact.id}>
+                <Grid item xs={12} sm={12}>
+                  <ContactCard
+                    contact={contact}
+                    handleSelectContact={this.handleSelectContact}
+                    handleDeleteContactModal={this.handleDeleteContactModal}
+                    handleDisplayContact={this.handleDisplayContact}
+                    index={index}
+                    categoryOfContact={categoryOfContact}
+                  />
+                </Grid>
+              </div>
+            ))}
           </Grid>
 
           {displayedContact !== null && (
           <DisplayContactModal
             handleClose={this.handleClose('displayContactModalIsOpen')}
             displayContactModalIsOpen={displayContactModalIsOpen}
-            contactsList={contactsList}
+            contactsList={redux.contacts}
             displayedContact={displayedContact}
           />)}
 
@@ -244,10 +224,9 @@ class Contact extends Component {
             handleClose={this.handleClose('deleteContactModalIsOpen')}
             handleDeleteContact={this.handleDeleteContact}
             deleteContactModalIsOpen={deleteContactModalIsOpen}
-            contactsList={contactsList}
+            contactsList={redux.contacts}
             displayedContact={displayedContact}
             selectedId={selectedId}
-            // index={index}
           />
           )}
         </div>
@@ -259,19 +238,23 @@ class Contact extends Component {
 // récupérer le state qui est dans le store pour l'injecter dans les props de mon composant actuel
 // grace à mapStateToProps on peut utiliser this.props.poulet par exemple
 const mapStateToProps = state => ({
-  reduxContact: {
-    title: formValueSelector('contactModal')(state, 'title'),
-    firstName: formValueSelector('contactModal')(state, 'firstName'),
-    lastName: formValueSelector('contactModal')(state, 'lastName'),
-    category: formValueSelector('contactModal')(state, 'category'),
-    profession: formValueSelector('contactModal')(state, 'profession'),
-    address: formValueSelector('contactModal')(state, 'address'),
-    email: formValueSelector('contactModal')(state, 'email'),
-    phone: formValueSelector('contactModal')(state, 'phone'),
-    preferenceOfContact: formValueSelector('contactModal')(state, 'preferenceOfContact'),
-    comment: formValueSelector('contactModal')(state, 'comment'),
+  redux: {
+    contact: {
+      title: formValueSelector('contactModal')(state, 'title'),
+      firstName: formValueSelector('contactModal')(state, 'firstName'),
+      lastName: formValueSelector('contactModal')(state, 'lastName'),
+      category: formValueSelector('contactModal')(state, 'category'),
+      profession: formValueSelector('contactModal')(state, 'profession'),
+      address: formValueSelector('contactModal')(state, 'address'),
+      email: formValueSelector('contactModal')(state, 'email'),
+      phone: formValueSelector('contactModal')(state, 'phone'),
+      preferenceOfContact: formValueSelector('contactModal')(state, 'preferenceOfContact'),
+      comment: formValueSelector('contactModal')(state, 'comment'),
+    },
+    contacts: state.info.contacts,
   },
 });
 
 // connect permet de connecter ton composant au store (actions, store ....)
-export default connect(mapStateToProps, null)(withStyles(styles)(Contact));
+export default connect(mapStateToProps, { getContacts, reset })(withStyles(styles)(Contact));
+
