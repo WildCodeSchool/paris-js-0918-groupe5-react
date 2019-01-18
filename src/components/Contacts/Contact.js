@@ -43,6 +43,7 @@ class Contact extends Component {
     }
 
     componentDidMount() {
+      console.log('componentdidmount');
       axios({
         method: 'GET',
         url: `${getServerAuthority()}/contacts`,
