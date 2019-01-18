@@ -21,7 +21,6 @@ export const renderTextField = ({
   meta: { touched, invalid, error },
   ...custom
 }) => {
-  console.log('text', value);
   return (
     <TextField
       helperText={touched && error}
@@ -47,7 +46,6 @@ export const renderRadioButton = ({
   ...rest
 
 }) => {
-  console.log('input', input.value);
   return (
     <FormControl>
       <FormLabel component="legend" required={required} className="radioButtonsLabel">

@@ -43,10 +43,7 @@ const ContactCard = (props) => {
     handleDeleteContactModal,
     handleDisplayContact,
     index,
-    categoryOfContact,
   } = props;
-
-  console.log('categoryOfContact ContactCard : ', categoryOfContact);
 
   return (
     <div>
@@ -55,7 +52,7 @@ const ContactCard = (props) => {
           <CardActionArea>
             <CardContent>
               <Typography variant="h6" component="h3" className={classes.contactName}>
-                {`${contact.title} ${contact.firstName} ${contact.lastName}`}
+                {`${contact.title} ${contact.firstName} ${contact.lastName} ${index}`}
               </Typography>
               <Typography component="h5">
                 <p>{contact.category}</p>

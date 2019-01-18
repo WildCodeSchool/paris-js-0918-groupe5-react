@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector, reset } from 'redux-form';
 import axios from 'axios';
-import { withStyles, Typography, Grid } from '@material-ui/core';
+import { withStyles, Grid } from '@material-ui/core';
 import getServerAuthority from '../../config/getServerAuthority';
 import ContactModal from './ContactModal';
 import DisplayContactModal from './DisplayContactModal';
@@ -20,9 +20,12 @@ const styles = theme => ({
     textTransform: 'capitalize',
   },
   selectCategoryOfContact: {
-    // border: '1px solid purple',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+  },
+  addContactButton: {
+    display: 'flex',
+    alignItems: 'center',
   },
 });
 
@@ -40,7 +43,6 @@ class Contact extends Component {
     }
 
     componentDidMount() {
-      const { contactsList } = this.state;
       axios({
         method: 'GET',
         url: `${getServerAuthority()}/contacts`,
@@ -50,14 +52,13 @@ class Contact extends Component {
       }).then(
         (res) => {
           this.setState({ contactsList: res.data },
-            () => console.log('contactsList : ', contactsList));
+            () => console.log('contactsList : ', res.data));
         },
       );
     }
 
     handleChangeCategoryOfContact = (event) => {
-      this.setState({ categoryOfContact: event.target.value },
-        () => console.log('handleChangeCategoryOfContact : ', event.target.value));
+      this.setState({ categoryOfContact: event.target.value });
     };
 
     // generic function to open different modals
@@ -67,9 +68,12 @@ class Contact extends Component {
     };
 
     handleDisplayContact = (id) => {
-      const { contactsList } = this.state;
+      console.log(id);
+      const { contactsList, categoryOfContact } = this.state;
+      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
       this.setState({
-        displayedContact: contactsList[id],
+        // displayedContact: contactsList[id],
+        displayedContact: contactsListFiltered[id],
         displayContactModalIsOpen: true,
       });
     }
@@ -107,9 +111,10 @@ class Contact extends Component {
     };
 
     handleSelectContact = (id) => {
-      const { contactsList } = this.state;
+      const { contactsList, categoryOfContact } = this.state;
+      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
       this.setState({
-        selectedContact: contactsList[id],
+        selectedContact: contactsListFiltered[id],
         selectedId: id,
         contactModalIsOpen: true,
       });
@@ -183,24 +188,22 @@ class Contact extends Component {
         classes,
       } = this.props;
 
-      const contactsListFiltered = contactsList.filter(
-        contact => contact.category === categoryOfContact,
-      );
-
+      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
       console.log('contactsListFiltered : ', contactsListFiltered);
 
       return (
         <div>
-          <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
           <Grid container spacing={16} justify="center">
-            <Grid item xs={12} className={classes.selectCategoryOfContact}>
+            <Grid item xs={6} className={classes.selectCategoryOfContact}>
               <ChooseCategoryOfContact
                 categoryOfContact={categoryOfContact}
                 handleChangeCategoryOfContact={this.handleChangeCategoryOfContact}
               />
             </Grid>
-            {contactsList
-              .filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories')
+            <Grid item xs={6} className={classes.addContactButton}>
+              <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
+            </Grid>
+            {contactsListFiltered
               .map((contact, index) => (
                 <div key={contact.id}>
                   <Grid item xs={12} sm={12}>
