@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { displayAppBar } from '../actions/displayActions';
 import SignUpCaregiver from './Caregiver/SignUpCaregiver';
 import SignInCaregiver from './Caregiver/SignInCaregiver';
-import logo from '../assets/logoKaliService2.png';
+import logo from '../assets/logoKaliService3.png';
 
 import './IntroductionPage.css';
 

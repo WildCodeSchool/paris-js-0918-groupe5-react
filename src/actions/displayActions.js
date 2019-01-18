@@ -1,4 +1,4 @@
-import { DISPLAY_APP_BAR, DISPLAY_DIALOG_ADD_RECEIVER } from './types';
+import { DISPLAY_APP_BAR, DISPLAY_DIALOG_RECEIVER } from './types';
 
 export const displayAppBar = isDisplayed => (dispatch) => {
   dispatch({
@@ -7,9 +7,9 @@ export const displayAppBar = isDisplayed => (dispatch) => {
   });
 };
 
-export const displayDialogAddReceiver = isDisplayed => (dispatch) => {
+export const displayDialogReceiver = isDisplayed => (dispatch) => {
   dispatch({
-    type: DISPLAY_DIALOG_ADD_RECEIVER,
+    type: DISPLAY_DIALOG_RECEIVER,
     isDisplayed,
   });
 };

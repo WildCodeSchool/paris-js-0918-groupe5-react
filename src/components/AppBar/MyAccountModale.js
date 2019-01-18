@@ -78,6 +78,7 @@ class MyAccountModale extends React.Component {
 
   recordNewInformations = (fieldName, stateField) => {
     const array = Object.entries(stateField);
+    console.log(array)
     let valueUpdated = {};
     for (let i = 0; i < array.length; i++) {
       if (array[i][1].length) {

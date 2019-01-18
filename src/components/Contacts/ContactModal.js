@@ -174,7 +174,10 @@ const contactModal = (props) => {
             Annuler
           </Button>
           <Button onClick={() => (selectedContact ? handleEditContact(selectedId) : handleAddContact())} color="primary">
-            Valider
+            {selectedContact !== null
+              ? <p>Modifier</p>
+              : <p>Valider</p>
+            }
           </Button>
         </DialogActions>
       </Dialog>
