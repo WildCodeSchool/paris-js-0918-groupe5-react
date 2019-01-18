@@ -142,22 +142,23 @@ class Contact extends Component {
     }
 
     handleDeleteContactModal = (id) => {
-      const { contactsList } = this.state;
+      const { contactsList, categoryOfContact } = this.state;
+      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
       this.setState({
-        displayedContact: contactsList[id],
+        displayedContact: contactsListFiltered[id],
         deleteContactModalIsOpen: true,
         selectedId: id,
       });
     }
 
     handleDeleteContact = (id) => {
-      const { contactsList } = this.state;
+      const { contactsList, categoryOfContact } = this.state;
       const { reduxContact } = this.props;
       const contact = { ...reduxContact };
-
+      const contactsListFiltered = contactsList.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
       axios({
         method: 'DELETE',
-        url: `${getServerAuthority()}/contacts/${contactsList[id].id}`,
+        url: `${getServerAuthority()}/contacts/${contactsListFiltered[id].id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
