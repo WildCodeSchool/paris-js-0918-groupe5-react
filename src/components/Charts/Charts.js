@@ -20,12 +20,8 @@ class Charts extends Component {
     };
   }
 
-  componentDidMount = () => this.init();
-
   componentDidUpdate = (prevProps) => {
-    if (prevProps.selectedReceiverId !== this.props.selectedReceiverId) {
-      console.log('prevProps', prevProps);
-      console.log('this.props', this.props);
+    if (prevProps.selectedReceiver !== this.props.selectedReceiver) {
       this.init();
     }
   };
@@ -230,6 +226,6 @@ class Charts extends Component {
 }
 
 const mapStateToProps = state => ({
-  selectedReceiverId: state.info.selectedReceiverId,
+  selectedReceiver: state.info.selectedReceiver,
 });
-export default connect(mapStateToProps)(Charts);
+export default connect(mapStateToProps, null)(Charts);
