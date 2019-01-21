@@ -20,6 +20,8 @@ class Charts extends Component {
     };
   }
 
+  componentDidMount = () => this.init();
+
   componentDidUpdate = (prevProps) => {
     if (prevProps.selectedReceiver !== this.props.selectedReceiver) {
       this.init();
