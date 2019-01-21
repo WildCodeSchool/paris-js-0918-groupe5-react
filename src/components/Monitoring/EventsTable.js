@@ -22,9 +22,9 @@ class EventsTable extends Component {
 
   iconifyMood = (mood) => {
     switch (mood) {
-      case 10: return <SentimentSatisfiedAlt />;
-      case 5: return <SentimentSatisfied />;
-      case 0: return <SentimentVeryDissatisfied />;
+      case 10: return <SentimentSatisfiedAlt style={{ color: '#11cef4' }} />;
+      case 5: return <SentimentSatisfied style={{ color: '#4eb1ba' }} />;
+      case 0: return <SentimentVeryDissatisfied style={{ color: '#f27460' }} />;
       default: return '...';
     }
   };
@@ -53,10 +53,10 @@ class EventsTable extends Component {
         <TableBody>
           {events.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(e => (
             <TableRow key={e.id}>
-              <TableCell>{this.formatDate(e.dateBeginning)}</TableCell>
+              <TableCell>{this.formatDate(e.startingDate)}</TableCell>
               <TableCell align="right">{e.title}</TableCell>
-              <TableCell align="right">{e.responsible}</TableCell>
-              <TableCell align="right" style={{ color: '#65cde2' }}>{this.iconifyMood(e.mood)}</TableCell>
+              <TableCell align="right">{e.contact}</TableCell>
+              <TableCell align="right">{this.iconifyMood(e.mood)}</TableCell>
             </TableRow>))}
         </TableBody>
         <TableFooter>

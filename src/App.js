@@ -3,14 +3,13 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Dashboard from './components/Dashboard/Dashboard';
-
-// import RemainingComponent from './components/RemainingComponent';
 import AppBarGlobal from './components/AppBar/AppBarGlobal';
-import ConnectionPage from './components/ConnectionPage';
+import IntroductionPage from './components/IntroductionPage';
 import Calendar from './components/Calendar/Calendar';
-import CaregiversForm from './components/Caregiver/CaregiverForm';
+import SignUpCaregiver from './components/Caregiver/SignUpCaregiver';
 import Contact from './components/Contacts/Contact';
 import Monitoring from './components/Monitoring/Monitoring';
+import SignInCaregiver from './components/Caregiver/SignInCaregiver';
 
 import './App.css';
 import 'typeface-roboto';
@@ -45,17 +44,19 @@ const theme = createMuiTheme({
   },
 });
 
-const App = ({ appBarIsDisplayed }) => (
+const App = ({ redux }) => (
   <MuiThemeProvider theme={theme}>
     <div className="App">
       <div>
         {/* <RemainingComponent /> */}
-        <Route exact path="/" component={ConnectionPage} />
-        {appBarIsDisplayed && <AppBarGlobal />}
+        <Route exact path="/" component={IntroductionPage} />
+        {redux.appBarIsDisplayed && <AppBarGlobal />}
         <div className="spaceBtwAppBarAndRoutes">
+          <Route path="/connexion" component={SignInCaregiver} />
           <Route path="/tableau_de_bord" component={Dashboard} />
+          {/* <Route path="/contacts" component={Contact} /> */}
           <Route path="/contacts" component={Contact} />
-          <Route path="/création" component={CaregiversForm} />
+          <Route path="/création" component={SignUpCaregiver} />
           <Route path="/calendrier" component={Calendar} />
           <Route path="/suivi" component={Monitoring} />
         </div>
@@ -66,7 +67,9 @@ const App = ({ appBarIsDisplayed }) => (
 );
 
 const mapStateToProps = state => ({
-  appBarIsDisplayed: state.display.appBarIsDisplayed,
+  redux: {
+    appBarIsDisplayed: state.display.appBarIsDisplayed,
+  },
 });
 
 export default connect(mapStateToProps, null)(App);

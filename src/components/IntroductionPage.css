@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.logoIntroAppBar {
+    max-width: 3em;
+}
+
+.introductionText {
+    color: #FC8F72;
+    text-align: center;
+    font-size: 3vw;
+    margin-top: 0.7em;
+    margin-bottom: 1em;
+    font-family: 'Roboto', sans-serif;
+}
+
+.imgLogoIntro {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10em;
+
+}
+
+.teamNames {
+    color: #FC8F72;
+    text-align: center;
+    font-size: 1.5vw;
+    margin-top: 5em;
+}

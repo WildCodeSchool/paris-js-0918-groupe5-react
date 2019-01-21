@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import VisitsChart from './components/VisitsChart';
 import MoodChart from './components/MoodChart';
 import getServerAuthority from '../../config/getServerAuthority';
+
 
 class Charts extends Component {
   constructor(props) {
@@ -18,8 +20,14 @@ class Charts extends Component {
     };
   }
 
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.selectedReceiver !== this.props.selectedReceiver) {
+      this.init();
+    }
+  };
+
   // the five arrays that need to be passed to the charts are created and set as states
-  componentDidMount = () => {
+  init = () => {
     this.createDayNamesArray();
     this.createMoodArray();
     this.createVisitsAndAbsencesArrays();
@@ -42,13 +50,13 @@ class Charts extends Component {
   // formats sqlite dates from DB so they can be compared with getLast7Days() dates
   // ex: "2019-01-03T13:41:54.111Z" => "Thu Jan 03 2019"
   formatDateData = events => events.map((e) => {
-    e.dateBeginning = String(moment(e.dateBeginning)).slice(0, 15);
+    e.startingDate = String(moment(e.startingDate)).slice(0, 15);
     return e;
   });
 
   // optional : for greater clarity in the console, keeps only relevant information from events
   simplifyEvents = events => events.map(e =>
-    ({ id: e.id, dateBeginning: e.dateBeginning, mood: e.mood, followedVisit: e.followedVisit })
+    ({ id: e.id, startingDate: e.startingDate, mood: e.mood, followedVisit: e.followedVisit })
   );
 
   // returns an array containing all the scheduled events from DB
@@ -70,7 +78,7 @@ class Charts extends Component {
   getLastWeekEvents = async () => {
     try {
       const [eventsData, lastWeek] = await Promise.all([this.getEventsData(), this.getLast7Days()]);
-      const result = eventsData.filter(e => lastWeek.includes(e.dateBeginning));
+      const result = eventsData.filter(e => lastWeek.includes(e.startingDate));
       // console.log('getLastWeekEvents', result);
       return result;
     } catch (err) {
@@ -129,7 +137,7 @@ class Charts extends Component {
         const dailyMoods = [];
         let currentMood = null;
         for (const e of events) {
-          if(e.dateBeginning === day && e.mood !== null) {
+          if(e.startingDate === day && e.mood !== null) {
             dailyMoods.push(e.mood);
           }
         }
@@ -153,7 +161,7 @@ class Charts extends Component {
       for (const day of week) {
         let dailyNonFollowedVisits = 0;
         for (const e of events) {
-          if(e.dateBeginning === day && e.followedVisit === false) {
+          if(e.startingDate === day && e.followedVisit === false) {
             dailyNonFollowedVisits++;
           }
         }
@@ -179,7 +187,7 @@ class Charts extends Component {
         let dailyVisits = 0;
         let dailyAbsences = 0;
         for (const e of events) {
-          e.dateBeginning === day &&
+          e.startingDate === day &&
             (e.mood !== null ? dailyVisits++ : dailyAbsences++);
         }
         visitsArray.push(dailyVisits);
@@ -217,4 +225,7 @@ class Charts extends Component {
   }
 }
 
-export default Charts;
+const mapStateToProps = state => ({
+  selectedReceiver: state.info.selectedReceiver,
+});
+export default connect(mapStateToProps, null)(Charts);
