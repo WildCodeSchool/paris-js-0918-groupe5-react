@@ -16,7 +16,8 @@ class Monitoring extends Component {
   componentDidMount = () => this.getSortedPastEvent();
 
   componentDidUpdate = (prevProps) => {
-    if (prevProps.selectedReceiver !== this.props.selectedReceiver) {
+    const { selectedReceiver } = this.props;
+    if (prevProps.selectedReceiver !== selectedReceiver) {
       this.getSortedPastEvent();
     }
   };
