@@ -86,7 +86,7 @@ class Charts extends Component {
       // console.log('getLastWeekEvents', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 
@@ -98,7 +98,7 @@ class Charts extends Component {
       // console.log('getFollowedEvents', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 

@@ -43,7 +43,7 @@ class Monitoring extends Component {
       console.log('getEventsWithMood', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 
@@ -58,7 +58,7 @@ class Monitoring extends Component {
       console.log('formatDatesToISO', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 
