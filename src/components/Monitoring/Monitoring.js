@@ -16,7 +16,8 @@ class Monitoring extends Component {
   componentDidMount = () => this.getSortedPastEvent();
 
   componentDidUpdate = (prevProps) => {
-    if (prevProps.selectedReceiver !== this.props.selectedReceiver) {
+    const { selectedReceiver } = this.props;
+    if (prevProps.selectedReceiver !== selectedReceiver) {
       this.getSortedPastEvent();
     }
   };
@@ -39,10 +40,10 @@ class Monitoring extends Component {
     try {
       const events = await this.getEventsData();
       const result = events.filter(e => e.mood !== null);
-      console.log('getEventsWithMood', result);
+      // console.log('getEventsWithMood', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 
@@ -54,10 +55,10 @@ class Monitoring extends Component {
         e.startingDate = new Date(e.startingDate).toISOString();
         return e;
       });
-      console.log('formatDatesToISO', result);
+      // console.log('formatDatesToISO', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 
@@ -65,7 +66,7 @@ class Monitoring extends Component {
   getPastEvents = async () => {
     const events = await this.formatDatesToISO();
     const result = events.filter(e => new Date(e.startingDate) < new Date());
-    console.log('getPastEvents', result);
+    // console.log('getPastEvents', result);
     return result;
   };
 
@@ -74,7 +75,7 @@ class Monitoring extends Component {
     try {
       const events = await this.getPastEvents();
       const result = events.sort((a, b) => new Date(a.startingDate) - new Date(b.startingDate)).reverse();
-      console.log('getSortedPastEvent', result);
+      // console.log('getSortedPastEvent', result);
       this.setState({ events: result });
     } catch (err) {
       console.error(err);

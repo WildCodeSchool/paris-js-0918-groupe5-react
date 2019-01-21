@@ -23,7 +23,8 @@ class Charts extends Component {
   componentDidMount = () => this.init();
 
   componentDidUpdate = (prevProps) => {
-    if (prevProps.selectedReceiver !== this.props.selectedReceiver) {
+    const { selectedReceiver } = this.props;
+    if (prevProps.selectedReceiver !== selectedReceiver) {
       this.init();
     }
   };
@@ -57,9 +58,10 @@ class Charts extends Component {
   });
 
   // optional : for greater clarity in the console, keeps only relevant information from events
-  simplifyEvents = events => events.map(e =>
-    ({ id: e.id, startingDate: e.startingDate, mood: e.mood, followedVisit: e.followedVisit })
-  );
+  simplifyEvents = events => events.map(e => (
+    {
+      id: e.id, startingDate: e.startingDate, mood: e.mood, followedVisit: e.followedVisit,
+    }));
 
   // returns an array containing all the scheduled events from DB
   getEventsData = () => {
@@ -84,7 +86,7 @@ class Charts extends Component {
       // console.log('getLastWeekEvents', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 
@@ -96,7 +98,7 @@ class Charts extends Component {
       // console.log('getFollowedEvents', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 
@@ -135,19 +137,19 @@ class Charts extends Component {
     try {
       const [week, events] = await Promise.all([this.getLast7Days(), this.getFollowedEvents()]);
       const result = [];
-      for (const day of week) {
+      week.forEach((day) => {
         const dailyMoods = [];
         let currentMood = null;
-        for (const e of events) {
-          if(e.startingDate === day && e.mood !== null) {
+        events.forEach((e) => {
+          if (e.startingDate === day && e.mood !== null) {
             dailyMoods.push(e.mood);
           }
-        }
-        if(dailyMoods.length !== 0) {
+        });
+        if (dailyMoods.length !== 0) {
           currentMood = dailyMoods.reduce((total, value) => total + value) / dailyMoods.length;
         }
         result.push(currentMood);
-      }
+      });
       this.setState({ moodArray: result });
       // console.log('createMoodArray', result);
     } catch (err) {
@@ -160,15 +162,15 @@ class Charts extends Component {
     try {
       const [week, events] = await Promise.all([this.getLast7Days(), this.getLastWeekEvents()]);
       const nonFollowedVisitsArray = [];
-      for (const day of week) {
+      week.forEach((day) => {
         let dailyNonFollowedVisits = 0;
-        for (const e of events) {
-          if(e.startingDate === day && e.followedVisit === false) {
+        events.forEach((e) => {
+          if (e.startingDate === day && e.followedVisit === false) {
             dailyNonFollowedVisits++;
           }
-        }
+        });
         nonFollowedVisitsArray.push(dailyNonFollowedVisits);
-      }
+      });
       this.setState({ nonFollowedVisitsArray });
       // console.log('this.state.nonFollowedVisitsArray', this.state.nonFollowedVisitsArray);
     } catch (err) {
@@ -185,16 +187,21 @@ class Charts extends Component {
       const [week, events] = await Promise.all([this.getLast7Days(), this.getFollowedEvents()]);
       const visitsArray = [];
       const absencesArray = [];
-      for (const day of week) {
+      week.forEach((day) => {
         let dailyVisits = 0;
         let dailyAbsences = 0;
-        for (const e of events) {
-          e.startingDate === day &&
-            (e.mood !== null ? dailyVisits++ : dailyAbsences++);
-        }
+        events.forEach((e) => {
+          if (e.startingDate === day) {
+            if (e.mood !== null) {
+              dailyVisits++;
+            } else {
+              dailyAbsences++;
+            }
+          }
+        });
         visitsArray.push(dailyVisits);
         absencesArray.push(dailyAbsences);
-      }
+      });
       this.setState({ visitsArray });
       this.setState({ absencesArray });
       // console.log('this.state.absencesArray', this.state.absencesArray)
