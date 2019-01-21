@@ -59,7 +59,7 @@ class Contact extends Component {
 
     handleDisplayContact = (id) => {
       this.setState({
-        displayedContact: this.contactsFiltered2()[id],
+        displayedContact: this.contactsFiltered()[id],
         displayContactModalIsOpen: true,
       });
     }
@@ -94,7 +94,7 @@ class Contact extends Component {
 
     handleSelectContact = (id) => {
       this.setState({
-        selectedContact: this.contactsFiltered2()[id],
+        selectedContact: this.contactsFiltered()[id],
         selectedId: id,
         contactModalIsOpen: true,
       });
@@ -106,7 +106,7 @@ class Contact extends Component {
 
       axios({
         method: 'PUT',
-        url: `${getServerAuthority()}/contacts/${this.contactsFiltered2()[id].id}`,
+        url: `${getServerAuthority()}/contacts/${this.contactsFiltered()[id].id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -118,7 +118,7 @@ class Contact extends Component {
 
     handleDeleteContactModal = (id) => {
       this.setState({
-        displayedContact: this.contactsFiltered2()[id],
+        displayedContact: this.contactsFiltered()[id],
         deleteContactModalIsOpen: true,
         selectedId: id,
       });
@@ -130,7 +130,7 @@ class Contact extends Component {
 
       axios({
         method: 'DELETE',
-        url: `${getServerAuthority()}/contacts/${this.contactsFiltered2()[id].id}`,
+        url: `${getServerAuthority()}/contacts/${this.contactsFiltered()[id].id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -138,14 +138,20 @@ class Contact extends Component {
       })
         .then(() => { getContacts(); })
         .then(this.handleClose('deleteContactModalIsOpen'))
-        .then(() => { console.log(`Contact n° ${this.contactsFiltered2()[id].id} (n° ${id} dans le tableau) supprimé`); });
+        .then(() => { console.log(`Contact n° ${this.contactsFiltered()[id].id} (n° ${id} dans le tableau) supprimé`); });
     }
 
-    contactsFiltered2() {
+    contactsFiltered() {
       const { redux } = this.props;
       const { categoryOfContact } = this.state;
 
-      return redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories');
+      return redux.contacts.filter(contact => contact.category === categoryOfContact || categoryOfContact === 'Toutes catégories').sort((a, b) => {
+        const x = a.lastName.toLowerCase();
+        const y = b.lastName.toLowerCase();
+        if (x < y) { return -1; }
+        if (y > x) { return 1; }
+        return 0;
+      });
     }
 
     render() {
@@ -161,6 +167,8 @@ class Contact extends Component {
       const { redux } = this.props;
       const { classes } = this.props;
 
+      console.log(this.contactsFiltered());
+
       return (
         <div>
           <Grid container spacing={16} justify="center">
@@ -173,7 +181,7 @@ class Contact extends Component {
             <Grid item xs={6} className={classes.addContactButton}>
               <AddContactButton handleClickOpen={this.handleClickOpen('contactModalIsOpen')} />
             </Grid>
-            {redux.contacts && this.contactsFiltered2().map((contact, index) => (
+            {redux.contacts && this.contactsFiltered().map((contact, index) => (
               <div key={contact.id}>
                 <Grid item xs={12} sm={12}>
                   <ContactCard
