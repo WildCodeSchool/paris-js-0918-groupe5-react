@@ -16,8 +16,8 @@ const validate = (values) => {
     'title',
     'firstName',
     'lastName',
-    // 'email',
-    // 'phone',
+    'email',
+    'phone',
     'address',
     'category',
     'preferenceOfContact',
@@ -27,12 +27,17 @@ const validate = (values) => {
       errors[field] = 'Champs requis';
     }
   });
-  // Verify if the email has the good format
   if (
     values.email
     && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
   ) {
     errors.email = 'Adresse email invalide';
+  }
+  if (
+    values.phone
+    && !/^((?:\+33\s|\+33|0)[1-9](((?:\s\d{2})|(\d{2})){4}))$/i.test(values.phone)
+  ) {
+    errors.phone = 'Numéro de téléphone invalide';
   }
   return errors;
 };

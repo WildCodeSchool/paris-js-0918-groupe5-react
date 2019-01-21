@@ -12,6 +12,7 @@ import DeleteContactModal from './DeleteContactModal';
 import { getContacts } from '../../actions/infoActions';
 import ChooseCategoryOfContact from './ChooseCategoryOfContact';
 
+/* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-undef
 const token = localStorage.getItem('token');
 
@@ -51,10 +52,23 @@ class Contact extends Component {
       this.setState({ categoryOfContact: event.target.value });
     };
 
-    // generic function to open different modals
-    // eslint-disable-next-line no-unused-vars
+    handleSelectContact = (id) => {
+      this.setState({
+        selectedContact: this.contactsFiltered()[id],
+        selectedId: id,
+        contactModalIsOpen: true,
+      });
+    };
+
     handleClickOpen = modal => (e) => {
       this.setState({ [modal]: true });
+    };
+
+    handleClose = modal => (e) => {
+      this.setState({
+        [modal]: false,
+        selectedContact: null,
+      });
     };
 
     handleDisplayContact = (id) => {
@@ -63,14 +77,6 @@ class Contact extends Component {
         displayContactModalIsOpen: true,
       });
     }
-
-    // eslint-disable-next-line no-unused-vars
-    handleClose = modal => (e) => {
-      this.setState({
-        [modal]: false,
-        selectedContact: null,
-      });
-    };
 
     handleAddContact = () => {
       const { redux, getContacts, reset } = this.props;
@@ -90,14 +96,6 @@ class Contact extends Component {
         .then(() => { getContacts(); })
         .then(this.handleClose('contactModalIsOpen'))
         .then(() => { reset('contactModal'); });
-    };
-
-    handleSelectContact = (id) => {
-      this.setState({
-        selectedContact: this.contactsFiltered()[id],
-        selectedId: id,
-        contactModalIsOpen: true,
-      });
     };
 
     handleEditContact = (id) => {
