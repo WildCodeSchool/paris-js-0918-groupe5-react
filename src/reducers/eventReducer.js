@@ -26,44 +26,44 @@ const initialState = {
   category: '',
   listOfCategories: [
     {
-      id:1,
-      value:'medical',
-      label:'Visite médicale',
+      id: 1,
+      value: 'medical',
+      label: 'Visite médicale',
     },
     {
-      id:2,
-      value:'nurse',
-      label:'Soins infirmier',
+      id: 2,
+      value: 'nurse',
+      label: 'Soins infirmier',
 
     },
     {
-      id:3,
-      value:'family',
-      label:'visite d\'un proche',
+      id: 3,
+      value: 'family',
+      label: 'visite d\'un proche',
     },
   ],
   listOfFrequency:
   [
     {
-      id:1,
-      value:'once',
-      label:'Evénement unique',
+      id: 1,
+      value: 'once',
+      label: 'Evénement unique',
     },
     {
-      id:2,
-      value:'everyday',
-      label:'Tous les jours',
+      id: 2,
+      value: 'everyday',
+      label: 'Tous les jours',
 
     },
     {
-      id:3,
-      value:'everyWeekDay',
-      label:'Tous les jours de la semaine',
+      id: 3,
+      value: 'everyWeekDay',
+      label: 'Tous les jours de la semaine',
     },
     {
-      id:4,
-      value:'specificDays',
-      label:'Certains jours de la semaine',
+      id: 4,
+      value: 'specificDays',
+      label: 'Certains jours de la semaine',
     },
   ],
   events: [],
@@ -78,16 +78,17 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_EVENT_LIST:
-    return {
-      ...state,
-      events: state.events.concat(action.events),
-      isLoaded: true,
-    };
-  case GET_CONTACT_LIST:
-    return {
-      ...state,
-      listOfcontact: action.contactsList,
-    };
+      return {
+        ...state,
+        // events: state.events.concat(action.events),
+        events: action.events,
+        isLoaded: true,
+      };
+    case GET_CONTACT_LIST:
+      return {
+        ...state,
+        listOfcontact: action.contactsList,
+      };
     case OPEN_DIALOG_EVENT:
       return {
         ...state,
@@ -136,12 +137,14 @@ export default (state = initialState, action) => {
         isOpen: false,
         title: '',
         OtherAddressChecked: false,
-        address: '34 avenue de la Republique',
+        address: '34 avenue de la Republique', // sould be fetch from server
         startingDate: '',
         endingDate: '',
         frequency: '',
+        daysSelected: '',
         contact: '',
         category: '',
+        events: state.events.concat(action.eventAdded),
       };
     case RECORD_SWITCH_LABEL:
       return {

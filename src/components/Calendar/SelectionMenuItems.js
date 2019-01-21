@@ -17,14 +17,14 @@ class SelectionMenuItems extends Component {
         onChange={this.handleChange}
         name={type}
       >
-        {listeOfChoices.map(item => <MenuItem key={item.id} value={item.value}>{item.label}</MenuItem>)}
+        {listeOfChoices.map(item => (
+          <MenuItem key={item.id} value={item.value}>{item.label}</MenuItem>))}
       </Select>
     );
   }
 }
 
 SelectionMenuItems.propTypes = {
-
   record: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   listeOfChoices: PropTypes.array.isRequired,

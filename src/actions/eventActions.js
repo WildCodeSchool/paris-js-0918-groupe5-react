@@ -17,23 +17,22 @@ import {
 
 class Contact {
   constructor(data) {
-    this.address = data.address
-    this.category = data.category
-    this.comment = data.comment
-    this.createdAt = data.createdAt
-    this.email = data.email
-    this.firstName = data.firstName
-    this.id = data.id
-    this.lastName = data.lastName
-    this.phone = data.phone
-    this.preferenceOfContact = data.preferenceOfContact
-    this.profession = data.profession
-    this.status = data.status
-    this.title = data.title
-    this.value =`${data.title} ${data.firstName} ${data.lastName}`
-    this.label =`${data.title} ${data.firstName} ${data.lastName}`
+    this.address = data.address;
+    this.category = data.category;
+    this.comment = data.comment;
+    this.createdAt = data.createdAt;
+    this.email = data.email;
+    this.firstName = data.firstName;
+    this.id = data.id;
+    this.lastName = data.lastName;
+    this.phone = data.phone;
+    this.preferenceOfContact = data.preferenceOfContact;
+    this.profession = data.profession;
+    this.status = data.status;
+    this.title = data.title;
+    this.value = `${data.title} ${data.firstName} ${data.lastName}`;
+    this.label = `${data.title} ${data.firstName} ${data.lastName}`;
   }
-
 }
 
 // eslint-disable-next-line no-undef
@@ -48,16 +47,23 @@ export const postAndClearFields = allInfo => (dispatch) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: allInfo
+    data: allInfo,
   })
-    .then(res => dispatch({
-      type: POST_AND_CLEAR_FIELDS,
-      eventAdded: res,
-    }))
-    .then(res => dispatch({
-      type: GET_EVENT_LIST,
-      events: res.eventAdded.data,
-    }));
+    // .then(res => dispatch({
+    //   type: POST_AND_CLEAR_FIELDS,
+    //   eventAdded: res,
+    // }))
+    .then((res) => {
+      console.log('SUperRES', res.data);
+      dispatch({
+        type: POST_AND_CLEAR_FIELDS,
+        eventAdded: res.data,
+      });
+    });
+  // .then(res => dispatch({
+  //   type: GET_EVENT_LIST,
+  //   events: res.eventAdded.data,
+  // }));
 };
 
 export const getContacts = () => (dispatch) => {
@@ -73,7 +79,7 @@ export const getContacts = () => (dispatch) => {
       contactsList: res.data.map(item => new Contact(item)),
     }),
   );
-}
+};
 
 export const getEventList = () => (dispatch) => {
   axios({
@@ -83,9 +89,9 @@ export const getEventList = () => (dispatch) => {
       Authorization: `Bearer ${token}`,
     },
   }).then(res => dispatch({
-      type: GET_EVENT_LIST,
-      events: res.data,
-    }));
+    type: GET_EVENT_LIST,
+    events: res.data,
+  }));
 };
 
 export const openEventDialog = () => ({
