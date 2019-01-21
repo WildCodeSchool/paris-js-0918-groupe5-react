@@ -12,8 +12,8 @@ import {
 } from '@material-ui/core';
 import { Add as AddIcon, Create as EditIcon, Clear as ClearIcon } from '@material-ui/icons';
 import getServerAuthority from '../../config/getServerAuthority';
-import { getReceivers } from '../../actions/infoActions';
-import { displayDialogAddReceiver } from '../../actions/displayActions';
+import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
+import { displayDialogReceiver } from '../../actions/displayActions';
 import DialogReceiver from './DialogReceiver';
 import './CoverflowButtons.css';
 
@@ -68,21 +68,41 @@ const styles = theme => ({
 class CoverflowButtons extends Component {
   state= {
     receiver: null,
-    selectedReceiverId: 0,
+    selectedReceiverId: -1,
   }
 
   componentDidMount() {
-    // const { redux } = this.props;
-    // this.setState({ selectedReceiverId: 0 });
+    const { redux } = this.props;
+    this.getReceiverTabIndex(redux.selectedReceiverId);
+  }
+
+  getReceiverTabIndex = (receiverId) => {
+    const { receivers } = this.props;
+    const { selectedReceiverId } = this.state;
+
+    for (let i = 0; i < receivers.length; i++) {
+      const receiver = receivers[i];
+      if (receiver.id === receiverId) {
+        if (selectedReceiverId !== i) {
+          this.setState({ selectedReceiverId: i }, () => this.selectReceiver(receiver.id));
+        }
+        break;
+      }
+    }
+  }
+
+  selectReceiver = (receiverId) => {
+    const { getSelectedReceiver } = this.props;
+    getSelectedReceiver(receiverId);
   }
 
   handleClickAdd = () => {
-    const { displayDialogAddReceiver } = this.props;
-    this.setState({ receiver: null }, displayDialogAddReceiver(true));
+    const { displayDialogReceiver } = this.props;
+    this.setState({ receiver: null }, displayDialogReceiver(true));
   }
 
-  getReceiver = (receiverId) => {
-    const { displayDialogAddReceiver } = this.props;
+  getReceiverInfos = (receiverId) => {
+    const { displayDialogReceiver } = this.props;
     const token = localStorage.getItem('token');
     axios({
       method: 'GET',
@@ -93,17 +113,16 @@ class CoverflowButtons extends Component {
     })
       .then(res => res.data)
       .then(receiver => (
-        this.setState({ receiver }, displayDialogAddReceiver(true))
+        this.setState({ receiver }, displayDialogReceiver(true))
       ));
   }
 
   handleClickEdit = (receiverId) => {
-    this.setState({ receiver: null }, () => this.getReceiver(receiverId));
+    this.setState({ receiver: null }, () => this.getReceiverInfos(receiverId));
   }
 
   handleClickClear = (receiverId) => {
-    const { getReceivers } = this.props;
-
+    const { redux, getReceivers } = this.props;
     const token = localStorage.getItem('token');
     axios({
       method: 'DELETE',
@@ -112,17 +131,25 @@ class CoverflowButtons extends Component {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(() => { getReceivers(); });
+      .then(() => { getReceivers(); })
+      .then(() => {
+        if (!redux.receivers) {
+          this.setState({
+            selectedReceiverId: 0,
+          });
+        } else {
+          this.getReceiverTabIndex(redux.selectedReceiverId);
+        }
+      });
   }
 
-  // handleClickSelect = (event) => {
-  //   console.table(event);
-  // }
+  handleClickSelect = (receiverId) => {
+    this.getReceiverTabIndex(receiverId);
+  }
 
   render() {
     const { classes, receivers } = this.props;
     const { receiver, selectedReceiverId } = this.state;
-
     return (
       <div className="CoverflowButtons">
         <Coverflow
@@ -137,8 +164,7 @@ class CoverflowButtons extends Component {
           {receivers.map((receiver, index) => (
             <div
               key={receiver.id}
-              // onClick={this.handleClickSelect}
-              // onKeyDown={() => fn()}
+              onClick={() => this.handleClickSelect(receiver.id)}
               tabIndex={index}
               role="menuitem"
             >
@@ -177,7 +203,7 @@ class CoverflowButtons extends Component {
           ))}
           <div
             role="menuitem"
-            tabIndex={receivers.length + 1}
+            tabIndex={receivers.length}
           >
             <Fab color="secondary" aria-label="Add" onClick={this.handleClickAdd}>
               <AddIcon />
@@ -209,5 +235,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { displayDialogAddReceiver, getReceivers },
+  { displayDialogReceiver, getReceivers, getSelectedReceiver },
 )(withStyles(styles)(CoverflowButtons));
