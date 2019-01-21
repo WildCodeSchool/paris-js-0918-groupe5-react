@@ -83,7 +83,7 @@ class Contact extends Component {
       const contact = { ...redux.contact };
       contact.title = redux.contact.title || 'Mme';
       contact.preferenceOfContact = redux.contact.preferenceOfContact || 'SMS';
-      console.log(this.props);
+      // console.log(this.props);
 
       axios({
         method: 'POST',
@@ -99,7 +99,7 @@ class Contact extends Component {
     };
 
     handleEditContact = (id) => {
-      const { redux, getContacts } = this.props;
+      const { redux, getContacts, reset } = this.props;
       const contact = { ...redux.contact };
 
       axios({
@@ -111,7 +111,10 @@ class Contact extends Component {
         data: contact,
       })
         .then(() => { getContacts(); })
-        .then(this.handleClose('contactModalIsOpen'));
+        .then(this.handleClose('contactModalIsOpen'))
+        .then(console.log(`Contact n° ${id} dans le tableau édité`))
+        .then(console.log('data : ', { contact }))
+        .then(() => { reset('contactModal'); });
     }
 
     handleDeleteContactModal = (id) => {
@@ -151,6 +154,7 @@ class Contact extends Component {
         return 0;
       });
     }
+    // .forEach(function(part, index) { part.lastName = 'pouet'; })
 
     render() {
       const {
@@ -164,8 +168,6 @@ class Contact extends Component {
       } = this.state;
       const { redux } = this.props;
       const { classes } = this.props;
-
-      console.log(this.contactsFiltered());
 
       return (
         <div>

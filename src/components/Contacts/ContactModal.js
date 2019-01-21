@@ -144,16 +144,21 @@ const contactModal = (props) => {
                 ? selectedContact.preferenceOfContact
                 : undefined
             }
+            // {...console.log(selectedContact !== null
+            //   ? selectedContact.preferenceOfContact
+            //   : 'pas def')}
           />
           <Field
             name="email"
             component={renderTextField}
             label="Email"
+            // required={false ? true : false}
             required
+            // ={selectedContact !== null && selectedContact.preferenceOfContact !== null && selectedContact.preferenceOfContact === 'Mail' ? true : false}
             defaultValue={
               selectedContact === null ? '' : selectedContact === undefined ? '' : selectedContact.email
             }
-
+            // {...console.log(selectedContact !== null && selectedContact.preferenceOfContact !== null && selectedContact.preferenceOfContact === 'Mail' ? 'mail !' : 'sms !')}
           />
           <Field
             name="phone"

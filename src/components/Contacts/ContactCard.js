@@ -44,6 +44,7 @@ const ContactCard = (props) => {
     handleDisplayContact,
     index,
   } = props;
+  // console.log(contact.firstName, index);
 
   return (
     <div>
@@ -52,7 +53,7 @@ const ContactCard = (props) => {
           <CardActionArea>
             <CardContent>
               <Typography variant="h6" component="h3" className={classes.contactName}>
-                {`${contact.title} ${contact.firstName} ${contact.lastName}`}
+                {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
               </Typography>
               <Typography component="h5">
                 <p>{contact.category}</p>
