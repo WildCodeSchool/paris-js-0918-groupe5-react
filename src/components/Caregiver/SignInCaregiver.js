@@ -14,12 +14,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
 import { displayAppBar } from '../../actions/displayActions';
+import ForgotPasswordModale from './ForgotPasswordModale';
 
 import './SignInCaregiver.css';
 
 class SignInCaregiver extends React.Component {
   state = {
     redirect: false,
+    openForgotPassword: false,
     email: '',
     password: '',
   }
@@ -28,6 +30,14 @@ class SignInCaregiver extends React.Component {
     const { displayAppBar } = this.props;
     displayAppBar(false);
   }
+
+  handleClickForgotPassword = () => {
+    this.setState({ openForgotPassword: true });
+  };
+
+  handleCloseForgotPassword = () => {
+    this.setState({ openForgotPassword: false });
+  };
 
   recordInformations = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -59,7 +69,7 @@ class SignInCaregiver extends React.Component {
 
   render() {
     const { openSignIn, onCloseSignIn } = this.props;
-    const { redirect } = this.state;
+    const { redirect, openForgotPassword } = this.state;
     if (redirect) {
       return (
         <Redirect to="/tableau_de_bord" />
@@ -97,7 +107,7 @@ class SignInCaregiver extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button className="forgottenPassword" onClick={this.forgotPassword} color="primary">
+            <Button className="forgottenPassword" onClick={this.handleClickForgotPassword} color="primary">
               Mot de passe oublié ?
             </Button>
             <Button onClick={onCloseSignIn} color="primary">
@@ -108,6 +118,7 @@ class SignInCaregiver extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <ForgotPasswordModale open={openForgotPassword} onClose={this.handleCloseForgotPassword} />
       </div>
     );
   }

@@ -60,7 +60,7 @@ const App = ({ redux }) => (
           <Route path="/création" component={SignUpCaregiver} />
           <Route path="/calendrier" component={Calendar} />
           <Route path="/suivi" component={Monitoring} />
-          <Route path="/reset" component={ResetPassword} />
+          <Route path="/reset/:token" component={ResetPassword} />
         </div>
         {/* <Route path='/mon_compte' component={Account} /> */}
       </div>
