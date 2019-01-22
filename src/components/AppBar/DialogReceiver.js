@@ -42,12 +42,12 @@ const validate = (values) => {
     }
   });
   // Verify if the email has the good format
-  if (
-    values.phone
-    && !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(values.phone)
-  ) {
-    errors.email = 'Numéro de téléphone invalide';
-  }
+  // if (
+  //   values.phone
+  //   && !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(values.phone)
+  // ) {
+  //   errors.email = 'Numéro de téléphone invalide';
+  // }
   return errors;
 };
 

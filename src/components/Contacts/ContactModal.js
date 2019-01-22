@@ -16,8 +16,8 @@ const validate = (values) => {
     'title',
     'firstName',
     'lastName',
-    // 'email',
-    // 'phone',
+    'email',
+    'phone',
     'address',
     'category',
     'preferenceOfContact',
@@ -27,12 +27,17 @@ const validate = (values) => {
       errors[field] = 'Champs requis';
     }
   });
-  // Verify if the email has the good format
   if (
     values.email
     && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
   ) {
     errors.email = 'Adresse email invalide';
+  }
+  if (
+    values.phone
+    && !/^((?:\+33\s|\+33|0)[1-9](((?:\s\d{2})|(\d{2})){4}))$/i.test(values.phone)
+  ) {
+    errors.phone = 'Numéro de téléphone invalide';
   }
   return errors;
 };
@@ -139,16 +144,21 @@ const contactModal = (props) => {
                 ? selectedContact.preferenceOfContact
                 : undefined
             }
+            // {...console.log(selectedContact !== null
+            //   ? selectedContact.preferenceOfContact
+            //   : 'pas def')}
           />
           <Field
             name="email"
             component={renderTextField}
             label="Email"
+            // required={false ? true : false}
             required
+            // ={selectedContact !== null && selectedContact.preferenceOfContact !== null && selectedContact.preferenceOfContact === 'Mail' ? true : false}
             defaultValue={
               selectedContact === null ? '' : selectedContact === undefined ? '' : selectedContact.email
             }
-
+            // {...console.log(selectedContact !== null && selectedContact.preferenceOfContact !== null && selectedContact.preferenceOfContact === 'Mail' ? 'mail !' : 'sms !')}
           />
           <Field
             name="phone"
