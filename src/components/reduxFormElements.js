@@ -69,9 +69,12 @@ export const renderRadioButton = ({
   </FormControl>
 );
 
-const renderFormHelper = ({ touched, error }) => {
-  return <FormHelperText>{touched && error}</FormHelperText>;
-};
+const renderFormHelper = ({ touched, error }) => (
+  <FormHelperText>
+    {touched && error}
+  </FormHelperText>
+);
+
 
 export const renderSelectField = ({
   input,

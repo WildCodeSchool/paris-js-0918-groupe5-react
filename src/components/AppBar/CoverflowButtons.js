@@ -159,7 +159,7 @@ class CoverflowButtons extends Component {
   render() {
     const { classes, receivers, selectedReceiverTab } = this.props;
     const { receiver } = this.state;
-    console.log(selectedReceiverTab);
+    // console.log(selectedReceiverTab);
     return (
       <div className="CoverflowButtons">
         <Coverflow
