@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import EventsTable from './EventsTable';
 import getServerAuthority from '../../config/getServerAuthority';
@@ -12,8 +13,12 @@ class Monitoring extends Component {
     };
   }
 
-  componentDidMount = () => {
-    this.getSortedPastEvent();
+  componentDidMount = () => this.getSortedPastEvent();
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.selectedReceiver !== this.props.selectedReceiver) {
+      this.getSortedPastEvent();
+    }
   };
 
   // returns all events from DB
@@ -96,4 +101,7 @@ class Monitoring extends Component {
   }
 }
 
-export default Monitoring;
+const mapStateToProps = state => ({
+  selectedReceiver: state.info.selectedReceiver,
+});
+export default connect(mapStateToProps, null)(Monitoring);

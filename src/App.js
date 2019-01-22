@@ -10,6 +10,7 @@ import SignUpCaregiver from './components/Caregiver/SignUpCaregiver';
 import Contact from './components/Contacts/Contact';
 import Monitoring from './components/Monitoring/Monitoring';
 import SignInCaregiver from './components/Caregiver/SignInCaregiver';
+import ResetPassword from './components/Caregiver/ResetPassword';
 
 import './App.css';
 import 'typeface-roboto';
@@ -59,6 +60,7 @@ const App = ({ redux }) => (
           <Route path="/création" component={SignUpCaregiver} />
           <Route path="/calendrier" component={Calendar} />
           <Route path="/suivi" component={Monitoring} />
+          <Route path="/reset" component={ResetPassword} />
         </div>
         {/* <Route path='/mon_compte' component={Account} /> */}
       </div>

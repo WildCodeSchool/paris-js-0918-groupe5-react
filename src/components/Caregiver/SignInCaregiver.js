@@ -47,6 +47,16 @@ class SignInCaregiver extends React.Component {
     });
   };
 
+  forgotPassword = () => {
+    const { email } = this.state;
+    const data = { email };
+    axios.post(`${getServerAuthority()}/auth/forgotPassword`,
+      data).then((res) => {
+      console.log(res);
+    // console.log('token', localStorage.getItem('token'));
+    });
+  }
+
   render() {
     const { openSignIn, onCloseSignIn } = this.props;
     const { redirect } = this.state;
@@ -87,7 +97,7 @@ class SignInCaregiver extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button className="forgottenPassword" onClick={this.handleSubmit} color="primary">
+            <Button className="forgottenPassword" onClick={this.forgotPassword} color="primary">
               Mot de passe oublié ?
             </Button>
             <Button onClick={onCloseSignIn} color="primary">
