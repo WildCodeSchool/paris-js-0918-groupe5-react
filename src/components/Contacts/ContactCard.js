@@ -46,6 +46,19 @@ const ContactCard = (props) => {
   } = props;
   // console.log(contact.firstName, index);
 
+  // console.log(contact.firstName.charAt(0).toUpperCase() + contact.firstName.substring(1).toLowerCase());
+
+  const properNounFirstName = contact.firstName.charAt(0).toUpperCase()
+  + contact.firstName.substring(1).toLowerCase();
+
+  const properNounLastName = contact.lastName.charAt(0).toUpperCase()
+  + contact.lastName.substring(1).toLowerCase();
+
+  // (field) => {
+  //   console.log(contact.field.charAt(0).toUpperCase() + contact.field.substring(1).toLowerCase());
+  // };
+  // properNoun(firstName);
+
   return (
     <div>
       <Card className={classes.root}>
@@ -53,7 +66,7 @@ const ContactCard = (props) => {
           <CardActionArea>
             <CardContent>
               <Typography variant="h6" component="h3" className={classes.contactName}>
-                {`${contact.title} ${contact.firstName} ${contact.lastName} ${contact.id}`}
+                {`${contact.title} ${properNounFirstName} ${properNounLastName} ${contact.id}`}
               </Typography>
               <Typography component="h5">
                 <p>{contact.category}</p>
