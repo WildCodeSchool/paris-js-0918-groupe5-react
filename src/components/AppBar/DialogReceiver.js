@@ -60,9 +60,11 @@ class DialogReceiver extends Component {
       reset,
     } = this.props;
 
-    const newReceiver = receiver || redux.receiver;
+    const newReceiver = redux.receiver;
     if (!receiver) {
       newReceiver.title = redux.receiver.title || 'Mme';
+    } else {
+      newReceiver.title = redux.receiver.title || receiver.title;
     }
 
     axios({
@@ -71,18 +73,18 @@ class DialogReceiver extends Component {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      data: redux.receiver,
+      data: newReceiver,
     })
       .then(res => res.data)
-      .then((newReceiver) => {
-        console.log(newReceiver);
+      .then((resReceiver) => {
         const { getReceivers } = this.props;
         getReceivers();
-        return newReceiver;
+        return resReceiver;
       })
-      .then((newReceiver) => {
+      .then((resReceiver) => {
         const { getSelectedReceiver } = this.props;
-        getSelectedReceiver(newReceiver.id);
+        console.log('resReceiver', resReceiver.id);
+        getSelectedReceiver(resReceiver.id);
       })
       .then(() => { reset('receiverForm'); })
       .then(() => displayDialogReceiver(false));
@@ -185,6 +187,7 @@ const mapStateToProps = state => ({
       dateOfBirth: formValueSelector('receiverForm')(state, 'dateOfBirth'),
       receiverBond: formValueSelector('receiverForm')(state, 'receiverBond'),
     },
+    selectedReceiver: state.info.selectedReceiver,
   },
 });
 

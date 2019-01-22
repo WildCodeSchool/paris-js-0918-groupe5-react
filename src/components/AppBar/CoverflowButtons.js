@@ -68,28 +68,31 @@ const styles = theme => ({
 class CoverflowButtons extends Component {
   state= {
     receiver: null,
-    selectedReceiverId: -1,
+    selectedReceiverId: 0,
   }
 
   componentDidMount() {
     const { redux } = this.props;
-    this.getReceiverTabIndex(redux.selectedReceiverId);
+    // this.getReceiverTabIndex(redux.selectedReceiverId);
+    this.selectReceiver(redux.selectedReceiverId);
   }
 
-  getReceiverTabIndex = (receiverId) => {
-    const { receivers } = this.props;
-    const { selectedReceiverId } = this.state;
+  // getReceiverTabIndex = (receiverId) => {
+  //   const { receivers } = this.props;
+  //   const { selectedReceiverId } = this.state;
 
-    for (let i = 0; i < receivers.length; i++) {
-      const receiver = receivers[i];
-      if (receiver.id === receiverId) {
-        if (selectedReceiverId !== i) {
-          this.setState({ selectedReceiverId: i }, () => this.selectReceiver(receiver.id));
-        }
-        break;
-      }
-    }
-  }
+  //   if (receivers.length) {
+  //     for (let i = 0; i < receivers.length; i++) {
+  //       const receiver = receivers[i];
+  //       if (receiver.id === receiverId) {
+  //         if (selectedReceiverId !== i) {
+  //           this.setState({ selectedReceiverId: i }, () => this.selectReceiver(receiver.id));
+  //         }
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
 
   selectReceiver = (receiverId) => {
     const { getSelectedReceiver } = this.props;
@@ -133,30 +136,37 @@ class CoverflowButtons extends Component {
     })
       .then(() => { getReceivers(); })
       .then(() => {
-        if (!redux.receivers) {
-          this.setState({
-            selectedReceiverId: 0,
-          });
-        } else {
-          this.getReceiverTabIndex(redux.selectedReceiverId);
+        if (redux.receivers) {
+          // this.setState({
+          //   selectedReceiverId: 0,
+          // });
+          // } else {
+          // this.getReceiverTabIndex(redux.selectedReceiverId);
+          this.selectReceiver(redux.selectedReceiverId);
         }
+      })
+      .then(() => {
+        window.location.reload();
       });
   }
 
   handleClickSelect = (receiverId) => {
-    this.getReceiverTabIndex(receiverId);
+    // this.getReceiverTabIndex(receiverId);
+    const { getSelectedReceiver } = this.props;
+    getSelectedReceiver(receiverId);
   }
 
   render() {
-    const { classes, receivers } = this.props;
-    const { receiver, selectedReceiverId } = this.state;
+    const { classes, receivers, selectedReceiverTab } = this.props;
+    const { receiver } = this.state;
+    console.log(selectedReceiverTab);
     return (
       <div className="CoverflowButtons">
         <Coverflow
           displayQuantityOfSide={2}
-          enableHeading={false}
           enableScroll={false}
-          active={selectedReceiverId}
+          enableHeading={false}
+          active={selectedReceiverTab}
           className={classes.coverflow}
           currentFigureScale={1.2}
           otherFigureScale={0.7}

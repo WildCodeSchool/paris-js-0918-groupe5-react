@@ -40,6 +40,7 @@ export const getSelectedReceiver = receiverId => (dispatch) => {
           selectedReceiver: data.receiver,
           contacts: data.contacts,
           events: data.events,
+          idReceiver: receiverId,
         },
       })
     ));
