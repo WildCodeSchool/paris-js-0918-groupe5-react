@@ -10,6 +10,13 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import { renderTextField, renderRadioButton, renderSelectField } from '../reduxFormElements';
 
+// let isSMS = (prefContact) => {
+//   return prefContact;
+// };
+
+let isSMS = 'phone';
+
+
 // validate allows to detect errors (see reduxFormElements.js)
 const validate = (values) => {
   const errors = {};
@@ -17,8 +24,7 @@ const validate = (values) => {
     'title',
     'firstName',
     'lastName',
-    'email',
-    'phone',
+    isSMS,
     'address',
     'category',
     'preferenceOfContact',
@@ -43,6 +49,7 @@ const validate = (values) => {
   return errors;
 };
 
+
 const ContactModal = (props) => {
   const {
     contactModalIsOpen,
@@ -52,12 +59,15 @@ const ContactModal = (props) => {
     classes,
     selectedContact,
     selectedId,
+    redux,
   } = props;
 
-  console.log('preferenceOfContact :', props.redux.preferenceOfContact);
-  console.log('selectedContact :', selectedContact);
+  // console.log('préférence de contact :', redux.preferenceOfContact);
+
   return (
     <div>
+      {/* {redux.preferenceOfContact === 'Mail' ? isSMS === 'email' : isSMS === 'phone'} */}
+      {console.log('isSMS : ', isSMS)}
       <Dialog
         open={contactModalIsOpen}
         onClose={handleClose}
@@ -141,7 +151,9 @@ const ContactModal = (props) => {
             component={renderRadioButton}
             label="Préférence de contact"
             buttonLabels={['SMS', 'Mail']}
+            // onClick={isSMS === 'email'}
             required
+            onChange={() => { isSMS = isSMS === 'email' ? 'phone' : 'email'; }}
             initialValue={
               selectedContact !== null
                 ? selectedContact.preferenceOfContact
@@ -149,21 +161,22 @@ const ContactModal = (props) => {
             }
           />
           <Field
-            name="email"
-            component={renderTextField}
-            label="Email"
-            required={props.redux.preferenceOfContact === 'SMS' ? false : true}
-            defaultValue={
-              selectedContact === null ? '' : selectedContact === undefined ? '' : selectedContact.email
-            }
-          />
-          <Field
             name="phone"
             component={renderTextField}
             label="Téléphone"
-            required={props.redux.preferenceOfContact === 'SMS' ? true : false}
+            required={redux.preferenceOfContact === 'Mail' ? false : true}
             defaultValue={
               selectedContact !== null ? selectedContact.phone : ''
+            }
+          />
+          <Field
+            name="email"
+            component={renderTextField}
+            label="Email"
+            // onChange={isSMS === 'email'}
+            required={redux.preferenceOfContact !== 'Mail' ? false : true}
+            defaultValue={
+              selectedContact === null ? '' : selectedContact === undefined ? '' : selectedContact.email
             }
           />
           <Field
