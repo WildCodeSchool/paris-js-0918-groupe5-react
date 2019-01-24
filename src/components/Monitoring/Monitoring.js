@@ -6,6 +6,8 @@ import EventsTable from './EventsTable';
 import getServerAuthority from '../../config/getServerAuthority';
 
 class Monitoring extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +15,10 @@ class Monitoring extends Component {
     };
   }
 
-  componentDidMount = () => this.getSortedPastEvent();
+  componentDidMount = () => {
+    this.getSortedPastEvent();
+    this._isMounted = true;
+  };
 
   componentDidUpdate = (prevProps) => {
     const { selectedReceiver } = this.props;
@@ -76,11 +81,13 @@ class Monitoring extends Component {
       const events = await this.getPastEvents();
       const result = events.sort((a, b) => new Date(a.startingDate) - new Date(b.startingDate)).reverse();
       // console.log('getSortedPastEvent', result);
-      this.setState({ events: result });
+      if (this._isMounted) this.setState({ events: result });
     } catch (err) {
       console.error(err);
     }
   };
+
+  componentWillUnmount = () => { this._isMounted = false; };
 
   render() {
     const { events } = this.state;

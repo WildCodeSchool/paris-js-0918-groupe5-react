@@ -49,6 +49,7 @@ class SignInCaregiver extends React.Component {
     const { email, password } = this.state;
     e.preventDefault();
     const data = { email, password };
+    console.log('DATA PASSWORD', email, password);
     axios.post(`${getServerAuthority()}/auth/signin`,
       data).then((res) => {
       localStorage.setItem('token', res.headers['x-access-token']);
