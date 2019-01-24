@@ -15,11 +15,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import getServerAuthority from '../../config/getServerAuthority';
 import { displayAppBar } from '../../actions/displayActions';
 
-class SignInCaregiverAfterSignUp extends React.Component {
+import './SignInCaregiver.css';
+
+class ForgotPasswordModale extends React.Component {
   state = {
     redirect: false,
     email: '',
-    password: '',
   }
 
   componentDidMount() {
@@ -31,39 +32,35 @@ class SignInCaregiverAfterSignUp extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleSubmit = (e) => {
-    const { email, password } = this.state;
-    e.preventDefault();
-    const data = { email, password };
-    axios.post(`${getServerAuthority()}/auth/signin`,
+  forgotPassword = () => {
+    const { email } = this.state;
+    const data = { email };
+    axios.post(`${getServerAuthority()}/auth/forgotPassword`,
       data).then((res) => {
-      const { displayAppBar } = this.props;
-      localStorage.setItem('token', res.headers['x-access-token']);
-      localStorage.setItem('id', res.id);
-      // console.log('token', localStorage.getItem('token'));
-      this.setState({ redirect: true }, displayAppBar(true));
+      console.log(res);
     });
-  };
+    alert('Un e-mail vient de vous être envoyé afin de renouveller votre mot de passe.');
+    this.setState({ redirect: true });
+  }
 
   render() {
-    const { openSignIn, onCloseSignIn } = this.props;
+    const { open, onClose } = this.props;
     const { redirect } = this.state;
     if (redirect) {
-      return (
-        <Redirect to="/tableau_de_bord" />
-      );
+      return <Redirect to="/" />;
     }
     return (
       <div>
         <Dialog
-          open={openSignIn}
-          onClose={onCloseSignIn}
+          open={open}
+          onClose={onClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Connexion</DialogTitle>
+          <DialogTitle id="form-dialog-title">Renouvellement de mot de passe</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Pour vous connecter, merci de rentrer votre adresse mail et votre mot de passe.
+              Afin de renouveller votre mot de passe, merci de bien vouloir indiquer votre adresse mail.
+              Un e-mail vous sera envoyé afin d'en créer un nouveau.
             </DialogContentText>
             <TextField
               margin="dense"
@@ -74,25 +71,13 @@ class SignInCaregiverAfterSignUp extends React.Component {
               onChange={this.recordInformations}
               fullWidth
             />
-            <TextField
-              margin="dense"
-              id="name"
-              label="Mot de passe"
-              type="password"
-              name="password"
-              onChange={this.recordInformations}
-              fullWidth
-            />
           </DialogContent>
           <DialogActions>
-            <Button className="forgottenPassword" onClick={this.handleSubmit} color="primary">
-              Mot de passe oublié ?
-            </Button>
-            <Button onClick={onCloseSignIn} color="primary">
+            <Button onClick={onClose} color="primary">
               Annuler
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
-              Se connecter
+            <Button onClick={this.forgotPassword} color="primary">
+              Valider
             </Button>
           </DialogActions>
         </Dialog>
@@ -101,8 +86,8 @@ class SignInCaregiverAfterSignUp extends React.Component {
   }
 }
 
-SignInCaregiverAfterSignUp.propTypes = {
+ForgotPasswordModale.propTypes = {
   displayAppBar: PropTypes.func.isRequired,
 };
 
-export default connect(null, { displayAppBar })(SignInCaregiverAfterSignUp);
+export default connect(null, { displayAppBar })(ForgotPasswordModale);

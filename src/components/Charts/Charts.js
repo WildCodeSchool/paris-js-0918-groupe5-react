@@ -9,6 +9,8 @@ import getServerAuthority from '../../config/getServerAuthority';
 
 
 class Charts extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,8 +22,14 @@ class Charts extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.init();
+    this._isMounted = true;
+  };
+
   componentDidUpdate = (prevProps) => {
-    if (prevProps.selectedReceiver !== this.props.selectedReceiver) {
+    const { selectedReceiver } = this.props;
+    if (prevProps.selectedReceiver !== selectedReceiver) {
       this.init();
     }
   };
@@ -55,9 +63,10 @@ class Charts extends Component {
   });
 
   // optional : for greater clarity in the console, keeps only relevant information from events
-  simplifyEvents = events => events.map(e =>
-    ({ id: e.id, startingDate: e.startingDate, mood: e.mood, followedVisit: e.followedVisit })
-  );
+  simplifyEvents = events => events.map(e => (
+    {
+      id: e.id, startingDate: e.startingDate, mood: e.mood, followedVisit: e.followedVisit,
+    }));
 
   // returns an array containing all the scheduled events from DB
   getEventsData = () => {
@@ -82,7 +91,7 @@ class Charts extends Component {
       // console.log('getLastWeekEvents', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 
@@ -94,7 +103,7 @@ class Charts extends Component {
       // console.log('getFollowedEvents', result);
       return result;
     } catch (err) {
-      console.error(err);
+      throw new Error(err);
     }
   };
 
@@ -116,7 +125,7 @@ class Charts extends Component {
           default: return '...';
         }
       });
-      this.setState({ dayNamesArray: result });
+      if (this._isMounted) this.setState({ dayNamesArray: result });
       // console.log('createDayNamesArray', this.state.dayNamesArray);
     } catch (err) {
       console.error(err);
@@ -133,20 +142,20 @@ class Charts extends Component {
     try {
       const [week, events] = await Promise.all([this.getLast7Days(), this.getFollowedEvents()]);
       const result = [];
-      for (const day of week) {
+      week.forEach((day) => {
         const dailyMoods = [];
         let currentMood = null;
-        for (const e of events) {
-          if(e.startingDate === day && e.mood !== null) {
+        events.forEach((e) => {
+          if (e.startingDate === day && e.mood !== null) {
             dailyMoods.push(e.mood);
           }
-        }
-        if(dailyMoods.length !== 0) {
+        });
+        if (dailyMoods.length !== 0) {
           currentMood = dailyMoods.reduce((total, value) => total + value) / dailyMoods.length;
         }
         result.push(currentMood);
-      }
-      this.setState({ moodArray: result });
+      });
+      if (this._isMounted) this.setState({ moodArray: result });
       // console.log('createMoodArray', result);
     } catch (err) {
       console.error(err);
@@ -158,16 +167,16 @@ class Charts extends Component {
     try {
       const [week, events] = await Promise.all([this.getLast7Days(), this.getLastWeekEvents()]);
       const nonFollowedVisitsArray = [];
-      for (const day of week) {
+      week.forEach((day) => {
         let dailyNonFollowedVisits = 0;
-        for (const e of events) {
-          if(e.startingDate === day && e.followedVisit === false) {
+        events.forEach((e) => {
+          if (e.startingDate === day && e.followedVisit === false) {
             dailyNonFollowedVisits++;
           }
-        }
+        });
         nonFollowedVisitsArray.push(dailyNonFollowedVisits);
-      }
-      this.setState({ nonFollowedVisitsArray });
+      });
+      if (this._isMounted) this.setState({ nonFollowedVisitsArray });
       // console.log('this.state.nonFollowedVisitsArray', this.state.nonFollowedVisitsArray);
     } catch (err) {
       console.error(err);
@@ -183,24 +192,33 @@ class Charts extends Component {
       const [week, events] = await Promise.all([this.getLast7Days(), this.getFollowedEvents()]);
       const visitsArray = [];
       const absencesArray = [];
-      for (const day of week) {
+      week.forEach((day) => {
         let dailyVisits = 0;
         let dailyAbsences = 0;
-        for (const e of events) {
-          e.startingDate === day &&
-            (e.mood !== null ? dailyVisits++ : dailyAbsences++);
-        }
+        events.forEach((e) => {
+          if (e.startingDate === day) {
+            if (e.mood !== null) {
+              dailyVisits++;
+            } else {
+              dailyAbsences++;
+            }
+          }
+        });
         visitsArray.push(dailyVisits);
         absencesArray.push(dailyAbsences);
+      });
+      if (this._isMounted) {
+        this.setState({ visitsArray });
+        this.setState({ absencesArray });
       }
-      this.setState({ visitsArray });
-      this.setState({ absencesArray });
       // console.log('this.state.absencesArray', this.state.absencesArray)
       // console.log('this.state.visitsArray', this.state.visitsArray)
     } catch (err) {
       console.error(err);
     }
   };
+
+  componentWillUnmount = () => { this._isMounted = false; };
 
   render() {
     const {

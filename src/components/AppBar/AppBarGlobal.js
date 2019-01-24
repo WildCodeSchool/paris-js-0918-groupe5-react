@@ -22,17 +22,6 @@ const AppBarGlobal = (props) => {
   );
 };
 
-// class AppBarGlobal extends Component {
-//   render() {
-//     const { classes } = this.props;
-//     return (
-//       <div className={classes.appBarGlobal}>
-//         <AppBarCaregiver />
-//       </div>
-//     )
-//   }
-// }
-
 AppBarGlobal.propTypes = {
   classes: PropTypes.object.isRequired,
 };

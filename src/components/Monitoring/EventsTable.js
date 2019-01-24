@@ -75,6 +75,6 @@ class EventsTable extends Component {
       </Table>
     );
   }
-};
+}
 
 export default EventsTable;

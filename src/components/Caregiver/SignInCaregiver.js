@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -13,21 +12,27 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
-import { displayAppBar } from '../../actions/displayActions';
+import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
+import ForgotPasswordModale from './ForgotPasswordModale';
+
 
 import './SignInCaregiver.css';
 
 class SignInCaregiver extends React.Component {
   state = {
     redirect: false,
+    openForgotPassword: false,
     email: '',
     password: '',
   }
 
-  componentDidMount() {
-    const { displayAppBar } = this.props;
-    displayAppBar(false);
-  }
+  handleClickForgotPassword = () => {
+    this.setState({ openForgotPassword: true });
+  };
+
+  handleCloseForgotPassword = () => {
+    this.setState({ openForgotPassword: false });
+  };
 
   recordInformations = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -37,19 +42,40 @@ class SignInCaregiver extends React.Component {
     const { email, password } = this.state;
     e.preventDefault();
     const data = { email, password };
-    axios.post(`${getServerAuthority()}/auth/signin`,
-      data).then((res) => {
-      const { displayAppBar } = this.props;
-      localStorage.setItem('token', res.headers['x-access-token']);
-      localStorage.setItem('id', res.id);
-      // console.log('token', localStorage.getItem('token'));
-      this.setState({ redirect: true }, displayAppBar(true));
-    });
+    axios
+      .post(`${getServerAuthority()}/auth/signin`,
+        data).then((res) => {
+        localStorage.setItem('token', res.headers['x-access-token']);
+        localStorage.setItem('id', res.id);
+      })
+      .then(() => {
+        const { getReceivers } = this.props;
+        getReceivers();
+      })
+      // .then(() => {
+      //   const { redux, getSelectedReceiver } = this.props;
+      //   if (redux.selectedReceiverId > 0) {
+      //     getSelectedReceiver(redux.selectedReceiverId);
+      //   }
+      // })
+      .then(() => {
+        this.setState({ redirect: true });
+      });
   };
+
+  forgotPassword = () => {
+    const { email } = this.state;
+    const data = { email };
+    axios.post(`${getServerAuthority()}/auth/forgotPassword`,
+      data).then((res) => {
+      console.log(res);
+    // console.log('token', localStorage.getItem('token'));
+    });
+  }
 
   render() {
     const { openSignIn, onCloseSignIn } = this.props;
-    const { redirect } = this.state;
+    const { redirect, openForgotPassword } = this.state;
     if (redirect) {
       return (
         <Redirect to="/tableau_de_bord" />
@@ -87,7 +113,7 @@ class SignInCaregiver extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button className="forgottenPassword" onClick={this.handleSubmit} color="primary">
+            <Button className="forgottenPassword" onClick={this.handleClickForgotPassword} color="primary">
               Mot de passe oublié ?
             </Button>
             <Button onClick={onCloseSignIn} color="primary">
@@ -98,13 +124,19 @@ class SignInCaregiver extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <ForgotPasswordModale open={openForgotPassword} onClose={this.handleCloseForgotPassword} />
       </div>
     );
   }
 }
 
-SignInCaregiver.propTypes = {
-  displayAppBar: PropTypes.func.isRequired,
-};
+const mapStateToProps = state => ({
+  redux: {
+    selectedReceiverId: state.info.selectedReceiverId,
+  },
+});
 
-export default connect(null, { displayAppBar })(SignInCaregiver);
+export default connect(
+  mapStateToProps,
+  { getReceivers, getSelectedReceiver },
+)(SignInCaregiver);

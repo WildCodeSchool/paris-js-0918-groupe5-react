@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { getReceivers } from '../../actions/infoActions';
 import CoverflowButtons from './CoverflowButtons';
-import CoverflowAdd from './CoverflowAdd';
 import ButtonsBar from './ButtonsBar';
 import MenuBar from './MenuBar';
+import logo from '../../assets/logoKaliService.png';
 
 const styles = theme => ({
   AppBarReceiver: {
@@ -41,10 +41,22 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  logo: {
+    position: 'absolute',
+    left: '60px',
+    top: '30px',
+    maxWidth: '125px',
+    height: 'auto',
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
 });
 
 class AppBarReceiver extends Component {
   componentDidMount() {
+    console.log('getReceivers AppBarReceiver componentDidMount');
     const { getReceivers } = this.props;
     getReceivers();
   }
@@ -53,9 +65,15 @@ class AppBarReceiver extends Component {
     const { classes, redux } = this.props;
     return (
       <div className={classes.AppBarReceiver}>
+        <img className={classes.logo} src={logo} alt="Logo Kalify" />
         <div className={classes.slider}>
-          {redux.receivers && <CoverflowButtons receivers={redux.receivers} />}
-          {!redux.receivers && <CoverflowAdd />}
+          {redux.receivers
+            && (
+            <CoverflowButtons
+              receivers={redux.receivers}
+              selectedReceiverTab={redux.selectedReceiverTab}
+            />)
+          }
         </div>
         <div className={classes.sectionDesktop}>
           <ButtonsBar />
@@ -75,6 +93,9 @@ AppBarReceiver.propTypes = {
 const mapStateToProps = state => ({
   redux: {
     receivers: state.info.receivers,
+    selectedReceiverTab: state.info.selectedReceiverTab,
+    selectedReceiver: state.info.selectedReceiver,
+    appBarIsDisplayed: state.display.appBarIsDisplayed,
   },
 });
 

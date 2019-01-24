@@ -43,6 +43,7 @@ const styles = theme => ({
 class MenuBar extends React.Component {
   state = {
     expanded: null,
+    menuTitle: 'Menu',
   };
 
   handleChange = panel => (event, expanded) => {
@@ -51,39 +52,45 @@ class MenuBar extends React.Component {
     });
   };
 
+  handleClick = (menuTitle) => {
+    this.setState({ menuTitle, expanded: false });
+  }
+
   render() {
     const { classes } = this.props;
-    const { expanded } = this.state;
+    const { expanded, menuTitle } = this.state;
 
     return (
       <div className={classes.root}>
         <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Menu</Typography>
+            <Typography className={classes.heading}>{menuTitle}</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <List className={classes.list}>
-              <Link to="/tableau_de_bord" className={classes.link}>
+              <Link to="/tableau_de_bord" className={classes.link} onClick={() => this.handleClick('Tableau de bord')}>
                 <ListItem button>
                   <ListItemText primary="Tableau de bord" classes={{ root: classes.listItemTextRoot }} />
                 </ListItem>
               </Link>
               <Divider />
-              <Link to="/calendrier" className={classes.link}>
+              <Link to="/calendrier" className={classes.link} onClick={() => this.handleClick('Calendrier')}>
                 <ListItem button>
                   <ListItemText primary="Calendrier" classes={{ root: classes.listItemTextRoot }} />
                 </ListItem>
               </Link>
               <Divider />
-              <Link to="/contacts" className={classes.link}>
+              <Link to="/contacts" className={classes.link} onClick={() => this.handleClick('Contacts')}>
                 <ListItem button>
                   <ListItemText primary="Contacts" classes={{ root: classes.listItemTextRoot }} />
                 </ListItem>
               </Link>
               <Divider />
-              <ListItem button>
-                <ListItemText primary="Suivi" classes={{ root: classes.listItemTextRoot }} />
-              </ListItem>
+              <Link to="/suivi" className={classes.link} onClick={() => this.handleClick('Suivi')}>
+                <ListItem button>
+                  <ListItemText primary="Suivi" classes={{ root: classes.listItemTextRoot }} />
+                </ListItem>
+              </Link>
             </List>
           </ExpansionPanelDetails>
         </ExpansionPanel>

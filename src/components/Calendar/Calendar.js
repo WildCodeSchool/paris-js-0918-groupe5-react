@@ -35,6 +35,17 @@ const refactoEventFormat = (allEvents = []) => {
 
 class Calendar extends Component {
   componentDidMount() {
+    this.init();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { selectedReceiver } = this.props;
+    if (prevProps.selectedReceiver !== selectedReceiver) {
+      this.init();
+    }
+  }
+
+  init = () => {
     const { getEvents, getContactsList } = this.props;
     getEvents();
     getContactsList();
@@ -83,6 +94,7 @@ const mapStateToProps = state => ({
   isLoaded: state.event.isLoaded,
   events: state.event.events,
   listOfcontact: state.event.listOfcontact,
+  selectedReceiver: state.info.selectedReceiver,
 });
 
 const mapDispatchToProps = dispatch => ({

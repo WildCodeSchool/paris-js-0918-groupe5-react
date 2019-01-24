@@ -23,32 +23,30 @@ import {
 import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
 import { displayDialogReceiver } from '../../actions/displayActions';
 
-const token = localStorage.getItem('token');
-
 const validate = (values) => {
-  const errors = {};
-  const requiredFields = [
-    'title',
-    'lastName',
-    'firstName',
-    'address',
-    'phone',
-    'dateOfBirth',
-    'receiverBond',
-  ];
-  requiredFields.forEach((field) => {
-    if (!values[field]) {
-      errors[field] = 'Champs requis';
-    }
-  });
-  // Verify if the email has the good format
-  if (
-    values.phone
-    && !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(values.phone)
-  ) {
-    errors.email = 'Numéro de téléphone invalide';
-  }
-  return errors;
+  // const errors = {};
+  // const requiredFields = [
+  //   'title',
+  //   'lastName',
+  //   'firstName',
+  //   'address',
+  //   'phone',
+  //   'dateOfBirth',
+  //   'receiverBond',
+  // ];
+  // requiredFields.forEach((field) => {
+  //   if (!values[field]) {
+  //     errors[field] = 'Champs requis';
+  //   }
+  // });
+  // // Verify if the email has the good format
+  // if (
+  //   values.phone
+  //   && !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(values.phone)
+  // ) {
+  //   errors.email = 'Numéro de téléphone invalide';
+  // }
+  // return errors;
 };
 
 class DialogReceiver extends Component {
@@ -60,29 +58,32 @@ class DialogReceiver extends Component {
       reset,
     } = this.props;
 
-    const newReceiver = receiver || redux.receiver;
+    const newReceiver = redux.receiver;
     if (!receiver) {
       newReceiver.title = redux.receiver.title || 'Mme';
+    } else {
+      newReceiver.title = redux.receiver.title || receiver.title;
     }
 
+    const token = localStorage.getItem('token');
     axios({
       method: receiver ? 'PUT' : 'POST',
       url: receiver ? `${getServerAuthority()}/users/receiver/${receiver.id}` : `${getServerAuthority()}/users/receivers`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      data: redux.receiver,
+      data: newReceiver,
     })
       .then(res => res.data)
-      .then((newReceiver) => {
-        console.log(newReceiver);
+      .then((resReceiver) => {
         const { getReceivers } = this.props;
         getReceivers();
-        return newReceiver;
+        return resReceiver;
       })
-      .then((newReceiver) => {
+      .then((resReceiver) => {
         const { getSelectedReceiver } = this.props;
-        getSelectedReceiver(newReceiver.id);
+        console.log('resReceiver', resReceiver.id);
+        getSelectedReceiver(resReceiver.id);
       })
       .then(() => { reset('receiverForm'); })
       .then(() => displayDialogReceiver(false));
@@ -185,6 +186,7 @@ const mapStateToProps = state => ({
       dateOfBirth: formValueSelector('receiverForm')(state, 'dateOfBirth'),
       receiverBond: formValueSelector('receiverForm')(state, 'receiverBond'),
     },
+    selectedReceiver: state.info.selectedReceiver,
   },
 });
 

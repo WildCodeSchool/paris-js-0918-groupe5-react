@@ -1,7 +1,7 @@
 import { DISPLAY_APP_BAR, DISPLAY_DIALOG_RECEIVER } from '../actions/types';
 
 const initialState = {
-  appBarIsDisplayed: true,
+  appBarIsDisplayed: false,
   dialogReceiverIsDisplayed: false,
 };
 

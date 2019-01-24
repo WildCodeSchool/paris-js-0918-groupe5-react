@@ -44,7 +44,7 @@ export const renderRadioButton = ({
   ...rest
 }) => (
   <FormControl>
-    <FormLabel component="legend" required={required}>
+    <FormLabel component="legend" required={required} className="radioButtonsLabel">
       {label}
     </FormLabel>
     <RadioGroup
@@ -69,9 +69,12 @@ export const renderRadioButton = ({
   </FormControl>
 );
 
-const renderFormHelper = ({ touched, error }) => {
-  return <FormHelperText>{touched && error}</FormHelperText>;
-};
+const renderFormHelper = ({ touched, error }) => (
+  <FormHelperText>
+    {touched && error}
+  </FormHelperText>
+);
+
 
 export const renderSelectField = ({
   input,
