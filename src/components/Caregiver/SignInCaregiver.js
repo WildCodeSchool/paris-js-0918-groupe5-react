@@ -13,15 +13,26 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
 import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
+import ForgotPasswordModale from './ForgotPasswordModale';
+
 
 import './SignInCaregiver.css';
 
 class SignInCaregiver extends React.Component {
   state = {
     redirect: false,
+    openForgotPassword: false,
     email: '',
     password: '',
   }
+
+  handleClickForgotPassword = () => {
+    this.setState({ openForgotPassword: true });
+  };
+
+  handleCloseForgotPassword = () => {
+    this.setState({ openForgotPassword: false });
+  };
 
   recordInformations = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -34,12 +45,8 @@ class SignInCaregiver extends React.Component {
     axios
       .post(`${getServerAuthority()}/auth/signin`,
         data).then((res) => {
-        console.log('SignInCaregiver res.headers ', res.headers['x-acces-token']);
-        console.log('SignInCaregiver res.id ', res.id);
         localStorage.setItem('token', res.headers['x-access-token']);
         localStorage.setItem('id', res.id);
-        console.log('SignInCaregiver token ', localStorage.getItem('token'));
-        console.log('SignInCaregiver id ', localStorage.getItem('id'));
       })
       .then(() => {
         const { getReceivers } = this.props;
@@ -56,9 +63,19 @@ class SignInCaregiver extends React.Component {
       });
   };
 
+  forgotPassword = () => {
+    const { email } = this.state;
+    const data = { email };
+    axios.post(`${getServerAuthority()}/auth/forgotPassword`,
+      data).then((res) => {
+      console.log(res);
+    // console.log('token', localStorage.getItem('token'));
+    });
+  }
+
   render() {
     const { openSignIn, onCloseSignIn } = this.props;
-    const { redirect } = this.state;
+    const { redirect, openForgotPassword } = this.state;
     if (redirect) {
       return (
         <Redirect to="/tableau_de_bord" />
@@ -96,7 +113,7 @@ class SignInCaregiver extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button className="forgottenPassword" onClick={this.handleSubmit} color="primary">
+            <Button className="forgottenPassword" onClick={this.handleClickForgotPassword} color="primary">
               Mot de passe oublié ?
             </Button>
             <Button onClick={onCloseSignIn} color="primary">
@@ -107,6 +124,7 @@ class SignInCaregiver extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <ForgotPasswordModale open={openForgotPassword} onClose={this.handleCloseForgotPassword} />
       </div>
     );
   }

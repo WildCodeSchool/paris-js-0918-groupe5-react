@@ -9,6 +9,7 @@ import SignUpCaregiver from './components/Caregiver/SignUpCaregiver';
 import Contact from './components/Contacts/Contact';
 import Monitoring from './components/Monitoring/Monitoring';
 import SignInCaregiver from './components/Caregiver/SignInCaregiver';
+import ResetPassword from './components/Caregiver/ResetPassword';
 
 import './App.css';
 import 'typeface-roboto';
