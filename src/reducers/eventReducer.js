@@ -11,7 +11,47 @@ import {
   POST_AND_CLEAR_FIELDS,
   GET_EVENT_LIST,
   GET_CONTACT_LIST,
+  CHECK_DAYS,
 } from '../actions/types';
+
+
+const initialListOfDays = [
+  {
+    label: 'tous les lundis',
+    checked: false,
+    idDay: '1',
+  },
+  {
+    label: 'tous les mardis',
+    checked: false,
+    idDay: '2',
+  },
+  {
+    label: 'tous les mercredis',
+    checked: false,
+    idDay: '3',
+  },
+  {
+    label: 'tous les jeudis',
+    checked: false,
+    idDay: '4',
+  },
+  {
+    label: 'tous les vendredis',
+    checked: false,
+    idDay: '5',
+  },
+  {
+    label: 'tous les samedis',
+    checked: false,
+    idDay: '6',
+  },
+  {
+    label: 'tous les dimanches',
+    checked: false,
+    idDay: '0',
+  },
+];
 
 const initialState = {
   isOpen: false,
@@ -66,6 +106,7 @@ const initialState = {
       label: 'Certains jours de la semaine',
     },
   ],
+  listOfDays: initialListOfDays,
   events: [],
   listOfcontact: [],
   isLoaded: false,
@@ -80,7 +121,6 @@ export default (state = initialState, action) => {
     case GET_EVENT_LIST:
       return {
         ...state,
-        // events: state.events.concat(action.events),
         events: action.events,
         isLoaded: true,
       };
@@ -123,7 +163,6 @@ export default (state = initialState, action) => {
     case RECORD_MULTIPLES_DAYS:
       return {
         ...state,
-        daysSelected: action.days,
       };
     case RECORD_DATE:
       return {
@@ -142,6 +181,7 @@ export default (state = initialState, action) => {
         endingDate: '',
         frequency: '',
         daysSelected: '',
+        listOfDays: initialListOfDays,
         contact: '',
         category: '',
         events: state.events.concat(action.eventAdded),
@@ -153,6 +193,12 @@ export default (state = initialState, action) => {
         followedVisit: action.followedVisit,
         reminder: action.reminder,
         immediateNotif: action.immediateNotif,
+      };
+    case CHECK_DAYS:
+      return {
+        ...state,
+        listOfDays: action.changeDayLIst,
+        daysSelected: action.daysSelected,
       };
     default:
       return state;

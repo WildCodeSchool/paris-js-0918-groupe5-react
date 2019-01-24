@@ -1,18 +1,20 @@
 import axios from 'axios';
 import getServerAuthority from '../config/getServerAuthority';
+import store from '../config/store';
 import {
   OPEN_DIALOG_EVENT,
   RECORD_EVENT_TITLE,
   RECORD_CONTACT,
   RECORD_FREQUENCY,
   RECORD_EVENT_ADDRESS,
-  RECORD_MULTIPLES_DAYS,
+  // RECORD_MULTIPLES_DAYS,
   RECORD_DATE,
   RECORD_CATEGORY,
   RECORD_SWITCH_LABEL,
   POST_AND_CLEAR_FIELDS,
   GET_EVENT_LIST,
   GET_CONTACT_LIST,
+  CHECK_DAYS,
 } from './types';
 
 class Contact {
@@ -36,32 +38,26 @@ class Contact {
 }
 
 // eslint-disable-next-line no-undef
+const token = localStorage.getItem('token');
+const apiUrl = `${getServerAuthority()}/events`;
+
 export const postAndClearFields = allInfo => (dispatch) => {
-  const token = localStorage.getItem('token');
-  const apiUrl = `${getServerAuthority()}/events`;
+  const { listOfcontact } = store.getState().event;
+  const contactSelected = listOfcontact.filter(item => item.value === allInfo.contact)[0];
   axios({
     method: 'POST',
-    url: `${apiUrl}/1`,
+    url: `${apiUrl}/${contactSelected.id}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
     data: allInfo,
   })
-    // .then(res => dispatch({
-    //   type: POST_AND_CLEAR_FIELDS,
-    //   eventAdded: res,
-    // }))
     .then((res) => {
-      console.log('SUperRES', res.data);
       dispatch({
         type: POST_AND_CLEAR_FIELDS,
         eventAdded: res.data,
       });
     });
-  // .then(res => dispatch({
-  //   type: GET_EVENT_LIST,
-  //   events: res.eventAdded.data,
-  // }));
 };
 
 export const getContacts = () => (dispatch) => {
@@ -131,10 +127,26 @@ export const recordFrequency = frequency => ({
   frequency,
 });
 
-export const recordMultipleDays = days => ({
-  type: RECORD_MULTIPLES_DAYS,
-  days,
-});
+export const checkSelectedDays = (id, checkedDay) => (dispatch) => {
+  const newDayList = store.getState().event.listOfDays.map((item) => {
+    if (item.idDay === id) {
+      return {
+        label: item.label,
+        checked: !checkedDay,
+        idDay: item.idDay,
+      };
+    } return item;
+  });
+  const SelectedDays = newDayList.map((item) => {
+    if (!item.checked) return false;
+    return item.idDay;
+  }).filter(item => item).join();
+  dispatch({
+    type: CHECK_DAYS,
+    changeDayLIst: newDayList,
+    daysSelected: SelectedDays,
+  });
+};
 
 export const recordSwitchLabels = (
   visibleEvent,

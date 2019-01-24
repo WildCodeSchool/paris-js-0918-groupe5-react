@@ -1,58 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import { recordMultipleDays } from '../../actions/eventActions';
+import { checkSelectedDays } from '../../actions/eventActions';
 
-const listInString = values => Object.keys(values).filter(day => values[day]).join();
+// const listInString = values => Object.keys(values).filter(day => values[day]).join();
 
-class SelectMultipleDays extends Component {
-  constructor() {
-    super();
-    this.state = {
-      everyMonday: false,
-      eveyTuesday: false,
-      everyWednesday: false,
-      everyThursday: false,
-      everyFriday: false,
-      everySaturday: false,
-      everySunday: false,
-    };
-  }
-
-  handleChange = (name) => {
-    const { record } = this.props;
-    this.setState(prevState => ({ [name]: !prevState[name] }),
-      () => record(this.state));
-  };
-
-  render() {
-    return (
-      Object.entries(this.state).map(([day, checkedStatut]) => (
-        <FormControlLabel
-          key={day}
-          control={(
-            <Checkbox
-              checked={checkedStatut}
-              name={day}
-              onChange={() => this.handleChange(day)}
-            />)}
-          label={day}
-        />
-      ))
-    );
-  }
-}
+const SelectMultipleDays = ({ listOfDays, SelectedDays }) => (
+  listOfDays.map(item => (
+    <FormControlLabel
+      key={item.idDay}
+      control={(
+        <Checkbox
+          checked={item.checked}
+          name={item.value}
+          onChange={() => SelectedDays(item.idDay, item.checked)}
+        />)}
+      label={item.label}
+    />))
+);
 
 SelectMultipleDays.propTypes = {
-  record: PropTypes.func.isRequired,
+  listOfDays: PropTypes.array.isRequired,
 };
-const mapStateToProps = state => state;
+
+
+const mapStateToProps = state => ({
+  listOfDays: state.event.listOfDays,
+});
 
 const mapDispatchToProps = dispatch => ({
-  record: days => dispatch(recordMultipleDays(listInString(days))),
+  SelectedDays: (id, checkedDay) => dispatch(checkSelectedDays(id, checkedDay)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectMultipleDays);

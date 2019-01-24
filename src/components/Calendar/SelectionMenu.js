@@ -46,10 +46,12 @@ const SelectionMenu = ({
       FormHelperText: 'Séléctionner la récurence d un événement',
     },
   ].map(item => (
+    // console.log()
     <form key={item.type} className="SelectionMenu">
       <FormControl className="SelectionMenuItems" required>
         <InputLabel htmlFor={item.type}>{item.InputLabel}</InputLabel>
         <SelectionMenuItems
+          required
           type={item.type}
           listeOfChoices={item.liste}
           record={item.recordFunction}

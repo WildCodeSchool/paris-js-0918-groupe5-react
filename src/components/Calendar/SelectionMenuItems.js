@@ -5,7 +5,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 class SelectionMenuItems extends Component {
   handleChange = ({ target: { value } }) => {
+    // console.log(value);
     const { record } = this.props;
+    // console.log('listeOfChoices', listeOfChoices);
     record(value);
   }
 
