@@ -26,7 +26,7 @@ class Charts extends Component {
     const { selectedReceiver } = this.props;
       this.init();
     }
-  };
+
 
   // the five arrays that need to be passed to the charts are created and set as states
   init = () => {
