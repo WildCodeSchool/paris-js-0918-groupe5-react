@@ -17,19 +17,16 @@ const DialogOpener = ({
   OpenOrCloseDialog,
   record,
   idContact,
-}) => {
-  // console.log(allInfo);
-  return (
-    <Dialog open={isOpen} onClose={() => OpenOrCloseDialog()} aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">Nouvel événement</DialogTitle>
-      <DialogContener />
-      <DialogActions>
-        <Button onClick={() => OpenOrCloseDialog()} color="primary">Annuler</Button>
-        <Button onClick={() => record(allInfo, idContact)} color="primary">Enregistrer</Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
+}) => (
+  <Dialog open={isOpen} onClose={() => OpenOrCloseDialog()} aria-labelledby="form-dialog-title">
+    <DialogTitle id="form-dialog-title">Nouvel événement</DialogTitle>
+    <DialogContener />
+    <DialogActions>
+      <Button onClick={() => OpenOrCloseDialog()} color="primary">Annuler</Button>
+      <Button onClick={() => record(allInfo, idContact)} color="primary">Enregistrer</Button>
+    </DialogActions>
+  </Dialog>
+);
 
 DialogOpener.propTypes = {
   isOpen: PropTypes.bool.isRequired,
@@ -49,7 +46,7 @@ const mapStateToProps = state => ({
     daysSelected: state.event.daysSelected,
     contact: state.event.contact,
     category: state.event.category,
-    events: state.event.events,
+    // events: state.event.events,
     visibleEvent: state.event.visibleEvent,
     followedVisit: state.event.followedVisit,
     reminder: state.event.reminder,

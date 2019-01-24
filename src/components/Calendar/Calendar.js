@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
+import 'moment/locale/fr';
 import PropTypes from 'prop-types';
 
 import DialogOpener from './DialogOpener';
@@ -15,6 +16,8 @@ import {
   getContacts,
 } from '../../actions/eventActions';
 
+// color func of category an past event
+moment.locale('fr');
 const localizer = BigCalendar.momentLocalizer(moment);
 
 const getGoodFormat = date => moment(date).toISOString(true).substr(0, 19);
@@ -25,7 +28,7 @@ const refactoEventFormat = (allEvents = []) => {
     title: item.title,
     start: item.startingDate,
     end: item.endingDate,
-    allDay: true,
+    allDay: false,
   }));
   return events;
 };
@@ -57,6 +60,8 @@ class Calendar extends Component {
           selectable
           onSelectEvent={() => console.log('pop-up to modify')}
           onSelectSlot={this.openDialogToCreateEvent}
+          startAccessor="start"
+          endAccessor="end"
         />
         <DialogOpener />
       </div>
@@ -70,7 +75,6 @@ Calendar.propTypes = {
   OpenDialog: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   events: PropTypes.array.isRequired,
-  listOfcontact: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
