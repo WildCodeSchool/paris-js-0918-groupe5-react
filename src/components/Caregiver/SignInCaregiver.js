@@ -14,7 +14,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
 import { displayAppBar } from '../../actions/displayActions';
-import ForgotPasswordModale from './ForgotPasswordModale';
+import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
+
 
 import './SignInCaregiver.css';
 
@@ -49,12 +50,24 @@ class SignInCaregiver extends React.Component {
     const data = { email, password };
     axios.post(`${getServerAuthority()}/auth/signin`,
       data).then((res) => {
-      const { displayAppBar } = this.props;
       localStorage.setItem('token', res.headers['x-access-token']);
       localStorage.setItem('id', res.id);
-      // console.log('token', localStorage.getItem('token'));
-      this.setState({ redirect: true }, displayAppBar(true));
-    });
+      this.setState({ redirect: true });
+    })
+      .then(() => {
+        const { getReceivers } = this.props;
+        getReceivers();
+      })
+      .then(() => {
+        const { selectedReceiverId, getSelectedReceiver } = this.props;
+        if (selectedReceiverId !== 0) {
+          getSelectedReceiver(selectedReceiverId);
+        }
+      })
+      .then(() => {
+        const { displayAppBar } = this.props;
+        displayAppBar(true);
+      });
   };
 
   forgotPassword = () => {
@@ -128,4 +141,4 @@ SignInCaregiver.propTypes = {
   displayAppBar: PropTypes.func.isRequired,
 };
 
-export default connect(null, { displayAppBar })(SignInCaregiver);
+export default connect(null, { displayAppBar, getReceivers, getSelectedReceiver })(SignInCaregiver);

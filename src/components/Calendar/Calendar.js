@@ -6,10 +6,14 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import DialogOpener from './DialogOpener';
-import './Calendar.css'
+import './Calendar.css';
 
-
-import { recordDateAndTime, openEventDialog, getEventList, getContacts } from '../../actions/eventActions';
+import {
+  recordDateAndTime,
+  openEventDialog,
+  getEventList,
+  getContacts,
+} from '../../actions/eventActions';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -28,6 +32,17 @@ const refactoEventFormat = (allEvents = []) => {
 
 class Calendar extends Component {
   componentDidMount() {
+    this.init();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { selectedReceiver } = this.props;
+    if (prevProps.selectedReceiver !== selectedReceiver) {
+      this.init();
+    }
+  }
+
+  init = () => {
     const { getEvents, getContactsList } = this.props;
     getEvents();
     getContactsList();
@@ -40,8 +55,7 @@ class Calendar extends Component {
   }
 
   render() {
-    const { isLoaded, events, contacts } = this.props;
-    console.log('contacts', contacts)
+    const { isLoaded, events } = this.props;
 
     if (!isLoaded) return <p>Site en maintenance, revenez plus tard :)</p>;
     return (
@@ -67,7 +81,7 @@ Calendar.propTypes = {
   OpenDialog: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   events: PropTypes.array.isRequired,
-  contacts: PropTypes.array.isRequired,
+  listOfcontact: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -75,7 +89,8 @@ const mapStateToProps = state => ({
   endingDate: state.event.endingDate,
   isLoaded: state.event.isLoaded,
   events: state.event.events,
-  contacts: state.event.listOfcontact
+  listOfcontact: state.event.listOfcontact,
+  selectedReceiver: state.info.selectedReceiver,
 });
 
 const mapDispatchToProps = dispatch => ({

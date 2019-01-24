@@ -29,6 +29,7 @@ const DisplayContactModal = (props) => {
     displayedContact,
     classes,
   } = props;
+  // console.log(displayedContact);
 
   return (
     <div>

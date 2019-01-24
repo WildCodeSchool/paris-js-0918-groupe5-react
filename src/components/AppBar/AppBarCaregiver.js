@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Redirect } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -17,6 +18,7 @@ import {
   PowerSettingsNew,
 } from '@material-ui/icons';
 import MyAccountModale from './MyAccountModale';
+import DialogLogOut from './DialogLogOut';
 
 
 const styles = {
@@ -39,6 +41,8 @@ class AppBarCaregiver extends Component {
   state = {
     anchorEl: null,
     openModaleAccount: false,
+    redirect: false,
+    dialogLogOutIsDisplayed: false,
   };
 
   handleMenu = (event) => {
@@ -57,10 +61,36 @@ class AppBarCaregiver extends Component {
     this.setState({ anchorEl: null });
   };
 
+  handleLogOut = () => {
+    localStorage.setItem('token', null);
+    localStorage.setItem('id', null);
+    this.setState({
+      dialogLogOutIsDisplayed: false,
+      redirect: true,
+    });
+  }
+
+  handleOpenCloseDialogLogOut = (isOpen) => {
+    this.setState({
+      dialogLogOutIsDisplayed: isOpen,
+    });
+  }
+
   render() {
     const { classes } = this.props;
-    const { anchorEl, openModaleAccount } = this.state;
+    const {
+      anchorEl,
+      openModaleAccount,
+      redirect,
+      dialogLogOutIsDisplayed,
+    } = this.state;
     const open = Boolean(anchorEl);
+
+    if (redirect) {
+      return (
+        <Redirect to="/" />
+      );
+    }
     return (
       <div className="AppBarCaregiver">
         <AppBar position="static">
@@ -99,7 +129,7 @@ class AppBarCaregiver extends Component {
                 </ListItemIcon>
                 <ListItemText inset primary="Mes notifications" />
               </MenuItem>
-              <MenuItem onClick={this.handleCloseMenu}>
+              <MenuItem onClick={() => this.handleOpenCloseDialogLogOut(true)}>
                 <ListItemIcon>
                   <PowerSettingsNew />
                 </ListItemIcon>
@@ -109,6 +139,11 @@ class AppBarCaregiver extends Component {
           </Toolbar>
         </AppBar>
         <MyAccountModale open={openModaleAccount} onClose={this.handleCloseModale} />
+        <DialogLogOut
+          dialogLogOutIsDisplayed={dialogLogOutIsDisplayed}
+          handleLogOut={this.handleLogOut}
+          handleOpenCloseDialogLogOut={this.handleOpenCloseDialogLogOut}
+        />
       </div>
     );
   }

@@ -11,21 +11,20 @@ class SelectionMenuItems extends Component {
 
   render() {
     const { type, listeOfChoices, fieldValue } = this.props;
-    console.log(listeOfChoices);
     return (
       <Select
         value={fieldValue}
         onChange={this.handleChange}
         name={type}
       >
-        {listeOfChoices.map(item => <MenuItem key={item.id} value={item.value}>{item.label}</MenuItem>)}
+        {listeOfChoices.map(item => (
+          <MenuItem key={item.id} value={item.value}>{item.label}</MenuItem>))}
       </Select>
     );
   }
 }
 
 SelectionMenuItems.propTypes = {
-
   record: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   listeOfChoices: PropTypes.array.isRequired,
