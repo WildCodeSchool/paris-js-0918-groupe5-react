@@ -15,6 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import getServerAuthority from '../../config/getServerAuthority';
 import { displayAppBar } from '../../actions/displayActions';
 import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
+import ForgotPasswordModale from './ForgotPasswordModale';
 
 
 import './SignInCaregiver.css';
