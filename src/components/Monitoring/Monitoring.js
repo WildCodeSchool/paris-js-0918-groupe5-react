@@ -98,7 +98,7 @@ class Monitoring extends Component {
         <Grid container justify="center">
           <Grid
             item
-            xs={10}
+            xs={9}
             style={{
               padding: 30,
             }}
