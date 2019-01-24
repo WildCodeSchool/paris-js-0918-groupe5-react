@@ -14,7 +14,7 @@ class EventsTable extends Component {
     super(props);
     this.state = {
       page: 0,
-      rowsPerPage: 10,
+      rowsPerPage: 5,
     };
   }
 
@@ -40,29 +40,30 @@ class EventsTable extends Component {
   render() {
     const { page, rowsPerPage } = this.state;
     const { events } = this.props;
+    const style = { fontSize: 18 };
     return (
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell align="right">Visite</TableCell>
-            <TableCell align="right">Responsable</TableCell>
-            <TableCell align="right">Humeur</TableCell>
+            <TableCell style={style}>Date</TableCell>
+            <TableCell align="right" style={style}>Visite</TableCell>
+            <TableCell align="right" style={style}>Responsable</TableCell>
+            <TableCell align="right" style={style}>Humeur</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {events.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(e => (
             <TableRow key={e.id}>
-              <TableCell>{this.formatDate(e.startingDate)}</TableCell>
-              <TableCell align="right">{e.title}</TableCell>
-              <TableCell align="right">{e.contact}</TableCell>
+              <TableCell style={style}>{this.formatDate(e.startingDate)}</TableCell>
+              <TableCell align="right" style={style}>{e.title}</TableCell>
+              <TableCell align="right" style={style}>{e.contact}</TableCell>
               <TableCell align="right">{this.iconifyMood(e.mood)}</TableCell>
             </TableRow>))}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[10, 20, 30]}
+              rowsPerPageOptions={[5, 10, 20]}
               colSpan={3}
               count={events.length}
               rowsPerPage={rowsPerPage}
