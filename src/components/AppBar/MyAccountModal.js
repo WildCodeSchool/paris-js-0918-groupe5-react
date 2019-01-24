@@ -10,12 +10,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Icons from '../Icons';
 import FieldModifyUser from './FieldModifyUser';
 import getServerAuthority from '../../config/getServerAuthority';
-import './MyAccountModale.css';
+import './MyAccountModal.css';
 
-const token = localStorage.getItem('token');
-const url = `${getServerAuthority()}/users/caregiver`;
-
-class MyAccountModale extends React.Component {
+class MyAccountModal extends React.Component {
   state = {
     openFieldModifyAccount: false,
     selectedCaregiver: {},
@@ -28,7 +25,6 @@ class MyAccountModale extends React.Component {
     stateName: '',
     // numberOfSubscriptions: 'Nombre d\'abonnements',
     selectedField: '',
-    inputUpdated: '',
   }
 
   componentDidMount() {
@@ -36,6 +32,8 @@ class MyAccountModale extends React.Component {
   }
 
   axiosGetting = () => {
+    const token = localStorage.getItem('token');
+    const url = `${getServerAuthority()}/users/caregiver`;
     axios({
       method: 'GET',
       url,
@@ -47,8 +45,13 @@ class MyAccountModale extends React.Component {
   }
 
   openFieldModifyAccount = async (name) => {
-    await this.setState({ selectedField: name }, () => this.setState({ openFieldModifyAccount: true }));
-    switch (this.state.selectedField) {
+    await this.setState({
+      selectedField: name,
+    }, () => this.setState({
+      openFieldModifyAccount: true,
+    }));
+    const { selectedField } = this.state;
+    switch (selectedField) {
       case 'Nom':
         this.setState({ stateName: 'lastName' });
         break;
@@ -78,14 +81,13 @@ class MyAccountModale extends React.Component {
 
   recordNewInformations = (fieldName, stateField) => {
     const array = Object.entries(stateField);
-    console.log(array)
     let valueUpdated = {};
     for (let i = 0; i < array.length; i++) {
       if (array[i][1].length) {
         valueUpdated = { [fieldName]: array[i][1] };
       }
     }
-
+    const token = localStorage.getItem('token');
     axios({
       method: 'PUT',
       url: `${getServerAuthority()}/users/caregiver`,
@@ -94,21 +96,29 @@ class MyAccountModale extends React.Component {
       },
       data: valueUpdated,
     })
-      .then((res) => {
-        this.setState({ inputUpdated: res.data });
+      .then(() => {
+        const { onClose } = this.props;
+        this.setState({ openFieldModifyAccount: false });
+        onClose();
+        alert('Vos modifications ont bien été enregistrées.');
+        this.axiosGetting();
+        window.location.reload();
       });
-
-    this.setState({ openFieldModifyAccount: false });
-    this.props.onClose();
-    alert('Vos modifications ont bien été enregistrées.');
-    this.axiosGetting();
-    window.location.reload();
   }
 
   render() {
     const { open, onClose } = this.props;
     const {
-      openFieldModifyAccount, selectedField, selectedCaregiver, lastName, firstName, address, phone, email, password, stateName,
+      openFieldModifyAccount,
+      selectedField,
+      selectedCaregiver,
+      lastName,
+      firstName,
+      address,
+      phone,
+      email,
+      password,
+      stateName,
     } = this.state;
     return (
       <div>
@@ -122,7 +132,7 @@ class MyAccountModale extends React.Component {
             <DialogContentText>
               Vous trouverez ci-dessous vos informations personnelles.
               <br />
-              Si vous souhaitez les modifier, nous vous invitons à cliquer sur l'icône "crayon".
+              {"Si vous souhaitez les modifier, nous vous invitons à cliquer sur l'icône \"crayon\"."}
             </DialogContentText>
             <h4>Nom</h4>
             <p>
@@ -188,4 +198,4 @@ class MyAccountModale extends React.Component {
   }
 }
 
-export default MyAccountModale;
+export default MyAccountModal;

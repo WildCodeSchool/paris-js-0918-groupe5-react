@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import { displayAppBar } from '../actions/displayActions';
 import SignUpCaregiver from './Caregiver/SignUpCaregiver';
 import SignInCaregiver from './Caregiver/SignInCaregiver';
 import logo from '../assets/logoKaliService3.png';
@@ -37,8 +35,11 @@ class IntroductionPage extends Component {
     this.setState({ openSignUp: true });
   };
 
-  handleCloseSignUp = () => {
-    this.setState({ openSignUp: false });
+  handleCloseSignUp = (openSignIn) => {
+    this.setState({
+      openSignUp: false,
+      openSignIn,
+    });
   };
 
   handleClickOpenSignIn = () => {
@@ -84,4 +85,4 @@ IntroductionPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(null, { displayAppBar })(withStyles(styles)(IntroductionPage));
+export default withStyles(styles)(IntroductionPage);

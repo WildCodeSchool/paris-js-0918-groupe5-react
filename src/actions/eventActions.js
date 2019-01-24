@@ -36,11 +36,9 @@ class Contact {
 }
 
 // eslint-disable-next-line no-undef
-const token = localStorage.getItem('token');
-
-const apiUrl = `${getServerAuthority()}/events`;
-
 export const postAndClearFields = allInfo => (dispatch) => {
+  const token = localStorage.getItem('token');
+  const apiUrl = `${getServerAuthority()}/events`;
   axios({
     method: 'POST',
     url: `${apiUrl}/1`,
@@ -67,6 +65,7 @@ export const postAndClearFields = allInfo => (dispatch) => {
 };
 
 export const getContacts = () => (dispatch) => {
+  const token = localStorage.getItem('token');
   axios({
     method: 'GET',
     url: `${getServerAuthority()}/contacts`,
@@ -82,6 +81,8 @@ export const getContacts = () => (dispatch) => {
 };
 
 export const getEventList = () => (dispatch) => {
+  const token = localStorage.getItem('token');
+  const apiUrl = `${getServerAuthority()}/events`;
   axios({
     method: 'GET',
     url: `${apiUrl}`,

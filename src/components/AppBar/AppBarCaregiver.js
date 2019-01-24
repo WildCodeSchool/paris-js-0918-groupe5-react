@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { Redirect } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -17,8 +17,9 @@ import {
   Build,
   PowerSettingsNew,
 } from '@material-ui/icons';
-import MyAccountModale from './MyAccountModale';
+import MyAccountModal from './MyAccountModal';
 import DialogLogOut from './DialogLogOut';
+import { logOut } from '../../actions/infoActions';
 
 
 const styles = {
@@ -40,8 +41,7 @@ const styles = {
 class AppBarCaregiver extends Component {
   state = {
     anchorEl: null,
-    openModaleAccount: false,
-    redirect: false,
+    openModalAccount: false,
     dialogLogOutIsDisplayed: false,
   };
 
@@ -49,30 +49,21 @@ class AppBarCaregiver extends Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClickOpenModale = () => {
-    this.setState({ openModaleAccount: true, anchorEl: null });
+  handleClickOpenModal = () => {
+    this.setState({ openModalAccount: true, anchorEl: null });
   };
 
-  handleCloseModale = () => {
-    this.setState({ openModaleAccount: false });
+  handleCloseModal = () => {
+    this.setState({ openModalAccount: false });
   };
 
   handleCloseMenu = () => {
     this.setState({ anchorEl: null });
   };
 
-  handleLogOut = () => {
-    localStorage.setItem('token', null);
-    localStorage.setItem('id', null);
+  handleOpenDialogLogOut = () => {
     this.setState({
-      dialogLogOutIsDisplayed: false,
-      redirect: true,
-    });
-  }
-
-  handleOpenCloseDialogLogOut = (isOpen) => {
-    this.setState({
-      dialogLogOutIsDisplayed: isOpen,
+      dialogLogOutIsDisplayed: true,
     });
   }
 
@@ -80,17 +71,11 @@ class AppBarCaregiver extends Component {
     const { classes } = this.props;
     const {
       anchorEl,
-      openModaleAccount,
-      redirect,
+      openModalAccount,
       dialogLogOutIsDisplayed,
     } = this.state;
     const open = Boolean(anchorEl);
 
-    if (redirect) {
-      return (
-        <Redirect to="/" />
-      );
-    }
     return (
       <div className="AppBarCaregiver">
         <AppBar position="static">
@@ -117,7 +102,7 @@ class AppBarCaregiver extends Component {
               open={open}
               onClose={this.handleCloseMenu}
             >
-              <MenuItem onClick={this.handleClickOpenModale}>
+              <MenuItem onClick={this.handleClickOpenModal}>
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>
@@ -129,7 +114,7 @@ class AppBarCaregiver extends Component {
                 </ListItemIcon>
                 <ListItemText inset primary="Mes notifications" />
               </MenuItem>
-              <MenuItem onClick={() => this.handleOpenCloseDialogLogOut(true)}>
+              <MenuItem onClick={this.handleOpenDialogLogOut}>
                 <ListItemIcon>
                   <PowerSettingsNew />
                 </ListItemIcon>
@@ -138,12 +123,12 @@ class AppBarCaregiver extends Component {
             </Menu>
           </Toolbar>
         </AppBar>
-        <MyAccountModale open={openModaleAccount} onClose={this.handleCloseModale} />
-        <DialogLogOut
-          dialogLogOutIsDisplayed={dialogLogOutIsDisplayed}
-          handleLogOut={this.handleLogOut}
-          handleOpenCloseDialogLogOut={this.handleOpenCloseDialogLogOut}
-        />
+        <MyAccountModal open={openModalAccount} onClose={this.handleCloseModal} />
+        {dialogLogOutIsDisplayed && (
+          <DialogLogOut
+            handleOpenCloseDialogLogOut={this.handleOpenCloseDialogLogOut}
+          />
+        )}
       </div>
     );
   }
@@ -153,4 +138,4 @@ AppBarCaregiver.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AppBarCaregiver);
+export default connect(null, { logOut })(withStyles(styles)(AppBarCaregiver));

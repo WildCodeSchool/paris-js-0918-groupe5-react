@@ -14,8 +14,6 @@ import ChooseCategoryOfContact from './ChooseCategoryOfContact';
 
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-undef
-const token = localStorage.getItem('token');
-
 const styles = theme => ({
   displayContactButton: {
     margin: theme.spacing.unit,
@@ -84,7 +82,7 @@ class Contact extends Component {
       const contact = { ...redux.contact };
       contact.title = redux.contact.title || 'Mme';
       contact.preferenceOfContact = redux.contact.preferenceOfContact || 'SMS';
-      console.log(redux.contact.preferenceOfContact);
+      const token = localStorage.getItem('token');
       axios({
         method: 'POST',
         url: `${getServerAuthority()}/contacts`,
@@ -102,6 +100,7 @@ class Contact extends Component {
     handleEditContact = (id) => {
       const { redux, getContacts, reset } = this.props;
       const contact = { ...redux.contact };
+      const token = localStorage.getItem('token');
 
       axios({
         method: 'PUT',
@@ -130,6 +129,7 @@ class Contact extends Component {
     handleDeleteContact = (id) => {
       const { getContacts, redux } = this.props;
       const contact = { ...redux.contact };
+      const token = localStorage.getItem('token');
 
       axios({
         method: 'DELETE',

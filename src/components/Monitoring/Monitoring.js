@@ -79,7 +79,9 @@ class Monitoring extends Component {
   getSortedPastEvent = async () => {
     try {
       const events = await this.getPastEvents();
-      const result = events.sort((a, b) => new Date(a.startingDate) - new Date(b.startingDate)).reverse();
+      const result = events
+        .sort((a, b) => new Date(a.startingDate) - new Date(b.startingDate))
+        .reverse();
       // console.log('getSortedPastEvent', result);
       if (this._isMounted) this.setState({ events: result });
     } catch (err) {

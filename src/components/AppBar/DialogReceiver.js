@@ -23,32 +23,30 @@ import {
 import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
 import { displayDialogReceiver } from '../../actions/displayActions';
 
-const token = localStorage.getItem('token');
-
 const validate = (values) => {
-  const errors = {};
-  const requiredFields = [
-    'title',
-    'lastName',
-    'firstName',
-    'address',
-    'phone',
-    'dateOfBirth',
-    'receiverBond',
-  ];
-  requiredFields.forEach((field) => {
-    if (!values[field]) {
-      errors[field] = 'Champs requis';
-    }
-  });
-  // Verify if the email has the good format
+  // const errors = {};
+  // const requiredFields = [
+  //   'title',
+  //   'lastName',
+  //   'firstName',
+  //   'address',
+  //   'phone',
+  //   'dateOfBirth',
+  //   'receiverBond',
+  // ];
+  // requiredFields.forEach((field) => {
+  //   if (!values[field]) {
+  //     errors[field] = 'Champs requis';
+  //   }
+  // });
+  // // Verify if the email has the good format
   // if (
   //   values.phone
   //   && !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(values.phone)
   // ) {
   //   errors.email = 'Numéro de téléphone invalide';
   // }
-  return errors;
+  // return errors;
 };
 
 class DialogReceiver extends Component {
@@ -67,6 +65,7 @@ class DialogReceiver extends Component {
       newReceiver.title = redux.receiver.title || receiver.title;
     }
 
+    const token = localStorage.getItem('token');
     axios({
       method: receiver ? 'PUT' : 'POST',
       url: receiver ? `${getServerAuthority()}/users/receiver/${receiver.id}` : `${getServerAuthority()}/users/receivers`,
