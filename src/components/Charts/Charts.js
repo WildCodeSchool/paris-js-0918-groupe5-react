@@ -9,6 +9,8 @@ import getServerAuthority from '../../config/getServerAuthority';
 
 
 class Charts extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +22,10 @@ class Charts extends Component {
     };
   }
 
-  componentDidMount = () => this.init();
+  componentDidMount = () => {
+    this.init();
+    this._isMounted = true;
+  };
 
   componentDidUpdate = (prevProps) => {
     const { selectedReceiver } = this.props;
@@ -120,7 +125,7 @@ class Charts extends Component {
           default: return '...';
         }
       });
-      this.setState({ dayNamesArray: result });
+      if (this._isMounted) this.setState({ dayNamesArray: result });
       // console.log('createDayNamesArray', this.state.dayNamesArray);
     } catch (err) {
       console.error(err);
@@ -150,7 +155,7 @@ class Charts extends Component {
         }
         result.push(currentMood);
       });
-      this.setState({ moodArray: result });
+      if (this._isMounted) this.setState({ moodArray: result });
       // console.log('createMoodArray', result);
     } catch (err) {
       console.error(err);
@@ -171,7 +176,7 @@ class Charts extends Component {
         });
         nonFollowedVisitsArray.push(dailyNonFollowedVisits);
       });
-      this.setState({ nonFollowedVisitsArray });
+      if (this._isMounted) this.setState({ nonFollowedVisitsArray });
       // console.log('this.state.nonFollowedVisitsArray', this.state.nonFollowedVisitsArray);
     } catch (err) {
       console.error(err);
@@ -202,14 +207,18 @@ class Charts extends Component {
         visitsArray.push(dailyVisits);
         absencesArray.push(dailyAbsences);
       });
-      this.setState({ visitsArray });
-      this.setState({ absencesArray });
+      if (this._isMounted) {
+        this.setState({ visitsArray });
+        this.setState({ absencesArray });
+      }
       // console.log('this.state.absencesArray', this.state.absencesArray)
       // console.log('this.state.visitsArray', this.state.visitsArray)
     } catch (err) {
       console.error(err);
     }
   };
+
+  componentWillUnmount = () => { this._isMounted = false; };
 
   render() {
     const {
