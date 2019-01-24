@@ -29,9 +29,10 @@ class Charts extends Component {
 
   componentDidUpdate = (prevProps) => {
     const { selectedReceiver } = this.props;
+    if (prevProps.selectedReceiver !== selectedReceiver) {
       this.init();
     }
-
+  };
 
   // the five arrays that need to be passed to the charts are created and set as states
   init = () => {
