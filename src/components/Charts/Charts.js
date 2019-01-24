@@ -24,7 +24,6 @@ class Charts extends Component {
 
   componentDidUpdate = (prevProps) => {
     const { selectedReceiver } = this.props;
-    if (prevProps.selectedReceiver !== selectedReceiver) {
       this.init();
     }
   };
