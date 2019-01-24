@@ -51,6 +51,7 @@ const SelectionMenu = ({
       <FormControl className="SelectionMenuItems" required>
         <InputLabel htmlFor={item.type}>{item.InputLabel}</InputLabel>
         <SelectionMenuItems
+          required
           type={item.type}
           listeOfChoices={item.liste}
           record={item.recordFunction}

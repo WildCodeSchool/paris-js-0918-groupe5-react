@@ -25,9 +25,10 @@ const getGoodFormat = date => moment(date).toISOString(true).substr(0, 19);
 const refactoEventFormat = (allEvents = []) => {
   const events = [];
   allEvents.map(item => events.push({
-    title: item.title,
-    start: item.startingDate,
-    end: item.endingDate,
+    // title: `${item.startingDate.slice(11, 16)} - ${item.title}`,
+    title: `${item.startingDate.slice(16, 21)} - ${item.title}`,
+    start: getGoodFormat(item.startingDate),
+    end: getGoodFormat(item.endingDate),
     allDay: false,
   }));
   return events;
@@ -59,12 +60,13 @@ class Calendar extends Component {
 
   render() {
     const { isLoaded, events } = this.props;
+    console.log(events);
 
     if (!isLoaded) return <p>Site en maintenance, revenez plus tard :)</p>;
     return (
       <div className="calendar">
         <BigCalendar
-          views={['month', 'week', 'day']}
+          views={['month']}
           defaultView="month"
           localizer={localizer}
           events={refactoEventFormat(events)}
