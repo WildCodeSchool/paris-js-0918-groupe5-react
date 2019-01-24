@@ -39,7 +39,6 @@ class Contact extends Component {
       selectedContact: null,
       selectedId: null,
       categoryOfContact: 'Toutes catégories',
-      preferenceOfContact: null,
     }
 
     componentDidMount() {

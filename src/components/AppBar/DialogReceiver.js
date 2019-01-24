@@ -24,29 +24,27 @@ import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
 import { displayDialogReceiver } from '../../actions/displayActions';
 
 const validate = (values) => {
-  // const errors = {};
-  // const requiredFields = [
-  //   'title',
-  //   'lastName',
-  //   'firstName',
-  //   'address',
-  //   'phone',
-  //   'dateOfBirth',
-  //   'receiverBond',
-  // ];
-  // requiredFields.forEach((field) => {
-  //   if (!values[field]) {
-  //     errors[field] = 'Champs requis';
-  //   }
-  // });
-  // // Verify if the email has the good format
-  // if (
-  //   values.phone
-  //   && !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(values.phone)
-  // ) {
-  //   errors.email = 'Numéro de téléphone invalide';
-  // }
-  // return errors;
+  const errors = {};
+  const requiredFields = [
+    'lastName',
+    'firstName',
+    'address',
+    'phone',
+    'dateOfBirth',
+    'receiverBond',
+  ];
+  requiredFields.forEach((field) => {
+    if (!values[field]) {
+      errors[field] = 'Champs requis';
+    }
+  });
+  if (
+    values.phone
+    && !/^((?:\+33\s|\+33|0)[1-9](((?:\s\d{2})|(\d{2})){4}))$/i.test(values.phone)
+  ) {
+    errors.phone = 'Numéro de téléphone invalide';
+  }
+  return errors;
 };
 
 class DialogReceiver extends Component {
@@ -95,7 +93,13 @@ class DialogReceiver extends Component {
   }
 
   render() {
-    const { redux, receiver } = this.props;
+    const {
+      redux,
+      receiver,
+      invalid,
+      submitting,
+      pristine,
+    } = this.props;
     return (
       <div className="DialogReceiver">
         <Dialog
@@ -163,7 +167,7 @@ class DialogReceiver extends Component {
             <Button onClick={this.handleClose} color="primary">
               Annuler
             </Button>
-            <Button onClick={this.handleValidation} color="primary">
+            <Button onClick={this.handleValidation} color="primary" disabled={invalid || submitting || pristine}>
               {receiver && 'Editer'}
               {!receiver && 'Ajouter'}
             </Button>

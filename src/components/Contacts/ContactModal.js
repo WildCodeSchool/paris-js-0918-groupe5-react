@@ -21,15 +21,14 @@ let isSMS = 'phone';
 const validate = (values) => {
   const errors = {};
   const requiredFields = [
-    'title',
     'firstName',
     'lastName',
     isSMS,
     'address',
     'category',
-    'preferenceOfContact',
   ];
   requiredFields.forEach((field) => {
+    console.log(values);
     if (!values[field]) {
       errors[field] = 'Champs requis';
     }
@@ -60,6 +59,9 @@ const ContactModal = (props) => {
     selectedContact,
     selectedId,
     redux,
+    invalid,
+    submitting,
+    pristine,
   } = props;
 
   // console.log('préférence de contact :', redux.preferenceOfContact);
@@ -193,7 +195,7 @@ const ContactModal = (props) => {
           <Button onClick={handleClose} color="primary">
             Annuler
           </Button>
-          <Button onClick={() => (selectedContact ? handleEditContact(selectedId) : handleAddContact())} color="primary">
+          <Button onClick={() => (selectedContact ? handleEditContact(selectedId) : handleAddContact())} color="primary" disabled={invalid || submitting || pristine}>
             {selectedContact !== null
               ? <p>Modifier</p>
               : <p>Valider</p>

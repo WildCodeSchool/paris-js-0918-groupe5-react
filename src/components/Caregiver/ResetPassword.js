@@ -1,7 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -13,7 +11,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
-import { displayAppBar } from '../../actions/displayActions';
 
 class ResetPassword2 extends React.Component {
   state ={
@@ -22,12 +19,6 @@ class ResetPassword2 extends React.Component {
     open: true,
     redirect: false,
     openSignIn: false,
-  }
-
-  componentDidMount() {
-    const { displayAppBar } = this.props;
-    displayAppBar(false);
-    // console.log('7777777777777777777777777', this.props.location.search.split('=')[1])
   }
 
   handleClose = () => {
@@ -113,8 +104,4 @@ class ResetPassword2 extends React.Component {
   }
 }
 
-ResetPassword2.propTypes = {
-  displayAppBar: PropTypes.func.isRequired,
-};
-
-export default connect(null, { displayAppBar })(ResetPassword2);
+export default ResetPassword2;
