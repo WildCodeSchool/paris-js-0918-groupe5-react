@@ -1,7 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 import Dashboard from './components/Dashboard/Dashboard';
 import AppBarGlobal from './components/AppBar/AppBarGlobal';
 import IntroductionPage from './components/IntroductionPage';
@@ -44,32 +43,26 @@ const theme = createMuiTheme({
   },
 });
 
-const App = ({ redux }) => (
-  <MuiThemeProvider theme={theme}>
-    <div className="App">
-      <div>
-        {/* <RemainingComponent /> */}
-        <Route exact path="/" component={IntroductionPage} />
-        {redux.appBarIsDisplayed && <AppBarGlobal />}
-        <div className="spaceBtwAppBarAndRoutes">
-          <Route path="/connexion" component={SignInCaregiver} />
-          <Route path="/tableau_de_bord" component={Dashboard} />
-          {/* <Route path="/contacts" component={Contact} /> */}
-          <Route path="/contacts" component={Contact} />
-          <Route path="/création" component={SignUpCaregiver} />
-          <Route path="/calendrier" component={Calendar} />
-          <Route path="/suivi" component={Monitoring} />
+const App = (props) => {
+  const { location } = props;
+  return (
+    <MuiThemeProvider theme={theme}>
+      <div className="App">
+        <div>
+          <Route exact path="/" component={IntroductionPage} />
+          {location.pathname !== '/' && <AppBarGlobal />}
+          <div className="spaceBtwAppBarAndRoutes">
+            <Route exact path="/connexion" component={SignInCaregiver} />
+            <Route exact path="/tableau_de_bord" component={Dashboard} />
+            <Route exact path="/contacts" component={Contact} />
+            <Route exact path="/création" component={SignUpCaregiver} />
+            <Route exact path="/calendrier" component={Calendar} />
+            <Route exact path="/suivi" component={Monitoring} />
+          </div>
         </div>
-        {/* <Route path='/mon_compte' component={Account} /> */}
       </div>
-    </div>
-  </MuiThemeProvider>
-);
+    </MuiThemeProvider>
+  );
+};
 
-const mapStateToProps = state => ({
-  redux: {
-    appBarIsDisplayed: state.display.appBarIsDisplayed,
-  },
-});
-
-export default connect(mapStateToProps, null)(App);
+export default App;

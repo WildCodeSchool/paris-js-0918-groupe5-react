@@ -13,8 +13,6 @@ import { getContacts } from '../../actions/infoActions';
 import ChooseCategoryOfContact from './ChooseCategoryOfContact';
 
 // eslint-disable-next-line no-undef
-const token = localStorage.getItem('token');
-
 const styles = theme => ({
   displayContactButton: {
     margin: theme.spacing.unit,
@@ -82,6 +80,7 @@ class Contact extends Component {
       const contact = { ...redux.contact };
       contact.title = redux.contact.title || 'Mme';
       contact.preferenceOfContact = redux.contact.preferenceOfContact || 'SMS';
+      const token = localStorage.getItem('token');
 
       axios({
         method: 'POST',
@@ -112,6 +111,7 @@ class Contact extends Component {
     handleEditContact = (id) => {
       const { redux, getContacts } = this.props;
       const contact = { ...redux.contact };
+      const token = localStorage.getItem('token');
 
       axios({
         method: 'PUT',
@@ -140,6 +140,7 @@ class Contact extends Component {
     handleDeleteContact = (id) => {
       const { getContacts, redux } = this.props;
       const contact = { ...redux.contact };
+      const token = localStorage.getItem('token');
 
       axios({
         method: 'DELETE',
@@ -256,4 +257,3 @@ const mapStateToProps = state => ({
 
 // connect permet de connecter ton composant au store (actions, store ....)
 export default connect(mapStateToProps, { getContacts, reset })(withStyles(styles)(Contact));
-

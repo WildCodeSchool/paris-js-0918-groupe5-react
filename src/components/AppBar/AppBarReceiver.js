@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
+import { getReceivers } from '../../actions/infoActions';
 import CoverflowButtons from './CoverflowButtons';
 import ButtonsBar from './ButtonsBar';
 import MenuBar from './MenuBar';
@@ -56,6 +56,7 @@ const styles = theme => ({
 
 class AppBarReceiver extends Component {
   componentDidMount() {
+    console.log('getReceivers AppBarReceiver componentDidMount');
     const { getReceivers } = this.props;
     getReceivers();
   }
@@ -94,10 +95,11 @@ const mapStateToProps = state => ({
     receivers: state.info.receivers,
     selectedReceiverTab: state.info.selectedReceiverTab,
     selectedReceiver: state.info.selectedReceiver,
+    appBarIsDisplayed: state.display.appBarIsDisplayed,
   },
 });
 
 export default connect(
   mapStateToProps,
-  { getReceivers, getSelectedReceiver },
+  { getReceivers },
 )(withStyles(styles)(AppBarReceiver));

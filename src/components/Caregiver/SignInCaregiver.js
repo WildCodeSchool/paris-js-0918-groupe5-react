@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -13,7 +12,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
-import { displayAppBar } from '../../actions/displayActions';
 import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
 
 import './SignInCaregiver.css';
@@ -25,11 +23,6 @@ class SignInCaregiver extends React.Component {
     password: '',
   }
 
-  componentDidMount() {
-    const { displayAppBar } = this.props;
-    displayAppBar(false);
-  }
-
   recordInformations = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -38,25 +31,28 @@ class SignInCaregiver extends React.Component {
     const { email, password } = this.state;
     e.preventDefault();
     const data = { email, password };
-    axios.post(`${getServerAuthority()}/auth/signin`,
-      data).then((res) => {
-      localStorage.setItem('token', res.headers['x-access-token']);
-      localStorage.setItem('id', res.id);
-      this.setState({ redirect: true });
-    })
+    axios
+      .post(`${getServerAuthority()}/auth/signin`,
+        data).then((res) => {
+        console.log('SignInCaregiver res.headers ', res.headers['x-acces-token']);
+        console.log('SignInCaregiver res.id ', res.id);
+        localStorage.setItem('token', res.headers['x-access-token']);
+        localStorage.setItem('id', res.id);
+        console.log('SignInCaregiver token ', localStorage.getItem('token'));
+        console.log('SignInCaregiver id ', localStorage.getItem('id'));
+      })
       .then(() => {
         const { getReceivers } = this.props;
         getReceivers();
       })
+      // .then(() => {
+      //   const { redux, getSelectedReceiver } = this.props;
+      //   if (redux.selectedReceiverId > 0) {
+      //     getSelectedReceiver(redux.selectedReceiverId);
+      //   }
+      // })
       .then(() => {
-        const { selectedReceiverId, getSelectedReceiver } = this.props;
-        if (selectedReceiverId !== 0) {
-          getSelectedReceiver(selectedReceiverId);
-        }
-      })
-      .then(() => {
-        const { displayAppBar } = this.props;
-        displayAppBar(true);
+        this.setState({ redirect: true });
       });
   };
 
@@ -116,8 +112,13 @@ class SignInCaregiver extends React.Component {
   }
 }
 
-SignInCaregiver.propTypes = {
-  displayAppBar: PropTypes.func.isRequired,
-};
+const mapStateToProps = state => ({
+  redux: {
+    selectedReceiverId: state.info.selectedReceiverId,
+  },
+});
 
-export default connect(null, { displayAppBar, getReceivers, getSelectedReceiver })(SignInCaregiver);
+export default connect(
+  mapStateToProps,
+  { getReceivers, getSelectedReceiver },
+)(SignInCaregiver);

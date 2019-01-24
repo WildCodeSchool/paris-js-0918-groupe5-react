@@ -13,7 +13,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import getServerAuthority from '../../config/getServerAuthority';
-import SignInCaregiverAfterSignUp from './SignInCaregiverAfterSignUp';
 
 const styles = theme => ({
   root: {
@@ -36,19 +35,14 @@ const styles = theme => ({
 class SignUpCaregiver extends React.Component {
   state = {
     title: 'female',
-    preferenceOfContact: 'sms',
-    openSignIn: false,
     lastName: '',
     firstName: '',
-    email: '',
-    password: '',
     address: '',
     phone: '',
-    dataCaregiver: {},
-  };
-
-  handleCloseConnection = () => {
-    this.setState({ openSignIn: false });
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+    preferenceOfContact: 'sms',
   };
 
   handleChangeTitle = (e) => {
@@ -64,18 +58,30 @@ class SignUpCaregiver extends React.Component {
   }
 
   handleValidation = () => {
-    const data = this.state;
-    axios.post(`${getServerAuthority()}/auth/signup`, data)
-      .then(res => this.setState({
-        dataCaregiver: res.data,
-      }));
-    this.props.onCloseSignUp();
-    this.setState({ openSignIn: true });
+    const caregiver = this.state;
+    if (caregiver.password === caregiver.passwordConfirmation) {
+      axios.post(`${getServerAuthority()}/auth/signup`, caregiver)
+        .then(() => {
+          const { onCloseSignUp } = this.props;
+          onCloseSignUp(true);
+        })
+        .catch((err) => { console.log('err SignUp ------- ', err); });
+    }
   }
 
   render() {
     const { openSignUp, onCloseSignUp, classes } = this.props;
-    const { title, preferenceOfContact, openSignIn } = this.state;
+    const {
+      title,
+      preferenceOfContact,
+      lastName,
+      firstName,
+      email,
+      password,
+      passwordConfirmation,
+      address,
+      phone,
+    } = this.state;
     return (
       <div className={classes.root}>
         <Dialog
@@ -98,7 +104,7 @@ class SignUpCaregiver extends React.Component {
               </RadioGroup>
             </FormControl>
             <FormControl component="fieldset" className={classes.titleCaregiver}>
-              <FormLabel component="legendPoint"> .</FormLabel>
+              <FormLabel className={classes.legendPoint}> .</FormLabel>
               <RadioGroup
                 aria-label="gender"
                 name="gender2"
@@ -120,6 +126,7 @@ class SignUpCaregiver extends React.Component {
               label="Nom"
               type="text"
               name="lastName"
+              value={lastName}
               onChange={this.handleChangeFields}
               fullWidth
             />
@@ -129,6 +136,7 @@ class SignUpCaregiver extends React.Component {
               label="Prénom"
               type="text"
               name="firstName"
+              value={firstName}
               onChange={this.handleChangeFields}
               fullWidth
             />
@@ -138,6 +146,7 @@ class SignUpCaregiver extends React.Component {
               label="Adresse mail"
               type="email"
               name="email"
+              value={email}
               onChange={this.handleChangeFields}
               fullWidth
             />
@@ -147,15 +156,17 @@ class SignUpCaregiver extends React.Component {
               label="Mot de passe"
               type="password"
               name="password"
+              value={password}
               onChange={this.handleChangeFields}
               fullWidth
             />
             <TextField
               margin="dense"
-              id="standard-password"
+              id="standard-password-2"
               label="Confirmation de mot de passe"
               type="password"
               name="passwordConfirmation"
+              value={passwordConfirmation}
               onChange={this.handleChangeFields}
               fullWidth
             />
@@ -165,6 +176,7 @@ class SignUpCaregiver extends React.Component {
               label="Adresse"
               type="text"
               name="address"
+              value={address}
               onChange={this.handleChangeFields}
               fullWidth
             />
@@ -174,6 +186,7 @@ class SignUpCaregiver extends React.Component {
               label="Téléphone"
               type="text"
               name="phone"
+              value={phone}
               onChange={this.handleChangeFields}
               fullWidth
             />
@@ -190,7 +203,7 @@ class SignUpCaregiver extends React.Component {
               </RadioGroup>
             </FormControl>
             <FormControl component="fieldset" className={classes.contactPreference}>
-              <FormLabel component="legendPoint"> .</FormLabel>
+              <FormLabel className={classes.legendPoint}> .</FormLabel>
               <RadioGroup
                 aria-label="gender"
                 name="gender2"
@@ -212,14 +225,10 @@ class SignUpCaregiver extends React.Component {
               Fermer
             </Button>
             <Button onClick={this.handleValidation} color="primary">
-              S'inscrire
+              {"S'inscrire"}
             </Button>
           </DialogActions>
         </Dialog>
-        <SignInCaregiverAfterSignUp
-          openSignIn={openSignIn}
-          onCloseSignIn={this.handleCloseConnection}
-        />
       </div>
     );
   }
