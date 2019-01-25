@@ -12,6 +12,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "express": "^4.16.4",
     "express-favicon": "^2.0.1",
+    "globalize": "^1.4.0",
     "material-ui-datetimepicker": "^1.0.7",
     "moment": "^2.23.0",
     "postinstall-build": "^5.0.3",

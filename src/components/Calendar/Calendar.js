@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
+import 'moment/locale/fr';
 import PropTypes from 'prop-types';
 
 import DialogOpener from './DialogOpener';
@@ -15,6 +16,8 @@ import {
   getContacts,
 } from '../../actions/eventActions';
 
+// color func of category an past event
+moment.locale('fr');
 const localizer = BigCalendar.momentLocalizer(moment);
 
 const getGoodFormat = date => moment(date).toISOString(true).substr(0, 19);
@@ -22,10 +25,11 @@ const getGoodFormat = date => moment(date).toISOString(true).substr(0, 19);
 const refactoEventFormat = (allEvents = []) => {
   const events = [];
   allEvents.map(item => events.push({
-    title: item.title,
-    start: item.startingDate,
-    end: item.endingDate,
-    allDay: true,
+    // title: `${item.startingDate.slice(11, 16)} - ${item.title}`,
+    title: `${item.startingDate.slice(16, 21)} - ${item.title}`,
+    start: getGoodFormat(item.startingDate),
+    end: getGoodFormat(item.endingDate),
+    allDay: false,
   }));
   return events;
 };
@@ -56,18 +60,21 @@ class Calendar extends Component {
 
   render() {
     const { isLoaded, events } = this.props;
+    console.log(events);
 
     if (!isLoaded) return <p>Site en maintenance, revenez plus tard :)</p>;
     return (
       <div className="calendar">
         <BigCalendar
-          views={['month', 'week', 'day']}
+          views={['month']}
           defaultView="month"
           localizer={localizer}
           events={refactoEventFormat(events)}
           selectable
           onSelectEvent={() => console.log('pop-up to modify')}
           onSelectSlot={this.openDialogToCreateEvent}
+          startAccessor="start"
+          endAccessor="end"
         />
         <DialogOpener />
       </div>
@@ -81,7 +88,6 @@ Calendar.propTypes = {
   OpenDialog: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   events: PropTypes.array.isRequired,
-  listOfcontact: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
