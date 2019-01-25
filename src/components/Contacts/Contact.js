@@ -90,7 +90,7 @@ class Contact extends Component {
         },
         data: contact,
       })
-        .then(console.log('data : ', contact))
+        // .then(console.log('data : ', contact))
         .then(() => { getContacts(); })
         .then(this.handleClose('contactModalIsOpen'))
         .then(() => { reset('contactModal'); });
@@ -111,10 +111,10 @@ class Contact extends Component {
       })
         .then(() => { reset('contactModal'); })
         .then(() => { getContacts(); })
-        .then(this.handleClose('contactModalIsOpen'))
-        .then(console.log(`Contact n° ${id} dans le tableau édité`))
-        .then(console.log('data : ', { contact }))
-        // .then(() => { reset('contactModal'); });
+        .then(this.handleClose('contactModalIsOpen'));
+      // .then(console.log(`Contact n° ${id} dans le tableau édité`))
+      // .then(console.log('data : ', { contact }))
+      // .then(() => { reset('contactModal'); });
     }
 
     handleDeleteContactModal = (id) => {
@@ -139,8 +139,7 @@ class Contact extends Component {
         data: contact,
       })
         .then(() => { getContacts(); })
-        .then(this.handleClose('deleteContactModalIsOpen'))
-        .then(() => { console.log(`Contact n° ${this.contactsFiltered()[id].id} (n° ${id} dans le tableau) supprimé`); });
+        .then(this.handleClose('deleteContactModalIsOpen'));
     }
 
     contactsFiltered() {
@@ -204,15 +203,17 @@ class Contact extends Component {
             displayedContact={displayedContact}
           />)}
 
-          <ContactModal
-            handleClose={this.handleClose('contactModalIsOpen')}
-            handleAddContact={this.handleAddContact}
-            handleSelectContact={this.handleSelectContact}
-            handleEditContact={this.handleEditContact}
-            selectedContact={selectedContact}
-            selectedId={selectedId}
-            contactModalIsOpen={contactModalIsOpen}
-          />
+          {contactModalIsOpen && (
+            <ContactModal
+              handleClose={this.handleClose('contactModalIsOpen')}
+              handleAddContact={this.handleAddContact}
+              handleSelectContact={this.handleSelectContact}
+              handleEditContact={this.handleEditContact}
+              selectedContact={selectedContact}
+              selectedId={selectedId}
+              contactModalIsOpen={contactModalIsOpen}
+            />
+          )}
 
           {displayedContact !== null && (
           <DeleteContactModal

@@ -1,3 +1,4 @@
+/* eslint react/destructuring-assignment: 0, prefer-destructuring: 0 */
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
@@ -12,13 +13,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
 
-class ResetPassword2 extends React.Component {
+class ResetPassword extends React.Component {
   state ={
     password: '',
     passwordVerify: '',
     open: true,
     redirect: false,
-    openSignIn: false,
   }
 
   handleClose = () => {
@@ -33,7 +33,6 @@ class ResetPassword2 extends React.Component {
     e.preventDefault();
     const { password, passwordVerify } = this.state;
     const token = this.props.match.params.token;
-    console.log('-------------------', token);
 
     if (password === passwordVerify) {
       axios({
@@ -44,13 +43,12 @@ class ResetPassword2 extends React.Component {
         },
         data: { password },
       })
-        .then((res) => {
-          console.log('reeeeees', res);
+        .then(() => {
+          alert('Votre mot de passe a bien été modifié');
+          this.setState({ redirect: true });
         });
-      alert('Votre mot de passe a bien été modifié');
-      this.setState({ redirect: true, openSignIn: true });
     } else {
-      alert('Les mots de passe ne correspondent pas, merci de rééssayer.')
+      alert('Les mots de passe ne correspondent pas, merci de rééssayer.');
     }
   }
 
@@ -104,4 +102,4 @@ class ResetPassword2 extends React.Component {
   }
 }
 
-export default ResetPassword2;
+export default ResetPassword;

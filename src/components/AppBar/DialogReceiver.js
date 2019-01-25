@@ -23,31 +23,40 @@ import {
 import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
 import { displayDialogReceiver } from '../../actions/displayActions';
 
-const validate = (values) => {
+const validate = (formProps) => {
   const errors = {};
-  const requiredFields = [
-    'lastName',
-    'firstName',
-    'address',
-    'phone',
-    'dateOfBirth',
-    'receiverBond',
-  ];
-  requiredFields.forEach((field) => {
-    if (!values[field]) {
-      errors[field] = 'Champs requis';
+  if (Object.entries(formProps).length) {
+    const entries = Object.entries(formProps);
+    for (let i = 0; i < entries.length; i++) {
+      const field = entries[i][0];
+      if (!entries[i][1]) {
+        errors[field] = 'Champs requis';
+      }
     }
-  });
-  if (
-    values.phone
-    && !/^((?:\+33\s|\+33|0)[1-9](((?:\s\d{2})|(\d{2})){4}))$/i.test(values.phone)
-  ) {
-    errors.phone = 'Numéro de téléphone invalide';
+    if (
+      formProps.phone
+      && !/^((?:\+33\s|\+33|0)[1-9](((?:\s\d{2})|(\d{2})){4}))$/i.test(formProps.phone)
+    ) {
+      errors.phone = 'Numéro de téléphone invalide';
+    }
   }
   return errors;
 };
 
 class DialogReceiver extends Component {
+  componentDidMount() {
+    const { receiver, initialize } = this.props;
+    const initData = {
+      lastName: receiver ? receiver.lastName : '',
+      firstName: receiver ? receiver.firstName : '',
+      address: receiver ? receiver.address : '',
+      phone: receiver ? receiver.phone : '',
+      dateOfBirth: receiver ? receiver.dateOfBirth : '',
+      receiverBond: receiver ? receiver.lastName : '',
+    };
+    initialize(initData);
+  }
+
   handleValidation = () => {
     const {
       redux,
@@ -80,7 +89,6 @@ class DialogReceiver extends Component {
       })
       .then((resReceiver) => {
         const { getSelectedReceiver } = this.props;
-        console.log('resReceiver', resReceiver.id);
         getSelectedReceiver(resReceiver.id);
       })
       .then(() => { reset('receiverForm'); })
