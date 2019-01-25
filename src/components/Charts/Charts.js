@@ -9,7 +9,8 @@ import getServerAuthority from '../../config/getServerAuthority';
 
 
 class Charts extends Component {
-  _isMounted = false;
+  _isMounted = false; // indicates whether the component is mounted in order to prevent
+  // setState in async functions to be executed when component is unmounted (may cause memory leak)
 
   constructor(props) {
     super(props);
@@ -68,7 +69,7 @@ class Charts extends Component {
       id: e.id, startingDate: e.startingDate, mood: e.mood, followedVisit: e.followedVisit,
     }));
 
-  // returns an array containing all the scheduled events from DB
+  // returns an array containing all the scheduled events related to the Caregiver
   getEventsData = () => {
     const token = localStorage.getItem('token');
     return axios({
@@ -83,7 +84,8 @@ class Charts extends Component {
       .then(res => this.simplifyEvents(res));// optional
   }
 
-  // filters all scheduled events from DB to keep only scheduled events of the previous week
+  // filters all scheduled events related to the Caregiver to keep only scheduled events
+  // of the previous week
   getLastWeekEvents = async () => {
     try {
       const [eventsData, lastWeek] = await Promise.all([this.getEventsData(), this.getLast7Days()]);
@@ -185,8 +187,8 @@ class Charts extends Component {
 
   // returns 2 arrays:
   // - visitsArray contains the number of tracked visits for each day of the previous week
-  // - absencesArray contains the number of absences of a tracked event (event is scheduled and
-  // tracked but no mood recorded) for each day of the previous week
+  // - absencesArray contains the number of absences of a tracked event (event is tracked
+  // but no mood recorded) for each day of the previous week
   createVisitsAndAbsencesArrays = async () => {
     try {
       const [week, events] = await Promise.all([this.getLast7Days(), this.getFollowedEvents()]);
