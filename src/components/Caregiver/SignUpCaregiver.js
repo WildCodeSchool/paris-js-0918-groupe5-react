@@ -86,7 +86,7 @@ class SignUpCaregiver extends React.Component {
       <div className={classes.root}>
         <Dialog
           open={openSignUp}
-          onClose={onCloseSignUp}
+          onClose={() => onCloseSignUp(false)}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Inscription</DialogTitle>
@@ -221,7 +221,7 @@ class SignUpCaregiver extends React.Component {
             {/* <Captcha /> */}
           </DialogContent>
           <DialogActions>
-            <Button onClick={onCloseSignUp} color="primary">
+            <Button onClick={() => onCloseSignUp(false)} color="primary">
               Fermer
             </Button>
             <Button onClick={this.handleValidation} color="primary">

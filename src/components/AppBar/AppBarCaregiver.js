@@ -61,9 +61,9 @@ class AppBarCaregiver extends Component {
     this.setState({ anchorEl: null });
   };
 
-  handleOpenDialogLogOut = () => {
+  handleOpenCloseDialogLogOut = isOpen => () => {
     this.setState({
-      dialogLogOutIsDisplayed: true,
+      dialogLogOutIsDisplayed: isOpen,
     });
   }
 
@@ -114,7 +114,7 @@ class AppBarCaregiver extends Component {
                 </ListItemIcon>
                 <ListItemText inset primary="Mes notifications" />
               </MenuItem>
-              <MenuItem onClick={this.handleOpenDialogLogOut}>
+              <MenuItem onClick={this.handleOpenCloseDialogLogOut(true)}>
                 <ListItemIcon>
                   <PowerSettingsNew />
                 </ListItemIcon>
