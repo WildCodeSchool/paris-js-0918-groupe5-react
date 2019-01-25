@@ -51,7 +51,11 @@ const App = (props) => {
       <div className="App">
         <div>
           <Route exact path="/" component={IntroductionPage} />
-          {location.pathname !== '/' && <AppBarGlobal />}
+          {location.pathname !== '/'
+            && location.pathname !== '/connexion'
+            && location.pathname !== '/inscription'
+            && location.pathname !== '/reset/:token'
+            && <AppBarGlobal />}
           <div className="spaceBtwAppBarAndRoutes">
             <Route exact path="/connexion" component={SignInCaregiver} />
             <Route exact path="/tableau_de_bord" component={Dashboard} />

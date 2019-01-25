@@ -39,13 +39,13 @@ class DialogLogOut extends Component {
       <div className="DialogLogOut">
         <Dialog
           open
-          onClose={() => handleOpenCloseDialogLogOut(false)}
+          onClose={handleOpenCloseDialogLogOut(false)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">Voulez-vous vraiment vous déconnecter ?</DialogTitle>
           <DialogActions>
-            <Button onClick={() => handleOpenCloseDialogLogOut(false)} color="primary">
+            <Button onClick={handleOpenCloseDialogLogOut(false)} color="primary">
               Annuler
             </Button>
             <Button onClick={this.handleLogOut} color="primary" autoFocus>
