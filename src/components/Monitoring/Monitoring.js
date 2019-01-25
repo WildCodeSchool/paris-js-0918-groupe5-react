@@ -70,10 +70,14 @@ class Monitoring extends Component {
 
   // returns only past events
   getPastEvents = async () => {
-    const events = await this.formatDatesToISO();
-    const result = events.filter(e => new Date(e.startingDate) < new Date());
-    // console.log('getPastEvents', result);
-    return result;
+    try {
+      const events = await this.formatDatesToISO();
+      const result = events.filter(e => new Date(e.startingDate) < new Date());
+      // console.log('getPastEvents', result);
+      return result;
+    } catch (err) {
+      throw new Error(err);
+    }
   };
 
   // returns past events sorted in reversed chronological order
