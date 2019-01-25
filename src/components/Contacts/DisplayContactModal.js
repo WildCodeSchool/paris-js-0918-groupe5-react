@@ -7,7 +7,6 @@ import {
   DialogContent,
   withStyles,
 } from '@material-ui/core';
-// import classes from '*.module.sass';
 
 const styles = theme => ({
   displayModal: {
@@ -29,7 +28,6 @@ const DisplayContactModal = (props) => {
     displayedContact,
     classes,
   } = props;
-  // console.log(displayedContact);
 
   return (
     <div>
@@ -40,7 +38,7 @@ const DisplayContactModal = (props) => {
       >
         <div className={classes.displayModal}>
           <DialogTitle id="form-dialog-title">
-            {`${displayedContact.title} ${displayedContact.firstName} ${displayedContact.lastName}`}
+            {`${displayedContact.title} ${displayedContact.lastName} ${displayedContact.firstName}`}
           </DialogTitle>
           <DialogContent>
             {displayedContact.category !== null && (<h4>Catégorie</h4>)}

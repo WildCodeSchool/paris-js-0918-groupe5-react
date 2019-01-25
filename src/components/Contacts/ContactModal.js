@@ -73,7 +73,6 @@ class ContactModal extends Component {
     } = this.props;
     return (
       <div>
-        {/* {redux.preferenceOfContact === 'Mail' ? isSMS === 'email' : isSMS === 'phone'} */}
         <Dialog
           open={contactModalIsOpen}
           onClose={handleClose}
@@ -156,8 +155,7 @@ class ContactModal extends Component {
               name="preferenceOfContact"
               component={renderRadioButton}
               label="Préférence de contact"
-              buttonLabels={['SMS', 'Mail']}
-              // onClick={isSMS === 'email'}
+              buttonLabels={['SMS', 'email']}
               required
               onChange={() => { isSMS = isSMS === 'email' ? 'phone' : 'email'; }}
               initialValue={
@@ -170,7 +168,7 @@ class ContactModal extends Component {
               name="phone"
               component={renderTextField}
               label="Téléphone"
-              required={redux.preferenceOfContact !== 'Mail'}
+              required={redux.preferenceOfContact !== 'email'}
               defaultValue={
                 selectedContact !== null ? selectedContact.phone : ''
               }
@@ -179,8 +177,7 @@ class ContactModal extends Component {
               name="email"
               component={renderTextField}
               label="Email"
-              // onChange={isSMS === 'email'}
-              required={redux.preferenceOfContact === 'Mail'}
+              required={redux.preferenceOfContact === 'email'}
               defaultValue={
                 selectedContact === null ? '' : selectedContact === undefined ? '' : selectedContact.email
               }
