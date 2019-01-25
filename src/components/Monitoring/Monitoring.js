@@ -6,7 +6,8 @@ import EventsTable from './EventsTable';
 import getServerAuthority from '../../config/getServerAuthority';
 
 class Monitoring extends Component {
-  _isMounted = false;
+  _isMounted = false;// indicates whether the component is mounted in order to prevent
+  // setState in async functions to be executed when component is unmounted (may cause memory leak)
 
   constructor(props) {
     super(props);
@@ -27,7 +28,7 @@ class Monitoring extends Component {
     }
   };
 
-  // returns all events from DB
+  // returns all events related to Caregiver
   getEventsData = () => {
     const token = localStorage.getItem('token');
     return axios({
@@ -52,7 +53,7 @@ class Monitoring extends Component {
     }
   };
 
-  // returns events with dates with ISO format
+  // returns events with dates in ISO format
   formatDatesToISO = async () => {
     try {
       const events = await this.getEventsWithMood();
@@ -98,7 +99,7 @@ class Monitoring extends Component {
         <Grid container justify="center">
           <Grid
             item
-            xs={10}
+            xs={9}
             style={{
               padding: 30,
             }}
