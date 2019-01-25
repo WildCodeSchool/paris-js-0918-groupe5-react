@@ -59,6 +59,7 @@ const App = (props) => {
             <Route exact path="/création" component={SignUpCaregiver} />
             <Route exact path="/calendrier" component={Calendar} />
             <Route exact path="/suivi" component={Monitoring} />
+            <Route path="/reset/:token" component={ResetPassword} />
           </div>
         </div>
       </div>

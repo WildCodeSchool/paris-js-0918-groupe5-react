@@ -1,7 +1,6 @@
+/* eslint react/destructuring-assignment: 0, prefer-destructuring: 0 */
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -13,21 +12,13 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
-import { displayAppBar } from '../../actions/displayActions';
 
-class ResetPassword2 extends React.Component {
+class ResetPassword extends React.Component {
   state ={
     password: '',
     passwordVerify: '',
     open: true,
     redirect: false,
-    openSignIn: false,
-  }
-
-  componentDidMount() {
-    const { displayAppBar } = this.props;
-    displayAppBar(false);
-    // console.log('7777777777777777777777777', this.props.location.search.split('=')[1])
   }
 
   handleClose = () => {
@@ -42,7 +33,6 @@ class ResetPassword2 extends React.Component {
     e.preventDefault();
     const { password, passwordVerify } = this.state;
     const token = this.props.match.params.token;
-    console.log('-------------------', token);
 
     if (password === passwordVerify) {
       axios({
@@ -53,13 +43,12 @@ class ResetPassword2 extends React.Component {
         },
         data: { password },
       })
-        .then((res) => {
-          console.log('reeeeees', res);
+        .then(() => {
+          alert('Votre mot de passe a bien été modifié');
+          this.setState({ redirect: true });
         });
-      alert('Votre mot de passe a bien été modifié');
-      this.setState({ redirect: true, openSignIn: true });
     } else {
-      alert('Les mots de passe ne correspondent pas, merci de rééssayer.')
+      alert('Les mots de passe ne correspondent pas, merci de rééssayer.');
     }
   }
 
@@ -113,8 +102,4 @@ class ResetPassword2 extends React.Component {
   }
 }
 
-ResetPassword2.propTypes = {
-  displayAppBar: PropTypes.func.isRequired,
-};
-
-export default connect(null, { displayAppBar })(ResetPassword2);
+export default ResetPassword;

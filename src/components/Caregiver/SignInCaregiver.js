@@ -13,7 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
 import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
-import ForgotPasswordModale from './ForgotPasswordModale';
+import ForgotPasswordModal from './ForgotPasswordModal';
 
 
 import './SignInCaregiver.css';
@@ -124,7 +124,7 @@ class SignInCaregiver extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <ForgotPasswordModale open={openForgotPassword} onClose={this.handleCloseForgotPassword} />
+        <ForgotPasswordModal open={openForgotPassword} onClose={this.handleCloseForgotPassword} />
       </div>
     );
   }

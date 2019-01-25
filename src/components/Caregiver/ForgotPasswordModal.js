@@ -1,7 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -13,19 +11,13 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import getServerAuthority from '../../config/getServerAuthority';
-import { displayAppBar } from '../../actions/displayActions';
 
 import './SignInCaregiver.css';
 
-class ForgotPasswordModale extends React.Component {
+class ForgotPasswordModal extends React.Component {
   state = {
     redirect: false,
     email: '',
-  }
-
-  componentDidMount() {
-    const { displayAppBar } = this.props;
-    displayAppBar(false);
   }
 
   recordInformations = (e) => {
@@ -59,8 +51,8 @@ class ForgotPasswordModale extends React.Component {
           <DialogTitle id="form-dialog-title">Renouvellement de mot de passe</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Afin de renouveller votre mot de passe, merci de bien vouloir indiquer votre adresse mail.
-              Un e-mail vous sera envoyé afin d'en créer un nouveau.
+              {'Afin de renouveller votre mot de passe, merci de bien vouloir indiquer votre adresse mail.'}
+              {'Un e-mail vous sera envoyé afin d\'en créer un nouveau.'}
             </DialogContentText>
             <TextField
               margin="dense"
@@ -86,8 +78,4 @@ class ForgotPasswordModale extends React.Component {
   }
 }
 
-ForgotPasswordModale.propTypes = {
-  displayAppBar: PropTypes.func.isRequired,
-};
-
-export default connect(null, { displayAppBar })(ForgotPasswordModale);
+export default ForgotPasswordModal;
