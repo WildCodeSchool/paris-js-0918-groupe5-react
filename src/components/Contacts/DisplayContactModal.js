@@ -40,7 +40,7 @@ const DisplayContactModal = (props) => {
       >
         <div className={classes.displayModal}>
           <DialogTitle id="form-dialog-title">
-            {`${displayedContact.title} ${displayedContact.firstName} ${displayedContact.lastName}`}
+            {`${displayedContact.title} ${displayedContact.lastName} ${displayedContact.firstName}`}
           </DialogTitle>
           <DialogContent>
             {displayedContact.category !== null && (<h4>Catégorie</h4>)}
