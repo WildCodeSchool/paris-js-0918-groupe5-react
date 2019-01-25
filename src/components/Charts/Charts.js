@@ -232,7 +232,7 @@ class Charts extends Component {
     } = this.state;
     return (
       <div>
-        <Grid container justify="center" spacing={32}>
+        <Grid container justify="center" spacing={32} style={{ paddingTop: 30 }}>
           <Grid item lg={6} md={8} sm={11} xs={12}>
             <VisitsChart nonFollowedVisitsArray={nonFollowedVisitsArray} absencesArray={absencesArray} visitsArray={visitsArray} dayNamesArray={dayNamesArray} />
           </Grid>
