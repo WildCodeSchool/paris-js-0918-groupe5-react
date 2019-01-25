@@ -90,7 +90,6 @@ class Contact extends Component {
         },
         data: contact,
       })
-        // .then(console.log('data : ', contact))
         .then(() => { getContacts(); })
         .then(this.handleClose('contactModalIsOpen'))
         .then(() => { reset('contactModal'); });
@@ -112,9 +111,6 @@ class Contact extends Component {
         .then(() => { reset('contactModal'); })
         .then(() => { getContacts(); })
         .then(this.handleClose('contactModalIsOpen'));
-      // .then(console.log(`Contact n° ${id} dans le tableau édité`))
-      // .then(console.log('data : ', { contact }))
-      // .then(() => { reset('contactModal'); });
     }
 
     handleDeleteContactModal = (id) => {

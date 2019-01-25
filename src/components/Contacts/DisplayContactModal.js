@@ -7,7 +7,6 @@ import {
   DialogContent,
   withStyles,
 } from '@material-ui/core';
-// import classes from '*.module.sass';
 
 const styles = theme => ({
   displayModal: {
@@ -29,7 +28,6 @@ const DisplayContactModal = (props) => {
     displayedContact,
     classes,
   } = props;
-  // console.log(displayedContact);
 
   return (
     <div>

@@ -5,11 +5,6 @@ import PropTypes from 'prop-types';
 const styles = theme => ({
   addContactButton: {
     margin: theme.spacing.unit,
-    // backgroundColor: '#FFD694',
-    // border: '1px solid #FFD694',
-    // '&:hover': {
-    //   backgroundColor: '#FFE7C0',
-    // },
   },
 
 });
