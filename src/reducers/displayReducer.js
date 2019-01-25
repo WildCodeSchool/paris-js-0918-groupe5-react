@@ -1,7 +1,8 @@
-import { DISPLAY_DIALOG_RECEIVER } from '../actions/types';
+import { DISPLAY_DIALOG_RECEIVER, DISPLAY_DIALOG_DELETE_RECEIVER } from '../actions/types';
 
 const initialState = {
   dialogReceiverIsDisplayed: false,
+  dialogDeleteReceiverIsDisplayed: false,
 };
 
 export default (state = initialState, action) => {
@@ -10,6 +11,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         dialogReceiverIsDisplayed: action.isDisplayed,
+      };
+    case DISPLAY_DIALOG_DELETE_RECEIVER:
+      return {
+        ...state,
+        dialogDeleteReceiverIsDisplayed: action.isDisplayed,
       };
     default:
       return state;

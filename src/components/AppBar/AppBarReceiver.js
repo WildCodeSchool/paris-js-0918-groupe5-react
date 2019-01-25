@@ -56,7 +56,6 @@ const styles = theme => ({
 
 class AppBarReceiver extends Component {
   componentDidMount() {
-    console.log('getReceivers AppBarReceiver componentDidMount');
     const { getReceivers } = this.props;
     getReceivers();
   }

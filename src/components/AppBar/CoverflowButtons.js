@@ -13,8 +13,9 @@ import {
 import { Add as AddIcon, Create as EditIcon, Clear as ClearIcon } from '@material-ui/icons';
 import getServerAuthority from '../../config/getServerAuthority';
 import { getReceivers, getSelectedReceiver } from '../../actions/infoActions';
-import { displayDialogReceiver } from '../../actions/displayActions';
+import { displayDialogReceiver, displayDialogDeleteReceiver } from '../../actions/displayActions';
 import DialogReceiver from './DialogReceiver';
+import DialogDeleteReceiver from './DialogDeleteReceiver';
 import './CoverflowButtons.css';
 
 const styles = theme => ({
@@ -76,7 +77,6 @@ class CoverflowButtons extends Component {
   }
 
   selectReceiver = (receiverId) => {
-    console.log('CoverFlowButtons selectReceiver', receiverId);
     if (receiverId && receiverId > 0) {
       const { getSelectedReceiver } = this.props;
       getSelectedReceiver(receiverId);
@@ -88,8 +88,8 @@ class CoverflowButtons extends Component {
     this.setState({ receiver: null }, displayDialogReceiver(true));
   }
 
-  getReceiverInfos = (receiverId) => {
-    const { displayDialogReceiver } = this.props;
+  getReceiverInfos = (blnEdit, receiverId) => {
+    const { displayDialogReceiver, displayDialogDeleteReceiver } = this.props;
     const token = localStorage.getItem('token');
     axios({
       method: 'GET',
@@ -100,15 +100,17 @@ class CoverflowButtons extends Component {
     })
       .then(res => res.data)
       .then(receiver => (
-        this.setState({ receiver }, displayDialogReceiver(true))
+        this.setState({ receiver }, blnEdit
+          ? displayDialogReceiver(true)
+          : displayDialogDeleteReceiver(true))
       ));
   }
 
   handleClickEdit = (receiverId) => {
-    this.setState({ receiver: null }, () => this.getReceiverInfos(receiverId));
+    this.setState({ receiver: null }, () => this.getReceiverInfos(true, receiverId));
   }
 
-  handleClickClear = (receiverId) => {
+  deleteReceiver = receiverId => () => {
     const { redux, getReceivers } = this.props;
     const token = localStorage.getItem('token');
     axios({
@@ -121,10 +123,12 @@ class CoverflowButtons extends Component {
       .then(() => { getReceivers(); })
       .then(() => {
         this.selectReceiver(redux.selectedReceiverId);
-      });
-    // .then(() => {
-    //   window.location.reload();
-    // });
+      })
+      .then(() => { console.log('aaaaaaaaaah'); displayDialogDeleteReceiver(false); });
+  }
+
+  handleClickDelete = (receiverId) => {
+    this.setState({ receiver: null }, () => this.getReceiverInfos(false, receiverId));
   }
 
   handleClickSelect = (receiverId) => {
@@ -136,7 +140,6 @@ class CoverflowButtons extends Component {
   render() {
     const { classes, receivers, selectedReceiverTab } = this.props;
     const { receiver } = this.state;
-    // console.log(selectedReceiverTab);
     return (
       <div className="CoverflowButtons">
         <Coverflow
@@ -165,7 +168,7 @@ class CoverflowButtons extends Component {
                 </Grid>
                 <Grid item>
                   <IconButton
-                    onClick={() => this.handleClickClear(receiver.id)}
+                    onClick={() => this.handleClickDelete(receiver.id)}
                   >
                     <ClearIcon className="iconCoverflow" fontSize="small" />
                   </IconButton>
@@ -209,6 +212,11 @@ class CoverflowButtons extends Component {
         </Coverflow>
         {receiver !== null && <DialogReceiver receiver={receiver} />}
         {receiver === null && <DialogReceiver />}
+        {receiver !== null && (
+          <DialogDeleteReceiver
+            receiver={receiver}
+            deleteReceiver={this.deleteReceiver}
+          />)}
       </div>
     );
   }
@@ -222,5 +230,10 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { displayDialogReceiver, getReceivers, getSelectedReceiver },
+  {
+    displayDialogReceiver,
+    displayDialogDeleteReceiver,
+    getReceivers,
+    getSelectedReceiver,
+  },
 )(withStyles(styles)(CoverflowButtons));
